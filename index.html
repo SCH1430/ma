@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#edf2ee">
+  <meta name="description" content="Математическое пространство школы 1430. Всё начинается с любопытства.">
+  <title>1430 — пространство математики</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23243f35'/%3E%3Cpath d='M17 40V24h16M47 24v16H31M23 45l18-26' stroke='%23e8f6c8' fill='none' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #243b32;
+      --muted: #536050;
+      --green: #375b45;
+      --line: rgba(44, 70, 54, .12);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-synthesis: none;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { min-width: 320px; min-height: 100%; background: #edf2ee; }
+    body { margin: 0; color: var(--ink); -webkit-font-smoothing: antialiased; }
+    button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #325d43; outline-offset: 6px; }
+    [hidden] { display: none !important; }
+    ::selection { background: #ccdfae; color: #1e372b; }
+    .page { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; overflow: clip; }
+    .landscape { position: absolute; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 18% 84%, #d0e1af 0, transparent 39%), radial-gradient(ellipse at 88% 28%, #d1e0dc 0, transparent 35%), radial-gradient(ellipse at 57% 13%, #fbfcf7 0, transparent 58%), #edf2ee; }
+    .landscape::before { content: ""; position: absolute; inset: 0; opacity: .34; background-image: linear-gradient(#5975651c 1px, transparent 1px), linear-gradient(90deg, #5975651c 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); }
+    .landscape::after { content: ""; position: absolute; width: 600px; height: 230px; bottom: -150px; right: 5%; border-radius: 50%; background: #b6c8ab; filter: blur(95px); opacity: .35; }
+    .sphere { position: absolute; width: 192px; height: 192px; left: -62px; top: 24%; border-radius: 50%; transform: rotate(-24deg); background: radial-gradient(circle at 30% 25%, #ffffffd9, transparent 42%), radial-gradient(circle at 64% 70%, #8fa88f2e, transparent 58%), linear-gradient(135deg, #ffffff2b 32%, #aabda553 65%, #ffffffcf 90%); box-shadow: inset 1px 2px 3px #fff, inset -5px -7px 16px #78957c30, 22px 26px 40px #748d7312; border: 1px solid #ffffffba; }
+    .sphere::before, .sphere::after { content: ""; position: absolute; border: 1px solid #ffffffa6; border-radius: 50%; inset: 0 26%; box-shadow: 1px 0 2px #647f7026; }
+    .sphere::after { inset: 29% 0; }
+    .orbit { position: absolute; width: 530px; height: 530px; right: -276px; top: 26%; transform: rotate(-30deg); opacity: .85; }
+    .orbit-ring { position: absolute; inset: 0; border-radius: 50%; border: 54px solid #ffffff23; background: transparent; box-shadow: inset 3px 3px 5px #fff, inset -10px -5px 18px #779c8655, 3px 2px 3px #ffffffed, 11px 15px 27px #728b7720, -1px -2px 2px #8eaa985c; }
+    .orbit-ring::after { content: ""; position: absolute; inset: -49px; border-radius: 50%; border: 1px solid #ffffffba; box-shadow: inset 7px 0 9px #fff7, 4px 1px 10px #8dada32b; }
+    .orbit-line { position: absolute; inset: 98px -75px; border: 1px solid #77977d36; border-radius: 50%; transform: rotate(65deg); }
+    .orbit-line::after { content: ""; position: absolute; height: 9px; width: 9px; border-radius: 50%; background: #668576; left: 90px; bottom: 17px; box-shadow: 0 0 0 5px #fff5; }
+    .glass-cube { position: absolute; width: 103px; height: 103px; bottom: 12%; left: 15%; border-radius: 25px; transform: rotate(-18deg); background: linear-gradient(145deg, #fffffff0, #e5eecb30 40%, #aebf7a25 70%, #ffffffb3); border: 1px solid #ffffffd9; box-shadow: inset 2px 2px 4px #fff, inset -3px -4px 9px #8ba07121, 9px 17px 20px #6f84620e; }
+    .glass-cube svg { width: 46px; height: 46px; margin: 28px; color: #66825a; opacity: .7; }
+    .math-note { position: absolute; font-family: Georgia, serif; font-size: 23px; font-style: italic; color: #62806c; opacity: .45; }
+    .note-a { left: 11.5%; top: 31%; transform: rotate(-9deg); }
+    .note-b { right: 16%; bottom: 20%; font-size: 28px; transform: rotate(8deg); }
+    .cross { position: absolute; width: 16px; height: 16px; color: #6e897357; }
+    .cross::before, .cross::after { content: ""; position: absolute; background: currentColor; }
+    .cross::before { height: 1px; width: 16px; top: 7px; }
+    .cross::after { height: 16px; width: 1px; left: 7px; }
+    .cross-a { left: 20%; top: 20%; }
+    .cross-b { right: 23%; top: 22%; }
+    .cross-c { right: 8%; bottom: 13%; }
+    .site-header, .site-footer { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .site-header { padding: 32px 48px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 13px; user-select: none; }
+    .brand-symbol { width: 47px; height: 47px; flex: 0 0 auto; border-radius: 15px; display: grid; place-items: center; background: #274437; color: #e4efcc; box-shadow: inset 0 1px 1px #ffffff20; }
+    .brand-symbol svg { width: 31px; height: 31px; }
+    .brand-name { display: flex; flex-direction: column; }
+    .brand-name small { font-size: 9px; letter-spacing: .26em; font-weight: 650; line-height: 1.3; padding-left: 2px; }
+    .brand-name strong { font-size: 31px; line-height: 1.05; letter-spacing: -.065em; font-weight: 650; }
+    .header-note { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .025em; color: #506356; }
+    .header-note::before { content: ""; width: 6px; height: 6px; background: #78926b; border-radius: 50%; box-shadow: 0 0 0 4px #78926b0e; }
+    main { flex: 1; display: grid; place-items: center; padding: 35px 24px 61px; }
+    .welcome { width: 100%; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin: 0 0 25px; color: #52664f; font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+    .eyebrow svg { width: 15px; height: 15px; }
+    h1 { margin: 0; font-size: clamp(48px, 6.1vw, 88px); line-height: 1.06; font-weight: 520; letter-spacing: -.067em; }
+    h1 span { display: block; }
+    h1 .accent { color: #527349; }
+    .intro { max-width: 470px; margin: 25px auto 0; font-size: 16px; line-height: 1.65; letter-spacing: -.015em; color: var(--muted); text-wrap: balance; }
+    .choices { max-width: 592px; margin: 38px auto 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .role-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; text-align: left; min-height: 174px; width: 100%; padding: 23px 25px 24px; border: 1px solid #ffffffe6; border-radius: 27px; cursor: pointer; background: linear-gradient(125deg, #ffffffb3, #ffffff57 52%, #ffffff85); -webkit-backdrop-filter: blur(20px) saturate(135%); backdrop-filter: blur(20px) saturate(135%); box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #ffffff70, 0 11px 30px #42563b0b, 0 1px 3px #324b3a08; transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+    .role-card::after { content: ""; position: absolute; inset: 3px; border-radius: 24px; border: 1px solid #ffffff61; pointer-events: none; }
+    .role-card.student { background: linear-gradient(125deg, #f8ffe4b8, #dbeabc75 60%, #ffffff99); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 23px; }
+    .role-icon { display: grid; place-items: center; width: 36px; height: 36px; }
+    .role-icon svg { width: 33px; height: 33px; stroke-width: 1.5; }
+    .arrow { display: grid; place-items: center; height: 29px; width: 29px; border: 1px solid #6c886d2b; border-radius: 50%; background: #ffffff38; transition: transform .25s ease, background .25s ease; }
+    .arrow svg { width: 14px; height: 14px; }
+    .role-title { display: block; font-size: 25px; font-weight: 550; letter-spacing: -.045em; line-height: 1.15; }
+    .role-description { display: block; margin-top: 7px; font-size: 12px; line-height: 1.4; color: #52634f; }
+    .choice-hint { margin: 21px 0 0; font-size: 11px; color: #52634f; letter-spacing: .025em; }
+    .choice-hint span { display: inline-block; margin: 0 5px; font-size: 14px; vertical-align: -1px; }
+    .site-footer { padding: 24px 48px 30px; gap: 24px; color: #52634f; font-size: 10px; letter-spacing: .015em; }
+    .footer-signature { letter-spacing: .14em; font-size: 9px; font-weight: 600; }
+    .footer-signature span { padding: 0 9px; color: #84907a; }
+    .footer-end { display: flex; gap: 22px; align-items: center; }
+    .coordinate { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; opacity: .7; }
+    .reveal { animation: reveal .7s ease both; }
+    .choices { animation-delay: .1s; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .role-view { width: min(100%, 592px); text-align: center; }
+    .role-view .eyebrow { margin-bottom: 19px; }
+    .role-view h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1.1; }
+    .role-panel { padding: 36px; border: 1px solid #ffffffee; border-radius: 32px; background: linear-gradient(140deg, #ffffffb8, #ffffff6b); box-shadow: inset 0 1px 2px #fff, 0 20px 70px #42563b09; -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
+    .welcome-icon { display: grid; place-items: center; width: 68px; height: 68px; margin: 0 auto 27px; background: #dceac88c; border-radius: 22px; border: 1px solid #ffffffab; }
+    .welcome-icon svg { width: 35px; height: 35px; }
+    .role-view .intro { margin-top: 21px; max-width: 410px; }
+    .preview-note { margin: 29px 0 0; padding: 19px 0 0; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.6; color: var(--muted); }
+    .back-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 12px 21px; margin-top: 23px; background: #ffffff8c; border: 1px solid #fff; border-radius: 50px; font-size: 13px; cursor: pointer; transition: background .2s ease; }
+    .back-button svg { width: 16px; height: 16px; }
+    .role-view h1:focus { outline: none; }
+    .skip-link { position: fixed; z-index: 10; top: 12px; left: 12px; transform: translateY(-150%); padding: 14px 18px; background: #fff; border-radius: 12px; color: var(--ink); font-size: 14px; }
+    .skip-link:focus { transform: translateY(0); }
+    noscript p { margin: 0; padding: 14px 24px; text-align: center; font-size: 13px; background: #dbe6cd; }
+    @media (hover: hover) {
+      .role-card:hover { transform: translateY(-5px); box-shadow: inset 0 1px 1px #fff, 0 16px 35px #42563b15, 0 1px 3px #324b3a08; }
+      .role-card:hover .arrow { transform: rotate(-35deg); background: #ffffff8c; }
+      .back-button:hover { background: #fff; }
+    }
+    .role-card:active { transform: translateY(-1px) scale(.985); }
+    @media (min-width: 1600px) {
+      .site-header { padding: 40px 64px; }
+      .site-footer { padding: 30px 64px 36px; }
+      .orbit { right: -225px; }
+      .sphere { left: -28px; }
+    }
+    @media (max-width: 900px) {
+      .site-header { padding: 28px 30px; }
+      .site-footer { padding: 24px 30px; }
+      main { padding-top: 50px; padding-bottom: 70px; }
+      h1 { font-size: clamp(48px, 7.5vw, 68px); }
+      .orbit { width: 430px; height: 430px; right: -310px; top: 35%; }
+      .orbit-ring { border-width: 42px; }
+      .orbit-ring::after { inset: -38px; }
+      .sphere { left: -130px; top: 21%; }
+      .glass-cube { left: 8%; bottom: 12%; width: 71px; height: 71px; border-radius: 19px; }
+      .glass-cube svg { width: 33px; height: 33px; margin: 18px; }
+      .note-a { left: 9%; top: 19%; font-size: 19px; }
+      .note-b { right: 10%; bottom: 13%; font-size: 23px; }
+      .cross-a { left: 25%; top: 15%; }
+      .cross-b { right: 17%; top: 25%; }
+      .footer-end { gap: 15px; }
+    }
+    @media (max-width: 600px) {
+      .site-header { padding: 23px 24px; }
+      .brand { gap: 10px; }
+      .brand-symbol { width: 40px; height: 40px; border-radius: 13px; }
+      .brand-symbol svg { width: 27px; height: 27px; }
+      .brand-name small { font-size: 8px; }
+      .brand-name strong { font-size: 27px; }
+      .header-note { font-size: 0; gap: 0; padding-right: 5px; }
+      .header-note::before { width: 7px; height: 7px; box-shadow: 0 0 0 5px #78926b10; }
+      main { padding: 35px 24px 46px; }
+      .eyebrow { font-size: 8px; letter-spacing: .15em; gap: 7px; margin-bottom: 22px; }
+      .eyebrow svg { width: 13px; height: 13px; }
+      h1 { font-size: clamp(37px, 10.4vw, 57px); letter-spacing: -.066em; line-height: 1.09; }
+      .intro { font-size: 14px; line-height: 1.7; max-width: 330px; margin-top: 21px; }
+      .choices { grid-template-columns: 1fr; margin-top: 30px; gap: 12px; max-width: 365px; }
+      .role-card { min-height: 105px; padding: 22px; border-radius: 25px; display: grid; grid-template-columns: 38px minmax(0, 1fr) 28px; align-items: center; gap: 17px; }
+      .role-card::after { border-radius: 22px; }
+      .card-top { display: contents; }
+      .role-icon { grid-column: 1; grid-row: 1; }
+      .arrow { grid-column: 3; grid-row: 1; width: 27px; height: 27px; }
+      .card-copy { grid-column: 2; grid-row: 1; }
+      .role-title { font-size: 23px; }
+      .role-description { font-size: 11px; margin-top: 6px; }
+      .choice-hint { margin-top: 21px; font-size: 10px; }
+      .site-footer { padding: 19px 24px 24px; gap: 16px; }
+      .footer-signature { font-size: 8px; letter-spacing: .07em; }
+      .footer-signature span { padding: 0 5px; }
+      .footer-end { font-size: 9px; }
+      .footer-end > span:first-child { display: none; }
+      .coordinate { font-size: 9px; }
+      .landscape::before { background-size: 45px 45px; opacity: .23; }
+      .sphere { width: 145px; height: 145px; left: -112px; top: 25%; }
+      .orbit { width: 315px; height: 315px; right: -254px; top: 18%; opacity: .65; }
+      .orbit-ring { border-width: 32px; }
+      .orbit-ring::after { inset: -28px; }
+      .orbit-line { inset: 65px -40px; }
+      .glass-cube { width: 65px; height: 65px; left: -29px; bottom: 7%; opacity: .65; }
+      .glass-cube svg { width: 30px; height: 30px; margin: 17px; }
+      .note-a { display: none; }
+      .note-b { right: 10%; bottom: 8.8%; font-size: 20px; opacity: .3; }
+      .cross-a { top: 14%; left: 14%; }
+      .cross-b { top: 12%; right: 26%; width: 10px; height: 10px; }
+      .cross-c { display: none; }
+      .role-panel { padding: 29px 23px; border-radius: 29px; }
+      .role-view h1 { font-size: clamp(34px, 9.5vw, 47px); }
+      .role-view .intro { font-size: 14px; }
+      .preview-note { font-size: 11px; }
+    }
+    @media (max-width: 360px) {
+      main { padding-left: 18px; padding-right: 18px; }
+      .site-header { padding-left: 20px; padding-right: 20px; }
+      .role-card { padding: 19px; gap: 13px; }
+      .role-description { font-size: 10px; }
+    }
+    @media (max-height: 760px) and (min-width: 901px) {
+      .site-header { padding-top: 24px; padding-bottom: 20px; }
+      main { padding-top: 15px; padding-bottom: 24px; }
+      h1 { font-size: 67px; }
+      .eyebrow { margin-bottom: 19px; }
+      .intro { margin-top: 19px; }
+      .choices { margin-top: 26px; }
+      .role-card { min-height: 158px; padding-top: 19px; padding-bottom: 20px; }
+      .card-top { margin-bottom: 17px; }
+      .site-footer { padding-top: 18px; padding-bottom: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .role-card:hover, .role-card:active, .role-card:hover .arrow { transform: none; }
+    }
+    @media (prefers-contrast: more) {
+      :root { --muted: #354b3d; }
+      .role-card, .role-panel { background: #f4f7ee; border-color: #59705c; }
+      .role-description, .choice-hint, .site-footer, .header-note { color: #354b3d; }
+    }
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .role-card, .role-panel { background: #f4f7ed; }
+      .role-card.student { background: #e6efd5; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к выбору роли</a>
+  <div class="page">
+    <div class="landscape" aria-hidden="true">
+      <div class="sphere"></div>
+      <div class="orbit"><div class="orbit-ring"></div><div class="orbit-line"></div></div>
+      <div class="glass-cube"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 20h20M20 10v20"/></svg></div>
+      <span class="math-note note-a">x + y</span><span class="math-note note-b">∞</span>
+      <i class="cross cross-a"></i><i class="cross cross-b"></i><i class="cross cross-c"></i>
+    </div>
+    <header class="site-header">
+      <div class="brand" aria-label="Школа 1430">
+        <div class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 26V13h13M33 14v13H20M13 31l14-22"/></svg></div>
+        <div class="brand-name" aria-hidden="true"><small>ШКОЛА</small><strong>1430</strong></div>
+      </div>
+      <div class="header-note">У каждого свой путь</div>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="welcome" id="welcome" aria-labelledby="welcome-title">
+        <div class="reveal">
+          <p class="eyebrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 14V6h8M17 6v8H9M6 17 14 3"/></svg>Пространство математики</p>
+          <h1 id="welcome-title"><span>Всё начинается</span><span class="accent">с любопытства.</span></h1>
+          <p class="intro">Место, где можно задавать вопросы,<br>находить решения и понимать больше.</p>
+        </div>
+        <div class="choices reveal" role="group" aria-label="Выберите свою роль">
+          <button class="role-card student" type="button" data-role="student" aria-labelledby="student-title" aria-describedby="student-description">
+            <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 13 14-7 14 7-14 7-14-7Z"/><path d="M10 16v9c4 4 12 4 16 0v-9M32 14v10"/><circle cx="32" cy="26" r="1" fill="currentColor" stroke="none"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
+            <span class="card-copy"><span class="role-title" id="student-title">Ученик</span><span class="role-description" id="student-description">Исследовать и открывать</span></span>
+          </button>
+          <button class="role-card teacher" type="button" data-role="teacher" aria-labelledby="teacher-title" aria-describedby="teacher-description">
+            <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h26v19H5zM12 31l6-6 6 6M18 25v7M11 19l5-6 5 3 5-5"/><path d="M22 11h4v4"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
+            <span class="card-copy"><span class="role-title" id="teacher-title">Учитель</span><span class="role-description" id="teacher-description">Объяснять и вдохновлять</span></span>
+          </button>
+        </div>
+        <p class="choice-hint">Выберите свою роль <span aria-hidden="true">↗</span> и начнём</p>
+      </section>
+      <section class="role-view" id="role-view" aria-labelledby="role-heading" hidden>
+        <div class="role-panel">
+          <div class="welcome-icon" id="welcome-icon" aria-hidden="true"></div>
+          <p class="eyebrow" id="role-label"></p>
+          <h1 id="role-heading" tabindex="-1"></h1>
+          <p class="intro" id="role-message"></p>
+          <p class="preview-note">Это первый шаг нашего пространства.<br>Новые возможности появятся здесь позже.</p>
+        </div>
+        <button class="back-button" id="back-button" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10H5m5-5-5 5 5 5"/></svg>Вернуться к выбору</button>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-signature">1430 <span aria-hidden="true">×</span> МАТЕМАТИКА</div>
+      <div class="footer-end"><span>От вопроса к открытию</span><span class="coordinate" aria-hidden="true">01 / ∞</span></div>
+    </footer>
+  </div>
+  <noscript><p>Чтобы выбрать роль, включите JavaScript в браузере.</p></noscript>
+  <script>
+    (() => {
+      const welcome = document.getElementById('welcome');
+      const roleView = document.getElementById('role-view');
+      const heading = document.getElementById('role-heading');
+      const buttons = [...document.querySelectorAll('[data-role]')];
+      const backButton = document.getElementById('back-button');
+      const skipLink = document.querySelector('.skip-link');
+      const roles = {
+        student: {
+          label: 'Пространство ученика',
+          title: 'Привет, исследователь.',
+          message: 'Любой большой ответ начинается с маленького «почему?». Здесь будет место для твоих вопросов, идей и открытий.'
+        },
+        teacher: {
+          label: 'Пространство учителя',
+          title: 'Открывать. Вместе.',
+          message: 'За каждым «я понял!» — ваше внимание и поддержка. Здесь начинается пространство для новых математических открытий вместе с учениками.'
+        }
+      };
+      let selectedButton = null;
+
+      function chooseRole(button) {
+        const role = roles[button.dataset.role];
+        selectedButton = button;
+        document.getElementById('role-label').textContent = role.label;
+        heading.textContent = role.title;
+        document.getElementById('role-message').textContent = role.message;
+        document.getElementById('welcome-icon').replaceChildren(button.querySelector('.role-icon svg').cloneNode(true));
+        welcome.hidden = true;
+        roleView.hidden = false;
+        roleView.classList.add('reveal');
+        skipLink.textContent = 'Перейти к приветствию';
+        document.title = `1430 — ${role.label.toLowerCase()}`;
+        heading.focus({ preventScroll: true });
+      }
+
+      function returnToChoice() {
+        if (roleView.hidden) return;
+        roleView.hidden = true;
+        roleView.classList.remove('reveal');
+        welcome.hidden = false;
+        skipLink.textContent = 'Перейти к выбору роли';
+        document.title = '1430 — пространство математики';
+        selectedButton?.focus({ preventScroll: true });
+      }
+
+      buttons.forEach(button => button.addEventListener('click', () => chooseRole(button)));
+      backButton.addEventListener('click', returnToChoice);
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !roleView.hidden) returnToChoice();
+      });
+    })();
+  </script>
+</body>
+</html>
