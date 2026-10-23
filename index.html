@@ -208,6 +208,153 @@
       .role-card, .role-panel { background: #f4f7ed; }
       .role-card.student { background: #e6efd5; }
     }
+  /* Shared screens retain the first screen's glass, geometry and palette. */
+.app-mode main { display:block; padding:25px 32px 65px; }
+.app-mode .landscape { position:fixed; }
+.app-mode .orbit { opacity:.3; right:-380px; }
+.app-mode .sphere,.app-mode .glass-cube,.app-mode .math-note { opacity:.25; }
+.app-shell { max-width:1100px; margin:0 auto; width:100%; }
+.screen-head { margin-bottom:30px; }
+.screen-head h1 { font-size:clamp(32px,4vw,52px); letter-spacing:-.05em; margin:20px 0 12px; line-height:1.12; }
+.screen-head p { color:var(--muted); font-size:15px; line-height:1.65; margin:0; max-width:650px; }
+.screen-head h1:focus { outline:none; }
+.trail { display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+.text-button { border:0; background:transparent; color:var(--ink); padding:10px 0; min-height:40px; cursor:pointer; font-size:13px; text-decoration:underline; text-underline-offset:4px; }
+.trail .text-button { text-decoration:none; }
+.badge { display:inline-flex; align-items:center; padding:7px 11px; background:#ffffff79; border:1px solid #fff; border-radius:30px; font-size:11px; line-height:1.4; color:#4b604a; }
+.glass { background:linear-gradient(130deg,#ffffffbd,#ffffff70); border:1px solid #fffffff0; border-radius:25px; box-shadow:inset 0 1px 2px #fff,0 12px 34px #42563b08; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); }
+.class-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:15px; }
+.class-card { min-height:158px; padding:24px; text-align:left; cursor:pointer; transition:transform .2s; }
+.class-card strong { display:block; font-size:46px; letter-spacing:-.07em; font-weight:500; margin-bottom:17px; }
+.class-card strong small { font-size:14px; letter-spacing:0; margin-left:6px; font-weight:400; }
+.class-card span { display:block; font-size:12px; color:var(--muted); }
+.class-card:first-child,.class-card:nth-child(2) { background:linear-gradient(135deg,#f7ffe6c9,#e3eccc95); }
+.bottom-note { margin-top:24px; display:flex; align-items:center; justify-content:space-between; gap:15px; flex-wrap:wrap; font-size:12px; line-height:1.7; color:var(--muted); }
+.profile { max-width:620px; padding:30px; }
+.field-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+label.field { display:flex; flex-direction:column; gap:9px; font-size:13px; font-weight:550; }
+input,select { font:inherit; color:var(--ink); width:100%; min-width:0; padding:13px 15px; border:1px solid #8caa8a66; border-radius:13px; background:#ffffffa8; min-height:46px; }
+input:focus-visible,select:focus-visible { outline:3px solid #527349; outline-offset:3px; }
+input::placeholder { color:#687668; opacity:1; }
+.field small,.muted { font-size:12px; color:var(--muted); font-weight:400; line-height:1.65; }
+.letter-field { max-width:160px; margin:20px 0; }
+.primary,.secondary { min-height:46px; border-radius:14px; padding:12px 19px; border:1px solid #fff; cursor:pointer; font-size:13px; font-weight:550; display:inline-flex; justify-content:center; align-items:center; gap:8px; line-height:1.5; }
+.primary { color:#f9fff5; background:#304d3c; border-color:#304d3c; box-shadow:inset 0 1px 1px #ffffff24; }
+.secondary { background:#ffffff9c; }
+button:disabled { cursor:not-allowed; opacity:.48; }
+.toolbar { display:flex; align-items:center; gap:12px; justify-content:space-between; flex-wrap:wrap; margin:24px 0; }
+.toolbar .field { min-width:180px; }
+.topic-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.topic-card { padding:24px; display:flex; flex-direction:column; align-items:start; min-height:210px; }
+.topic-card .subject { font-size:10px; line-height:1.5; letter-spacing:.04em; color:#52634f; }
+.topic-card h2 { font-size:20px; font-weight:530; letter-spacing:-.03em; line-height:1.3; margin:15px 0 10px; }
+.topic-card .muted { margin:0 0 20px; }
+.topic-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:auto; }
+.topic-actions .secondary { padding:9px 13px; font-size:12px; min-height:42px; }
+.trainer { max-width:800px; margin:0 auto; }
+.task-card { padding:35px; }
+.task-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:11px; color:var(--muted); margin-bottom:26px; }
+.task-prompt { font-size:clamp(20px,2.2vw,28px); line-height:1.55; font-weight:450; letter-spacing:-.02em; margin:0 0 27px; overflow-wrap:anywhere; }
+.answer-row { display:flex; align-items:end; gap:12px; }
+.answer-row .field { flex:1; }
+.answer-row input { font-size:20px; }
+.feedback { margin:22px 0 0; padding:17px 19px; border-radius:15px; background:#e0edce; color:#29452e; font-size:14px; line-height:1.65; }
+.feedback.wrong { background:#f7ebd8; color:#66461c; }
+.feedback p { margin:6px 0 0; }
+.solution { margin:18px 0 0; padding-top:18px; border-top:1px solid var(--line); font-size:14px; line-height:1.7; }
+.task-nav { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:20px; flex-wrap:wrap; }
+.dots { display:flex; gap:9px; }
+.task-dot { width:40px; height:40px; border:1px solid #fff; border-radius:50%; background:#ffffff80; cursor:pointer; }
+.task-dot[aria-current="step"] { border:2px solid #375b45; }
+.task-dot.done { background:#d2e4b6; }
+.progress { height:5px; border-radius:10px; background:#b5c5a63b; overflow:hidden; margin-bottom:20px; }
+.progress span { display:block; height:100%; background:#6b8652; transition:width .2s; }
+.result { max-width:650px; padding:38px; text-align:center; margin:auto; }
+.result-number { font-size:68px; font-weight:450; letter-spacing:-.06em; margin:15px 0; }
+.result h2 { font-size:25px; letter-spacing:-.03em; }
+.builder-grid { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr); gap:22px; align-items:start; }
+.bank-task { padding:23px; margin-bottom:13px; }
+.bank-task h3 { font-size:11px; font-weight:500; color:var(--muted); margin:0 0 10px; }
+.bank-task p { font-size:15px; line-height:1.65; margin:0 0 18px; }
+.bank-task .secondary { width:100%; }
+.work-panel { padding:25px; position:sticky; top:20px; }
+.work-panel h2 { font-weight:500; font-size:23px; margin:0 0 20px; letter-spacing:-.04em; }
+.work-list { padding:0; margin:20px 0; list-style:none; }
+.work-list li { border-top:1px solid var(--line); padding:13px 0; }
+.work-list p { font-size:12px; line-height:1.55; margin:0 0 8px; }
+.mini-actions { display:flex; gap:5px; }
+.mini-actions button { min-width:38px; min-height:36px; padding:7px 10px; background:#ffffff9c; border:1px solid #fff; border-radius:9px; cursor:pointer; font-size:11px; }
+.work-panel .field { margin-bottom:15px; }
+.check { display:flex; align-items:flex-start; gap:10px; margin:20px 0; font-size:13px; line-height:1.6; }
+.check input { width:19px; min-height:19px; height:19px; margin:1px 0 0; accent-color:#375b45; }
+.work-panel>.primary { width:100%; }
+.empty { color:var(--muted); font-size:13px; line-height:1.7; margin:20px 0; }
+.source-box { padding:30px; font-size:14px; line-height:1.8; }
+.source-box h2 { font-size:21px; font-weight:550; }
+.source-box a { color:#305b43; }
+.source-box table { width:100%; border-collapse:collapse; font-size:12px; }
+.source-box td,.source-box th { padding:13px 8px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+.source-box th { font-weight:600; }
+.print-instructions { max-width:794px; margin:0 auto 23px; font-size:13px; line-height:1.7; }
+.print-root { max-width:794px; margin:auto; }
+.sheet { background:white; color:#1c2820; padding:44px 48px; min-height:1123px; margin:0 auto 25px; box-shadow:0 8px 36px #253b3010; position:relative; border:1px solid #dee4da; }
+.sheet-header { border-bottom:2px solid #334d3c; padding-bottom:14px; margin-bottom:22px; }
+.sheet-brand { font-size:12px; letter-spacing:.08em; font-weight:650; }
+.sheet h2 { font-size:23px; line-height:1.25; margin:13px 0 8px; overflow-wrap:anywhere; }
+.sheet-meta { font-size:11px; line-height:1.7; }
+.name-line { font-size:12px; margin:19px 0 20px; }
+.print-question { break-inside:avoid; margin:0 0 20px; }
+.print-question p { font-size:14px; line-height:1.65; margin:0 0 10px; }
+.solution-lines { height:160px; background:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,#cfd7cd 26px,#cfd7cd 27px); border-bottom:1px solid #cfd7cd; }
+.sheet-footer { position:absolute; bottom:24px; left:48px; right:48px; display:flex; justify-content:space-between; gap:20px; font-size:9px; color:#52634f; border-top:1px solid #d4dcd0; padding-top:12px; }
+.answer-key { margin-bottom:23px; font-size:13px; line-height:1.6; break-inside:avoid; }
+.answer-key p { margin:5px 0; }
+.toast { position:fixed; left:50%; bottom:25px; transform:translateX(-50%); z-index:20; background:#2b4635; color:#fff; padding:13px 20px; border-radius:16px; font-size:13px; max-width:calc(100% - 30px); box-shadow:0 8px 30px #20302426; }
+@media (hover:hover) { .class-card:hover { transform:translateY(-4px); } .secondary:hover { background:#fff; } .primary:hover { background:#243f2e; } }
+@media (max-width:900px) { .class-grid { grid-template-columns:repeat(3,1fr); } .topic-grid { grid-template-columns:repeat(2,1fr); } .builder-grid { grid-template-columns:minmax(0,1fr) 290px; gap:15px; } .work-panel { padding:20px; } }
+@media (max-width:650px) {
+ .app-mode main { padding:14px 20px 40px; } .app-mode .site-header { padding-bottom:16px; }
+ .screen-head { margin-bottom:23px; } .screen-head h1 { font-size:35px; } .screen-head p { font-size:14px; }
+ .class-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .class-card { padding:20px; min-height:145px; }
+ .class-card strong { font-size:39px; } .class-card span { font-size:11px; }
+ .profile { padding:23px; } .field-grid { grid-template-columns:1fr; }
+ .topic-grid { grid-template-columns:1fr; gap:13px; } .topic-card { min-height:0; padding:22px; }
+ .topic-card h2 { font-size:21px; } .topic-card .muted { margin-bottom:16px; }
+ .topic-actions { width:100%; } .topic-actions button { flex:1; }
+ .task-card { padding:24px 21px; } .task-prompt { font-size:22px; }
+ .answer-row { display:block; } .answer-row .primary { width:100%; margin-top:14px; }
+ .task-meta { margin-bottom:21px; font-size:10px; } .task-nav { gap:16px; }
+ .builder-grid { grid-template-columns:1fr; } .work-panel { position:static; }
+ .source-box { padding:22px; } .source-box table { font-size:11px; }
+ .sheet { padding:24px 20px 65px; min-height:0; } .sheet h2 { font-size:20px; }
+ .sheet-footer { left:20px; right:20px; bottom:18px; font-size:8px; }
+ .sheet-header { margin-bottom:18px; } .print-question p { font-size:13px; }
+ .solution-lines { height:105px; } .print-instructions { font-size:12px; }
+ .result { padding:28px 22px; }
+}
+@media (prefers-reduced-motion:reduce) { .class-card:hover { transform:none; } }
+@page { size:A4; margin:0; }
+@media print {
+ html,body { margin:0!important; padding:0!important; min-width:0; background:white!important; }
+ .page { display:block!important; overflow:visible!important; min-height:0!important; }
+ .landscape,.site-header,.site-footer,.skip-link,.screen-head,.print-instructions,.toolbar,.toast,noscript { display:none!important; }
+ main,#app,.app-shell { display:block!important; margin:0!important; padding:0!important; max-width:none!important; width:auto!important; }
+ #app > :not(.print-root) { display:none!important; }
+ .print-root { display:block!important; margin:0!important; max-width:none; }
+ .sheet { width:210mm; height:297mm; min-height:0; padding:14mm 16mm 18mm; margin:0; box-shadow:none; border:0; break-after:page; page-break-after:always; box-sizing:border-box; }
+ .sheet:last-child { break-after:auto; page-break-after:auto; }
+ .sheet-header { margin-bottom:6mm; padding-bottom:4mm; }
+ .sheet h2 { font-size:17pt; margin:3mm 0 2mm; }
+ .sheet-brand { font-size:9pt; }.sheet-meta { font-size:8pt; }
+ .name-line { font-size:9pt; margin:5mm 0; }
+ .print-question { margin-bottom:5mm; }
+ .print-question p { font-size:10.5pt; line-height:1.5; }
+ .solution-lines { height:37mm; background:none; border:0; position:relative; }
+ .solution-lines::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(to bottom,transparent 0,transparent 7mm,#cfd7cd 7mm,#cfd7cd 7.2mm); print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+ .sheet-footer { bottom:9mm; left:16mm; right:16mm; font-size:7pt; padding-top:3mm; }
+ .answer-key { font-size:9pt; margin-bottom:5mm; }
+}
+
   </style>
 </head>
 <body>
@@ -246,76 +393,2021 @@
         </div>
         <p class="choice-hint">Выберите свою роль <span aria-hidden="true">↗</span> и начнём</p>
       </section>
-      <section class="role-view" id="role-view" aria-labelledby="role-heading" hidden>
-        <div class="role-panel">
-          <div class="welcome-icon" id="welcome-icon" aria-hidden="true"></div>
-          <p class="eyebrow" id="role-label"></p>
-          <h1 id="role-heading" tabindex="-1"></h1>
-          <p class="intro" id="role-message"></p>
-          <p class="preview-note">Это первый шаг нашего пространства.<br>Новые возможности появятся здесь позже.</p>
-        </div>
-        <button class="back-button" id="back-button" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10H5m5-5-5 5 5 5"/></svg>Вернуться к выбору</button>
-      </section>
+      <section id="app" class="app-shell" hidden aria-label="Математическое пространство"></section>
     </main>
     <footer class="site-footer">
       <div class="footer-signature">1430 <span aria-hidden="true">×</span> МАТЕМАТИКА</div>
       <div class="footer-end"><span>От вопроса к открытию</span><span class="coordinate" aria-hidden="true">01 / ∞</span></div>
     </footer>
   </div>
+  <div class="toast" id="notice" role="status" hidden></div>
   <noscript><p>Чтобы выбрать роль, включите JavaScript в браузере.</p></noscript>
   <script>
-    (() => {
-      const welcome = document.getElementById('welcome');
-      const roleView = document.getElementById('role-view');
-      const heading = document.getElementById('role-heading');
-      const buttons = [...document.querySelectorAll('[data-role]')];
-      const backButton = document.getElementById('back-button');
-      const skipLink = document.querySelector('.skip-link');
-      const roles = {
-        student: {
-          label: 'Пространство ученика',
-          title: 'Привет, исследователь.',
-          message: 'Любой большой ответ начинается с маленького «почему?». Здесь будет место для твоих вопросов, идей и открытий.'
-        },
-        teacher: {
-          label: 'Пространство учителя',
-          title: 'Открывать. Вместе.',
-          message: 'За каждым «я понял!» — ваше внимание и поддержка. Здесь начинается пространство для новых математических открытий вместе с учениками.'
-        }
-      };
-      let selectedButton = null;
-
-      function chooseRole(button) {
-        const role = roles[button.dataset.role];
-        selectedButton = button;
-        document.getElementById('role-label').textContent = role.label;
-        heading.textContent = role.title;
-        document.getElementById('role-message').textContent = role.message;
-        document.getElementById('welcome-icon').replaceChildren(button.querySelector('.role-icon svg').cloneNode(true));
-        welcome.hidden = true;
-        roleView.hidden = false;
-        roleView.classList.add('reveal');
-        skipLink.textContent = 'Перейти к приветствию';
-        document.title = `1430 — ${role.label.toLowerCase()}`;
-        heading.focus({ preventScroll: true });
+const BANK = [
+  {
+    "id": "5-01",
+    "grade": 5,
+    "subject": "Математика",
+    "title": "Порядок действий",
+    "ref": "14",
+    "tasks": [
+      {
+        "id": "5-01-1",
+        "prompt": "Вычислите: 21 + 3 · (18 − 12).",
+        "answer": 39.0,
+        "display": "39",
+        "solution": "Сначала скобки: 18 − 12 = 6. Затем умножение: 3 · 6 = 18. Прибавляем 21."
+      },
+      {
+        "id": "5-01-2",
+        "prompt": "Вычислите: 22 + 4 · (18 − 12).",
+        "answer": 46.0,
+        "display": "46",
+        "solution": "Сначала скобки: 18 − 12 = 6. Затем умножение: 4 · 6 = 24. Прибавляем 22."
+      },
+      {
+        "id": "5-01-3",
+        "prompt": "Вычислите: 23 + 5 · (18 − 12).",
+        "answer": 53.0,
+        "display": "53",
+        "solution": "Сначала скобки: 18 − 12 = 6. Затем умножение: 5 · 6 = 30. Прибавляем 23."
       }
-
-      function returnToChoice() {
-        if (roleView.hidden) return;
-        roleView.hidden = true;
-        roleView.classList.remove('reveal');
-        welcome.hidden = false;
-        skipLink.textContent = 'Перейти к выбору роли';
-        document.title = '1430 — пространство математики';
-        selectedButton?.focus({ preventScroll: true });
+    ]
+  },
+  {
+    "id": "5-02",
+    "grade": 5,
+    "subject": "Математика",
+    "title": "Деление с остатком",
+    "ref": "14",
+    "tasks": [
+      {
+        "id": "5-02-1",
+        "prompt": "Найдите остаток от деления 38 на 7.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "38 = 7 · 5 + 3. Остаток 3 меньше делителя 7."
+      },
+      {
+        "id": "5-02-2",
+        "prompt": "Найдите остаток от деления 45 на 7.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "45 = 7 · 6 + 3. Остаток 3 меньше делителя 7."
+      },
+      {
+        "id": "5-02-3",
+        "prompt": "Найдите остаток от деления 52 на 7.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "52 = 7 · 7 + 3. Остаток 3 меньше делителя 7."
       }
+    ]
+  },
+  {
+    "id": "5-03",
+    "grade": 5,
+    "subject": "Математика",
+    "title": "Обыкновенные дроби",
+    "ref": "14",
+    "tasks": [
+      {
+        "id": "5-03-1",
+        "prompt": "Вычислите: 1/8 + 2/8. Ответ можно записать дробью.",
+        "answer": 0.375,
+        "display": "3/8",
+        "solution": "При одинаковых знаменателях складываем числители: (1 + 2)/8 = 3/8."
+      },
+      {
+        "id": "5-03-2",
+        "prompt": "Вычислите: 2/8 + 3/8. Ответ можно записать дробью.",
+        "answer": 0.625,
+        "display": "5/8",
+        "solution": "При одинаковых знаменателях складываем числители: (2 + 3)/8 = 5/8."
+      },
+      {
+        "id": "5-03-3",
+        "prompt": "Вычислите: 3/8 + 4/8. Ответ можно записать дробью.",
+        "answer": 0.875,
+        "display": "7/8",
+        "solution": "При одинаковых знаменателях складываем числители: (3 + 4)/8 = 7/8."
+      }
+    ]
+  },
+  {
+    "id": "5-04",
+    "grade": 5,
+    "subject": "Математика",
+    "title": "Десятичные дроби",
+    "ref": "14",
+    "tasks": [
+      {
+        "id": "5-04-1",
+        "prompt": "Вычислите: 1,25 + 2,5.",
+        "answer": 3.75,
+        "display": "15/4",
+        "solution": "Запишем 2,5 как 2,50. Складываем по разрядам: 1,25 + 2,50 = 3,75."
+      },
+      {
+        "id": "5-04-2",
+        "prompt": "Вычислите: 2,25 + 2,5.",
+        "answer": 4.75,
+        "display": "19/4",
+        "solution": "Запишем 2,5 как 2,50. Складываем по разрядам: 2,25 + 2,50 = 4,75."
+      },
+      {
+        "id": "5-04-3",
+        "prompt": "Вычислите: 3,25 + 2,5.",
+        "answer": 5.75,
+        "display": "23/4",
+        "solution": "Запишем 2,5 как 2,50. Складываем по разрядам: 3,25 + 2,50 = 5,75."
+      }
+    ]
+  },
+  {
+    "id": "5-05",
+    "grade": 5,
+    "subject": "Математика",
+    "title": "Скорость, время, расстояние",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "5-05-1",
+        "prompt": "Велосипедист ехал 2 ч со скоростью 12 км/ч. Какое расстояние он проехал? Ответ в километрах.",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "Расстояние равно скорости, умноженной на время: 12 · 2 = 24 км."
+      },
+      {
+        "id": "5-05-2",
+        "prompt": "Велосипедист ехал 3 ч со скоростью 12 км/ч. Какое расстояние он проехал? Ответ в километрах.",
+        "answer": 36.0,
+        "display": "36",
+        "solution": "Расстояние равно скорости, умноженной на время: 12 · 3 = 36 км."
+      },
+      {
+        "id": "5-05-3",
+        "prompt": "Велосипедист ехал 4 ч со скоростью 12 км/ч. Какое расстояние он проехал? Ответ в километрах.",
+        "answer": 48.0,
+        "display": "48",
+        "solution": "Расстояние равно скорости, умноженной на время: 12 · 4 = 48 км."
+      }
+    ]
+  },
+  {
+    "id": "5-06",
+    "grade": 5,
+    "subject": "Геометрия",
+    "title": "Периметр прямоугольника",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "5-06-1",
+        "prompt": "Стороны прямоугольника равны 5 см и 3 см. Найдите периметр в сантиметрах.",
+        "answer": 16.0,
+        "display": "16",
+        "solution": "P = 2(a + b) = 2 · (5 + 3) = 16 см."
+      },
+      {
+        "id": "5-06-2",
+        "prompt": "Стороны прямоугольника равны 6 см и 4 см. Найдите периметр в сантиметрах.",
+        "answer": 20.0,
+        "display": "20",
+        "solution": "P = 2(a + b) = 2 · (6 + 4) = 20 см."
+      },
+      {
+        "id": "5-06-3",
+        "prompt": "Стороны прямоугольника равны 7 см и 5 см. Найдите периметр в сантиметрах.",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "P = 2(a + b) = 2 · (7 + 5) = 24 см."
+      }
+    ]
+  },
+  {
+    "id": "5-07",
+    "grade": 5,
+    "subject": "Геометрия",
+    "title": "Площадь прямоугольника",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "5-07-1",
+        "prompt": "Прямоугольник имеет длину 6 см и ширину 4 см. Найдите площадь в см².",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "S = a · b = 6 · 4 = 24 см²."
+      },
+      {
+        "id": "5-07-2",
+        "prompt": "Прямоугольник имеет длину 7 см и ширину 4 см. Найдите площадь в см².",
+        "answer": 28.0,
+        "display": "28",
+        "solution": "S = a · b = 7 · 4 = 28 см²."
+      },
+      {
+        "id": "5-07-3",
+        "prompt": "Прямоугольник имеет длину 8 см и ширину 4 см. Найдите площадь в см².",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "S = a · b = 8 · 4 = 32 см²."
+      }
+    ]
+  },
+  {
+    "id": "5-08",
+    "grade": 5,
+    "subject": "Геометрия",
+    "title": "Объём прямоугольного параллелепипеда",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "5-08-1",
+        "prompt": "Длина коробки 4 см, ширина 3 см, высота 2 см. Найдите её объём в см³.",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "V = a · b · c = 4 · 3 · 2 = 24 см³."
+      },
+      {
+        "id": "5-08-2",
+        "prompt": "Длина коробки 5 см, ширина 3 см, высота 2 см. Найдите её объём в см³.",
+        "answer": 30.0,
+        "display": "30",
+        "solution": "V = a · b · c = 5 · 3 · 2 = 30 см³."
+      },
+      {
+        "id": "5-08-3",
+        "prompt": "Длина коробки 6 см, ширина 3 см, высота 2 см. Найдите её объём в см³.",
+        "answer": 36.0,
+        "display": "36",
+        "solution": "V = a · b · c = 6 · 3 · 2 = 36 см³."
+      }
+    ]
+  },
+  {
+    "id": "6-01",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "НОД и НОК",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "6-01-1",
+        "prompt": "Найдите наибольший общий делитель чисел 12 и 18.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "12 = 6 · 2, а 18 = 6 · 3. Числа 2 и 3 взаимно просты, поэтому НОД равен 6."
+      },
+      {
+        "id": "6-01-2",
+        "prompt": "Найдите наибольший общий делитель чисел 18 и 27.",
+        "answer": 9.0,
+        "display": "9",
+        "solution": "18 = 9 · 2, а 27 = 9 · 3. Числа 2 и 3 взаимно просты, поэтому НОД равен 9."
+      },
+      {
+        "id": "6-01-3",
+        "prompt": "Найдите наибольший общий делитель чисел 24 и 36.",
+        "answer": 12.0,
+        "display": "12",
+        "solution": "24 = 12 · 2, а 36 = 12 · 3. Числа 2 и 3 взаимно просты, поэтому НОД равен 12."
+      }
+    ]
+  },
+  {
+    "id": "6-02",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Действия с дробями",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-02-1",
+        "prompt": "Вычислите: 1/4 + 1/6. Ответ можно записать дробью.",
+        "answer": 0.4166666666666667,
+        "display": "5/12",
+        "solution": "Общий знаменатель 12: 1/4 = 3/12, 1/6 = 2/12. Сумма равна 5/12."
+      },
+      {
+        "id": "6-02-2",
+        "prompt": "Вычислите: 2/4 + 1/6. Ответ можно записать дробью.",
+        "answer": 0.6666666666666666,
+        "display": "2/3",
+        "solution": "Общий знаменатель 12: 2/4 = 6/12, 1/6 = 2/12. Сумма равна 8/12."
+      },
+      {
+        "id": "6-02-3",
+        "prompt": "Вычислите: 3/4 + 1/6. Ответ можно записать дробью.",
+        "answer": 0.9166666666666666,
+        "display": "11/12",
+        "solution": "Общий знаменатель 12: 3/4 = 9/12, 1/6 = 2/12. Сумма равна 11/12."
+      }
+    ]
+  },
+  {
+    "id": "6-03",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Проценты",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-03-1",
+        "prompt": "В книге 140 страниц. Прочитано 25% книги. Сколько страниц прочитано?",
+        "answer": 35.0,
+        "display": "35",
+        "solution": "25% = 1/4. Поэтому 140 : 4 = 35 страниц."
+      },
+      {
+        "id": "6-03-2",
+        "prompt": "В книге 180 страниц. Прочитано 25% книги. Сколько страниц прочитано?",
+        "answer": 45.0,
+        "display": "45",
+        "solution": "25% = 1/4. Поэтому 180 : 4 = 45 страниц."
+      },
+      {
+        "id": "6-03-3",
+        "prompt": "В книге 220 страниц. Прочитано 25% книги. Сколько страниц прочитано?",
+        "answer": 55.0,
+        "display": "55",
+        "solution": "25% = 1/4. Поэтому 220 : 4 = 55 страниц."
+      }
+    ]
+  },
+  {
+    "id": "6-04",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Отношения и пропорции",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-04-1",
+        "prompt": "Разделите 30 в отношении 2 : 3. Найдите меньшую часть.",
+        "answer": 12.0,
+        "display": "12",
+        "solution": "Всего 2 + 3 = 5 долей. Меньшая часть: 30 : 5 · 2 = 12."
+      },
+      {
+        "id": "6-04-2",
+        "prompt": "Разделите 60 в отношении 2 : 3. Найдите меньшую часть.",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "Всего 2 + 3 = 5 долей. Меньшая часть: 60 : 5 · 2 = 24."
+      },
+      {
+        "id": "6-04-3",
+        "prompt": "Разделите 90 в отношении 2 : 3. Найдите меньшую часть.",
+        "answer": 36.0,
+        "display": "36",
+        "solution": "Всего 2 + 3 = 5 долей. Меньшая часть: 90 : 5 · 2 = 36."
+      }
+    ]
+  },
+  {
+    "id": "6-05",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Положительные и отрицательные числа",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-05-1",
+        "prompt": "Вычислите: −7 + 3 − 2.",
+        "answer": -6.0,
+        "display": "-6",
+        "solution": "−7 + 3 = −4. Ещё вычитаем 2 и получаем −6."
+      },
+      {
+        "id": "6-05-2",
+        "prompt": "Вычислите: −14 + 6 − 2.",
+        "answer": -10.0,
+        "display": "-10",
+        "solution": "−14 + 6 = −8. Ещё вычитаем 2 и получаем −10."
+      },
+      {
+        "id": "6-05-3",
+        "prompt": "Вычислите: −21 + 9 − 2.",
+        "answer": -14.0,
+        "display": "-14",
+        "solution": "−21 + 9 = −12. Ещё вычитаем 2 и получаем −14."
+      }
+    ]
+  },
+  {
+    "id": "6-06",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Модуль числа",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-06-1",
+        "prompt": "Вычислите: |−6| − |2|.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Модуль — расстояние до нуля. Получаем 6 − 2 = 4."
+      },
+      {
+        "id": "6-06-2",
+        "prompt": "Вычислите: |−7| − |3|.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Модуль — расстояние до нуля. Получаем 7 − 3 = 4."
+      },
+      {
+        "id": "6-06-3",
+        "prompt": "Вычислите: |−8| − |4|.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Модуль — расстояние до нуля. Получаем 8 − 4 = 4."
+      }
+    ]
+  },
+  {
+    "id": "6-07",
+    "grade": 6,
+    "subject": "Математика",
+    "title": "Координатная плоскость",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "6-07-1",
+        "prompt": "Точка A имеет координаты (−3; 5). Чему равна её абсцисса?",
+        "answer": -3.0,
+        "display": "-3",
+        "solution": "Абсцисса — первая координата точки, то есть −3."
+      },
+      {
+        "id": "6-07-2",
+        "prompt": "Точка A имеет координаты (−4; 6). Чему равна её абсцисса?",
+        "answer": -4.0,
+        "display": "-4",
+        "solution": "Абсцисса — первая координата точки, то есть −4."
+      },
+      {
+        "id": "6-07-3",
+        "prompt": "Точка A имеет координаты (−5; 7). Чему равна её абсцисса?",
+        "answer": -5.0,
+        "display": "-5",
+        "solution": "Абсцисса — первая координата точки, то есть −5."
+      }
+    ]
+  },
+  {
+    "id": "6-08",
+    "grade": 6,
+    "subject": "Геометрия",
+    "title": "Осевая симметрия",
+    "ref": "17",
+    "tasks": [
+      {
+        "id": "6-08-1",
+        "prompt": "Точка A(2; 3) отражена относительно оси абсцисс. Найдите ординату полученной точки.",
+        "answer": -3.0,
+        "display": "-3",
+        "solution": "При отражении относительно оси x абсцисса сохраняется, а ордината меняет знак: (2; −3)."
+      },
+      {
+        "id": "6-08-2",
+        "prompt": "Точка A(3; 6) отражена относительно оси абсцисс. Найдите ординату полученной точки.",
+        "answer": -6.0,
+        "display": "-6",
+        "solution": "При отражении относительно оси x абсцисса сохраняется, а ордината меняет знак: (3; −6)."
+      },
+      {
+        "id": "6-08-3",
+        "prompt": "Точка A(4; 9) отражена относительно оси абсцисс. Найдите ординату полученной точки.",
+        "answer": -9.0,
+        "display": "-9",
+        "solution": "При отражении относительно оси x абсцисса сохраняется, а ордината меняет знак: (4; −9)."
+      }
+    ]
+  },
+  {
+    "id": "7-01",
+    "grade": 7,
+    "subject": "Алгебра",
+    "title": "Линейные уравнения",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "7-01-1",
+        "prompt": "Решите уравнение: 3x + 3 = 12.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "3x = 12 − 3 = 9. Делим обе части на 3: x = 3."
+      },
+      {
+        "id": "7-01-2",
+        "prompt": "Решите уравнение: 3x + 4 = 16.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "3x = 16 − 4 = 12. Делим обе части на 3: x = 4."
+      },
+      {
+        "id": "7-01-3",
+        "prompt": "Решите уравнение: 3x + 5 = 20.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "3x = 20 − 5 = 15. Делим обе части на 3: x = 5."
+      }
+    ]
+  },
+  {
+    "id": "7-02",
+    "grade": 7,
+    "subject": "Алгебра",
+    "title": "Степени с натуральным показателем",
+    "ref": "41–42",
+    "tasks": [
+      {
+        "id": "7-02-1",
+        "prompt": "Вычислите: 2^3 · 2².",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "При умножении степеней одного основания показатели складываются: 2^(3+2) = 2^5 = 32."
+      },
+      {
+        "id": "7-02-2",
+        "prompt": "Вычислите: 2^4 · 2².",
+        "answer": 64.0,
+        "display": "64",
+        "solution": "При умножении степеней одного основания показатели складываются: 2^(4+2) = 2^6 = 64."
+      },
+      {
+        "id": "7-02-3",
+        "prompt": "Вычислите: 2^5 · 2².",
+        "answer": 128.0,
+        "display": "128",
+        "solution": "При умножении степеней одного основания показатели складываются: 2^(5+2) = 2^7 = 128."
+      }
+    ]
+  },
+  {
+    "id": "7-03",
+    "grade": 7,
+    "subject": "Алгебра",
+    "title": "Многочлены и формулы сокращённого умножения",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "7-03-1",
+        "prompt": "Найдите значение выражения (x + 3)² − x² при x = 2.",
+        "answer": 21.0,
+        "display": "21",
+        "solution": "(x + 3)² − x² = 6x + 9. Подставляем x = 2: 21."
+      },
+      {
+        "id": "7-03-2",
+        "prompt": "Найдите значение выражения (x + 3)² − x² при x = 3.",
+        "answer": 27.0,
+        "display": "27",
+        "solution": "(x + 3)² − x² = 6x + 9. Подставляем x = 3: 27."
+      },
+      {
+        "id": "7-03-3",
+        "prompt": "Найдите значение выражения (x + 3)² − x² при x = 4.",
+        "answer": 33.0,
+        "display": "33",
+        "solution": "(x + 3)² − x² = 6x + 9. Подставляем x = 4: 33."
+      }
+    ]
+  },
+  {
+    "id": "7-04",
+    "grade": 7,
+    "subject": "Алгебра",
+    "title": "Линейная функция",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "7-04-1",
+        "prompt": "Функция задана формулой y = 3x − 2. Найдите y при x = 3.",
+        "answer": 7.0,
+        "display": "7",
+        "solution": "Подставим значение x: y = 3 · 3 − 2 = 7."
+      },
+      {
+        "id": "7-04-2",
+        "prompt": "Функция задана формулой y = 3x − 2. Найдите y при x = 4.",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "Подставим значение x: y = 3 · 4 − 2 = 10."
+      },
+      {
+        "id": "7-04-3",
+        "prompt": "Функция задана формулой y = 3x − 2. Найдите y при x = 5.",
+        "answer": 13.0,
+        "display": "13",
+        "solution": "Подставим значение x: y = 3 · 5 − 2 = 13."
+      }
+    ]
+  },
+  {
+    "id": "7-05",
+    "grade": 7,
+    "subject": "Алгебра",
+    "title": "Системы линейных уравнений",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "7-05-1",
+        "prompt": "В системе x + y = 7, x − y = 3 найдите x.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "Сложим уравнения: 2x = 10. Значит, x = 5."
+      },
+      {
+        "id": "7-05-2",
+        "prompt": "В системе x + y = 9, x − y = 3 найдите x.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "Сложим уравнения: 2x = 12. Значит, x = 6."
+      },
+      {
+        "id": "7-05-3",
+        "prompt": "В системе x + y = 11, x − y = 3 найдите x.",
+        "answer": 7.0,
+        "display": "7",
+        "solution": "Сложим уравнения: 2x = 14. Значит, x = 7."
+      }
+    ]
+  },
+  {
+    "id": "7-06",
+    "grade": 7,
+    "subject": "Геометрия",
+    "title": "Смежные и вертикальные углы",
+    "ref": "70",
+    "tasks": [
+      {
+        "id": "7-06-1",
+        "prompt": "Один из двух смежных углов равен 50°. Найдите второй угол в градусах.",
+        "answer": 130.0,
+        "display": "130",
+        "solution": "Сумма смежных углов равна 180°. Второй угол: 180° − 50° = 130°."
+      },
+      {
+        "id": "7-06-2",
+        "prompt": "Один из двух смежных углов равен 60°. Найдите второй угол в градусах.",
+        "answer": 120.0,
+        "display": "120",
+        "solution": "Сумма смежных углов равна 180°. Второй угол: 180° − 60° = 120°."
+      },
+      {
+        "id": "7-06-3",
+        "prompt": "Один из двух смежных углов равен 70°. Найдите второй угол в градусах.",
+        "answer": 110.0,
+        "display": "110",
+        "solution": "Сумма смежных углов равна 180°. Второй угол: 180° − 70° = 110°."
+      }
+    ]
+  },
+  {
+    "id": "7-07",
+    "grade": 7,
+    "subject": "Геометрия",
+    "title": "Углы треугольника",
+    "ref": "71",
+    "tasks": [
+      {
+        "id": "7-07-1",
+        "prompt": "В равнобедренном треугольнике угол при вершине равен 60°. Найдите угол при основании в градусах.",
+        "answer": 60.0,
+        "display": "60",
+        "solution": "Углы при основании равны. Каждый равен (180° − 60°) : 2 = 60°."
+      },
+      {
+        "id": "7-07-2",
+        "prompt": "В равнобедренном треугольнике угол при вершине равен 80°. Найдите угол при основании в градусах.",
+        "answer": 50.0,
+        "display": "50",
+        "solution": "Углы при основании равны. Каждый равен (180° − 80°) : 2 = 50°."
+      },
+      {
+        "id": "7-07-3",
+        "prompt": "В равнобедренном треугольнике угол при вершине равен 100°. Найдите угол при основании в градусах.",
+        "answer": 40.0,
+        "display": "40",
+        "solution": "Углы при основании равны. Каждый равен (180° − 100°) : 2 = 40°."
+      }
+    ]
+  },
+  {
+    "id": "7-08",
+    "grade": 7,
+    "subject": "Вероятность и статистика",
+    "title": "Среднее, медиана и размах",
+    "ref": "92",
+    "tasks": [
+      {
+        "id": "7-08-1",
+        "prompt": "Найдите среднее арифметическое чисел 3, 5 и 10.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "Сумма равна 18. Делим на число значений: 18 : 3 = 6."
+      },
+      {
+        "id": "7-08-2",
+        "prompt": "Найдите среднее арифметическое чисел 4, 6 и 11.",
+        "answer": 7.0,
+        "display": "7",
+        "solution": "Сумма равна 21. Делим на число значений: 21 : 3 = 7."
+      },
+      {
+        "id": "7-08-3",
+        "prompt": "Найдите среднее арифметическое чисел 5, 7 и 12.",
+        "answer": 8.0,
+        "display": "8",
+        "solution": "Сумма равна 24. Делим на число значений: 24 : 3 = 8."
+      }
+    ]
+  },
+  {
+    "id": "7-09",
+    "grade": 7,
+    "subject": "Вероятность и статистика",
+    "title": "Частота случайного события",
+    "ref": "92",
+    "tasks": [
+      {
+        "id": "7-09-1",
+        "prompt": "В 20 бросках монеты орёл выпал 8 раз. Найдите относительную частоту выпадения орла.",
+        "answer": 0.4,
+        "display": "2/5",
+        "solution": "Относительная частота = число появлений события / число опытов: 8/20 = 2/5 = 0,4."
+      },
+      {
+        "id": "7-09-2",
+        "prompt": "В 40 бросках монеты орёл выпал 16 раз. Найдите относительную частоту выпадения орла.",
+        "answer": 0.4,
+        "display": "2/5",
+        "solution": "Относительная частота = число появлений события / число опытов: 16/40 = 2/5 = 0,4."
+      },
+      {
+        "id": "7-09-3",
+        "prompt": "В 60 бросках монеты орёл выпал 24 раз. Найдите относительную частоту выпадения орла.",
+        "answer": 0.4,
+        "display": "2/5",
+        "solution": "Относительная частота = число появлений события / число опытов: 24/60 = 2/5 = 0,4."
+      }
+    ]
+  },
+  {
+    "id": "8-01",
+    "grade": 8,
+    "subject": "Алгебра",
+    "title": "Квадратные корни",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "8-01-1",
+        "prompt": "Вычислите: √36 + √9.",
+        "answer": 9.0,
+        "display": "9",
+        "solution": "Арифметические квадратные корни неотрицательны: √36 = 6, √9 = 3. Сумма 9."
+      },
+      {
+        "id": "8-01-2",
+        "prompt": "Вычислите: √49 + √16.",
+        "answer": 11.0,
+        "display": "11",
+        "solution": "Арифметические квадратные корни неотрицательны: √49 = 7, √16 = 4. Сумма 11."
+      },
+      {
+        "id": "8-01-3",
+        "prompt": "Вычислите: √64 + √25.",
+        "answer": 13.0,
+        "display": "13",
+        "solution": "Арифметические квадратные корни неотрицательны: √64 = 8, √25 = 5. Сумма 13."
+      }
+    ]
+  },
+  {
+    "id": "8-02",
+    "grade": 8,
+    "subject": "Алгебра",
+    "title": "Квадратные уравнения",
+    "ref": "43",
+    "tasks": [
+      {
+        "id": "8-02-1",
+        "prompt": "Найдите больший корень уравнения x² − 6x + 5 = 0.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "Разложение: (x − 1)(x − 5) = 0. Корни 1 и 5; больший — 5."
+      },
+      {
+        "id": "8-02-2",
+        "prompt": "Найдите больший корень уравнения x² − 8x + 12 = 0.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "Разложение: (x − 2)(x − 6) = 0. Корни 2 и 6; больший — 6."
+      },
+      {
+        "id": "8-02-3",
+        "prompt": "Найдите больший корень уравнения x² − 10x + 21 = 0.",
+        "answer": 7.0,
+        "display": "7",
+        "solution": "Разложение: (x − 3)(x − 7) = 0. Корни 3 и 7; больший — 7."
+      }
+    ]
+  },
+  {
+    "id": "8-03",
+    "grade": 8,
+    "subject": "Алгебра",
+    "title": "Рациональные выражения",
+    "ref": "42",
+    "tasks": [
+      {
+        "id": "8-03-1",
+        "prompt": "Найдите значение (x² − 9)/(x − 3) при x = 5.",
+        "answer": 8.0,
+        "display": "8",
+        "solution": "x ≠ 3. Сокращаем (x − 3)(x + 3)/(x − 3) = x + 3. При x = 5 получаем 8."
+      },
+      {
+        "id": "8-03-2",
+        "prompt": "Найдите значение (x² − 9)/(x − 3) при x = 6.",
+        "answer": 9.0,
+        "display": "9",
+        "solution": "x ≠ 3. Сокращаем (x − 3)(x + 3)/(x − 3) = x + 3. При x = 6 получаем 9."
+      },
+      {
+        "id": "8-03-3",
+        "prompt": "Найдите значение (x² − 9)/(x − 3) при x = 7.",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "x ≠ 3. Сокращаем (x − 3)(x + 3)/(x − 3) = x + 3. При x = 7 получаем 10."
+      }
+    ]
+  },
+  {
+    "id": "8-04",
+    "grade": 8,
+    "subject": "Алгебра",
+    "title": "Линейные неравенства",
+    "ref": "43",
+    "tasks": [
+      {
+        "id": "8-04-1",
+        "prompt": "Найдите наименьшее целое решение неравенства 2x > 6.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Делим на положительное число 2: x > 3. Наименьшее подходящее целое — 4."
+      },
+      {
+        "id": "8-04-2",
+        "prompt": "Найдите наименьшее целое решение неравенства 2x > 10.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "Делим на положительное число 2: x > 5. Наименьшее подходящее целое — 6."
+      },
+      {
+        "id": "8-04-3",
+        "prompt": "Найдите наименьшее целое решение неравенства 2x > 14.",
+        "answer": 8.0,
+        "display": "8",
+        "solution": "Делим на положительное число 2: x > 7. Наименьшее подходящее целое — 8."
+      }
+    ]
+  },
+  {
+    "id": "8-05",
+    "grade": 8,
+    "subject": "Геометрия",
+    "title": "Теорема Пифагора",
+    "ref": "71",
+    "tasks": [
+      {
+        "id": "8-05-1",
+        "prompt": "Катеты прямоугольного треугольника равны 3 см и 4 см. Найдите гипотенузу в сантиметрах.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "c² = (3)² + (4)² = 25. Значит, c = 5 см."
+      },
+      {
+        "id": "8-05-2",
+        "prompt": "Катеты прямоугольного треугольника равны 6 см и 8 см. Найдите гипотенузу в сантиметрах.",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "c² = (6)² + (8)² = 100. Значит, c = 10 см."
+      },
+      {
+        "id": "8-05-3",
+        "prompt": "Катеты прямоугольного треугольника равны 9 см и 12 см. Найдите гипотенузу в сантиметрах.",
+        "answer": 15.0,
+        "display": "15",
+        "solution": "c² = (9)² + (12)² = 225. Значит, c = 15 см."
+      }
+    ]
+  },
+  {
+    "id": "8-06",
+    "grade": 8,
+    "subject": "Геометрия",
+    "title": "Площади четырёхугольников",
+    "ref": "71",
+    "tasks": [
+      {
+        "id": "8-06-1",
+        "prompt": "Основания трапеции равны 4 см и 8 см, высота — 4 см. Найдите площадь в см².",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "S = (a + b) · h / 2 = (4 + 8) · 4 / 2 = 24 см²."
+      },
+      {
+        "id": "8-06-2",
+        "prompt": "Основания трапеции равны 5 см и 9 см, высота — 4 см. Найдите площадь в см².",
+        "answer": 28.0,
+        "display": "28",
+        "solution": "S = (a + b) · h / 2 = (5 + 9) · 4 / 2 = 28 см²."
+      },
+      {
+        "id": "8-06-3",
+        "prompt": "Основания трапеции равны 6 см и 10 см, высота — 4 см. Найдите площадь в см².",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "S = (a + b) · h / 2 = (6 + 10) · 4 / 2 = 32 см²."
+      }
+    ]
+  },
+  {
+    "id": "8-07",
+    "grade": 8,
+    "subject": "Геометрия",
+    "title": "Подобие треугольников",
+    "ref": "71",
+    "tasks": [
+      {
+        "id": "8-07-1",
+        "prompt": "Сторона первого треугольника равна 4 см, соответствующая сторона подобного ему второго — 8 см. Площадь первого равна 5 см². Найдите площадь второго в см².",
+        "answer": 20.0,
+        "display": "20",
+        "solution": "Коэффициент подобия второго к первому равен 2. Площади относятся как 2² = 4. Площадь второго: 5 · 4 = 20 см²."
+      },
+      {
+        "id": "8-07-2",
+        "prompt": "Сторона первого треугольника равна 5 см, соответствующая сторона подобного ему второго — 10 см. Площадь первого равна 10 см². Найдите площадь второго в см².",
+        "answer": 40.0,
+        "display": "40",
+        "solution": "Коэффициент подобия второго к первому равен 2. Площади относятся как 2² = 4. Площадь второго: 10 · 4 = 40 см²."
+      },
+      {
+        "id": "8-07-3",
+        "prompt": "Сторона первого треугольника равна 6 см, соответствующая сторона подобного ему второго — 12 см. Площадь первого равна 15 см². Найдите площадь второго в см².",
+        "answer": 60.0,
+        "display": "60",
+        "solution": "Коэффициент подобия второго к первому равен 2. Площади относятся как 2² = 4. Площадь второго: 15 · 4 = 60 см²."
+      }
+    ]
+  },
+  {
+    "id": "8-08",
+    "grade": 8,
+    "subject": "Вероятность и статистика",
+    "title": "Вероятность противоположного события",
+    "ref": "93",
+    "tasks": [
+      {
+        "id": "8-08-1",
+        "prompt": "Вероятность дождя завтра равна 0,2. Какова вероятность того, что дождя не будет?",
+        "answer": 0.8,
+        "display": "4/5",
+        "solution": "Вероятности противоположных событий в сумме дают 1: 1 − 0,2 = 0,8."
+      },
+      {
+        "id": "8-08-2",
+        "prompt": "Вероятность дождя завтра равна 0,3. Какова вероятность того, что дождя не будет?",
+        "answer": 0.7,
+        "display": "7/10",
+        "solution": "Вероятности противоположных событий в сумме дают 1: 1 − 0,3 = 0,7."
+      },
+      {
+        "id": "8-08-3",
+        "prompt": "Вероятность дождя завтра равна 0,4. Какова вероятность того, что дождя не будет?",
+        "answer": 0.6,
+        "display": "3/5",
+        "solution": "Вероятности противоположных событий в сумме дают 1: 1 − 0,4 = 0,6."
+      }
+    ]
+  },
+  {
+    "id": "8-09",
+    "grade": 8,
+    "subject": "Вероятность и статистика",
+    "title": "Дисперсия числового набора",
+    "ref": "93",
+    "tasks": [
+      {
+        "id": "8-09-1",
+        "prompt": "Найдите дисперсию набора 1, 3, 5. Используйте среднее квадратов отклонений (деление на 3).",
+        "answer": 2.6666666666666665,
+        "display": "8/3",
+        "solution": "Среднее равно 3. Отклонения: −2, 0, 2. Дисперсия: (4 + 0 + 4)/3 = 8/3."
+      },
+      {
+        "id": "8-09-2",
+        "prompt": "Найдите дисперсию набора 2, 4, 6. Используйте среднее квадратов отклонений (деление на 3).",
+        "answer": 2.6666666666666665,
+        "display": "8/3",
+        "solution": "Среднее равно 4. Отклонения: −2, 0, 2. Дисперсия: (4 + 0 + 4)/3 = 8/3."
+      },
+      {
+        "id": "8-09-3",
+        "prompt": "Найдите дисперсию набора 3, 5, 7. Используйте среднее квадратов отклонений (деление на 3).",
+        "answer": 2.6666666666666665,
+        "display": "8/3",
+        "solution": "Среднее равно 5. Отклонения: −2, 0, 2. Дисперсия: (4 + 0 + 4)/3 = 8/3."
+      }
+    ]
+  },
+  {
+    "id": "9-01",
+    "grade": 9,
+    "subject": "Алгебра",
+    "title": "Арифметическая прогрессия",
+    "ref": "44",
+    "tasks": [
+      {
+        "id": "9-01-1",
+        "prompt": "В арифметической прогрессии a₁ = 3, d = 3. Найдите a₆.",
+        "answer": 18.0,
+        "display": "18",
+        "solution": "a₆ = a₁ + 5d = 3 + 5 · 3 = 18."
+      },
+      {
+        "id": "9-01-2",
+        "prompt": "В арифметической прогрессии a₁ = 4, d = 3. Найдите a₆.",
+        "answer": 19.0,
+        "display": "19",
+        "solution": "a₆ = a₁ + 5d = 4 + 5 · 3 = 19."
+      },
+      {
+        "id": "9-01-3",
+        "prompt": "В арифметической прогрессии a₁ = 5, d = 3. Найдите a₆.",
+        "answer": 20.0,
+        "display": "20",
+        "solution": "a₆ = a₁ + 5d = 5 + 5 · 3 = 20."
+      }
+    ]
+  },
+  {
+    "id": "9-02",
+    "grade": 9,
+    "subject": "Алгебра",
+    "title": "Геометрическая прогрессия",
+    "ref": "44",
+    "tasks": [
+      {
+        "id": "9-02-1",
+        "prompt": "В геометрической прогрессии b₁ = 2, q = 2. Найдите b₅.",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "b₅ = b₁ · q⁴ = 2 · 16 = 32."
+      },
+      {
+        "id": "9-02-2",
+        "prompt": "В геометрической прогрессии b₁ = 3, q = 2. Найдите b₅.",
+        "answer": 48.0,
+        "display": "48",
+        "solution": "b₅ = b₁ · q⁴ = 3 · 16 = 48."
+      },
+      {
+        "id": "9-02-3",
+        "prompt": "В геометрической прогрессии b₁ = 4, q = 2. Найдите b₅.",
+        "answer": 64.0,
+        "display": "64",
+        "solution": "b₅ = b₁ · q⁴ = 4 · 16 = 64."
+      }
+    ]
+  },
+  {
+    "id": "9-03",
+    "grade": 9,
+    "subject": "Алгебра",
+    "title": "Квадратичная функция",
+    "ref": "44",
+    "tasks": [
+      {
+        "id": "9-03-1",
+        "prompt": "Найдите абсциссу вершины параболы y = x² − 4x + 5.",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "Абсцисса вершины x₀ = −b/(2a) = 4/2 = 2."
+      },
+      {
+        "id": "9-03-2",
+        "prompt": "Найдите абсциссу вершины параболы y = x² − 6x + 5.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "Абсцисса вершины x₀ = −b/(2a) = 6/2 = 3."
+      },
+      {
+        "id": "9-03-3",
+        "prompt": "Найдите абсциссу вершины параболы y = x² − 8x + 5.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Абсцисса вершины x₀ = −b/(2a) = 8/2 = 4."
+      }
+    ]
+  },
+  {
+    "id": "9-04",
+    "grade": 9,
+    "subject": "Алгебра",
+    "title": "Биквадратные уравнения",
+    "ref": "43",
+    "tasks": [
+      {
+        "id": "9-04-1",
+        "prompt": "Найдите наибольший корень уравнения x⁴ − 5x² + 4 = 0.",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "Пусть t = x². Тогда (t − 1)(t − 4) = 0. Получаем x = ±1 и x = ±2. Наибольший корень 2."
+      },
+      {
+        "id": "9-04-2",
+        "prompt": "Найдите наибольший корень уравнения x⁴ − 10x² + 9 = 0.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "Пусть t = x². Тогда (t − 1)(t − 9) = 0. Получаем x = ±1 и x = ±3. Наибольший корень 3."
+      },
+      {
+        "id": "9-04-3",
+        "prompt": "Найдите наибольший корень уравнения x⁴ − 17x² + 16 = 0.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Пусть t = x². Тогда (t − 1)(t − 16) = 0. Получаем x = ±1 и x = ±4. Наибольший корень 4."
+      }
+    ]
+  },
+  {
+    "id": "9-05",
+    "grade": 9,
+    "subject": "Геометрия",
+    "title": "Векторы на плоскости",
+    "ref": "72",
+    "tasks": [
+      {
+        "id": "9-05-1",
+        "prompt": "Векторы a = (1; 2) и b = (3; −1). Найдите их скалярное произведение.",
+        "answer": 1.0,
+        "display": "1",
+        "solution": "a · b = 1 · 3 + 2 · (−1) = 1."
+      },
+      {
+        "id": "9-05-2",
+        "prompt": "Векторы a = (2; 2) и b = (3; −1). Найдите их скалярное произведение.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "a · b = 2 · 3 + 2 · (−1) = 4."
+      },
+      {
+        "id": "9-05-3",
+        "prompt": "Векторы a = (3; 2) и b = (3; −1). Найдите их скалярное произведение.",
+        "answer": 7.0,
+        "display": "7",
+        "solution": "a · b = 3 · 3 + 2 · (−1) = 7."
+      }
+    ]
+  },
+  {
+    "id": "9-06",
+    "grade": 9,
+    "subject": "Геометрия",
+    "title": "Окружность и круг",
+    "ref": "72",
+    "tasks": [
+      {
+        "id": "9-06-1",
+        "prompt": "Радиус круга равен 3 см. Его площадь равна kπ см². Найдите k.",
+        "answer": 9.0,
+        "display": "9",
+        "solution": "S = πr² = 9π см². Поэтому k = 9."
+      },
+      {
+        "id": "9-06-2",
+        "prompt": "Радиус круга равен 4 см. Его площадь равна kπ см². Найдите k.",
+        "answer": 16.0,
+        "display": "16",
+        "solution": "S = πr² = 16π см². Поэтому k = 16."
+      },
+      {
+        "id": "9-06-3",
+        "prompt": "Радиус круга равен 5 см. Его площадь равна kπ см². Найдите k.",
+        "answer": 25.0,
+        "display": "25",
+        "solution": "S = πr² = 25π см². Поэтому k = 25."
+      }
+    ]
+  },
+  {
+    "id": "9-07",
+    "grade": 9,
+    "subject": "Геометрия",
+    "title": "Теорема косинусов",
+    "ref": "72",
+    "tasks": [
+      {
+        "id": "9-07-1",
+        "prompt": "Две стороны треугольника равны 3 см и 5 см, угол между ними равен 60°. Найдите квадрат длины третьей стороны в см².",
+        "answer": 19.0,
+        "display": "19",
+        "solution": "c² = a² + b² − 2ab · cos 60°. Так как cos 60° = 1/2, c² = 9 + 25 − 15 = 19."
+      },
+      {
+        "id": "9-07-2",
+        "prompt": "Две стороны треугольника равны 6 см и 10 см, угол между ними равен 60°. Найдите квадрат длины третьей стороны в см².",
+        "answer": 76.0,
+        "display": "76",
+        "solution": "c² = a² + b² − 2ab · cos 60°. Так как cos 60° = 1/2, c² = 36 + 100 − 60 = 76."
+      },
+      {
+        "id": "9-07-3",
+        "prompt": "Две стороны треугольника равны 9 см и 15 см, угол между ними равен 60°. Найдите квадрат длины третьей стороны в см².",
+        "answer": 171.0,
+        "display": "171",
+        "solution": "c² = a² + b² − 2ab · cos 60°. Так как cos 60° = 1/2, c² = 81 + 225 − 135 = 171."
+      }
+    ]
+  },
+  {
+    "id": "9-08",
+    "grade": 9,
+    "subject": "Вероятность и статистика",
+    "title": "Комбинаторика: сочетания",
+    "ref": "93",
+    "tasks": [
+      {
+        "id": "9-08-1",
+        "prompt": "Из 5 учеников нужно выбрать двух дежурных. Порядок не важен. Сколько пар можно выбрать?",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "C(5, 2) = 5 · 4 / 2 = 10."
+      },
+      {
+        "id": "9-08-2",
+        "prompt": "Из 6 учеников нужно выбрать двух дежурных. Порядок не важен. Сколько пар можно выбрать?",
+        "answer": 15.0,
+        "display": "15",
+        "solution": "C(6, 2) = 6 · 5 / 2 = 15."
+      },
+      {
+        "id": "9-08-3",
+        "prompt": "Из 7 учеников нужно выбрать двух дежурных. Порядок не важен. Сколько пар можно выбрать?",
+        "answer": 21.0,
+        "display": "21",
+        "solution": "C(7, 2) = 7 · 6 / 2 = 21."
+      }
+    ]
+  },
+  {
+    "id": "9-09",
+    "grade": 9,
+    "subject": "Вероятность и статистика",
+    "title": "Испытания Бернулли",
+    "ref": "93",
+    "tasks": [
+      {
+        "id": "9-09-1",
+        "prompt": "Правильную монету подбрасывают 2 раза. Броски независимы. Какова вероятность того, что орёл выпадет ровно один раз?",
+        "answer": 0.5,
+        "display": "1/2",
+        "solution": "Есть 2 способов выбрать бросок с орлом. Вероятность каждой последовательности 1/4. Итого 2/4."
+      },
+      {
+        "id": "9-09-2",
+        "prompt": "Правильную монету подбрасывают 3 раза. Броски независимы. Какова вероятность того, что орёл выпадет ровно один раз?",
+        "answer": 0.375,
+        "display": "3/8",
+        "solution": "Есть 3 способов выбрать бросок с орлом. Вероятность каждой последовательности 1/8. Итого 3/8."
+      },
+      {
+        "id": "9-09-3",
+        "prompt": "Правильную монету подбрасывают 4 раза. Броски независимы. Какова вероятность того, что орёл выпадет ровно один раз?",
+        "answer": 0.25,
+        "display": "1/4",
+        "solution": "Есть 4 способов выбрать бросок с орлом. Вероятность каждой последовательности 1/16. Итого 4/16."
+      }
+    ]
+  },
+  {
+    "id": "10-01",
+    "grade": 10,
+    "subject": "Алгебра и начала анализа",
+    "title": "Корни натуральной степени",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "10-01-1",
+        "prompt": "Найдите арифметический кубический корень из 27.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "(3)³ = 27, поэтому корень равен 3."
+      },
+      {
+        "id": "10-01-2",
+        "prompt": "Найдите арифметический кубический корень из 64.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "(4)³ = 64, поэтому корень равен 4."
+      },
+      {
+        "id": "10-01-3",
+        "prompt": "Найдите арифметический кубический корень из 125.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "(5)³ = 125, поэтому корень равен 5."
+      }
+    ]
+  },
+  {
+    "id": "10-02",
+    "grade": 10,
+    "subject": "Алгебра и начала анализа",
+    "title": "Тригонометрические выражения",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "10-02-1",
+        "prompt": "Вычислите: 2 · sin 30° + 2 · cos 60°.",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "sin 30° = cos 60° = 1/2. Получаем 2 · 1/2 + 2 · 1/2 = 2."
+      },
+      {
+        "id": "10-02-2",
+        "prompt": "Вычислите: 4 · sin 30° + 2 · cos 60°.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "sin 30° = cos 60° = 1/2. Получаем 4 · 1/2 + 2 · 1/2 = 3."
+      },
+      {
+        "id": "10-02-3",
+        "prompt": "Вычислите: 6 · sin 30° + 2 · cos 60°.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "sin 30° = cos 60° = 1/2. Получаем 6 · 1/2 + 2 · 1/2 = 4."
+      }
+    ]
+  },
+  {
+    "id": "10-03",
+    "grade": 10,
+    "subject": "Алгебра и начала анализа",
+    "title": "Тригонометрические уравнения",
+    "ref": "15",
+    "tasks": [
+      {
+        "id": "10-03-1",
+        "prompt": "Найдите наименьший положительный корень уравнения sin(1x) = 0. Ответ укажите в градусах.",
+        "answer": 180.0,
+        "display": "180",
+        "solution": "sin α = 0 при α = 180° · k, где k — целое. Поэтому x = 180° · k/1, наименьшее положительное значение — 180°."
+      },
+      {
+        "id": "10-03-2",
+        "prompt": "Найдите наименьший положительный корень уравнения sin(2x) = 0. Ответ укажите в градусах.",
+        "answer": 90.0,
+        "display": "90",
+        "solution": "sin α = 0 при α = 180° · k, где k — целое. Поэтому x = 180° · k/2, наименьшее положительное значение — 90°."
+      },
+      {
+        "id": "10-03-3",
+        "prompt": "Найдите наименьший положительный корень уравнения sin(3x) = 0. Ответ укажите в градусах.",
+        "answer": 60.0,
+        "display": "60",
+        "solution": "sin α = 0 при α = 180° · k, где k — целое. Поэтому x = 180° · k/3, наименьшее положительное значение — 60°."
+      }
+    ]
+  },
+  {
+    "id": "10-04",
+    "grade": 10,
+    "subject": "Алгебра и начала анализа",
+    "title": "Бесконечно убывающая прогрессия",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "10-04-1",
+        "prompt": "Найдите сумму бесконечно убывающей геометрической прогрессии с первым членом 3 и знаменателем 1/2.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "|q| < 1, поэтому S = b₁/(1 − q) = 3/(1 − 1/2) = 6."
+      },
+      {
+        "id": "10-04-2",
+        "prompt": "Найдите сумму бесконечно убывающей геометрической прогрессии с первым членом 4 и знаменателем 1/2.",
+        "answer": 8.0,
+        "display": "8",
+        "solution": "|q| < 1, поэтому S = b₁/(1 − q) = 4/(1 − 1/2) = 8."
+      },
+      {
+        "id": "10-04-3",
+        "prompt": "Найдите сумму бесконечно убывающей геометрической прогрессии с первым членом 5 и знаменателем 1/2.",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "|q| < 1, поэтому S = b₁/(1 − q) = 5/(1 − 1/2) = 10."
+      }
+    ]
+  },
+  {
+    "id": "10-05",
+    "grade": 10,
+    "subject": "Геометрия",
+    "title": "Расстояние от точки до плоскости",
+    "ref": "32",
+    "tasks": [
+      {
+        "id": "10-05-1",
+        "prompt": "Из точки A проведены перпендикуляр AH к плоскости и наклонная AB. Известно: AB = 5 см, HB = 4 см. Найдите расстояние от A до плоскости в сантиметрах.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "AH ⟂ HB. По теореме Пифагора AH = √((5)² − (4)²) = 3 см."
+      },
+      {
+        "id": "10-05-2",
+        "prompt": "Из точки A проведены перпендикуляр AH к плоскости и наклонная AB. Известно: AB = 10 см, HB = 8 см. Найдите расстояние от A до плоскости в сантиметрах.",
+        "answer": 6.0,
+        "display": "6",
+        "solution": "AH ⟂ HB. По теореме Пифагора AH = √((10)² − (8)²) = 6 см."
+      },
+      {
+        "id": "10-05-3",
+        "prompt": "Из точки A проведены перпендикуляр AH к плоскости и наклонная AB. Известно: AB = 15 см, HB = 12 см. Найдите расстояние от A до плоскости в сантиметрах.",
+        "answer": 9.0,
+        "display": "9",
+        "solution": "AH ⟂ HB. По теореме Пифагора AH = √((15)² − (12)²) = 9 см."
+      }
+    ]
+  },
+  {
+    "id": "10-06",
+    "grade": 10,
+    "subject": "Геометрия",
+    "title": "Призма",
+    "ref": "32–33",
+    "tasks": [
+      {
+        "id": "10-06-1",
+        "prompt": "Площадь основания прямой призмы равна 6 см², высота — 5 см. Найдите объём в см³.",
+        "answer": 30.0,
+        "display": "30",
+        "solution": "V = S основания · h = 6 · 5 = 30 см³."
+      },
+      {
+        "id": "10-06-2",
+        "prompt": "Площадь основания прямой призмы равна 12 см², высота — 5 см. Найдите объём в см³.",
+        "answer": 60.0,
+        "display": "60",
+        "solution": "V = S основания · h = 12 · 5 = 60 см³."
+      },
+      {
+        "id": "10-06-3",
+        "prompt": "Площадь основания прямой призмы равна 18 см², высота — 5 см. Найдите объём в см³.",
+        "answer": 90.0,
+        "display": "90",
+        "solution": "V = S основания · h = 18 · 5 = 90 см³."
+      }
+    ]
+  },
+  {
+    "id": "10-07",
+    "grade": 10,
+    "subject": "Геометрия",
+    "title": "Пирамида",
+    "ref": "32–33",
+    "tasks": [
+      {
+        "id": "10-07-1",
+        "prompt": "Площадь основания пирамиды равна 12 см², высота — 6 см. Найдите объём в см³.",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "V = S основания · h / 3 = 12 · 6 / 3 = 24 см³."
+      },
+      {
+        "id": "10-07-2",
+        "prompt": "Площадь основания пирамиды равна 24 см², высота — 6 см. Найдите объём в см³.",
+        "answer": 48.0,
+        "display": "48",
+        "solution": "V = S основания · h / 3 = 24 · 6 / 3 = 48 см³."
+      },
+      {
+        "id": "10-07-3",
+        "prompt": "Площадь основания пирамиды равна 36 см², высота — 6 см. Найдите объём в см³.",
+        "answer": 72.0,
+        "display": "72",
+        "solution": "V = S основания · h / 3 = 36 · 6 / 3 = 72 см³."
+      }
+    ]
+  },
+  {
+    "id": "10-08",
+    "grade": 10,
+    "subject": "Вероятность и статистика",
+    "title": "Независимые события",
+    "ref": "57",
+    "tasks": [
+      {
+        "id": "10-08-1",
+        "prompt": "События A и B независимы. P(A) = 0,2, P(B) = 0,5. Найдите вероятность их одновременного наступления.",
+        "answer": 0.1,
+        "display": "1/10",
+        "solution": "Для независимых событий P(A ∩ B) = P(A) · P(B) = 0,2 · 0,5 = 1/10."
+      },
+      {
+        "id": "10-08-2",
+        "prompt": "События A и B независимы. P(A) = 0,3, P(B) = 0,5. Найдите вероятность их одновременного наступления.",
+        "answer": 0.15,
+        "display": "3/20",
+        "solution": "Для независимых событий P(A ∩ B) = P(A) · P(B) = 0,3 · 0,5 = 3/20."
+      },
+      {
+        "id": "10-08-3",
+        "prompt": "События A и B независимы. P(A) = 0,4, P(B) = 0,5. Найдите вероятность их одновременного наступления.",
+        "answer": 0.2,
+        "display": "1/5",
+        "solution": "Для независимых событий P(A ∩ B) = P(A) · P(B) = 0,4 · 0,5 = 1/5."
+      }
+    ]
+  },
+  {
+    "id": "10-09",
+    "grade": 10,
+    "subject": "Вероятность и статистика",
+    "title": "Комбинаторное правило умножения",
+    "ref": "57",
+    "tasks": [
+      {
+        "id": "10-09-1",
+        "prompt": "В меню 3 салата, 4 горячих блюда и 2 напитка. Сколько обедов можно составить, выбирая по одному блюду каждого вида?",
+        "answer": 24.0,
+        "display": "24",
+        "solution": "По правилу умножения: 3 · 4 · 2 = 24 вариантов."
+      },
+      {
+        "id": "10-09-2",
+        "prompt": "В меню 4 салата, 4 горячих блюда и 2 напитка. Сколько обедов можно составить, выбирая по одному блюду каждого вида?",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "По правилу умножения: 4 · 4 · 2 = 32 вариантов."
+      },
+      {
+        "id": "10-09-3",
+        "prompt": "В меню 5 салата, 4 горячих блюда и 2 напитка. Сколько обедов можно составить, выбирая по одному блюду каждого вида?",
+        "answer": 40.0,
+        "display": "40",
+        "solution": "По правилу умножения: 5 · 4 · 2 = 40 вариантов."
+      }
+    ]
+  },
+  {
+    "id": "11-01",
+    "grade": 11,
+    "subject": "Алгебра и начала анализа",
+    "title": "Логарифмы",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "11-01-1",
+        "prompt": "Вычислите log₂(8).",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "Логарифм — показатель степени: 2^3 = 8. Ответ 3."
+      },
+      {
+        "id": "11-01-2",
+        "prompt": "Вычислите log₂(16).",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "Логарифм — показатель степени: 2^4 = 16. Ответ 4."
+      },
+      {
+        "id": "11-01-3",
+        "prompt": "Вычислите log₂(32).",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "Логарифм — показатель степени: 2^5 = 32. Ответ 5."
+      }
+    ]
+  },
+  {
+    "id": "11-02",
+    "grade": 11,
+    "subject": "Алгебра и начала анализа",
+    "title": "Показательные уравнения",
+    "ref": "16",
+    "tasks": [
+      {
+        "id": "11-02-1",
+        "prompt": "Решите уравнение 3ˣ = 9.",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "9 = 3^2. Поскольку функция 3ˣ строго возрастает, равенство выполняется только при x = 2."
+      },
+      {
+        "id": "11-02-2",
+        "prompt": "Решите уравнение 3ˣ = 27.",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "27 = 3^3. Поскольку функция 3ˣ строго возрастает, равенство выполняется только при x = 3."
+      },
+      {
+        "id": "11-02-3",
+        "prompt": "Решите уравнение 3ˣ = 81.",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "81 = 3^4. Поскольку функция 3ˣ строго возрастает, равенство выполняется только при x = 4."
+      }
+    ]
+  },
+  {
+    "id": "11-03",
+    "grade": 11,
+    "subject": "Алгебра и начала анализа",
+    "title": "Производная",
+    "ref": "16–17",
+    "tasks": [
+      {
+        "id": "11-03-1",
+        "prompt": "Дана функция f(x) = x³ − 2x. Найдите f′(1).",
+        "answer": 1.0,
+        "display": "1",
+        "solution": "f′(x) = 3x² − 2. Поэтому f′(1) = 3 · 1² − 2 = 1."
+      },
+      {
+        "id": "11-03-2",
+        "prompt": "Дана функция f(x) = x³ − 2x. Найдите f′(2).",
+        "answer": 10.0,
+        "display": "10",
+        "solution": "f′(x) = 3x² − 2. Поэтому f′(2) = 3 · 2² − 2 = 10."
+      },
+      {
+        "id": "11-03-3",
+        "prompt": "Дана функция f(x) = x³ − 2x. Найдите f′(3).",
+        "answer": 25.0,
+        "display": "25",
+        "solution": "f′(x) = 3x² − 2. Поэтому f′(3) = 3 · 3² − 2 = 25."
+      }
+    ]
+  },
+  {
+    "id": "11-04",
+    "grade": 11,
+    "subject": "Алгебра и начала анализа",
+    "title": "Наименьшее значение функции",
+    "ref": "16–17",
+    "tasks": [
+      {
+        "id": "11-04-1",
+        "prompt": "Найдите наименьшее значение f(x) = x² − 4x + 7 на отрезке [0; 4].",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "f(x) = (x − 2)² + 3. Вершина x = 2 лежит на отрезке; квадрат обращается в ноль, минимум равен 3."
+      },
+      {
+        "id": "11-04-2",
+        "prompt": "Найдите наименьшее значение f(x) = x² − 6x + 12 на отрезке [0; 6].",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "f(x) = (x − 3)² + 3. Вершина x = 3 лежит на отрезке; квадрат обращается в ноль, минимум равен 3."
+      },
+      {
+        "id": "11-04-3",
+        "prompt": "Найдите наименьшее значение f(x) = x² − 8x + 19 на отрезке [0; 8].",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "f(x) = (x − 4)² + 3. Вершина x = 4 лежит на отрезке; квадрат обращается в ноль, минимум равен 3."
+      }
+    ]
+  },
+  {
+    "id": "11-05",
+    "grade": 11,
+    "subject": "Геометрия",
+    "title": "Цилиндр",
+    "ref": "33",
+    "tasks": [
+      {
+        "id": "11-05-1",
+        "prompt": "Радиус цилиндра равен 2 см, высота — 5 см. Объём равен kπ см³. Найдите k.",
+        "answer": 20.0,
+        "display": "20",
+        "solution": "V = πr²h = π · 2² · 5 = 20π см³."
+      },
+      {
+        "id": "11-05-2",
+        "prompt": "Радиус цилиндра равен 3 см, высота — 5 см. Объём равен kπ см³. Найдите k.",
+        "answer": 45.0,
+        "display": "45",
+        "solution": "V = πr²h = π · 3² · 5 = 45π см³."
+      },
+      {
+        "id": "11-05-3",
+        "prompt": "Радиус цилиндра равен 4 см, высота — 5 см. Объём равен kπ см³. Найдите k.",
+        "answer": 80.0,
+        "display": "80",
+        "solution": "V = πr²h = π · 4² · 5 = 80π см³."
+      }
+    ]
+  },
+  {
+    "id": "11-06",
+    "grade": 11,
+    "subject": "Геометрия",
+    "title": "Конус",
+    "ref": "33",
+    "tasks": [
+      {
+        "id": "11-06-1",
+        "prompt": "Радиус основания конуса равен 2 см, высота — 6 см. Объём равен kπ см³. Найдите k.",
+        "answer": 8.0,
+        "display": "8",
+        "solution": "V = πr²h/3 = π · 2² · 6/3 = 8π см³."
+      },
+      {
+        "id": "11-06-2",
+        "prompt": "Радиус основания конуса равен 3 см, высота — 6 см. Объём равен kπ см³. Найдите k.",
+        "answer": 18.0,
+        "display": "18",
+        "solution": "V = πr²h/3 = π · 3² · 6/3 = 18π см³."
+      },
+      {
+        "id": "11-06-3",
+        "prompt": "Радиус основания конуса равен 4 см, высота — 6 см. Объём равен kπ см³. Найдите k.",
+        "answer": 32.0,
+        "display": "32",
+        "solution": "V = πr²h/3 = π · 4² · 6/3 = 32π см³."
+      }
+    ]
+  },
+  {
+    "id": "11-07",
+    "grade": 11,
+    "subject": "Геометрия",
+    "title": "Векторы в пространстве",
+    "ref": "33–34",
+    "tasks": [
+      {
+        "id": "11-07-1",
+        "prompt": "Векторы a = (1; 2; −1) и b = (3; 0; 4). Найдите их скалярное произведение.",
+        "answer": -1.0,
+        "display": "-1",
+        "solution": "a · b = 1 · 3 + 2 · 0 + (−1) · 4 = -1."
+      },
+      {
+        "id": "11-07-2",
+        "prompt": "Векторы a = (2; 2; −1) и b = (3; 0; 4). Найдите их скалярное произведение.",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "a · b = 2 · 3 + 2 · 0 + (−1) · 4 = 2."
+      },
+      {
+        "id": "11-07-3",
+        "prompt": "Векторы a = (3; 2; −1) и b = (3; 0; 4). Найдите их скалярное произведение.",
+        "answer": 5.0,
+        "display": "5",
+        "solution": "a · b = 3 · 3 + 2 · 0 + (−1) · 4 = 5."
+      }
+    ]
+  },
+  {
+    "id": "11-08",
+    "grade": 11,
+    "subject": "Вероятность и статистика",
+    "title": "Математическое ожидание",
+    "ref": "57",
+    "tasks": [
+      {
+        "id": "11-08-1",
+        "prompt": "Случайная величина X принимает значение 0 с вероятностью 0,5 и значение 4 с вероятностью 0,5. Найдите E(X).",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "E(X) = 0 · 0,5 + 4 · 0,5 = 2."
+      },
+      {
+        "id": "11-08-2",
+        "prompt": "Случайная величина X принимает значение 0 с вероятностью 0,5 и значение 6 с вероятностью 0,5. Найдите E(X).",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "E(X) = 0 · 0,5 + 6 · 0,5 = 3."
+      },
+      {
+        "id": "11-08-3",
+        "prompt": "Случайная величина X принимает значение 0 с вероятностью 0,5 и значение 8 с вероятностью 0,5. Найдите E(X).",
+        "answer": 4.0,
+        "display": "4",
+        "solution": "E(X) = 0 · 0,5 + 8 · 0,5 = 4."
+      }
+    ]
+  },
+  {
+    "id": "11-09",
+    "grade": 11,
+    "subject": "Вероятность и статистика",
+    "title": "Дисперсия биномиального распределения",
+    "ref": "57",
+    "tasks": [
+      {
+        "id": "11-09-1",
+        "prompt": "Число успехов X в 4 независимых испытаниях имеет биномиальное распределение. Вероятность успеха в каждом испытании равна 0,5. Найдите D(X).",
+        "answer": 1.0,
+        "display": "1",
+        "solution": "D(X) = np(1 − p) = 4 · 0,5 · 0,5 = 1."
+      },
+      {
+        "id": "11-09-2",
+        "prompt": "Число успехов X в 8 независимых испытаниях имеет биномиальное распределение. Вероятность успеха в каждом испытании равна 0,5. Найдите D(X).",
+        "answer": 2.0,
+        "display": "2",
+        "solution": "D(X) = np(1 − p) = 8 · 0,5 · 0,5 = 2."
+      },
+      {
+        "id": "11-09-3",
+        "prompt": "Число успехов X в 12 независимых испытаниях имеет биномиальное распределение. Вероятность успеха в каждом испытании равна 0,5. Найдите D(X).",
+        "answer": 3.0,
+        "display": "3",
+        "solution": "D(X) = np(1 − p) = 12 · 0,5 · 0,5 = 3."
+      }
+    ]
+  }
+];
+// One local bank serves both the trainer and the print constructor.
+function parseAnswer(raw) {
+  const value=String(raw).trim().replace(/−/g,'-').replace(/,/g,'.').replace(/\s+/g,'');
+  const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
+  if(!new RegExp(`^${number}(?:/${number})?$`).test(value)) return null;
+  const parts=value.split('/').map(Number);
+  if(parts.length===2 && parts[1]===0) return null;
+  const result=parts.length===2 ? parts[0]/parts[1] : parts[0];
+  return Number.isFinite(result) ? result : null;
+}
+function answerMatches(raw,expected) {
+  const value=parseAnswer(raw);
+  return value!==null && Math.abs(value-expected)<=1e-8*Math.max(1,Math.abs(expected));
+}
+/* UI */
+(() => {
+  const $=id=>document.getElementById(id);
+  const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const baseTitle='1430 — пространство математики';
+  const source59='https://edsoo.ru/wp-content/uploads/2025/07/2025_ooo_frp_matematika-5-9_baza.pdf';
+  const source1011='https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_baz.pdf';
+  const student={first:'',last:'',letter:''};
+  const attempts=new Map(),works=new Map();
+  let route={view:'home',role:null,grade:null,topic:null,index:0};
+  let filter='all',toastTimer;
+  const roleLabel=()=>route.role==='teacher'?'Учитель':'Ученик';
+  const topics=()=>BANK.filter(t=>t.grade===route.grade);
+  const currentTopic=()=>BANK.find(t=>t.id===route.topic);
+  const allTasks=BANK.flatMap(t=>t.tasks.map(q=>({...q,topic:t.title,topicId:t.id,grade:t.grade,subject:t.subject})));
+  const question=id=>allTasks.find(q=>q.id===id);
+  const work=()=>{
+    if(!works.has(route.grade)) works.set(route.grade,{ids:[],title:'Самостоятельная работа',variant:'1',answers:false});
+    return works.get(route.grade);
+  };
+  const record=id=>{
+    const key=`${route.role}:${id}`;
+    if(!attempts.has(key)) attempts.set(key,{draft:'',tries:0,correct:false,revealed:false,feedback:''});
+    return attempts.get(key);
+  };
+  const action=(key,label,cls='secondary',attrs='')=>`<button type="button" class="${cls}" data-action="${key}" ${attrs}>${label}</button>`;
+  const note=()=>`<div class="bottom-note"><span>Авторский стартовый банк по темам ФРП · 23.10.2026</span>${action('help','О программе и заданиях','text-button')}</div>`;
+  const header=(title,subtitle)=>`<div class="screen-head"><div class="trail">${action('back','← Назад','text-button')}<span>${roleLabel()}${route.grade?` · ${route.grade} класс`:''}</span>${route.grade>=10?'<span class="badge">Базовый уровень</span>':''}</div><h1 tabindex="-1" id="screen-title">${esc(title)}</h1><p>${esc(subtitle)}</p></div>`;
+  function notify(text){ $('notice').textContent=text; $('notice').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>{$('notice').hidden=true;},2400); }
+  function go(view,data={}) {
+    route={...route,...data,view};
+    history.pushState({mat1430:true,route},'',`#${view}`);
+    render(true);
+  }
+  function back(){ history.back(); }
+  function render(focus=false){
+    $('welcome').hidden=route.view!=='home'; $('app').hidden=route.view==='home';
+    document.body.classList.toggle('app-mode',route.view!=='home');
+    document.title=route.view==='home'?baseTitle:`1430 — ${roleLabel()}${route.grade?` · ${route.grade} класс`:''}`;
+    document.querySelector('.skip-link').textContent=route.view==='home'?'Перейти к выбору роли':'Перейти к содержимому';
+    if(route.view==='home') {
+      $('app').innerHTML='';
+      if(focus){document.querySelector('[data-role="student"]').focus({preventScroll:true});window.scrollTo(0,0);}
+      return;
+    }
+    if(!route.role){route={...route,view:'home'};render(focus);return;}
+    const pages={classes:renderClasses,profile:renderProfile,topics:renderTopics,train:renderTrainer,result:renderResult,builder:renderBuilder,print:renderPrint,help:renderHelp};
+    if(!pages[route.view]) return;
+    $('app').innerHTML=pages[route.view]();
+    if(focus){window.scrollTo(0,0);$('screen-title')?.focus({preventScroll:true});}
+  }
+  function renderClasses(){
+    return header('В каком вы классе?',route.role==='teacher'?'Выберите класс для тренажёра и печатной работы.':'Выберите свой класс. Дальше — знакомство и тема урока.')+
+      `<div class="class-grid">${Array.from({length:7},(_,i)=>i+5).map(g=>`<button type="button" class="glass class-card" data-action="grade" data-grade="${g}" aria-label="${g} класс"><strong>${g}<small>класс</small></strong><span>${BANK.filter(t=>t.grade===g).length} тем · ${g>=10?'базовый уровень':'стартовый банк'}</span></button>`).join('')}</div>`+note();
+  }
+  function renderProfile(){
+    return header('Давайте познакомимся.',`${route.grade} класс. Как к вам обращаться?`)+
+      `<form id="profile-form" class="glass profile"><div class="field-grid"><label class="field" for="first-name">Имя<input id="first-name" name="first" required maxlength="40" autocomplete="off" value="${esc(student.first)}" placeholder="Например, Саша"></label><label class="field" for="last-name">Фамилия<input id="last-name" name="last" required maxlength="60" autocomplete="off" value="${esc(student.last)}" placeholder="Например, Иванова"></label></div><label class="field letter-field" for="class-letter">Буква класса<input id="class-letter" name="letter" required maxlength="1" pattern="[А-Яа-яЁёA-Za-z]" autocomplete="off" value="${esc(student.letter)}" placeholder="А" title="Одна буква класса"></label><p class="muted">Имя используется только в этой вкладке. После перезагрузки оно исчезнет; на сервер ничего не отправляется.</p><button class="primary" type="submit">Выбрать тему →</button></form>`;
+  }
+  function renderTopics(){
+    const intro=route.role==='teacher'?'Откройте тренажёр для просмотра или соберите задания в печатную работу.':`${student.first}, выберите тему, которую назвал учитель на уроке.`;
+    return header('Сегодня разбираемся.',intro)+`<div class="toolbar"><span class="badge">${topics().length} тем · ${topics().reduce((s,t)=>s+t.tasks.length,0)} задания${route.role==='student'?` · ${esc(student.first)} ${esc(student.last)}, ${route.grade}${esc(student.letter)}`:''}</span>${route.role==='teacher'?action('builder','Конструктор работы ↗','primary'):''}</div>`+
+      `<div class="topic-grid">${topics().map(t=>`<article class="glass topic-card"><span class="subject">${esc(t.subject)}</span><h2>${esc(t.title)}</h2><p class="muted">3 задания · с объяснениями</p><div class="topic-actions">${action('train',route.role==='teacher'?'Посмотреть тренажёр':'Начать →','secondary',`data-topic="${t.id}"`)}${route.role==='teacher'?action('builder','В работу +','secondary',`data-topic="${t.id}"`):''}</div></article>`).join('')}</div>`+note();
+  }
+  function renderTrainer(){
+    const t=currentTopic(),q=t.tasks[route.index],r=record(q.id),done=t.tasks.filter(x=>record(x.id).correct).length;
+    return `<div class="trainer">`+header(t.title,route.role==='teacher'?'Режим учителя: тот же тренажёр и тот же банк заданий.':`${student.first}, решайте в своём темпе. Можно попробовать ещё раз или посмотреть объяснение.`)+
+      `<div class="progress" role="progressbar" aria-label="Проверенные задания" aria-valuemin="0" aria-valuemax="3" aria-valuenow="${done}"><span style="width:${done/3*100}%"></span></div><article class="glass task-card"><div class="task-meta"><span>${esc(t.subject)} · ${route.grade} класс</span><span>Задание ${route.index+1} из 3</span></div><h2 class="task-prompt">${esc(q.prompt)}</h2><form id="answer-form"><div class="answer-row"><label class="field" for="answer">Ваш ответ<input id="answer" name="answer" autocomplete="off" spellcheck="false" maxlength="60" inputmode="text" value="${esc(r.draft)}" ${r.correct?'readonly':''} aria-describedby="answer-format${r.feedback?' feedback':''}"></label><button type="submit" class="primary" ${r.correct?'disabled':''}>${r.correct?'Проверено ✓':'Проверить'}</button></div><p class="muted" id="answer-format">Число без единиц: 12, −3, 0,75 или 3/4. Для точного ответа используйте дробь.</p></form>${r.feedback?`<div id="feedback" class="feedback ${r.correct?'':'wrong'}" role="status"><strong>${r.correct?'Верно. Продолжаем!':r.feedback==='format'?'Проверьте запись ответа.':'Пока не сходится.'}</strong><p>${r.correct?esc(q.solution):r.feedback==='format'?'Введите число или дробь вида 3/4. Знаменатель не должен быть нулём.':'Попробуйте ещё раз. Если нужна помощь, откройте объяснение.'}</p></div>`:''}${!r.correct?action('reveal',r.revealed?'Объяснение открыто':'Показать объяснение','text-button',r.revealed?'disabled':''):''}${r.revealed&&!r.correct?`<div class="solution"><strong>Ответ: ${esc(q.display.replace('.',','))}.</strong> ${esc(q.solution)}</div>`:''}</article><div class="task-nav"><div class="dots" aria-label="Номер задания">${t.tasks.map((x,i)=>action('task',String(i+1),`task-dot ${record(x.id).correct?'done':''}`,`data-index="${i}" aria-label="Задание ${i+1}${record(x.id).correct?', проверено':''}" ${i===route.index?'aria-current="step"':''}`)).join('')}</div>${action(route.index===2?'finish':'next',route.index===2?'Завершить →':'Следующее →','secondary')}</div></div>`;
+  }
+  function renderResult(){
+    const t=currentTopic(),done=t.tasks.filter(q=>record(q.id).correct).length;
+    return header('Ещё один шаг вперёд.',t.title)+`<section class="glass result"><span class="eyebrow">Практика завершена</span><div class="result-number">${done}<span class="muted"> / 3</span></div><h2>Задания с верным ответом</h2><p class="muted">Это практика, а не оценка. Можно вернуться к теме и разобрать оставшиеся задания.</p><div class="toolbar">${action('repeat','Начать заново','secondary')}${action('topics','К темам →','primary')}</div></section>`;
+  }
+  function renderBuilder(){
+    if(route.role!=='teacher')return header('Выберите тему','Конструктор доступен в режиме учителя.');
+    const w=work(),list=allTasks.filter(q=>q.grade===route.grade&&(filter==='all'||q.topicId===filter));
+    return header('Соберите свою работу.','Выбирайте задания из разных тем. Порядок можно изменить; ответы печатаются отдельно и только по вашему выбору.')+
+      `<div class="builder-grid"><section><div class="toolbar"><label class="field" style="width:100%" for="bank-filter">Тема в общем банке<select id="bank-filter"><option value="all">Все темы · ${route.grade} класс</option>${topics().map(t=>`<option value="${t.id}" ${filter===t.id?'selected':''}>${esc(t.title)}</option>`).join('')}</select></label></div><div id="bank-list">${list.map(q=>`<article class="glass bank-task"><h3>${esc(q.topic)} · № ${q.id}</h3><p>${esc(q.prompt)}</p>${action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу +','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=24?'disabled':''}`)}</article>`).join('')}</div></section><aside class="glass work-panel"><h2>В работе <span class="badge">${w.ids.length} / 24</span></h2><label class="field" for="work-title">Название<input id="work-title" maxlength="70" value="${esc(w.title)}"></label><label class="field" for="work-variant">Вариант<input id="work-variant" maxlength="20" value="${esc(w.variant)}"></label>${w.ids.length?`<ol class="work-list">${w.ids.map((id,i)=>`<li><p><strong>${i+1}.</strong> ${esc(question(id).prompt)}</p><div class="mini-actions">${action('up','↑','',`data-id="${id}" aria-label="Поднять задание ${i+1}" ${i===0?'disabled':''}`)}${action('down','↓','',`data-id="${id}" aria-label="Опустить задание ${i+1}" ${i===w.ids.length-1?'disabled':''}`)}${action('remove','Удалить','',`data-id="${id}" aria-label="Удалить задание ${i+1}"`)}</div></li>`).join('')}</ol>`:'<p class="empty">Пока здесь пусто. Добавьте первое задание из банка.</p>'}<label class="check"><input id="include-answers" type="checkbox" ${w.answers?'checked':''}>Включить ответы и объяснения на отдельных страницах для учителя</label>${action('print-preview','Предпросмотр A4 →','primary',w.ids.length?'':'disabled')}<p class="muted">До 24 заданий. В работе будет место для решений. PDF сохраняется через диалог печати браузера.</p></aside></div>`;
+  }
+  function printMarkup(){
+    const w=work(),tasks=w.ids.map(question),pages=[];
+    const top=(isKey)=>`<div class="sheet-header"><div class="sheet-brand">1430 × МАТЕМАТИКА</div><h2>${esc(w.title.trim()||'Самостоятельная работа')}${isKey?' · ответы':''}</h2><div class="sheet-meta">${route.grade} класс${route.grade>=10?' · базовый уровень':''} · Вариант ${esc(w.variant.trim()||'1')}${isKey?' · Для учителя':''}</div></div>`;
+    for(let i=0;i<tasks.length;i+=3) pages.push(`${top(false)}<div class="name-line">Имя и фамилия: __________________________ Класс: ______</div>${tasks.slice(i,i+3).map((q,j)=>`<section class="print-question"><p><strong>${i+j+1}.</strong> ${esc(q.prompt)}</p><div class="solution-lines" aria-label="Место для решения"></div></section>`).join('')}`);
+    if(w.answers)for(let i=0;i<tasks.length;i+=6)pages.push(`${top(true)}${tasks.slice(i,i+6).map((q,j)=>`<section class="answer-key"><strong>${i+j+1}. Ответ: ${esc(q.display.replace('.',','))}.</strong><p>${esc(q.solution)}</p></section>`).join('')}`);
+    return pages.map((html,i)=>`<article class="sheet">${html}<div class="sheet-footer"><span>Авторские задания по темам ФРП · школа 1430</span><span>${i+1} / ${pages.length}</span></div></article>`).join('');
+  }
+  function renderPrint(){
+    if(route.role!=='teacher'||!work().ids.length)return header('Работа пока пуста.','Вернитесь в конструктор и добавьте задания.');
+    return header('Готово к печати.',`${work().ids.length} заданий · ${work().answers?'ответы включены отдельными страницами':'без ответов'}`)+`<div class="print-instructions glass" style="padding:20px"><strong>Как получить PDF</strong><p>Нажмите «Печать / сохранить PDF». В системном диалоге выберите сохранение в PDF, формат A4, масштаб 100% и отключите колонтитулы браузера. Это откроет диалог печати, а не скачает файл автоматически.</p>${action('print','Печать / сохранить PDF','primary')}</div><div class="print-root">${printMarkup()}</div>`;
+  }
+  function renderHelp(){
+    return header('Откуда берутся темы.','Проверено 23 октября 2026 года. Стартовый банк для практики на уроке.')+`<article class="glass source-box"><h2>Программа и авторские задания</h2><p>Темы распределены по классам на основе федеральных рабочих программ, размещённых на ЕДСОО. Все ${allTasks.length} упражнения составлены для этого сайта. Они не являются официальным банком ФРП. Здесь ${BANK.length} тема; это выборка, а не полное покрытие программы. В 10–11 классах выбран базовый уровень.</p><p><a href="${source59}" target="_blank" rel="noopener noreferrer">ФРП «Математика», 5–9 классы, базовый уровень (2025)</a><br><a href="${source1011}" target="_blank" rel="noopener noreferrer">ФРП «Математика», 10–11 классы, базовый уровень (2025)</a><br><a href="https://edsoo.ru/rabochie-programmy/" target="_blank" rel="noopener noreferrer">Официальный каталог ЕДСОО</a></p><p class="muted">Использованы документы, доступные в официальном каталоге на дату проверки. Перед расширением банка нужно повторно сверить актуальные редакции. Ссылки открываются в интернете; сам тренажёр работает без подключения.</p><table><thead><tr><th>Класс</th><th>Темы стартового банка</th><th>Страницы ФРП</th></tr></thead><tbody>${Array.from({length:7},(_,i)=>i+5).map(g=>{const ts=BANK.filter(t=>t.grade===g);return `<tr><th>${g}${g>=10?'<br>базовый':''}</th><td>${ts.map(t=>esc(t.title)).join('; ')}.<br><strong>${ts.length} тем · ${ts.length*3} задания</strong></td><td>${[...new Set(ts.map(t=>t.ref))].join(', ')}</td></tr>`;}).join('')}</tbody></table><h2>Как проверяется ответ</h2><p>Все задания имеют числовой ответ. Можно использовать точку, запятую или дробь a/b, в том числе несокращённую. Единицы измерения вводить не нужно. Для бесконечной десятичной дроби вводите точную обыкновенную дробь. Объяснение доступно в каждом задании.</p><h2>Локальная работа</h2><p>Имя, фамилия, буква класса, ответы и состав печатной работы хранятся только в памяти открытой вкладки. Перезагрузка страницы очищает их. Выбор роли меняет доступные действия интерфейса; это не система авторизации.</p></article>`;
+  }
+  document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>go('classes',{role:b.dataset.role,grade:null,topic:null,index:0})));
+  $('app').addEventListener('input',event=>{
+    const e=event.target;
+    if(e.id==='answer')record(currentTopic().tasks[route.index].id).draft=e.value;
+    if(e.id==='work-title')work().title=e.value;
+    if(e.id==='work-variant')work().variant=e.value;
+    if(e.id==='first-name')student.first=e.value;
+    if(e.id==='last-name')student.last=e.value;
+    if(e.id==='class-letter')student.letter=e.value.toUpperCase();
+  });
+  $('app').addEventListener('change',event=>{
+    if(event.target.id==='bank-filter'){filter=event.target.value;render();$('bank-filter').focus();}
+    if(event.target.id==='include-answers')work().answers=event.target.checked;
+  });
+  $('app').addEventListener('submit',event=>{
+    event.preventDefault();
+    if(event.target.id==='profile-form'){
+      const first=$('first-name'),last=$('last-name');
+      first.setCustomValidity(first.value.trim()?'':'Введите имя.');last.setCustomValidity(last.value.trim()?'':'Введите фамилию.');
+      if(!event.target.reportValidity())return;
+      student.first=first.value.trim();student.last=last.value.trim();student.letter=$('class-letter').value.toUpperCase();go('topics');
+    }
+    if(event.target.id==='answer-form'){
+      const q=currentTopic().tasks[route.index],r=record(q.id);r.draft=$('answer').value;
+      if(parseAnswer(r.draft)===null)r.feedback='format';
+      else {r.tries++;r.correct=answerMatches(r.draft,q.answer);r.feedback=r.correct?'correct':'wrong';}
+      render();$('answer').focus({preventScroll:true});
+    }
+  });
+  $('app').addEventListener('click',event=>{
+    const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
+    const a=b.dataset.action,id=b.dataset.id;
+    if(a==='back'){back();return;}
+    if(a==='help'){go('help');return;}
+    if(a==='grade'){go(route.role==='teacher'?'topics':'profile',{grade:Number(b.dataset.grade),topic:null,index:0});return;}
+    if(a==='topics'){go('topics');return;}
+    if(a==='train'){go('train',{topic:b.dataset.topic,index:0});return;}
+    if(a==='task'||a==='next'){
+      route={...route,index:a==='task'?Number(b.dataset.index):route.index+1};history.replaceState({mat1430:true,route},'', '#train');render(true);return;
+    }
+    if(a==='finish'){go('result');return;}
+    if(a==='reveal'){record(currentTopic().tasks[route.index].id).revealed=true;render();$('answer').focus({preventScroll:true});return;}
+    if(a==='repeat'){currentTopic().tasks.forEach(q=>attempts.delete(`${route.role}:${q.id}`));go('train',{index:0});return;}
+    if(route.role!=='teacher')return;
+    if(a==='builder'){filter=b.dataset.topic||'all';go('builder');return;}
+    if(a==='add'||a==='remove'||a==='up'||a==='down'){
+      const w=work(),i=w.ids.indexOf(id);
+      if(a==='add'&&i<0&&w.ids.length<24){w.ids.push(id);notify('Задание добавлено в работу');}
+      if(a==='remove'&&i>=0){w.ids.splice(i,1);notify('Задание удалено');}
+      if(a==='up'&&i>0)[w.ids[i-1],w.ids[i]]=[w.ids[i],w.ids[i-1]];
+      if(a==='down'&&i>=0&&i<w.ids.length-1)[w.ids[i+1],w.ids[i]]=[w.ids[i],w.ids[i+1]];
+      const scroll=window.scrollY;render();window.scrollTo(0,scroll);
+      const same=[...$('app').querySelectorAll('[data-action]')].find(x=>x.dataset.id===id&&(x.dataset.action===a||x.dataset.action===(a==='add'?'remove':'add')));
+      same?.focus({preventScroll:true});return;
+    }
+    if(a==='print-preview'&&work().ids.length){go('print');return;}
+    if(a==='print'){window.print();return;}
+  });
+  // Clear field errors as soon as the user edits, before native form validation.
+  $('app').addEventListener('input',e=>{if(e.target.matches('#first-name,#last-name'))e.target.setCustomValidity('');});
+  window.addEventListener('popstate',event=>{route=event.state?.mat1430?event.state.route:{view:'home',role:null,grade:null,topic:null,index:0};render(true);});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&route.view!=='home'){event.preventDefault();back();}});
+  history.replaceState({mat1430:true,route},'', '#home');
+  render();
+})();
 
-      buttons.forEach(button => button.addEventListener('click', () => chooseRole(button)));
-      backButton.addEventListener('click', returnToChoice);
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && !roleView.hidden) returnToChoice();
-      });
-    })();
   </script>
 </body>
 </html>
