@@ -1,0 +1,92 @@
+[
+  {
+    "key": "5-basic",
+    "tasks": 306,
+    "pages": 271,
+    "polygons": {
+      "filled": 35,
+      "outline": 32
+    },
+    "errors": []
+  },
+  {
+    "key": "6-basic",
+    "tasks": 550,
+    "pages": 463,
+    "polygons": {
+      "filled": 0,
+      "outline": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "7-basic",
+    "tasks": 524,
+    "pages": 443,
+    "polygons": {
+      "filled": 1,
+      "outline": 0
+    },
+    "errors": []
+  },
+  {
+    "key": "8-basic",
+    "tasks": 518,
+    "pages": 453,
+    "polygons": {
+      "filled": 4,
+      "outline": 13
+    },
+    "errors": []
+  },
+  {
+    "key": "9-basic",
+    "tasks": 518,
+    "pages": 454,
+    "polygons": {
+      "filled": 1,
+      "outline": 4
+    },
+    "errors": []
+  },
+  {
+    "key": "10-basic",
+    "tasks": 321,
+    "pages": 272,
+    "polygons": {
+      "filled": 1,
+      "outline": 4
+    },
+    "errors": []
+  },
+  {
+    "key": "10-advanced",
+    "tasks": 357,
+    "pages": 304,
+    "polygons": {
+      "filled": 1,
+      "outline": 8
+    },
+    "errors": []
+  },
+  {
+    "key": "11-basic",
+    "tasks": 321,
+    "pages": 273,
+    "polygons": {
+      "filled": 0,
+      "outline": 1
+    },
+    "errors": []
+  },
+  {
+    "key": "11-advanced",
+    "tasks": 311,
+    "pages": 268,
+    "polygons": {
+      "filled": 1,
+      "outline": 3
+    },
+    "errors": []
+  }
+]

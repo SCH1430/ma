@@ -1,0 +1,87 @@
+{
+  "verified_on": "2026-10-24",
+  "automated_status": "passed",
+  "build": {
+    "topics": 357,
+    "tasks": 3726,
+    "index_sha256": "af1daeb703ad9c8824b4eca5961760f5ddb81c996bec35674e398dd8867d85eb",
+    "embedded_sources_bank_and_statistics": "current"
+  },
+  "bank": {
+    "numeric_checks": 3646,
+    "property_reviews_current": 80,
+    "newly_reviewed_tasks": 14,
+    "errors": []
+  },
+  "runtime": {
+    "checks": 41673,
+    "errors": [],
+    "figures": 122
+  },
+  "font": {
+    "unique_characters": 225,
+    "missing": {}
+  },
+  "pdf": {
+    "programs": 9,
+    "pages": 3201,
+    "filled_polygons": 44,
+    "outline_polygons": 65,
+    "errors": [],
+    "visual_sample_pages": 3,
+    "visual_grid_check": {
+      "rendered_grid_cells": 36,
+      "filled_boundary_cells": 20,
+      "white_interior_cells": 16,
+      "errors": []
+    }
+  },
+  "author_banks": {
+    "6_7": {
+      "tasks": 900,
+      "errors": []
+    },
+    "8_9": {
+      "topics": 34,
+      "tasks": 900,
+      "figures": 42,
+      "tricky": 57,
+      "errors": []
+    }
+  },
+  "semantic": {
+    "catalog_entries": 3726,
+    "canonical_conditions": 3616,
+    "independent_groups": 3348,
+    "numeric_or_template_variants": 268,
+    "cross_catalog_reuses": 110,
+    "new_parameter_families": 14,
+    "materialized_family_members": 56,
+    "manual_family_groups": 106,
+    "near_duplicate_pairs_for_review": 0,
+    "group_errors": 0,
+    "target_independent": 3100,
+    "target_reached": true
+  },
+  "raw_similarity_diagnostics": {
+    "6_7": {
+      "clone_groups": 5,
+      "near_candidates": 19
+    },
+    "8_9": {
+      "clone_groups": 0,
+      "near_candidates": 26
+    },
+    "note": "Raw local diagnostics do not apply saved manual grouping and review decisions. Global semantic audit has no unresolved candidates."
+  },
+  "syntax": {
+    "python_files": 41,
+    "javascript_files": 7,
+    "errors": []
+  },
+  "browser_ui": {
+    "status": "not_run",
+    "script": "scripts/cua-qa.js",
+    "reason": "Browser security policy blocks file:// URLs; no browser workaround attempted."
+  }
+}
