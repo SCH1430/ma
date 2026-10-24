@@ -67,7 +67,7 @@ for path in sorted((ROOT/'checks').glob('property-reviews-*.json')):
 property_ids=[];property_reviewed=[]
 for helper in sorted((ROOT/'checks').glob('math_helpers_*.py')):
     globals().update({k:v for k,v in runpy.run_path(str(helper),init_globals=globals()).items() if not k.startswith('__')})
-errors=[];ids=set();prompts={};bygrade={};figs=0;canonical_data={}
+errors=[];ids=set();numeric_ids=set();open_ids=[];prompts={};bygrade={};figs=0;canonical_data={}
 for t in bank:
     assert t['tasks'] and t['subject'] and t['ref']
     if set(q['difficulty'] for q in t['tasks'])!={'Базовый','Средний','Повышенный','Суперсложный'}:errors.append(t['id']+': missing difficulty tier')
@@ -86,35 +86,45 @@ for t in bank:
         prompts[q['prompt']]=q.get('canonicalId',id)
         for field in ['prompt','solution','display']:
             if not q[field] or any(s in q[field] for s in ['TODO','заглушка','Проверим условие','? По таблице']):errors.append(f'{id}: incomplete {field}')
-        expr=oracles.get(id)
-        if expr:
-            try:
-                tree=ast.parse(expr,mode='eval')
-                try:ast.literal_eval(tree);is_property=True
-                except (ValueError,SyntaxError):
-                    is_property=id in proofs or any(
-                        (isinstance(node,ast.comprehension) and isinstance(node.iter,(ast.List,ast.Tuple)) and not node.iter.elts)
-                        or (isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id=='len' and node.args and isinstance(node.args[0],(ast.List,ast.Tuple)) and not node.args[0].elts)
-                        for node in ast.walk(tree))
-                if is_property:
-                    property_ids.append(id)
-                    digest=hashlib.sha256(json.dumps([q['prompt'],q['solution'],expr],ensure_ascii=False).encode()).hexdigest()
-                    review=proofs.get(id,{})
-                    if review.get('hash')==digest and review.get('reason'):property_reviewed.append(id)
-                    else:errors.append(id+': property/proof requires current review')
-            except SyntaxError:pass
-        try:actual=eval(expr,globals()) if expr else legacy(g,topic,n)
-        except Exception as exc:
-            errors.append(f'{id}: oracle {type(exc).__name__}: {exc}')
-            actual=nan
-        expected=q['answer']
-        for v in expected if isinstance(expected,list) else [expected]:
-            if not isfinite(float(v)):errors.append(id+': nonfinite answer')
-            if abs(float(v))>9007199254740991:errors.append(id+': answer exceeds JS exact integer bound')
-        if isinstance(expected,list):
-            ok=isinstance(actual,list) and len(actual)==len(expected) and all(close(a,b) for a,b in zip(sorted(actual),sorted(expected)))
-        else:ok=close(actual,expected)
-        if not ok:errors.append(f'{id}: condition gives {actual}, bank has {expected}')
+        if q.get('kind')=='open':
+            open_ids.append(id)
+            if q.get('answer') is not None:errors.append(id+': open task must not have a numeric answer')
+            rubric=q.get('rubric')
+            if not isinstance(rubric,list) or not 3<=len(rubric)<=4 or any(not isinstance(v,str) or not v.strip() for v in rubric):errors.append(id+': open task requires 3–4 self-check criteria')
+            hints=q.get('hints')
+            if not isinstance(hints,list) or len(hints)!=2 or any(not isinstance(v,str) or not v.strip() for v in hints):errors.append(id+': open task requires two staged hints')
+            if id in oracles:errors.append(id+': open task must not use a numeric oracle')
+        else:
+            numeric_ids.add(id)
+            expr=oracles.get(id)
+            if expr:
+                try:
+                    tree=ast.parse(expr,mode='eval')
+                    try:ast.literal_eval(tree);is_property=True
+                    except (ValueError,SyntaxError):
+                        is_property=id in proofs or any(
+                            (isinstance(node,ast.comprehension) and isinstance(node.iter,(ast.List,ast.Tuple)) and not node.iter.elts)
+                            or (isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id=='len' and node.args and isinstance(node.args[0],(ast.List,ast.Tuple)) and not node.args[0].elts)
+                            for node in ast.walk(tree))
+                    if is_property:
+                        property_ids.append(id)
+                        digest=hashlib.sha256(json.dumps([q['prompt'],q['solution'],expr],ensure_ascii=False).encode()).hexdigest()
+                        review=proofs.get(id,{})
+                        if review.get('hash')==digest and review.get('reason'):property_reviewed.append(id)
+                        else:errors.append(id+': property/proof requires current review')
+                except SyntaxError:pass
+            try:actual=eval(expr,globals()) if expr else legacy(g,topic,n)
+            except Exception as exc:
+                errors.append(f'{id}: oracle {type(exc).__name__}: {exc}')
+                actual=nan
+            expected=q['answer']
+            for v in expected if isinstance(expected,list) else [expected]:
+                if not isfinite(float(v)):errors.append(id+': nonfinite answer')
+                if abs(float(v))>9007199254740991:errors.append(id+': answer exceeds JS exact integer bound')
+            if isinstance(expected,list):
+                ok=isinstance(actual,list) and len(actual)==len(expected) and all(close(a,b) for a,b in zip(sorted(actual),sorted(expected)))
+            else:ok=close(actual,expected)
+            if not ok:errors.append(f'{id}: condition gives {actual}, bank has {expected}')
         if q.get('precision') and q['precision']!=3:errors.append(f'{id}: precision')
         f=q.get('figure')
         if f:
@@ -130,8 +140,9 @@ for t in bank:
                 if el['type']=='ellipse':coords=[(el['x']-el['rx'],el['y']-el['ry']),(el['x']+el['rx'],el['y']+el['ry'])]
                 if any(x<0 or y<0 or x>f['width'] or y>f['height'] for x,y in coords):errors.append(f'{id}: figure coordinates out of bounds')
         bygrade[g]=bygrade.get(g,0)+1
-assert len(oracles)==len(ids)-48
-report={'tasks':len(ids),'topics':len(bank),'numeric_expression_checks':len(ids)-len(property_ids),'property_or_direct_value_checks':len(property_ids),'property_reviews_current':len(property_reviewed),'property_ids':property_ids,'by_grade':bygrade,'explicit_figures':figs,'errors':errors}
+if set(oracles)-numeric_ids:errors.append('numeric oracles contain unknown or open task IDs')
+if len(oracles)!=len(numeric_ids)-48:errors.append('numeric oracle coverage differs from the 48 reviewed legacy tasks')
+report={'tasks':len(ids),'topics':len(bank),'numeric_expression_checks':len(numeric_ids)-len(property_ids),'open_task_checks':len(open_ids),'open_ids':open_ids,'property_or_direct_value_checks':len(property_ids),'property_reviews_current':len(property_reviewed),'property_ids':property_ids,'by_grade':bygrade,'explicit_figures':figs,'errors':errors}
 (ROOT/'checks/math-results.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
 print(json.dumps(report,ensure_ascii=False,indent=2))
 raise SystemExit(bool(errors))

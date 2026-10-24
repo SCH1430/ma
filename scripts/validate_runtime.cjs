@@ -1,21 +1,37 @@
 const fs=require('fs'),vm=require('vm'),path=require('path');
 const root=path.resolve(__dirname,'..');
-const bank=JSON.parse(fs.readFileSync(path.join(root,'checks/bank.json'),'utf8'));
-const code=fs.readFileSync(path.join(root,'src/app.js'),'utf8').split('/* UI */')[0];
-const ctx={BANK:bank};vm.createContext(ctx);vm.runInContext(code+'\n'+fs.readFileSync(path.join(root,'src/math-figures.js'),'utf8'),ctx);
+const page=require('./load_page.cjs').loadPage(root),{BANK:bank}=page.dataValues();
+const code=page.sourceFor('src/app.js').split('/* UI */')[0];
+const support=page.sourceFor('src/learning-support.js');
+const ctx={BANK:bank};vm.createContext(ctx);vm.runInContext((support+'\n')+code+'\n'+page.sourceFor('src/math-figures.js'),ctx);
+const learning=vm.runInContext('MathLearning',ctx);
 let checks=0;const errors=[];const test=(cond,label)=>{checks++;if(!cond)errors.push(label)};
 const check=(v,q)=>ctx.checkAnswer(v,q);
 for(const t of bank)for(const q of t.tasks){
- test(check(q.display,q).correct,q.id+' display');
- const values=Array.isArray(q.answer)?q.answer:[q.answer];
- const decimal=values.length?values.map(v=>String(v).replace('.',',')).join(';'):'∅';
- test(check(decimal,q).correct,q.id+' comma');
- const bad=q.kind==='set'?[...q.answer,9999].join(';'):String(q.answer+1);
- test(!check(bad,q).correct,q.id+' incorrect');
- for(const input of ['', 'abc', '1/0','√-1','sqrt(-2)','<script>','1e309'])test(!check(input,q).valid,q.id+' invalid '+input);
- if(q.kind==='set'){
-  test(check(q.answer.length?[...q.answer].reverse().join(';'):'нет решений',q).correct,q.id+' reversed or empty set');
-  if(q.answer.length>1)test(!check(q.answer.slice(1).join(';'),q).correct,q.id+' incomplete set');
+ if(q.kind==='open'){
+  test(q.answer===null,q.id+' open answer is not numeric');
+  for(const input of ['0','1',q.display,q.solution])test(!check(input,q).correct,q.id+' cannot auto-grade open response');
+  test(Array.isArray(q.rubric)&&q.rubric.length>=3&&q.rubric.length<=4,q.id+' self-check criteria');
+ }else{
+  test(check(q.display,q).correct,q.id+' display');
+  const values=Array.isArray(q.answer)?q.answer:[q.answer];
+  const decimal=values.length?values.map(v=>String(v).replace('.',',')).join(';'):'∅';
+  test(check(decimal,q).correct,q.id+' comma');
+  const bad=q.kind==='set'?[...q.answer,9999].join(';'):String(q.answer+1);
+  test(!check(bad,q).correct,q.id+' incorrect');
+  for(const input of ['', 'abc', '1/0','√-1','sqrt(-2)','<script>','1e309'])test(!check(input,q).valid,q.id+' invalid '+input);
+  if(q.kind==='set'){
+   test(check(q.answer.length?[...q.answer].reverse().join(';'):'нет решений',q).correct,q.id+' reversed or empty set');
+   if(q.answer.length>1)test(!check(q.answer.slice(1).join(';'),q).correct,q.id+' incomplete set');
+  }
+ }
+ if(learning){
+  const help=learning.help(q);
+  test(typeof help.hint==='string'&&help.hint.trim().length>10,q.id+' meaningful hint');
+  test(typeof help.step==='string'&&help.step.trim().length>10,q.id+' meaningful first step');
+  test(help.hint!==help.step,q.id+' staged help differs');
+  test(help.hint!==q.solution&&help.step!==q.solution,q.id+' help does not reveal full solution');
+  if(q.hints)test(help.hint===q.hints[0]&&help.step===q.hints[1],q.id+' authored hints take priority');
  }
  const f=ctx.geometryFigure(q.id);
  if(f){
@@ -66,8 +82,8 @@ test(JSON.stringify(ctx.mathTokens('16^(3/4); x^2; a₁'))===JSON.stringify([
  {type:'text',text:'16'},{type:'sup',text:'(3/4)'},{type:'text',text:'; x'},
  {type:'sup',text:'2'},{type:'text',text:'; a'},{type:'sub',text:'1'}
 ]),'existing exponent and subscript grouping');
-const source=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const source=page.html+page.runtimeCode();
 test(source.includes('10_11_baz.pdf')&&source.includes('10_11_ugl.pdf'),'both official sources');
-test(!/fetch\(|XMLHttpRequest|localStorage|sessionStorage/.test(fs.readFileSync(path.join(root,'src/app.js'),'utf8')),'no remote persistence');
-const report={checks,errors,figures:bank.flatMap(t=>t.tasks).filter(q=>ctx.geometryFigure(q.id)).length};
+test(!/\b(?:fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(|navigator\s*\.\s*sendBeacon\s*\(/.test(page.sourceFor('src/app.js')),'no application network requests');
+const report={checks,errors,openTasks:bank.flatMap(t=>t.tasks).filter(q=>q.kind==='open').length,figures:bank.flatMap(t=>t.tasks).filter(q=>ctx.geometryFigure(q.id)).length};
 fs.writeFileSync(path.join(root,'checks/runtime-results.json'),JSON.stringify(report,null,2));console.log(report);if(errors.length)process.exitCode=1;

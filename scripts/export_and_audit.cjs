@@ -1,7 +1,7 @@
-const fs=require('fs'),path=require('path'),vm=require('vm');
-const root=path.resolve(__dirname,'..'),src=path.join(root,'src');
-const PDFLib=require(path.join(src,'vendor/pdf-lib.min.js')),fontkit=require(path.join(src,'vendor/fontkit.umd.min.js'));
-const BANK=JSON.parse(fs.readFileSync(path.join(root,'checks/bank.json'),'utf8'));
+const fs=require('fs'),path=require('path');
+const root=path.resolve(__dirname,'..');
+const page=require('./load_page.cjs').loadPage(root),{BANK,FONT_BASE64}=page.dataValues();
+const PDFLib=page.vendor('pdf-lib'),fontkit=page.vendor('fontkit');
 const outputs=path.join(root,'output/pdf');fs.mkdirSync(outputs,{recursive:true});
 const reports=[];let activeReport;
 const originalCreate=PDFLib.PDFDocument.create.bind(PDFLib.PDFDocument);
@@ -24,8 +24,8 @@ PDFLib.PDFDocument.create=async(...args)=>{
  };
  return doc;
 };
-const ctx={PDFLib,fontkit,BANK,FONT_BASE64:fs.readFileSync(path.join(src,'vendor/DejaVuSans.ttf')).toString('base64'),Uint8Array,atob:s=>Buffer.from(s,'base64').toString('binary'),console};
-Object.assign(ctx,new Function('PDFLib','fontkit','BANK','FONT_BASE64',fs.readFileSync(path.join(src,'math-figures.js'),'utf8')+'\n'+fs.readFileSync(path.join(src,'pdf.js'),'utf8')+'\nreturn {createMathPDF,geometryFigure};')(PDFLib,fontkit,BANK,ctx.FONT_BASE64));
+const ctx={PDFLib,fontkit,BANK,FONT_BASE64,Uint8Array,atob:s=>Buffer.from(s,'base64').toString('binary'),console};
+Object.assign(ctx,new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.sourceFor('src/math-figures.js')+'\n'+page.sourceFor('src/pdf.js')+'\nreturn {createMathPDF,geometryFigure};')(PDFLib,fontkit,BANK,ctx.FONT_BASE64));
 (async()=>{
  const groups=[...new Set(BANK.map(t=>`${t.grade}-${t.level}`))];
  for(const key of groups){
