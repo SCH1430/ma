@@ -1,0 +1,1 @@
+const BANK_STATS = {"catalog_entries":3744,"canonical_conditions":3634,"independent_groups":3366,"numeric_or_template_variants":268,"cross_catalog_reuses":110,"new_parameter_families":14,"materialized_family_members":56,"manual_family_groups":106,"near_duplicate_pairs_for_review":0,"group_errors":0,"target_independent":3100,"target_reached":true};
