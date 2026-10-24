@@ -1,0 +1,65 @@
+{
+  "source": "ФИПИ",
+  "year": 2026,
+  "retrievedAt": "2026-10-24",
+  "officialLandingPages": [
+    "https://fipi.ru/ege/demoversii-specifikacii-kodifikatory",
+    "https://fipi.ru/oge/demoversii-specifikacii-kodifikatory"
+  ],
+  "archives": [
+    {
+      "file": "sources/ma_11_2026.zip",
+      "url": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/ma_11_2026.zip",
+      "bytes": 3626329,
+      "sha256": "d2c8475de61f1e7dac5ee1e4d3950998c55275f17a66b821a510da585920aead"
+    },
+    {
+      "file": "sources/ma_9_2026.zip",
+      "url": "https://doc.fipi.ru/oge/demoversii-specifikacii-kodifikatory/2026/ma_9_2026.zip",
+      "bytes": 2382063,
+      "sha256": "ebb8523e1d1a01192497e7dbe4bdda0e771d8c37c7ca567ba8b6ab49b07d8913"
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "sources/ma_11_2026/МА-11 ЕГЭ 2026 ДЕМО_базовый.pdf",
+      "bytes": 875874,
+      "sha256": "e5fc404729bfa3809b34f4cf481bc794cc13b455fa22e041b608421935a2cf57"
+    },
+    {
+      "file": "sources/ma_11_2026/МА-11 ЕГЭ 2026 ДЕМО_профильный.pdf",
+      "bytes": 871125,
+      "sha256": "f223ca76f3c703d136f05e7f197e8fb8bc7a8925b89b1bef533a58e99a5413d5"
+    },
+    {
+      "file": "sources/ma_11_2026/МА-11 ЕГЭ 2026 СПЕЦ_базовый.pdf",
+      "bytes": 595577,
+      "sha256": "fc78e609f0668cc65b73d070e998c30f3d44e09d8dda9ba1874cb59d9747aaac"
+    },
+    {
+      "file": "sources/ma_11_2026/МА-11 ЕГЭ 2026 СПЕЦ_профильный.pdf",
+      "bytes": 636070,
+      "sha256": "c2714491179edf7a4705c50c7aceb870b13eb5ca78c45e908ece6a9dfddf4bb4"
+    },
+    {
+      "file": "sources/ma_11_2026/МА-11 ЕГЭ 2026_КОДИФ.pdf",
+      "bytes": 836218,
+      "sha256": "77fb404746a86067449b77223ce4ea950f87bec776c78de3d0279f9d947e17c3"
+    },
+    {
+      "file": "sources/ma_9_2026/МА-9 ОГЭ 2026_ДЕМО.pdf",
+      "bytes": 906387,
+      "sha256": "25ef7b3b449f742f63a0b0478c46a6dbfcf9861c8824c7d3e988a05b06e1cda9"
+    },
+    {
+      "file": "sources/ma_9_2026/МА-9 ОГЭ 2026_КОДИФ.pdf",
+      "bytes": 817974,
+      "sha256": "da4293c0b67f41f0baaf92743df916321637aa8f13ab953f1e0cfd11014a1b4d"
+    },
+    {
+      "file": "sources/ma_9_2026/МА-9 ОГЭ 2026_СПЕЦ.pdf",
+      "bytes": 759867,
+      "sha256": "02fd6695ad4868e4440c8b89395203820e3f5f505b3b196126433543d8ffd05e"
+    }
+  ]
+}

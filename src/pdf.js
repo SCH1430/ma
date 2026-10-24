@@ -1,5 +1,7 @@
 // Offline PDF creation: all layout, fonts and tasks remain in the current tab.
 async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) {
+  const unified=grade==null||tasks.some(q=>q.source==='exam'||q.examId)||new Set(tasks.map(q=>q.grade).filter(Boolean)).size>1;
+  const hasExams=tasks.some(q=>q.source==='exam'||q.examId);
   const {PDFDocument,rgb}=PDFLib;
   const doc=await PDFDocument.create();
   doc.registerFontkit(fontkit);
@@ -7,7 +9,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
   const font=await doc.embedFont(fontBytes,{subset:true});
   const ink=rgb(.13,.2,.15),muted=rgb(.32,.39,.31),line=rgb(.79,.83,.77),shade=rgb(227/255,237/255,218/255);
   doc.setTitle(title||'Самостоятельная работа');doc.setAuthor('Математическое пространство 1430');
-  doc.setSubject(`Математика, ${grade} класс. Авторские задания по темам ФРП.`);
+  doc.setSubject(unified?(hasExams?'Сборная работа по математике. Официальные задания ФИПИ 2026 и задания по темам ФРП.':'Сборная работа по математике. Задания по темам ФРП.'):`Математика, ${grade} класс. Авторские задания по темам ФРП.`);
   const pages=[];
   const wrap=(text,size,width)=>{
     const lines=[];let lineText='';
@@ -46,7 +48,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
       x+=w;
     }
   }
-  function mathParagraph(page,value,x,y,size,width,color=ink){
+  function paragraphLines(value,size,width){
     const groups=[];let current=[];
     for(const t of mathTokens(value)){
       if(t.type!=='text'){current.push(t);continue;}
@@ -63,12 +65,15 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
       if(line.length&&rowWidth(candidate,size)>width){lines.push(line);line=[...g];}else line=candidate;
     }
     if(line.length)lines.push(line);
+    return lines;
+  }
+  function mathParagraph(page,value,x,y,size,width,color=ink){
     let previous=null;
-    for(const row of lines){
+    for(const row of paragraphLines(value,size,width)){
       const box=rowBox(row,size);
       if(previous)y-=Math.max(size*2.05,previous.descent+box.ascent+5);
       else y-=Math.max(0,box.ascent-size);
-      mathRow(page,row,x,y,size,color);previous=box;
+      if(page)mathRow(page,row,x,y,size,color);previous=box;
     }
     return y-Math.max(0,(previous?.descent||0)-size*.22);
   }
@@ -103,22 +108,199 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     if(!isKey)text(page,'Имя и фамилия: ______________________________  Класс: ______',45,671,10);
     return page;
   }
+  // The shared constructor keeps the original exam fragments intact. Images are
+  // embedded directly, so formulas, diagrams and official criteria never pass
+  // through text recognition or the class-task solution generator.
+  if(unified){
+    const left=45,right=550,width=right-left,bottom=66;
+    const isExam=q=>q.source==='exam'||!!q.examId;
+    const sourceLabel=q=>q.sourceLabel||(isExam(q)?`${q.examId==='oge'?'ОГЭ':q.examId==='ege-basic'?'ЕГЭ, базовый уровень':'ЕГЭ, профильный уровень'} · демоверсия 2026`:`${q.grade||String(q.id).split('-')[0]} класс${q.grade>=10?` · ${q.level==='advanced'?'углублённый':'базовый'} уровень`:''}`);
+    const taskLabel=(q,index)=>`${sourceLabel(q)}${isExam(q)?` · № ${q.number}${q.exampleNumber?` · пример ${q.exampleNumber}`:''}`:''}`;
+    const sources=[...new Set(tasks.map(sourceLabel))];
+    const sourceSummary=sources.length>3?'Задания из разных классов и экзаменов':sources.join(' · ');
+    const imageCache=new Map();
+    const original=async value=>{
+      const data=typeof value==='string'?value:value?.image;
+      if(!data)throw new Error('Не найден оригинальный фрагмент демоверсии ФИПИ.');
+      if(!imageCache.has(data))imageCache.set(data,doc.embedPng(data));
+      return imageCache.get(data);
+    };
+    let page,y,pageTop,key=false,sectionPages=0;
+    function nextPage(){
+      page=doc.addPage([595.28,841.89]);pages.push(page);sectionPages++;
+      text(page,'1430  ×  МАТЕМАТИКА',left,797,10,muted);
+      let headingSize=sectionPages===1?18:13;
+      let headingLines=wrap(title||'Самостоятельная работа',headingSize,width);
+      while(headingLines.length>3&&headingSize>10){headingSize--;headingLines=wrap(title||'Самостоятельная работа',headingSize,width);}
+      y=sectionPages===1?765:772;
+      headingLines.forEach(value=>{text(page,value,left,y,headingSize);y-=headingSize+5;});
+      if(sectionPages===1&&!key){
+        for(const value of wrap(sourceSummary,9,width)){text(page,value,left,y-2,9,muted);y-=13;}
+      }
+      const caption=`Вариант ${variant||'1'} · ${key?'Ответы и критерии для учителя':'Задания'}`;
+      text(page,caption,left,y-3,10,muted);y-=18;
+      page.drawLine({start:{x:left,y},end:{x:right,y},thickness:1.1,color:ink});y-=22;
+      if(!key&&sectionPages===1){text(page,'Имя и фамилия: ______________________________  Класс: ______',left,y,10);y-=27;}
+      pageTop=y;
+    }
+    const ensure=height=>{if(y-height<bottom&&y<pageTop)nextPage();};
+    function flow(value,size=11,color=ink,gap=12){
+      const rows=paragraphLines(value,size,width);let previous=null;
+      for(const row of rows){
+        const box=rowBox(row,size);
+        let step=previous?Math.max(size*1.85,previous.descent+box.ascent+5):Math.max(0,box.ascent-size);
+        if(y-step-box.descent<bottom){nextPage();previous=null;step=Math.max(0,box.ascent-size);}
+        y-=step;mathRow(page,row,left,y,size,color);previous=box;
+      }
+      y-=Math.max(0,(previous?.descent||0)-size*.22)+gap;
+    }
+    function label(q,index,continued=false){
+      flow(`Задание ${index+1}${continued?' · продолжение':''}`,12,ink,16);
+      flow(taskLabel(q,index),8.5,muted,15);
+    }
+    async function drawOriginal(value,continuation){
+      const picture=await original(value);
+      const naturalHeight=picture.height*width/picture.width;
+      const fullPageSpace=pageTop-bottom-(continuation?50:0);
+      const freshFragment=naturalHeight>fullPageSpace&&(y-bottom)>=fullPageSpace*.9;
+      if(y-naturalHeight<bottom&&y<pageTop&&!freshFragment){nextPage();if(continuation)continuation();}
+      // Full-page fragments can be a little taller than the printable area.
+      // Fit the whole original on its own page; never crop a line or diagram.
+      const scale=Math.min(width/picture.width,(y-bottom)/picture.height);
+      const drawWidth=picture.width*scale,drawHeight=picture.height*scale;
+      page.drawImage(picture,{x:left+(width-drawWidth)/2,y:y-drawHeight,width:drawWidth,height:drawHeight});
+      y-=drawHeight+15;
+    }
+    function solutionLines(count){
+      for(let i=0;i<count;i++){
+        if(y<bottom+18){nextPage();flow('Место для решения · продолжение',9,muted,18);}
+        page.drawLine({start:{x:left,y},end:{x:right,y},thickness:.45,color:line});y-=22;
+      }
+      y-=14;
+    }
+    const contexts=new Map();
+    tasks.forEach((q,index)=>{
+      if(!isExam(q)||!q.contextImages?.length)return;
+      const id=q.contextImages.map(value=>typeof value==='string'?value:value.image).join('|');
+      if(!contexts.has(id))contexts.set(id,{images:q.contextImages,source:sourceLabel(q),numbers:[]});
+      contexts.get(id).numbers.push(index+1);
+    });
+    const drawnContexts=new Set();
+    nextPage();
+    for(let index=0;index<tasks.length;index++){
+      const q=tasks[index],exam=isExam(q);
+      if(exam&&q.contextImages?.length){
+        const id=q.contextImages.map(value=>typeof value==='string'?value:value.image).join('|');
+        if(!drawnContexts.has(id)){
+          const context=contexts.get(id),first=await original(context.images[0]);
+          ensure(Math.min(first.height*width/first.width+68,pageTop-bottom));
+          flow(`Общий материал к заданиям работы: ${context.numbers.join(', ')}`,11,ink,17);
+          flow(context.source,8.5,muted,15);
+          for(const image of context.images)await drawOriginal(image,()=>flow('Общий материал · продолжение',10,muted,18));
+          drawnContexts.add(id);y-=8;
+        }
+      }
+      if(exam){
+        if(!q.images?.length)throw new Error(`Нет оригинального условия: ${taskLabel(q,index)}.`);
+        const first=await original(q.images[0]);
+        const workspace=q.kind==='open'?9:4;
+        const needed=48+first.height*width/first.width+22*workspace+22;
+        ensure(Math.min(needed,pageTop-bottom));
+        label(q,index);
+        for(const image of q.images)await drawOriginal(image,()=>label(q,index,true));
+        if(q.contextImages?.length)flow('Используйте общий материал, приведённый выше.',8.5,muted,17);
+        if(q.kind==='open')flow('Запишите развёрнутое решение.',9,muted,18);
+        solutionLines(workspace);
+      }else{
+        const figure=geometryFigure(q.id),promptHeight=-mathParagraph(null,q.prompt,left,0,11,width)+16;
+        const workspace=q.kind==='open'?10:figure?7:5;
+        const needed=50+promptHeight+(figure?figure.height+37:0)+workspace*22+20;
+        ensure(Math.min(needed,pageTop-bottom));
+        label(q,index);flow(q.prompt,11,ink,24);
+        if(figure){
+          ensure(figure.height+48);const height=diagram(page,q.id,y);y-=height+20;
+        }
+        if(q.kind==='open')flow('Запишите развёрнутое решение.',9,muted,18);
+        solutionLines(workspace);
+      }
+    }
+    if(answers&&tasks.length){
+      key=true;sectionPages=0;nextPage();
+      for(let index=0;index<tasks.length;index++){
+        const q=tasks[index],exam=isExam(q);
+        if(exam&&q.kind==='open'){
+          if(!q.solutionPages?.length)throw new Error(`Нет оригинальных решения и критериев ФИПИ: ${taskLabel(q,index)}.`);
+          const first=await original(q.solutionPages[0]);
+          ensure(Math.min(74+first.height*width/first.width,pageTop-bottom));
+          label(q,index);flow('Оригинальные решение и критерии ФИПИ',10,ink,18);
+          for(const fragment of q.solutionPages){
+            const image=typeof fragment==='string'?fragment:fragment.image;
+            const sourcePage=typeof fragment==='object'&&fragment.page!=null?` · страница ${fragment.page}`:'';
+            await drawOriginal(image,()=>{label(q,index,true);flow(`Решение и критерии ФИПИ${sourcePage}`,9,muted,17);});
+          }
+        }else{
+          const answer=exam?(q.answerText||q.display||''):q.display;
+          const estimate=54+Math.max(22,paragraphLines(`Ответ: ${answer}`,11,width).length*21)+(exam?0:Math.max(22,paragraphLines(q.solution||'',10,width).length*20));
+          ensure(Math.min(estimate,pageTop-bottom));label(q,index);
+          if(exam){
+            if(!answer)throw new Error(`Нет официального ответа: ${taskLabel(q,index)}.`);
+            flow(`Ответ: ${answer}`,11,ink,26);
+          }else{
+            flow(q.kind==='open'?'Образец решения':`Ответ: ${String(answer).replace(/\./g,',')}.`,11,ink,17);
+            if(q.solution)flow(q.solution,10,muted,18);
+            if(q.kind==='open'&&q.rubric?.length){
+              flow('Критерии самопроверки:',10,ink,14);
+              q.rubric.forEach((criterion,i)=>flow(`${i+1}) ${criterion}`,10,muted,14));
+            }
+            y-=12;
+          }
+        }
+      }
+    }
+    const footer=hasExams?(tasks.some(q=>!isExam(q))?'ФИПИ 2026 · задания по темам ФРП · школа 1430':'Официальная демоверсия ФИПИ 2026 · школа 1430'):'Задания по темам ФРП · школа 1430';
+    pages.forEach((page,index)=>{
+      page.drawLine({start:{x:left,y:47},end:{x:right,y:47},thickness:.5,color:line});
+      text(page,footer,left,32,8,muted);text(page,`${index+1} / ${pages.length}`,520,32,8,muted);
+    });
+    return doc.save();
+  }
   for(const group of taskPages(tasks)){
     const page=base(false);
     group.forEach(({q,number},j)=>{
       const top=650-j*274;
-      const end=mathParagraph(page,`${number}. ${q.prompt}`,45,top,11,505);
+      let end=mathParagraph(page,`${number}. ${q.prompt}`,45,top,11,505);
+      if(q.kind==='open')end=mathParagraph(page,'Развёрнутое решение · самопроверка по критериям',45,end-24,9,505,muted);
       const h=diagram(page,q.id,end-18),start=h?end-18-h-15:end-35;
       const count=group.length===1?Math.min(12,Math.floor((start-80)/22)):6;
       for(let k=0;k<count;k++)page.drawLine({start:{x:45,y:start-k*22},end:{x:550,y:start-k*22},thickness:.45,color:line});
     });
   }
-  if(answers)for(let i=0;i<tasks.length;i+=3){
-    const page=base(true);let y=672;
-    for(let j=i;j<Math.min(i+3,tasks.length);j++){
-      const q=tasks[j];y=mathParagraph(page,`${j+1}. Ответ: ${q.display.replace(/\./g,',')}.`,45,y,11,505);y-=28;
-      y=mathParagraph(page,q.solution,45,y,10,505,muted);y-=29;
-    }
+  if(answers&&tasks.length){
+    let page=base(true),y=672;
+    // Keys flow by their actual height: open tasks include a model solution and
+    // criteria, so a fixed number of tasks per page would overlap the footer.
+    const keyParagraph=(value,size,color=ink)=>{
+      let previous=null;
+      for(const row of paragraphLines(value,size,505)){
+        const box=rowBox(row,size);
+        let next=y-(previous?Math.max(size*2.05,previous.descent+box.ascent+5):Math.max(0,box.ascent-size));
+        if(next-box.descent<66){page=base(true);y=672;previous=null;next=y-Math.max(0,box.ascent-size);}
+        mathRow(page,row,45,next,size,color);y=next;previous=box;
+      }
+      y-=Math.max(0,(previous?.descent||0)-size*.22);
+    };
+    tasks.forEach((q,j)=>{
+      const open=q.kind==='open';
+      const paragraphs=[
+        [`${j+1}. ${open?'Самопроверка по критериям':'Ответ: '+q.display.replace(/\./g,',')+'.'}`,11,ink,18],
+        [q.solution,10,muted,open?15:29],
+        ...(open?[['Критерии самопроверки:',10,ink,12],...(q.rubric||[]).map((criterion,i)=>[`${i+1}) ${criterion}`,10,muted,12])]:[])
+      ];
+      const end=paragraphs.reduce((top,[value,size,,gap])=>mathParagraph(null,value,45,top,size,505)-gap,y);
+      if(y<672&&end<66){page=base(true);y=672;}
+      for(const [value,size,color,gap] of paragraphs){keyParagraph(value,size,color);y-=gap;}
+      if(open)y-=17;
+    });
   }
   pages.forEach((page,i)=>{
     page.drawLine({start:{x:45,y:47},end:{x:550,y:47},thickness:.5,color:line});

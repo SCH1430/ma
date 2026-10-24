@@ -1,8 +1,8 @@
 [
   {
     "key": "5-basic",
-    "tasks": 306,
-    "pages": 271,
+    "tasks": 308,
+    "pages": 201,
     "polygons": {
       "filled": 35,
       "outline": 32
@@ -11,18 +11,18 @@
   },
   {
     "key": "6-basic",
-    "tasks": 550,
-    "pages": 463,
+    "tasks": 552,
+    "pages": 344,
     "polygons": {
       "filled": 0,
-      "outline": 0
+      "outline": 14
     },
     "errors": []
   },
   {
     "key": "7-basic",
-    "tasks": 524,
-    "pages": 443,
+    "tasks": 526,
+    "pages": 319,
     "polygons": {
       "filled": 1,
       "outline": 0
@@ -31,8 +31,8 @@
   },
   {
     "key": "8-basic",
-    "tasks": 518,
-    "pages": 453,
+    "tasks": 520,
+    "pages": 328,
     "polygons": {
       "filled": 4,
       "outline": 13
@@ -41,8 +41,8 @@
   },
   {
     "key": "9-basic",
-    "tasks": 518,
-    "pages": 454,
+    "tasks": 520,
+    "pages": 329,
     "polygons": {
       "filled": 1,
       "outline": 4
@@ -51,8 +51,8 @@
   },
   {
     "key": "10-basic",
-    "tasks": 321,
-    "pages": 272,
+    "tasks": 323,
+    "pages": 197,
     "polygons": {
       "filled": 1,
       "outline": 4
@@ -61,8 +61,8 @@
   },
   {
     "key": "10-advanced",
-    "tasks": 357,
-    "pages": 304,
+    "tasks": 359,
+    "pages": 221,
     "polygons": {
       "filled": 1,
       "outline": 8
@@ -71,8 +71,8 @@
   },
   {
     "key": "11-basic",
-    "tasks": 321,
-    "pages": 273,
+    "tasks": 323,
+    "pages": 197,
     "polygons": {
       "filled": 0,
       "outline": 1
@@ -81,8 +81,8 @@
   },
   {
     "key": "11-advanced",
-    "tasks": 311,
-    "pages": 268,
+    "tasks": 313,
+    "pages": 195,
     "polygons": {
       "filled": 1,
       "outline": 3

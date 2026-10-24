@@ -3,56 +3,61 @@
   "automated_status": "passed",
   "build": {
     "topics": 357,
-    "tasks": 3726,
-    "index_sha256": "af1daeb703ad9c8824b4eca5961760f5ddb81c996bec35674e398dd8867d85eb",
+    "tasks": 3744,
+    "index_sha256": "edad48606bf34607ee74eafcf508d624bd64ef99729d71c385f4a6ab186ad5a2",
     "embedded_sources_bank_and_statistics": "current"
   },
   "bank": {
     "numeric_checks": 3646,
     "property_reviews_current": 80,
-    "newly_reviewed_tasks": 14,
+    "open_tasks": 18,
     "errors": []
   },
   "runtime": {
-    "checks": 41673,
+    "checks": 56847,
     "errors": [],
-    "figures": 122
+    "openTasks": 18,
+    "figures": 140
+  },
+  "features": {
+    "checks": 124,
+    "errors": []
+  },
+  "ui_state_integration": {
+    "checks": 135,
+    "errors": [],
+    "scope": "Node VM state/event integration; no visual or browser verification",
+    "bankTasks": 3744
   },
   "font": {
-    "unique_characters": 225,
+    "unique_characters": 226,
     "missing": {}
   },
   "pdf": {
     "programs": 9,
-    "pages": 3201,
+    "pages": 2331,
     "filled_polygons": 44,
-    "outline_polygons": 65,
+    "outline_polygons": 79,
     "errors": [],
-    "visual_sample_pages": 3,
-    "visual_grid_check": {
-      "rendered_grid_cells": 36,
-      "filled_boundary_cells": 20,
-      "white_interior_cells": 16,
-      "errors": []
-    }
-  },
-  "author_banks": {
-    "6_7": {
-      "tasks": 900,
-      "errors": []
-    },
-    "8_9": {
-      "topics": 34,
-      "tasks": 900,
-      "figures": 42,
-      "tricky": 57,
+    "visual_review": {
+      "verified_on": "2026-10-24",
+      "sample": "output/pdf/1430-learning-6.pdf",
+      "worksheet_tasks": 19,
+      "rendered_pages": 21,
+      "contact_sheet_pages_reviewed": 21,
+      "detail_pages_reviewed": [
+        5,
+        18,
+        21
+      ],
+      "corrected_label": "6-216-5: C moved away from x-axis tick 6",
       "errors": []
     }
   },
   "semantic": {
-    "catalog_entries": 3726,
-    "canonical_conditions": 3616,
-    "independent_groups": 3348,
+    "catalog_entries": 3744,
+    "canonical_conditions": 3634,
+    "independent_groups": 3366,
     "numeric_or_template_variants": 268,
     "cross_catalog_reuses": 110,
     "new_parameter_families": 14,
@@ -63,25 +68,78 @@
     "target_independent": 3100,
     "target_reached": true
   },
-  "raw_similarity_diagnostics": {
-    "6_7": {
-      "clone_groups": 5,
-      "near_candidates": 19
-    },
-    "8_9": {
-      "clone_groups": 0,
-      "near_candidates": 26
-    },
-    "note": "Raw local diagnostics do not apply saved manual grouping and review decisions. Global semantic audit has no unresolved candidates."
-  },
-  "syntax": {
-    "python_files": 41,
-    "javascript_files": 7,
+  "browser_ui": {
+    "status": "passed",
+    "url": "http://127.0.0.1:8765/#builder",
+    "viewport_widths": [
+      1280,
+      390
+    ],
+    "scenarios": [
+      "OGE base difficulty with graph and reasoning competencies: requested 3, selected 2, truthful shortage",
+      "Print preview includes the 2 selected original FIPI tasks; returning preserves filters, count, IDs and result",
+      "Append 3 base grade 7 equation tasks to the existing exam work: 5 tasks without duplicate IDs",
+      "Mobile auto panel fits viewport without horizontal overflow",
+      "Temporary viewport reset and all test tasks removed"
+    ],
+    "screenshots": [
+      "preview/auto-work.png",
+      "preview/auto-work-append.png",
+      "preview/auto-work-mobile.png"
+    ],
     "errors": []
   },
-  "browser_ui": {
-    "status": "not_run",
-    "script": "scripts/cua-qa.js",
-    "reason": "Browser security policy blocks file:// URLs; no browser workaround attempted."
+  "exams": {
+    "checks": 4514,
+    "errors": [],
+    "banks": [
+      {
+        "id": "oge",
+        "numbers": 25,
+        "examples": 25,
+        "openExamples": 6,
+        "sourceSha256": "25ef7b3b449f742f63a0b0478c46a6dbfcf9861c8824c7d3e988a05b06e1cda9"
+      },
+      {
+        "id": "ege-basic",
+        "numbers": 21,
+        "examples": 70,
+        "openExamples": 0,
+        "sourceSha256": "e5fc404729bfa3809b34f4cf481bc794cc13b455fa22e041b608421935a2cf57"
+      },
+      {
+        "id": "ege-profile",
+        "numbers": 19,
+        "examples": 55,
+        "openExamples": 14,
+        "sourceSha256": "f223ca76f3c703d136f05e7f197e8fb8bc7a8925b89b1bef533a58e99a5413d5"
+      }
+    ],
+    "scope": "Official-demo source assets, complete examples, answer-table oracle and pure app boundaries; UI tested separately"
+  },
+  "unified_constructor": {
+    "checks": 101,
+    "errors": [],
+    "scope": "Actual app IIFE events and local state, mixed JSON and PDF generator call contract; PDF layout audited separately",
+    "sources": [
+      "class:5:basic",
+      "class:11:basic",
+      "class:11:advanced",
+      "exam:oge",
+      "exam:ege-basic",
+      "exam:ege-profile"
+    ]
+  },
+  "competencies": {
+    "checks": 47,
+    "errors": [],
+    "scope": "Full 3,894-task metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events",
+    "classTasks": 3744,
+    "examExamples": 150
+  },
+  "auto_work": {
+    "checks": 82,
+    "errors": [],
+    "scope": "Pure seeded selection, coverage and diversity; real application filter, build, append, validation, recovery, JSON and PDF payload events"
   }
 }

@@ -1,0 +1,44 @@
+{
+  "samples": [
+    {
+      "file": "/Users/maximigonin/Desktop/МАТБАЗ/БАЗА — готовый проект/output/pdf/1430-mixed-student.pdf",
+      "answers": false,
+      "tasks": 12,
+      "pages": 9,
+      "images": 8,
+      "sha256": "6feec19a1963d85d3aa3ec1183a9eca7fcb276dc708aa0374d513a48101cd0d2",
+      "errors": []
+    },
+    {
+      "file": "/Users/maximigonin/Desktop/МАТБАЗ/БАЗА — готовый проект/output/pdf/1430-mixed-teacher.pdf",
+      "answers": true,
+      "tasks": 12,
+      "pages": 15,
+      "images": 12,
+      "sha256": "dbf6b966ad528442d509053a6424e061b5ada0c037a6dbd5d9a7503dfc1e4d5a",
+      "errors": []
+    }
+  ],
+  "layout": {
+    "documents": 2,
+    "pages": 24,
+    "images": 20,
+    "textRuns": 1570,
+    "taskLabels": 37,
+    "imageCounts": {
+      "b2cc7ebdf1a548c5a073acc55c2f2876b53686d214fa6c2f02102a97b667d5aa": 2,
+      "21524c01d17c9a8381a3af13635a2311d758a624bdb3905f91ced14bd9602f7f": 2,
+      "1a13ff6871dc56ec5adb3c5c82bf46556b23cb1a6d5b1eeab5b5cf663d5db217": 2,
+      "ba4d9d68d6f75af40c977f23a5a62441abc69c158942c8beef15eba28b853d1d": 2,
+      "2179e379d2add8ade30cb7a0915883535bae33c69f7aa9d88993ec81f2eb677e": 2,
+      "4c7ec8fd479a86ba20232d0a04e43037024cb52779b4bffa660937c4aa4d38fe": 2,
+      "9f42c294e4e88477a008e001f6c94003ac4d7cca3f41c7f0872f180df935f2c2": 2,
+      "6bf93377015327b1af6ec539b7d28d82833174ba55bc22c49080324e7909cb01": 2,
+      "4490600028b2747fabd3a4c40d91e3f1ed4545aab0434066335cabeab54271aa": 1,
+      "cb8ec0751b0a618e86d321ca7a835fbab32305331f6381ffc6bccd21be768f78": 1,
+      "aeb5a01acc55634ff23067cb0a5f7fab59c4a8ea8fcc43cccd0d7437e4b6cfc1": 1,
+      "567f956a935681217b815acf7dc02844b0d8a8c3df87035944af60ee486a1ef7": 1
+    },
+    "failures": []
+  }
+}

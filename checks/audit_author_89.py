@@ -2,11 +2,16 @@ from pathlib import Path
 import sys,runpy,json,collections
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'src'))
-ns={'bank':[]}
-for p in sorted((root/'src/author_banks').glob('0[89]_*.py')):exec(p.read_text(),ns)
+from task_bank import load_bank
+bank,_=load_bank()
+# Preserve the original author-bank scope, excluding later open tasks.
+expected_topics={f'8-{n}' for n in [*range(201,210),*range(220,225),*range(230,235)]}|{f'9-{n}' for n in [*range(201,206),*range(220,225),*range(230,235)]}
+topics=sorted((t for t in bank if t['id'] in expected_topics),key=lambda t:tuple(map(int,t['id'].split('-'))))
+assert {t['id'] for t in topics}==expected_topics,'Missing topics from the authored 8–9 bank'
 normalize=runpy.run_path(str(root/'scripts/semantic_audit.py'))['normalize']
-own={q['id']:q for t in ns['bank'] for q in t['tasks']}
-other={q['id']:q for t in json.loads((root/'checks/bank.json').read_text()) for q in t['tasks'] if q['id'] not in own}
+own={q['id']:q for t in topics for q in sorted(t['tasks'],key=lambda q:int(q['id'].split('-')[-1])) if q.get('authoredIndependent') and q.get('kind')!='open'}
+assert own,'Missing authored numeric tasks from the 8–9 bank'
+other={q['id']:q for t in bank for q in t['tasks'] if q['id'] not in own}
 allq=dict(other,**own)
 normal=collections.defaultdict(list)
 for id,q in allq.items():normal[normalize(q['prompt'])].append(id)

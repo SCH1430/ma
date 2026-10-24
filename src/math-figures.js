@@ -102,7 +102,7 @@ function taskPages(tasks){
   const pages=[];let pending=[];
   tasks.forEach((q,i)=>{
     const entry={q,number:i+1};
-    if(geometryFigure(q.id)||q.prompt.length>220){
+    if(q.kind==='open'||geometryFigure(q.id)||q.prompt.length>220){
       if(pending.length){pages.push(pending);pending=[];}pages.push([entry]);
     }else{pending.push(entry);if(pending.length===2){pages.push(pending);pending=[];}}
   });
