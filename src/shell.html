@@ -25,29 +25,17 @@
     [hidden] { display: none !important; }
     ::selection { background: #ccdfae; color: #1e372b; }
     .page { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; overflow: clip; }
-    .landscape { position: absolute; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 18% 84%, #d0e1af 0, transparent 39%), radial-gradient(ellipse at 88% 28%, #d1e0dc 0, transparent 35%), radial-gradient(ellipse at 57% 13%, #fbfcf7 0, transparent 58%), #edf2ee; }
-    .landscape::before { content: ""; position: absolute; inset: 0; opacity: .34; background-image: linear-gradient(#5975651c 1px, transparent 1px), linear-gradient(90deg, #5975651c 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); }
-    .landscape::after { content: ""; position: absolute; width: 600px; height: 230px; bottom: -150px; right: 5%; border-radius: 50%; background: #b6c8ab; filter: blur(95px); opacity: .35; }
-    .sphere { position: absolute; width: 192px; height: 192px; left: -62px; top: 24%; border-radius: 50%; transform: rotate(-24deg); background: radial-gradient(circle at 30% 25%, #ffffffd9, transparent 42%), radial-gradient(circle at 64% 70%, #8fa88f2e, transparent 58%), linear-gradient(135deg, #ffffff2b 32%, #aabda553 65%, #ffffffcf 90%); box-shadow: inset 1px 2px 3px #fff, inset -5px -7px 16px #78957c30, 22px 26px 40px #748d7312; border: 1px solid #ffffffba; }
-    .sphere::before, .sphere::after { content: ""; position: absolute; border: 1px solid #ffffffa6; border-radius: 50%; inset: 0 26%; box-shadow: 1px 0 2px #647f7026; }
-    .sphere::after { inset: 29% 0; }
-    .orbit { position: absolute; width: 530px; height: 530px; right: -276px; top: 26%; transform: rotate(-30deg); opacity: .85; }
-    .orbit-ring { position: absolute; inset: 0; border-radius: 50%; border: 54px solid #ffffff23; background: transparent; box-shadow: inset 3px 3px 5px #fff, inset -10px -5px 18px #779c8655, 3px 2px 3px #ffffffed, 11px 15px 27px #728b7720, -1px -2px 2px #8eaa985c; }
-    .orbit-ring::after { content: ""; position: absolute; inset: -49px; border-radius: 50%; border: 1px solid #ffffffba; box-shadow: inset 7px 0 9px #fff7, 4px 1px 10px #8dada32b; }
-    .orbit-line { position: absolute; inset: 98px -75px; border: 1px solid #77977d36; border-radius: 50%; transform: rotate(65deg); }
-    .orbit-line::after { content: ""; position: absolute; height: 9px; width: 9px; border-radius: 50%; background: #668576; left: 90px; bottom: 17px; box-shadow: 0 0 0 5px #fff5; }
-    .glass-cube { position: absolute; width: 103px; height: 103px; bottom: 12%; left: 15%; border-radius: 25px; transform: rotate(-18deg); background: linear-gradient(145deg, #fffffff0, #e5eecb30 40%, #aebf7a25 70%, #ffffffb3); border: 1px solid #ffffffd9; box-shadow: inset 2px 2px 4px #fff, inset -3px -4px 9px #8ba07121, 9px 17px 20px #6f84620e; }
-    .glass-cube svg { width: 46px; height: 46px; margin: 28px; color: #66825a; opacity: .7; }
-    .math-note { position: absolute; font-family: Georgia, serif; font-size: 23px; font-style: italic; color: #62806c; opacity: .45; }
-    .note-a { left: 11.5%; top: 31%; transform: rotate(-9deg); }
-    .note-b { right: 16%; bottom: 20%; font-size: 28px; transform: rotate(8deg); }
-    .cross { position: absolute; width: 16px; height: 16px; color: #6e897357; }
-    .cross::before, .cross::after { content: ""; position: absolute; background: currentColor; }
-    .cross::before { height: 1px; width: 16px; top: 7px; }
-    .cross::after { height: 16px; width: 1px; left: 7px; }
-    .cross-a { left: 20%; top: 20%; }
-    .cross-b { right: 23%; top: 22%; }
-    .cross-c { right: 8%; bottom: 13%; }
+    /* A mathematical atlas: the drawings live at the edges of a quiet sheet. */
+    .landscape { position: fixed; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 49% 40%, #fbfcf7 0, #fbfcf700 57%), radial-gradient(ellipse at 4% 77%, #cfdfbb 0, #cfdfbb00 43%), radial-gradient(ellipse at 99% 27%, #c9ddd5 0, #c9ddd500 43%), radial-gradient(ellipse at 83% 100%, #ece4c9 0, #ece4c900 38%), #eef2e9; }
+    .landscape::before { content: ""; position: absolute; inset: 0; opacity: .2; background-image: radial-gradient(#46674e38 .55px, transparent .7px); background-size: 5px 5px; mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); }
+    .landscape::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 43%, #fbfcf76b, #fbfcf700 62%); }
+    .math-atlas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .6s ease; }
+    .atlas-line { fill: none; stroke: #50735d; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+    .atlas-label { fill: #53725c; font: italic 18px Georgia, "Times New Roman", serif; letter-spacing: .025em; }
+    .atlas-micro { fill: #597460; font: 9px ui-monospace, Consolas, monospace; letter-spacing: .17em; }
+    .atlas-solid, .atlas-sphere { transform-box: fill-box; transform-origin: center; animation: atlas-drift 24s ease-in-out infinite alternate; }
+    .atlas-sphere { animation-duration: 30s; animation-delay: -9s; }
+    @keyframes atlas-drift { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
     .site-header, .site-footer { display: flex; align-items: center; justify-content: space-between; width: 100%; }
     .site-header { padding: 32px 48px; gap: 24px; }
     .brand { display: flex; align-items: center; gap: 13px; user-select: none; }
@@ -110,24 +98,16 @@
     @media (min-width: 1600px) {
       .site-header { padding: 40px 64px; }
       .site-footer { padding: 30px 64px 36px; }
-      .orbit { right: -225px; }
-      .sphere { left: -28px; }
     }
     @media (max-width: 900px) {
       .site-header { padding: 28px 30px; }
       .site-footer { padding: 24px 30px; }
       main { padding-top: 50px; padding-bottom: 70px; }
       h1 { font-size: clamp(48px, 7.5vw, 68px); }
-      .orbit { width: 430px; height: 430px; right: -310px; top: 35%; }
-      .orbit-ring { border-width: 42px; }
-      .orbit-ring::after { inset: -38px; }
-      .sphere { left: -130px; top: 21%; }
-      .glass-cube { left: 8%; bottom: 12%; width: 71px; height: 71px; border-radius: 19px; }
-      .glass-cube svg { width: 33px; height: 33px; margin: 18px; }
-      .note-a { left: 9%; top: 19%; font-size: 19px; }
-      .note-b { right: 10%; bottom: 13%; font-size: 23px; }
-      .cross-a { left: 25%; top: 15%; }
-      .cross-b { right: 17%; top: 25%; }
+      .math-atlas { width: 128%; max-width: none; left: -14%; }
+      .atlas-solid { transform: translateX(220px) scale(.88); animation: none; }
+      .atlas-sphere { transform: translateX(-230px) scale(.88); animation: none; }
+      .atlas-functions { opacity: .65; }
       .footer-end { gap: 15px; }
     }
     @media (max-width: 600px) {
@@ -160,19 +140,13 @@
       .footer-end { font-size: 9px; }
       .footer-end > span:first-child { display: none; }
       .coordinate { font-size: 9px; }
-      .landscape::before { background-size: 45px 45px; opacity: .23; }
-      .sphere { width: 145px; height: 145px; left: -112px; top: 25%; }
-      .orbit { width: 315px; height: 315px; right: -254px; top: 18%; opacity: .65; }
-      .orbit-ring { border-width: 32px; }
-      .orbit-ring::after { inset: -28px; }
-      .orbit-line { inset: 65px -40px; }
-      .glass-cube { width: 65px; height: 65px; left: -29px; bottom: 7%; opacity: .65; }
-      .glass-cube svg { width: 30px; height: 30px; margin: 17px; }
-      .note-a { display: none; }
-      .note-b { right: 10%; bottom: 8.8%; font-size: 20px; opacity: .3; }
-      .cross-a { top: 14%; left: 14%; }
-      .cross-b { top: 12%; right: 26%; width: 10px; height: 10px; }
-      .cross-c { display: none; }
+      .landscape { background: radial-gradient(ellipse at 50% 36%, #fbfcf7 0, #fbfcf700 65%), radial-gradient(ellipse at 0 84%, #d9e5c7 0, #d9e5c700 60%), radial-gradient(ellipse at 100% 12%, #d2e4dc 0, #d2e4dc00 50%), #f0f3e9; }
+      .math-atlas { width: 100%; left: 0; opacity: .65; }
+      .atlas-solid { transform: translate(430px, 340px) scale(.65); }
+      .atlas-sphere { transform: translate(-375px, -220px) scale(.68); }
+      .atlas-functions { transform: translate(420px, 90px); opacity: .3; }
+      .atlas-functions .atlas-label { display: none; }
+      .atlas-annotations { display: none; }
       .role-panel { padding: 29px 23px; border-radius: 29px; }
       .role-view h1 { font-size: clamp(34px, 9.5vw, 47px); }
       .role-view .intro { font-size: 14px; }
@@ -201,9 +175,11 @@
     }
     @media (prefers-contrast: more) {
       :root { --muted: #354b3d; }
+      .math-atlas, .landscape::before { display: none; }
       .role-card, .role-panel { background: #f4f7ee; border-color: #59705c; }
       .role-description, .choice-hint, .site-footer, .header-note { color: #354b3d; }
     }
+    @media (forced-colors: active) { .landscape { display: none; } }
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .role-card, .role-panel { background: #f4f7ed; }
       .role-card.student { background: #e6efd5; }
@@ -214,11 +190,112 @@
   <a class="skip-link" href="#main">Перейти к выбору роли</a>
   <div class="page">
     <div class="landscape" aria-hidden="true">
-      <div class="sphere"></div>
-      <div class="orbit"><div class="orbit-ring"></div><div class="orbit-line"></div></div>
-      <div class="glass-cube"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 20h20M20 10v20"/></svg></div>
-      <span class="math-note note-a">x + y</span><span class="math-note note-b">∞</span>
-      <i class="cross cross-a"></i><i class="cross cross-b"></i><i class="cross cross-c"></i>
+      <svg class="math-atlas" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="atlas-grid" width="64" height="64" patternUnits="userSpaceOnUse">
+            <path d="M64 0H0V64" stroke="#54735c" stroke-opacity=".13" stroke-width=".65"/>
+            <circle cx="1" cy="1" r="1" fill="#54735c" fill-opacity=".17"/>
+          </pattern>
+          <radialGradient id="atlas-edge-fade" cx="50%" cy="43%" r="65%">
+            <stop offset=".29" stop-color="#000"/><stop offset=".7" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff"/>
+          </radialGradient>
+          <mask id="atlas-edges"><rect width="1600" height="1000" fill="url(#atlas-edge-fade)"/></mask>
+          <linearGradient id="atlas-crystal" x1="60" y1="290" x2="300" y2="580" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#fff" stop-opacity=".9"/><stop offset=".46" stop-color="#e3edcf" stop-opacity=".35"/><stop offset="1" stop-color="#86a684" stop-opacity=".2"/>
+          </linearGradient>
+          <linearGradient id="atlas-crystal-shade" x1="175" y1="215" x2="330" y2="540" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#b2c9a5" stop-opacity=".08"/><stop offset="1" stop-color="#77967b" stop-opacity=".23"/>
+          </linearGradient>
+          <linearGradient id="atlas-edge-light" x1="40" y1="215" x2="325" y2="635" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#fff"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#71927c" stop-opacity=".25"/>
+          </linearGradient>
+          <radialGradient id="atlas-globe" cx="29%" cy="25%" r="80%">
+            <stop stop-color="#fff" stop-opacity=".7"/><stop offset=".5" stop-color="#e1eee6" stop-opacity=".2"/><stop offset=".83" stop-color="#82ab96" stop-opacity=".18"/><stop offset="1" stop-color="#eaf5e8" stop-opacity=".5"/>
+          </radialGradient>
+          <linearGradient id="atlas-orbit" x1="-300" y1="-100" x2="270" y2="100" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#88a38d" stop-opacity=".12"/><stop offset=".44" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#6b8b73" stop-opacity=".34"/>
+          </linearGradient>
+          <linearGradient id="atlas-curve" x1="100" y1="0" x2="460" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#6b8b5b" stop-opacity="0"/><stop offset=".3" stop-color="#6b8b5b" stop-opacity=".6"/><stop offset=".8" stop-color="#6b8b5b" stop-opacity=".6"/><stop offset="1" stop-color="#6b8b5b" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="atlas-globe-clip"><circle r="226"/></clipPath>
+        </defs>
+        <rect width="1600" height="1000" fill="url(#atlas-grid)" mask="url(#atlas-edges)"/>
+
+        <!-- An octahedron: translucent faces, construction lines, lit edges. -->
+        <g class="atlas-solid">
+          <ellipse cx="183" cy="660" rx="126" ry="17" fill="#73906a" opacity=".035"/>
+          <g class="atlas-line" opacity=".15">
+            <ellipse cx="180" cy="423" rx="205" ry="78" transform="rotate(-23 180 423)"/>
+            <path d="M175 175V677M12 437 361 365" stroke-dasharray="3 8"/>
+            <circle cx="175" cy="423" r="204" stroke-dasharray="1 12"/>
+          </g>
+          <path d="m175 215-130 200 135 65Z" fill="url(#atlas-crystal)"/>
+          <path d="m175 215 150 175-145 90Z" fill="url(#atlas-crystal-shade)"/>
+          <path d="m45 415 151 220-16-155Z" fill="#edf4df" fill-opacity=".36"/>
+          <path d="m180 480 145-90-129 245Z" fill="url(#atlas-crystal)"/>
+          <g class="atlas-line" stroke-opacity=".2">
+            <path d="m175 215 15 115 135 60M45 415l145-85 6 305" stroke-dasharray="4 6"/>
+            <path d="m175 215-130 200 151 220 129-245-150-175 5 265-135-65m135 65 145-90m-145 90 16 155"/>
+          </g>
+          <path d="m45 415 130-200 5 265 145-90M45 415l135 65 16 155" stroke="url(#atlas-edge-light)" stroke-width="1.8" stroke-linejoin="round"/>
+          <g fill="#6e8d70" fill-opacity=".45" stroke="#f4f8ed" stroke-width="3">
+            <circle cx="175" cy="215" r="4"/><circle cx="325" cy="390" r="4"/><circle cx="180" cy="480" r="4"/><circle cx="196" cy="635" r="4"/>
+          </g>
+          <g class="atlas-label" opacity=".45"><text x="158" y="197">A</text><text x="338" y="394">B</text><text x="197" y="488">O</text></g>
+        </g>
+
+        <!-- A spherical coordinate net and an oblique orbital section. -->
+        <g class="atlas-sphere">
+          <g transform="translate(1445 438) rotate(-23)">
+            <circle r="254" stroke="#6c907b" stroke-opacity=".1" stroke-dasharray="2 9"/>
+            <circle r="238" stroke="#fff" stroke-opacity=".4" stroke-width="12"/>
+            <circle r="226" fill="url(#atlas-globe)" stroke="#fafff6" stroke-opacity=".9" stroke-width="1.5"/>
+            <g class="atlas-line" stroke-opacity=".23" clip-path="url(#atlas-globe-clip)">
+              <ellipse rx="63" ry="226"/><ellipse rx="139" ry="226"/><ellipse rx="198" ry="226"/>
+              <ellipse rx="226" ry="57"/><ellipse rx="226" ry="133"/><ellipse rx="226" ry="195"/>
+              <path d="M-226 0h452M0-226v452" stroke-opacity=".35"/>
+            </g>
+            <path d="M-160-160A226 226 0 0 1 160-160" stroke="#fff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
+            <ellipse rx="306" ry="91" transform="rotate(-32)" stroke="url(#atlas-orbit)" stroke-width="1.5"/>
+            <g transform="rotate(-32)">
+              <circle cx="-249" cy="53" r="10" fill="#fff" fill-opacity=".38"/>
+              <circle cx="-249" cy="53" r="4" fill="#b3995d" fill-opacity=".75"/>
+              <path d="M-318 0h22M296 0h22" stroke="#75927b" stroke-opacity=".3"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- Function sketches, set away from the reading area. -->
+        <g class="atlas-functions">
+          <g class="atlas-line" opacity=".23">
+            <path d="M125 836h330m-6-4 6 4-6 4M270 900V713m-4 6 4-6 4 6"/>
+            <path d="M172 832v8m49-8v8m98-8v8m49-8v8M266 786h8m-8-50h8m-8 150h8"/>
+            <path d="M172 736h98m98 0H270M172 736v100m196-100v100" stroke-dasharray="3 7" opacity=".5"/>
+          </g>
+          <path d="M154 696Q270 976 386 696" stroke="url(#atlas-curve)" stroke-width="1.8"/>
+          <circle cx="319" cy="811" r="3" fill="#8aa16f" fill-opacity=".65"/>
+          <g class="atlas-label" opacity=".42"><text x="354" y="743">y = x²</text><text x="460" y="841">x</text><text x="279" y="718">y</text><text x="251" y="856" font-size="13">0</text></g>
+          <g transform="translate(1045 810)">
+            <g class="atlas-line" opacity=".2">
+              <path d="M0 0h385m-6-4 6 4-6 4M50 71V-75m-4 6 4-6 4 6"/>
+              <path d="M130-4v8m80-8v8m80-8v8M46-45h8m-8 90h8"/>
+              <path d="M50-45h320M50 45h320" stroke-dasharray="2 8" opacity=".55"/>
+            </g>
+            <path d="M-30 0C-3 0-3 45 24 45S50 0 50 0C77-60 103-60 130 0S183 60 210 0 263-60 290 0 343 60 370 0" stroke="#a28a52" stroke-opacity=".42" stroke-width="1.6"/>
+            <circle cx="90" cy="-45" r="3" fill="#b3995d" fill-opacity=".6"/>
+            <g class="atlas-label" opacity=".4"><text x="242" y="-64">y = sin x</text><text x="391" y="5">x</text></g>
+          </g>
+        </g>
+
+        <g class="atlas-annotations" opacity=".35">
+          <g class="atlas-line"><path d="M367 187h16m-8-8v16M1180 180h16m-8-8v16M984 909h12m-6-6v12"/></g>
+          <text class="atlas-micro" x="87" y="153">FIG. 01</text>
+          <text class="atlas-label" x="1251" y="168" font-size="23">ℝ³</text>
+          <circle cx="1134" cy="229" r="3" stroke="#8a9e75"/>
+          <path d="M1134 216v-34h43" stroke="#78936f" stroke-opacity=".4" stroke-dasharray="2 5"/>
+        </g>
+      </svg>
     </div>
     <header class="site-header">
       <div class="brand" aria-label="Школа 1430">

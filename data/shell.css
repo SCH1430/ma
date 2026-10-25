@@ -16,29 +16,17 @@
     [hidden] { display: none !important; }
     ::selection { background: #ccdfae; color: #1e372b; }
     .page { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; overflow: clip; }
-    .landscape { position: absolute; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 18% 84%, #d0e1af 0, transparent 39%), radial-gradient(ellipse at 88% 28%, #d1e0dc 0, transparent 35%), radial-gradient(ellipse at 57% 13%, #fbfcf7 0, transparent 58%), #edf2ee; }
-    .landscape::before { content: ""; position: absolute; inset: 0; opacity: .34; background-image: linear-gradient(#5975651c 1px, transparent 1px), linear-gradient(90deg, #5975651c 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 38%, transparent 68%, #000); }
-    .landscape::after { content: ""; position: absolute; width: 600px; height: 230px; bottom: -150px; right: 5%; border-radius: 50%; background: #b6c8ab; filter: blur(95px); opacity: .35; }
-    .sphere { position: absolute; width: 192px; height: 192px; left: -62px; top: 24%; border-radius: 50%; transform: rotate(-24deg); background: radial-gradient(circle at 30% 25%, #ffffffd9, transparent 42%), radial-gradient(circle at 64% 70%, #8fa88f2e, transparent 58%), linear-gradient(135deg, #ffffff2b 32%, #aabda553 65%, #ffffffcf 90%); box-shadow: inset 1px 2px 3px #fff, inset -5px -7px 16px #78957c30, 22px 26px 40px #748d7312; border: 1px solid #ffffffba; }
-    .sphere::before, .sphere::after { content: ""; position: absolute; border: 1px solid #ffffffa6; border-radius: 50%; inset: 0 26%; box-shadow: 1px 0 2px #647f7026; }
-    .sphere::after { inset: 29% 0; }
-    .orbit { position: absolute; width: 530px; height: 530px; right: -276px; top: 26%; transform: rotate(-30deg); opacity: .85; }
-    .orbit-ring { position: absolute; inset: 0; border-radius: 50%; border: 54px solid #ffffff23; background: transparent; box-shadow: inset 3px 3px 5px #fff, inset -10px -5px 18px #779c8655, 3px 2px 3px #ffffffed, 11px 15px 27px #728b7720, -1px -2px 2px #8eaa985c; }
-    .orbit-ring::after { content: ""; position: absolute; inset: -49px; border-radius: 50%; border: 1px solid #ffffffba; box-shadow: inset 7px 0 9px #fff7, 4px 1px 10px #8dada32b; }
-    .orbit-line { position: absolute; inset: 98px -75px; border: 1px solid #77977d36; border-radius: 50%; transform: rotate(65deg); }
-    .orbit-line::after { content: ""; position: absolute; height: 9px; width: 9px; border-radius: 50%; background: #668576; left: 90px; bottom: 17px; box-shadow: 0 0 0 5px #fff5; }
-    .glass-cube { position: absolute; width: 103px; height: 103px; bottom: 12%; left: 15%; border-radius: 25px; transform: rotate(-18deg); background: linear-gradient(145deg, #fffffff0, #e5eecb30 40%, #aebf7a25 70%, #ffffffb3); border: 1px solid #ffffffd9; box-shadow: inset 2px 2px 4px #fff, inset -3px -4px 9px #8ba07121, 9px 17px 20px #6f84620e; }
-    .glass-cube svg { width: 46px; height: 46px; margin: 28px; color: #66825a; opacity: .7; }
-    .math-note { position: absolute; font-family: Georgia, serif; font-size: 23px; font-style: italic; color: #62806c; opacity: .45; }
-    .note-a { left: 11.5%; top: 31%; transform: rotate(-9deg); }
-    .note-b { right: 16%; bottom: 20%; font-size: 28px; transform: rotate(8deg); }
-    .cross { position: absolute; width: 16px; height: 16px; color: #6e897357; }
-    .cross::before, .cross::after { content: ""; position: absolute; background: currentColor; }
-    .cross::before { height: 1px; width: 16px; top: 7px; }
-    .cross::after { height: 16px; width: 1px; left: 7px; }
-    .cross-a { left: 20%; top: 20%; }
-    .cross-b { right: 23%; top: 22%; }
-    .cross-c { right: 8%; bottom: 13%; }
+    /* A mathematical atlas: the drawings live at the edges of a quiet sheet. */
+    .landscape { position: fixed; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 49% 40%, #fbfcf7 0, #fbfcf700 57%), radial-gradient(ellipse at 4% 77%, #cfdfbb 0, #cfdfbb00 43%), radial-gradient(ellipse at 99% 27%, #c9ddd5 0, #c9ddd500 43%), radial-gradient(ellipse at 83% 100%, #ece4c9 0, #ece4c900 38%), #eef2e9; }
+    .landscape::before { content: ""; position: absolute; inset: 0; opacity: .2; background-image: radial-gradient(#46674e38 .55px, transparent .7px); background-size: 5px 5px; mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); }
+    .landscape::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 43%, #fbfcf76b, #fbfcf700 62%); }
+    .math-atlas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .6s ease; }
+    .atlas-line { fill: none; stroke: #50735d; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+    .atlas-label { fill: #53725c; font: italic 18px Georgia, "Times New Roman", serif; letter-spacing: .025em; }
+    .atlas-micro { fill: #597460; font: 9px ui-monospace, Consolas, monospace; letter-spacing: .17em; }
+    .atlas-solid, .atlas-sphere { transform-box: fill-box; transform-origin: center; animation: atlas-drift 24s ease-in-out infinite alternate; }
+    .atlas-sphere { animation-duration: 30s; animation-delay: -9s; }
+    @keyframes atlas-drift { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
     .site-header, .site-footer { display: flex; align-items: center; justify-content: space-between; width: 100%; }
     .site-header { padding: 32px 48px; gap: 24px; }
     .brand { display: flex; align-items: center; gap: 13px; user-select: none; }
@@ -101,24 +89,16 @@
     @media (min-width: 1600px) {
       .site-header { padding: 40px 64px; }
       .site-footer { padding: 30px 64px 36px; }
-      .orbit { right: -225px; }
-      .sphere { left: -28px; }
     }
     @media (max-width: 900px) {
       .site-header { padding: 28px 30px; }
       .site-footer { padding: 24px 30px; }
       main { padding-top: 50px; padding-bottom: 70px; }
       h1 { font-size: clamp(48px, 7.5vw, 68px); }
-      .orbit { width: 430px; height: 430px; right: -310px; top: 35%; }
-      .orbit-ring { border-width: 42px; }
-      .orbit-ring::after { inset: -38px; }
-      .sphere { left: -130px; top: 21%; }
-      .glass-cube { left: 8%; bottom: 12%; width: 71px; height: 71px; border-radius: 19px; }
-      .glass-cube svg { width: 33px; height: 33px; margin: 18px; }
-      .note-a { left: 9%; top: 19%; font-size: 19px; }
-      .note-b { right: 10%; bottom: 13%; font-size: 23px; }
-      .cross-a { left: 25%; top: 15%; }
-      .cross-b { right: 17%; top: 25%; }
+      .math-atlas { width: 128%; max-width: none; left: -14%; }
+      .atlas-solid { transform: translateX(220px) scale(.88); animation: none; }
+      .atlas-sphere { transform: translateX(-230px) scale(.88); animation: none; }
+      .atlas-functions { opacity: .65; }
       .footer-end { gap: 15px; }
     }
     @media (max-width: 600px) {
@@ -151,19 +131,13 @@
       .footer-end { font-size: 9px; }
       .footer-end > span:first-child { display: none; }
       .coordinate { font-size: 9px; }
-      .landscape::before { background-size: 45px 45px; opacity: .23; }
-      .sphere { width: 145px; height: 145px; left: -112px; top: 25%; }
-      .orbit { width: 315px; height: 315px; right: -254px; top: 18%; opacity: .65; }
-      .orbit-ring { border-width: 32px; }
-      .orbit-ring::after { inset: -28px; }
-      .orbit-line { inset: 65px -40px; }
-      .glass-cube { width: 65px; height: 65px; left: -29px; bottom: 7%; opacity: .65; }
-      .glass-cube svg { width: 30px; height: 30px; margin: 17px; }
-      .note-a { display: none; }
-      .note-b { right: 10%; bottom: 8.8%; font-size: 20px; opacity: .3; }
-      .cross-a { top: 14%; left: 14%; }
-      .cross-b { top: 12%; right: 26%; width: 10px; height: 10px; }
-      .cross-c { display: none; }
+      .landscape { background: radial-gradient(ellipse at 50% 36%, #fbfcf7 0, #fbfcf700 65%), radial-gradient(ellipse at 0 84%, #d9e5c7 0, #d9e5c700 60%), radial-gradient(ellipse at 100% 12%, #d2e4dc 0, #d2e4dc00 50%), #f0f3e9; }
+      .math-atlas { width: 100%; left: 0; opacity: .65; }
+      .atlas-solid { transform: translate(430px, 340px) scale(.65); }
+      .atlas-sphere { transform: translate(-375px, -220px) scale(.68); }
+      .atlas-functions { transform: translate(420px, 90px); opacity: .3; }
+      .atlas-functions .atlas-label { display: none; }
+      .atlas-annotations { display: none; }
       .role-panel { padding: 29px 23px; border-radius: 29px; }
       .role-view h1 { font-size: clamp(34px, 9.5vw, 47px); }
       .role-view .intro { font-size: 14px; }
@@ -192,9 +166,11 @@
     }
     @media (prefers-contrast: more) {
       :root { --muted: #354b3d; }
+      .math-atlas, .landscape::before { display: none; }
       .role-card, .role-panel { background: #f4f7ee; border-color: #59705c; }
       .role-description, .choice-hint, .site-footer, .header-note { color: #354b3d; }
     }
+    @media (forced-colors: active) { .landscape { display: none; } }
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .role-card, .role-panel { background: #f4f7ed; }
       .role-card.student { background: #e6efd5; }
