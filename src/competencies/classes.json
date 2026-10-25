@@ -2865,6 +2865,12185 @@
     "6-231-12": [
       "reasoning",
       "modelling"
+    ],
+    "5-01-8001": [
+      "calculations"
+    ],
+    "5-02-8001": [
+      "calculations"
+    ],
+    "5-03-8001": [
+      "calculations"
+    ],
+    "5-04-8001": [
+      "calculations"
+    ],
+    "5-05-8001": [
+      "modelling"
+    ],
+    "5-205-8001": [
+      "modelling"
+    ],
+    "5-06-8001": [
+      "geometry"
+    ],
+    "5-07-8001": [
+      "geometry"
+    ],
+    "5-08-8001": [
+      "geometry"
+    ],
+    "5-219-8001": [
+      "geometry"
+    ],
+    "5-222-8001": [
+      "data"
+    ],
+    "5-01-8002": [
+      "calculations"
+    ],
+    "5-02-8002": [
+      "modelling"
+    ],
+    "5-03-8002": [
+      "calculations"
+    ],
+    "5-04-8002": [
+      "modelling"
+    ],
+    "5-05-8002": [
+      "modelling"
+    ],
+    "5-205-8002": [
+      "modelling"
+    ],
+    "5-06-8002": [
+      "geometry"
+    ],
+    "5-07-8002": [
+      "geometry"
+    ],
+    "5-08-8002": [
+      "geometry"
+    ],
+    "5-219-8002": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8002": [
+      "data"
+    ],
+    "5-01-8003": [
+      "calculations"
+    ],
+    "5-02-8003": [
+      "calculations"
+    ],
+    "5-03-8003": [
+      "calculations"
+    ],
+    "5-04-8003": [
+      "calculations"
+    ],
+    "5-05-8003": [
+      "modelling"
+    ],
+    "5-205-8003": [
+      "modelling"
+    ],
+    "5-06-8003": [
+      "geometry"
+    ],
+    "5-07-8003": [
+      "geometry"
+    ],
+    "5-08-8003": [
+      "geometry"
+    ],
+    "5-219-8003": [
+      "geometry"
+    ],
+    "5-222-8003": [
+      "data"
+    ],
+    "5-01-8004": [
+      "calculations"
+    ],
+    "5-02-8004": [
+      "modelling"
+    ],
+    "5-03-8004": [
+      "calculations"
+    ],
+    "5-04-8004": [
+      "modelling"
+    ],
+    "5-05-8004": [
+      "modelling"
+    ],
+    "5-205-8004": [
+      "modelling"
+    ],
+    "5-06-8004": [
+      "geometry"
+    ],
+    "5-07-8004": [
+      "geometry"
+    ],
+    "5-08-8004": [
+      "geometry"
+    ],
+    "5-219-8004": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8004": [
+      "data"
+    ],
+    "5-01-8005": [
+      "calculations"
+    ],
+    "5-02-8005": [
+      "calculations"
+    ],
+    "5-03-8005": [
+      "calculations"
+    ],
+    "5-04-8005": [
+      "calculations"
+    ],
+    "5-05-8005": [
+      "modelling"
+    ],
+    "5-205-8005": [
+      "modelling"
+    ],
+    "5-06-8005": [
+      "geometry"
+    ],
+    "5-07-8005": [
+      "geometry"
+    ],
+    "5-08-8005": [
+      "geometry"
+    ],
+    "5-219-8005": [
+      "geometry"
+    ],
+    "5-222-8005": [
+      "data"
+    ],
+    "5-01-8006": [
+      "calculations"
+    ],
+    "5-02-8006": [
+      "modelling"
+    ],
+    "5-03-8006": [
+      "calculations"
+    ],
+    "5-04-8006": [
+      "modelling"
+    ],
+    "5-05-8006": [
+      "modelling"
+    ],
+    "5-205-8006": [
+      "modelling"
+    ],
+    "5-06-8006": [
+      "geometry"
+    ],
+    "5-07-8006": [
+      "geometry"
+    ],
+    "5-08-8006": [
+      "geometry"
+    ],
+    "5-219-8006": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8006": [
+      "data"
+    ],
+    "5-01-8007": [
+      "calculations"
+    ],
+    "5-02-8007": [
+      "calculations"
+    ],
+    "5-03-8007": [
+      "calculations"
+    ],
+    "5-04-8007": [
+      "calculations"
+    ],
+    "5-05-8007": [
+      "modelling"
+    ],
+    "5-205-8007": [
+      "modelling"
+    ],
+    "5-06-8007": [
+      "geometry"
+    ],
+    "5-07-8007": [
+      "geometry"
+    ],
+    "5-08-8007": [
+      "geometry"
+    ],
+    "5-219-8007": [
+      "geometry"
+    ],
+    "5-222-8007": [
+      "data"
+    ],
+    "5-01-8008": [
+      "calculations"
+    ],
+    "5-02-8008": [
+      "modelling"
+    ],
+    "5-03-8008": [
+      "calculations"
+    ],
+    "5-04-8008": [
+      "modelling"
+    ],
+    "5-05-8008": [
+      "modelling"
+    ],
+    "5-205-8008": [
+      "modelling"
+    ],
+    "5-06-8008": [
+      "geometry"
+    ],
+    "5-07-8008": [
+      "geometry"
+    ],
+    "5-08-8008": [
+      "geometry"
+    ],
+    "5-219-8008": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8008": [
+      "data"
+    ],
+    "5-01-8009": [
+      "calculations"
+    ],
+    "5-02-8009": [
+      "calculations"
+    ],
+    "5-03-8009": [
+      "calculations"
+    ],
+    "5-04-8009": [
+      "calculations"
+    ],
+    "5-05-8009": [
+      "modelling"
+    ],
+    "5-205-8009": [
+      "modelling"
+    ],
+    "5-06-8009": [
+      "geometry"
+    ],
+    "5-07-8009": [
+      "geometry"
+    ],
+    "5-08-8009": [
+      "geometry"
+    ],
+    "5-219-8009": [
+      "geometry"
+    ],
+    "5-222-8009": [
+      "data"
+    ],
+    "5-01-8010": [
+      "calculations"
+    ],
+    "5-02-8010": [
+      "modelling"
+    ],
+    "5-03-8010": [
+      "calculations"
+    ],
+    "5-04-8010": [
+      "modelling"
+    ],
+    "5-05-8010": [
+      "modelling"
+    ],
+    "5-205-8010": [
+      "modelling"
+    ],
+    "5-06-8010": [
+      "geometry"
+    ],
+    "5-07-8010": [
+      "geometry"
+    ],
+    "5-08-8010": [
+      "geometry"
+    ],
+    "5-219-8010": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8010": [
+      "data"
+    ],
+    "5-01-8011": [
+      "calculations"
+    ],
+    "5-02-8011": [
+      "calculations"
+    ],
+    "5-03-8011": [
+      "calculations"
+    ],
+    "5-04-8011": [
+      "calculations"
+    ],
+    "5-05-8011": [
+      "modelling"
+    ],
+    "5-205-8011": [
+      "modelling"
+    ],
+    "5-06-8011": [
+      "geometry"
+    ],
+    "5-07-8011": [
+      "geometry"
+    ],
+    "5-08-8011": [
+      "geometry"
+    ],
+    "5-219-8011": [
+      "geometry"
+    ],
+    "5-222-8011": [
+      "data"
+    ],
+    "5-01-8012": [
+      "calculations"
+    ],
+    "5-02-8012": [
+      "modelling"
+    ],
+    "5-03-8012": [
+      "calculations"
+    ],
+    "5-04-8012": [
+      "modelling"
+    ],
+    "5-05-8012": [
+      "modelling"
+    ],
+    "5-205-8012": [
+      "modelling"
+    ],
+    "5-06-8012": [
+      "geometry"
+    ],
+    "5-07-8012": [
+      "geometry"
+    ],
+    "5-08-8012": [
+      "geometry"
+    ],
+    "5-219-8012": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8012": [
+      "data"
+    ],
+    "5-01-8013": [
+      "calculations"
+    ],
+    "5-02-8013": [
+      "calculations"
+    ],
+    "5-03-8013": [
+      "calculations"
+    ],
+    "5-04-8013": [
+      "calculations"
+    ],
+    "5-05-8013": [
+      "modelling"
+    ],
+    "5-205-8013": [
+      "modelling"
+    ],
+    "5-06-8013": [
+      "geometry"
+    ],
+    "5-07-8013": [
+      "geometry"
+    ],
+    "5-08-8013": [
+      "geometry"
+    ],
+    "5-219-8013": [
+      "geometry"
+    ],
+    "5-222-8013": [
+      "data"
+    ],
+    "5-01-8014": [
+      "calculations"
+    ],
+    "5-02-8014": [
+      "modelling"
+    ],
+    "5-03-8014": [
+      "calculations"
+    ],
+    "5-04-8014": [
+      "modelling"
+    ],
+    "5-05-8014": [
+      "modelling"
+    ],
+    "5-205-8014": [
+      "modelling"
+    ],
+    "5-06-8014": [
+      "geometry"
+    ],
+    "5-07-8014": [
+      "geometry"
+    ],
+    "5-08-8014": [
+      "geometry"
+    ],
+    "5-219-8014": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8014": [
+      "data"
+    ],
+    "5-01-8015": [
+      "calculations"
+    ],
+    "5-02-8015": [
+      "calculations"
+    ],
+    "5-03-8015": [
+      "calculations"
+    ],
+    "5-04-8015": [
+      "calculations"
+    ],
+    "5-05-8015": [
+      "modelling"
+    ],
+    "5-205-8015": [
+      "modelling"
+    ],
+    "5-06-8015": [
+      "geometry"
+    ],
+    "5-07-8015": [
+      "geometry"
+    ],
+    "5-08-8015": [
+      "geometry"
+    ],
+    "5-219-8015": [
+      "geometry"
+    ],
+    "5-222-8015": [
+      "data"
+    ],
+    "5-01-8016": [
+      "calculations"
+    ],
+    "5-02-8016": [
+      "modelling"
+    ],
+    "5-03-8016": [
+      "calculations"
+    ],
+    "5-04-8016": [
+      "modelling"
+    ],
+    "5-05-8016": [
+      "modelling"
+    ],
+    "5-205-8016": [
+      "modelling"
+    ],
+    "5-06-8016": [
+      "geometry"
+    ],
+    "5-07-8016": [
+      "geometry"
+    ],
+    "5-08-8016": [
+      "geometry"
+    ],
+    "5-219-8016": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8016": [
+      "data"
+    ],
+    "5-01-8017": [
+      "calculations"
+    ],
+    "5-02-8017": [
+      "calculations"
+    ],
+    "5-03-8017": [
+      "calculations"
+    ],
+    "5-04-8017": [
+      "calculations"
+    ],
+    "5-05-8017": [
+      "modelling"
+    ],
+    "5-205-8017": [
+      "modelling"
+    ],
+    "5-06-8017": [
+      "geometry"
+    ],
+    "5-07-8017": [
+      "geometry"
+    ],
+    "5-08-8017": [
+      "geometry"
+    ],
+    "5-219-8017": [
+      "geometry"
+    ],
+    "5-222-8017": [
+      "data"
+    ],
+    "5-01-8018": [
+      "calculations"
+    ],
+    "5-02-8018": [
+      "modelling"
+    ],
+    "5-03-8018": [
+      "calculations"
+    ],
+    "5-04-8018": [
+      "modelling"
+    ],
+    "5-05-8018": [
+      "modelling"
+    ],
+    "5-205-8018": [
+      "modelling"
+    ],
+    "5-06-8018": [
+      "geometry"
+    ],
+    "5-07-8018": [
+      "geometry"
+    ],
+    "5-08-8018": [
+      "geometry"
+    ],
+    "5-219-8018": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8018": [
+      "data"
+    ],
+    "5-01-8019": [
+      "calculations"
+    ],
+    "5-02-8019": [
+      "calculations"
+    ],
+    "5-03-8019": [
+      "calculations"
+    ],
+    "5-04-8019": [
+      "calculations"
+    ],
+    "5-05-8019": [
+      "modelling"
+    ],
+    "5-205-8019": [
+      "modelling"
+    ],
+    "5-06-8019": [
+      "geometry"
+    ],
+    "5-07-8019": [
+      "geometry"
+    ],
+    "5-08-8019": [
+      "geometry"
+    ],
+    "5-219-8019": [
+      "geometry"
+    ],
+    "5-222-8019": [
+      "data"
+    ],
+    "5-01-8020": [
+      "calculations"
+    ],
+    "5-02-8020": [
+      "modelling"
+    ],
+    "5-03-8020": [
+      "calculations"
+    ],
+    "5-04-8020": [
+      "modelling"
+    ],
+    "5-05-8020": [
+      "modelling"
+    ],
+    "5-205-8020": [
+      "modelling"
+    ],
+    "5-06-8020": [
+      "geometry"
+    ],
+    "5-07-8020": [
+      "geometry"
+    ],
+    "5-08-8020": [
+      "geometry"
+    ],
+    "5-219-8020": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8020": [
+      "data"
+    ],
+    "5-01-8021": [
+      "calculations"
+    ],
+    "5-02-8021": [
+      "calculations"
+    ],
+    "5-03-8021": [
+      "calculations"
+    ],
+    "5-04-8021": [
+      "calculations"
+    ],
+    "5-05-8021": [
+      "modelling"
+    ],
+    "5-205-8021": [
+      "modelling"
+    ],
+    "5-06-8021": [
+      "geometry"
+    ],
+    "5-07-8021": [
+      "geometry"
+    ],
+    "5-08-8021": [
+      "geometry"
+    ],
+    "5-219-8021": [
+      "geometry"
+    ],
+    "5-222-8021": [
+      "data"
+    ],
+    "5-01-8022": [
+      "calculations"
+    ],
+    "5-02-8022": [
+      "modelling"
+    ],
+    "5-03-8022": [
+      "calculations"
+    ],
+    "5-04-8022": [
+      "modelling"
+    ],
+    "5-05-8022": [
+      "modelling"
+    ],
+    "5-205-8022": [
+      "modelling"
+    ],
+    "5-06-8022": [
+      "geometry"
+    ],
+    "5-07-8022": [
+      "geometry"
+    ],
+    "5-08-8022": [
+      "geometry"
+    ],
+    "5-219-8022": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8022": [
+      "data"
+    ],
+    "5-01-8023": [
+      "calculations"
+    ],
+    "5-02-8023": [
+      "calculations"
+    ],
+    "5-03-8023": [
+      "calculations"
+    ],
+    "5-04-8023": [
+      "calculations"
+    ],
+    "5-05-8023": [
+      "modelling"
+    ],
+    "5-205-8023": [
+      "modelling"
+    ],
+    "5-06-8023": [
+      "geometry"
+    ],
+    "5-07-8023": [
+      "geometry"
+    ],
+    "5-08-8023": [
+      "geometry"
+    ],
+    "5-219-8023": [
+      "geometry"
+    ],
+    "5-222-8023": [
+      "data"
+    ],
+    "5-01-8024": [
+      "calculations"
+    ],
+    "5-02-8024": [
+      "modelling"
+    ],
+    "5-03-8024": [
+      "calculations"
+    ],
+    "5-04-8024": [
+      "modelling"
+    ],
+    "5-05-8024": [
+      "modelling"
+    ],
+    "5-205-8024": [
+      "modelling"
+    ],
+    "5-06-8024": [
+      "geometry"
+    ],
+    "5-07-8024": [
+      "geometry"
+    ],
+    "5-08-8024": [
+      "geometry"
+    ],
+    "5-219-8024": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8024": [
+      "data"
+    ],
+    "5-01-8025": [
+      "calculations"
+    ],
+    "5-02-8025": [
+      "calculations"
+    ],
+    "5-03-8025": [
+      "calculations"
+    ],
+    "5-04-8025": [
+      "calculations"
+    ],
+    "5-05-8025": [
+      "modelling"
+    ],
+    "5-205-8025": [
+      "modelling"
+    ],
+    "5-06-8025": [
+      "geometry"
+    ],
+    "5-07-8025": [
+      "geometry"
+    ],
+    "5-08-8025": [
+      "geometry"
+    ],
+    "5-219-8025": [
+      "geometry"
+    ],
+    "5-222-8025": [
+      "data"
+    ],
+    "5-01-8026": [
+      "calculations"
+    ],
+    "5-02-8026": [
+      "modelling"
+    ],
+    "5-03-8026": [
+      "calculations"
+    ],
+    "5-04-8026": [
+      "modelling"
+    ],
+    "5-05-8026": [
+      "modelling"
+    ],
+    "5-205-8026": [
+      "modelling"
+    ],
+    "5-06-8026": [
+      "geometry"
+    ],
+    "5-07-8026": [
+      "geometry"
+    ],
+    "5-08-8026": [
+      "geometry"
+    ],
+    "5-219-8026": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8026": [
+      "data"
+    ],
+    "5-01-8027": [
+      "calculations"
+    ],
+    "5-02-8027": [
+      "calculations"
+    ],
+    "5-03-8027": [
+      "calculations"
+    ],
+    "5-04-8027": [
+      "calculations"
+    ],
+    "5-05-8027": [
+      "modelling"
+    ],
+    "5-205-8027": [
+      "modelling"
+    ],
+    "5-06-8027": [
+      "geometry"
+    ],
+    "5-07-8027": [
+      "geometry"
+    ],
+    "5-08-8027": [
+      "geometry"
+    ],
+    "5-219-8027": [
+      "geometry"
+    ],
+    "5-222-8027": [
+      "data"
+    ],
+    "5-01-8028": [
+      "calculations"
+    ],
+    "5-02-8028": [
+      "modelling"
+    ],
+    "5-03-8028": [
+      "calculations"
+    ],
+    "5-04-8028": [
+      "modelling"
+    ],
+    "5-05-8028": [
+      "modelling"
+    ],
+    "5-205-8028": [
+      "modelling"
+    ],
+    "5-06-8028": [
+      "geometry"
+    ],
+    "5-07-8028": [
+      "geometry"
+    ],
+    "5-08-8028": [
+      "geometry"
+    ],
+    "5-219-8028": [
+      "geometry",
+      "equations"
+    ],
+    "5-222-8028": [
+      "data"
+    ],
+    "6-01-8001": [
+      "calculations"
+    ],
+    "6-02-8001": [
+      "calculations"
+    ],
+    "6-03-8001": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8001": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8001": [
+      "calculations"
+    ],
+    "6-06-8001": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8001": [
+      "geometry"
+    ],
+    "6-210-8001": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8001": [
+      "modelling"
+    ],
+    "6-218-8001": [
+      "geometry"
+    ],
+    "6-219-8001": [
+      "geometry"
+    ],
+    "6-220-8001": [
+      "geometry"
+    ],
+    "6-223-8001": [
+      "modelling"
+    ],
+    "6-01-8002": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8002": [
+      "calculations"
+    ],
+    "6-03-8002": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8002": [
+      "modelling"
+    ],
+    "6-05-8002": [
+      "calculations"
+    ],
+    "6-06-8002": [
+      "equations"
+    ],
+    "6-07-8002": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8002": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8002": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8002": [
+      "geometry"
+    ],
+    "6-219-8002": [
+      "geometry"
+    ],
+    "6-220-8002": [
+      "geometry"
+    ],
+    "6-223-8002": [
+      "modelling"
+    ],
+    "6-01-8003": [
+      "calculations"
+    ],
+    "6-02-8003": [
+      "calculations"
+    ],
+    "6-03-8003": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8003": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8003": [
+      "calculations"
+    ],
+    "6-06-8003": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8003": [
+      "geometry"
+    ],
+    "6-210-8003": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8003": [
+      "modelling"
+    ],
+    "6-218-8003": [
+      "geometry"
+    ],
+    "6-219-8003": [
+      "geometry"
+    ],
+    "6-220-8003": [
+      "geometry"
+    ],
+    "6-223-8003": [
+      "modelling"
+    ],
+    "6-01-8004": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8004": [
+      "calculations"
+    ],
+    "6-03-8004": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8004": [
+      "modelling"
+    ],
+    "6-05-8004": [
+      "calculations"
+    ],
+    "6-06-8004": [
+      "equations"
+    ],
+    "6-07-8004": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8004": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8004": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8004": [
+      "geometry"
+    ],
+    "6-219-8004": [
+      "geometry"
+    ],
+    "6-220-8004": [
+      "geometry"
+    ],
+    "6-223-8004": [
+      "modelling"
+    ],
+    "6-01-8005": [
+      "calculations"
+    ],
+    "6-02-8005": [
+      "calculations"
+    ],
+    "6-03-8005": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8005": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8005": [
+      "calculations"
+    ],
+    "6-06-8005": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8005": [
+      "geometry"
+    ],
+    "6-210-8005": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8005": [
+      "modelling"
+    ],
+    "6-218-8005": [
+      "geometry"
+    ],
+    "6-219-8005": [
+      "geometry"
+    ],
+    "6-220-8005": [
+      "geometry"
+    ],
+    "6-223-8005": [
+      "modelling"
+    ],
+    "6-01-8006": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8006": [
+      "calculations"
+    ],
+    "6-03-8006": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8006": [
+      "modelling"
+    ],
+    "6-05-8006": [
+      "calculations"
+    ],
+    "6-06-8006": [
+      "equations"
+    ],
+    "6-07-8006": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8006": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8006": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8006": [
+      "geometry"
+    ],
+    "6-219-8006": [
+      "geometry"
+    ],
+    "6-220-8006": [
+      "geometry"
+    ],
+    "6-223-8006": [
+      "modelling"
+    ],
+    "6-01-8007": [
+      "calculations"
+    ],
+    "6-02-8007": [
+      "calculations"
+    ],
+    "6-03-8007": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8007": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8007": [
+      "calculations"
+    ],
+    "6-06-8007": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8007": [
+      "geometry"
+    ],
+    "6-210-8007": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8007": [
+      "modelling"
+    ],
+    "6-218-8007": [
+      "geometry"
+    ],
+    "6-219-8007": [
+      "geometry"
+    ],
+    "6-220-8007": [
+      "geometry"
+    ],
+    "6-223-8007": [
+      "modelling"
+    ],
+    "6-01-8008": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8008": [
+      "calculations"
+    ],
+    "6-03-8008": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8008": [
+      "modelling"
+    ],
+    "6-05-8008": [
+      "calculations"
+    ],
+    "6-06-8008": [
+      "equations"
+    ],
+    "6-07-8008": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8008": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8008": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8008": [
+      "geometry"
+    ],
+    "6-219-8008": [
+      "geometry"
+    ],
+    "6-220-8008": [
+      "geometry"
+    ],
+    "6-223-8008": [
+      "modelling"
+    ],
+    "6-01-8009": [
+      "calculations"
+    ],
+    "6-02-8009": [
+      "calculations"
+    ],
+    "6-03-8009": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8009": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8009": [
+      "calculations"
+    ],
+    "6-06-8009": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8009": [
+      "geometry"
+    ],
+    "6-210-8009": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8009": [
+      "modelling"
+    ],
+    "6-218-8009": [
+      "geometry"
+    ],
+    "6-219-8009": [
+      "geometry"
+    ],
+    "6-220-8009": [
+      "geometry"
+    ],
+    "6-223-8009": [
+      "modelling"
+    ],
+    "6-01-8010": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8010": [
+      "calculations"
+    ],
+    "6-03-8010": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8010": [
+      "modelling"
+    ],
+    "6-05-8010": [
+      "calculations"
+    ],
+    "6-06-8010": [
+      "equations"
+    ],
+    "6-07-8010": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8010": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8010": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8010": [
+      "geometry"
+    ],
+    "6-219-8010": [
+      "geometry"
+    ],
+    "6-220-8010": [
+      "geometry"
+    ],
+    "6-223-8010": [
+      "modelling"
+    ],
+    "6-01-8011": [
+      "calculations"
+    ],
+    "6-02-8011": [
+      "calculations"
+    ],
+    "6-03-8011": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8011": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8011": [
+      "calculations"
+    ],
+    "6-06-8011": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8011": [
+      "geometry"
+    ],
+    "6-210-8011": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8011": [
+      "modelling"
+    ],
+    "6-218-8011": [
+      "geometry"
+    ],
+    "6-219-8011": [
+      "geometry"
+    ],
+    "6-220-8011": [
+      "geometry"
+    ],
+    "6-223-8011": [
+      "modelling"
+    ],
+    "6-01-8012": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8012": [
+      "calculations"
+    ],
+    "6-03-8012": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8012": [
+      "modelling"
+    ],
+    "6-05-8012": [
+      "calculations"
+    ],
+    "6-06-8012": [
+      "equations"
+    ],
+    "6-07-8012": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8012": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8012": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8012": [
+      "geometry"
+    ],
+    "6-219-8012": [
+      "geometry"
+    ],
+    "6-220-8012": [
+      "geometry"
+    ],
+    "6-223-8012": [
+      "modelling"
+    ],
+    "6-01-8013": [
+      "calculations"
+    ],
+    "6-02-8013": [
+      "calculations"
+    ],
+    "6-03-8013": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8013": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8013": [
+      "calculations"
+    ],
+    "6-06-8013": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8013": [
+      "geometry"
+    ],
+    "6-210-8013": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8013": [
+      "modelling"
+    ],
+    "6-218-8013": [
+      "geometry"
+    ],
+    "6-219-8013": [
+      "geometry"
+    ],
+    "6-220-8013": [
+      "geometry"
+    ],
+    "6-223-8013": [
+      "modelling"
+    ],
+    "6-01-8014": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8014": [
+      "calculations"
+    ],
+    "6-03-8014": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8014": [
+      "modelling"
+    ],
+    "6-05-8014": [
+      "calculations"
+    ],
+    "6-06-8014": [
+      "equations"
+    ],
+    "6-07-8014": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8014": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8014": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8014": [
+      "geometry"
+    ],
+    "6-219-8014": [
+      "geometry"
+    ],
+    "6-220-8014": [
+      "geometry"
+    ],
+    "6-223-8014": [
+      "modelling"
+    ],
+    "6-01-8015": [
+      "calculations"
+    ],
+    "6-02-8015": [
+      "calculations"
+    ],
+    "6-03-8015": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8015": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8015": [
+      "calculations"
+    ],
+    "6-06-8015": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8015": [
+      "geometry"
+    ],
+    "6-210-8015": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8015": [
+      "modelling"
+    ],
+    "6-218-8015": [
+      "geometry"
+    ],
+    "6-219-8015": [
+      "geometry"
+    ],
+    "6-220-8015": [
+      "geometry"
+    ],
+    "6-223-8015": [
+      "modelling"
+    ],
+    "6-01-8016": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8016": [
+      "calculations"
+    ],
+    "6-03-8016": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8016": [
+      "modelling"
+    ],
+    "6-05-8016": [
+      "calculations"
+    ],
+    "6-06-8016": [
+      "equations"
+    ],
+    "6-07-8016": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8016": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8016": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8016": [
+      "geometry"
+    ],
+    "6-219-8016": [
+      "geometry"
+    ],
+    "6-220-8016": [
+      "geometry"
+    ],
+    "6-223-8016": [
+      "modelling"
+    ],
+    "6-01-8017": [
+      "calculations"
+    ],
+    "6-02-8017": [
+      "calculations"
+    ],
+    "6-03-8017": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8017": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8017": [
+      "calculations"
+    ],
+    "6-06-8017": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8017": [
+      "geometry"
+    ],
+    "6-210-8017": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8017": [
+      "modelling"
+    ],
+    "6-218-8017": [
+      "geometry"
+    ],
+    "6-219-8017": [
+      "geometry"
+    ],
+    "6-220-8017": [
+      "geometry"
+    ],
+    "6-223-8017": [
+      "modelling"
+    ],
+    "6-01-8018": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8018": [
+      "calculations"
+    ],
+    "6-03-8018": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8018": [
+      "modelling"
+    ],
+    "6-05-8018": [
+      "calculations"
+    ],
+    "6-06-8018": [
+      "equations"
+    ],
+    "6-07-8018": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8018": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8018": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8018": [
+      "geometry"
+    ],
+    "6-219-8018": [
+      "geometry"
+    ],
+    "6-220-8018": [
+      "geometry"
+    ],
+    "6-223-8018": [
+      "modelling"
+    ],
+    "6-01-8019": [
+      "calculations"
+    ],
+    "6-02-8019": [
+      "calculations"
+    ],
+    "6-03-8019": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8019": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8019": [
+      "calculations"
+    ],
+    "6-06-8019": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8019": [
+      "geometry"
+    ],
+    "6-210-8019": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8019": [
+      "modelling"
+    ],
+    "6-218-8019": [
+      "geometry"
+    ],
+    "6-219-8019": [
+      "geometry"
+    ],
+    "6-220-8019": [
+      "geometry"
+    ],
+    "6-223-8019": [
+      "modelling"
+    ],
+    "6-01-8020": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8020": [
+      "calculations"
+    ],
+    "6-03-8020": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8020": [
+      "modelling"
+    ],
+    "6-05-8020": [
+      "calculations"
+    ],
+    "6-06-8020": [
+      "equations"
+    ],
+    "6-07-8020": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8020": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8020": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8020": [
+      "geometry"
+    ],
+    "6-219-8020": [
+      "geometry"
+    ],
+    "6-220-8020": [
+      "geometry"
+    ],
+    "6-223-8020": [
+      "modelling"
+    ],
+    "6-01-8021": [
+      "calculations"
+    ],
+    "6-02-8021": [
+      "calculations"
+    ],
+    "6-03-8021": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8021": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8021": [
+      "calculations"
+    ],
+    "6-06-8021": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8021": [
+      "geometry"
+    ],
+    "6-210-8021": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8021": [
+      "modelling"
+    ],
+    "6-218-8021": [
+      "geometry"
+    ],
+    "6-219-8021": [
+      "geometry"
+    ],
+    "6-220-8021": [
+      "geometry"
+    ],
+    "6-223-8021": [
+      "modelling"
+    ],
+    "6-01-8022": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8022": [
+      "calculations"
+    ],
+    "6-03-8022": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8022": [
+      "modelling"
+    ],
+    "6-05-8022": [
+      "calculations"
+    ],
+    "6-06-8022": [
+      "equations"
+    ],
+    "6-07-8022": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8022": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8022": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8022": [
+      "geometry"
+    ],
+    "6-219-8022": [
+      "geometry"
+    ],
+    "6-220-8022": [
+      "geometry"
+    ],
+    "6-223-8022": [
+      "modelling"
+    ],
+    "6-01-8023": [
+      "calculations"
+    ],
+    "6-02-8023": [
+      "calculations"
+    ],
+    "6-03-8023": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8023": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8023": [
+      "calculations"
+    ],
+    "6-06-8023": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8023": [
+      "geometry"
+    ],
+    "6-210-8023": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8023": [
+      "modelling"
+    ],
+    "6-218-8023": [
+      "geometry"
+    ],
+    "6-219-8023": [
+      "geometry"
+    ],
+    "6-220-8023": [
+      "geometry"
+    ],
+    "6-223-8023": [
+      "modelling"
+    ],
+    "6-01-8024": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8024": [
+      "calculations"
+    ],
+    "6-03-8024": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8024": [
+      "modelling"
+    ],
+    "6-05-8024": [
+      "calculations"
+    ],
+    "6-06-8024": [
+      "equations"
+    ],
+    "6-07-8024": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8024": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8024": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8024": [
+      "geometry"
+    ],
+    "6-219-8024": [
+      "geometry"
+    ],
+    "6-220-8024": [
+      "geometry"
+    ],
+    "6-223-8024": [
+      "modelling"
+    ],
+    "6-01-8025": [
+      "calculations"
+    ],
+    "6-02-8025": [
+      "calculations"
+    ],
+    "6-03-8025": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8025": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8025": [
+      "calculations"
+    ],
+    "6-06-8025": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8025": [
+      "geometry"
+    ],
+    "6-210-8025": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8025": [
+      "modelling"
+    ],
+    "6-218-8025": [
+      "geometry"
+    ],
+    "6-219-8025": [
+      "geometry"
+    ],
+    "6-220-8025": [
+      "geometry"
+    ],
+    "6-223-8025": [
+      "modelling"
+    ],
+    "6-01-8026": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8026": [
+      "calculations"
+    ],
+    "6-03-8026": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8026": [
+      "modelling"
+    ],
+    "6-05-8026": [
+      "calculations"
+    ],
+    "6-06-8026": [
+      "equations"
+    ],
+    "6-07-8026": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8026": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8026": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8026": [
+      "geometry"
+    ],
+    "6-219-8026": [
+      "geometry"
+    ],
+    "6-220-8026": [
+      "geometry"
+    ],
+    "6-223-8026": [
+      "modelling"
+    ],
+    "6-01-8027": [
+      "calculations"
+    ],
+    "6-02-8027": [
+      "calculations"
+    ],
+    "6-03-8027": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8027": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8027": [
+      "calculations"
+    ],
+    "6-06-8027": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8027": [
+      "geometry"
+    ],
+    "6-210-8027": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8027": [
+      "modelling"
+    ],
+    "6-218-8027": [
+      "geometry"
+    ],
+    "6-219-8027": [
+      "geometry"
+    ],
+    "6-220-8027": [
+      "geometry"
+    ],
+    "6-223-8027": [
+      "modelling"
+    ],
+    "6-01-8028": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8028": [
+      "calculations"
+    ],
+    "6-03-8028": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8028": [
+      "modelling"
+    ],
+    "6-05-8028": [
+      "calculations"
+    ],
+    "6-06-8028": [
+      "equations"
+    ],
+    "6-07-8028": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8028": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8028": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8028": [
+      "geometry"
+    ],
+    "6-219-8028": [
+      "geometry"
+    ],
+    "6-220-8028": [
+      "geometry"
+    ],
+    "6-223-8028": [
+      "modelling"
+    ],
+    "6-01-8029": [
+      "calculations"
+    ],
+    "6-02-8029": [
+      "calculations"
+    ],
+    "6-03-8029": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8029": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8029": [
+      "calculations"
+    ],
+    "6-06-8029": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8029": [
+      "geometry"
+    ],
+    "6-210-8029": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8029": [
+      "modelling"
+    ],
+    "6-218-8029": [
+      "geometry"
+    ],
+    "6-219-8029": [
+      "geometry"
+    ],
+    "6-220-8029": [
+      "geometry"
+    ],
+    "6-223-8029": [
+      "modelling"
+    ],
+    "6-01-8030": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8030": [
+      "calculations"
+    ],
+    "6-03-8030": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8030": [
+      "modelling"
+    ],
+    "6-05-8030": [
+      "calculations"
+    ],
+    "6-06-8030": [
+      "equations"
+    ],
+    "6-07-8030": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8030": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8030": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8030": [
+      "geometry"
+    ],
+    "6-219-8030": [
+      "geometry"
+    ],
+    "6-220-8030": [
+      "geometry"
+    ],
+    "6-223-8030": [
+      "modelling"
+    ],
+    "6-01-8031": [
+      "calculations"
+    ],
+    "6-02-8031": [
+      "calculations"
+    ],
+    "6-03-8031": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8031": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8031": [
+      "calculations"
+    ],
+    "6-06-8031": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8031": [
+      "geometry"
+    ],
+    "6-210-8031": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8031": [
+      "modelling"
+    ],
+    "6-218-8031": [
+      "geometry"
+    ],
+    "6-219-8031": [
+      "geometry"
+    ],
+    "6-220-8031": [
+      "geometry"
+    ],
+    "6-223-8031": [
+      "modelling"
+    ],
+    "6-01-8032": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8032": [
+      "calculations"
+    ],
+    "6-03-8032": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8032": [
+      "modelling"
+    ],
+    "6-05-8032": [
+      "calculations"
+    ],
+    "6-06-8032": [
+      "equations"
+    ],
+    "6-07-8032": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8032": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8032": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8032": [
+      "geometry"
+    ],
+    "6-219-8032": [
+      "geometry"
+    ],
+    "6-220-8032": [
+      "geometry"
+    ],
+    "6-223-8032": [
+      "modelling"
+    ],
+    "6-01-8033": [
+      "calculations"
+    ],
+    "6-02-8033": [
+      "calculations"
+    ],
+    "6-03-8033": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8033": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8033": [
+      "calculations"
+    ],
+    "6-06-8033": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8033": [
+      "geometry"
+    ],
+    "6-210-8033": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8033": [
+      "modelling"
+    ],
+    "6-218-8033": [
+      "geometry"
+    ],
+    "6-219-8033": [
+      "geometry"
+    ],
+    "6-220-8033": [
+      "geometry"
+    ],
+    "6-223-8033": [
+      "modelling"
+    ],
+    "6-01-8034": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8034": [
+      "calculations"
+    ],
+    "6-03-8034": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8034": [
+      "modelling"
+    ],
+    "6-05-8034": [
+      "calculations"
+    ],
+    "6-06-8034": [
+      "equations"
+    ],
+    "6-07-8034": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8034": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8034": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8034": [
+      "geometry"
+    ],
+    "6-219-8034": [
+      "geometry"
+    ],
+    "6-220-8034": [
+      "geometry"
+    ],
+    "6-223-8034": [
+      "modelling"
+    ],
+    "6-01-8035": [
+      "calculations"
+    ],
+    "6-02-8035": [
+      "calculations"
+    ],
+    "6-03-8035": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8035": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8035": [
+      "calculations"
+    ],
+    "6-06-8035": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8035": [
+      "geometry"
+    ],
+    "6-210-8035": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8035": [
+      "modelling"
+    ],
+    "6-218-8035": [
+      "geometry"
+    ],
+    "6-219-8035": [
+      "geometry"
+    ],
+    "6-220-8035": [
+      "geometry"
+    ],
+    "6-223-8035": [
+      "modelling"
+    ],
+    "6-01-8036": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8036": [
+      "calculations"
+    ],
+    "6-03-8036": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8036": [
+      "modelling"
+    ],
+    "6-05-8036": [
+      "calculations"
+    ],
+    "6-06-8036": [
+      "equations"
+    ],
+    "6-07-8036": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8036": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8036": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8036": [
+      "geometry"
+    ],
+    "6-219-8036": [
+      "geometry"
+    ],
+    "6-220-8036": [
+      "geometry"
+    ],
+    "6-223-8036": [
+      "modelling"
+    ],
+    "6-01-8037": [
+      "calculations"
+    ],
+    "6-02-8037": [
+      "calculations"
+    ],
+    "6-03-8037": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8037": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8037": [
+      "calculations"
+    ],
+    "6-06-8037": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8037": [
+      "geometry"
+    ],
+    "6-210-8037": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8037": [
+      "modelling"
+    ],
+    "6-218-8037": [
+      "geometry"
+    ],
+    "6-219-8037": [
+      "geometry"
+    ],
+    "6-220-8037": [
+      "geometry"
+    ],
+    "6-223-8037": [
+      "modelling"
+    ],
+    "6-01-8038": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8038": [
+      "calculations"
+    ],
+    "6-03-8038": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8038": [
+      "modelling"
+    ],
+    "6-05-8038": [
+      "calculations"
+    ],
+    "6-06-8038": [
+      "equations"
+    ],
+    "6-07-8038": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8038": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8038": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8038": [
+      "geometry"
+    ],
+    "6-219-8038": [
+      "geometry"
+    ],
+    "6-220-8038": [
+      "geometry"
+    ],
+    "6-223-8038": [
+      "modelling"
+    ],
+    "6-01-8039": [
+      "calculations"
+    ],
+    "6-02-8039": [
+      "calculations"
+    ],
+    "6-03-8039": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8039": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8039": [
+      "calculations"
+    ],
+    "6-06-8039": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8039": [
+      "geometry"
+    ],
+    "6-210-8039": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8039": [
+      "modelling"
+    ],
+    "6-218-8039": [
+      "geometry"
+    ],
+    "6-219-8039": [
+      "geometry"
+    ],
+    "6-220-8039": [
+      "geometry"
+    ],
+    "6-223-8039": [
+      "modelling"
+    ],
+    "6-01-8040": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8040": [
+      "calculations"
+    ],
+    "6-03-8040": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8040": [
+      "modelling"
+    ],
+    "6-05-8040": [
+      "calculations"
+    ],
+    "6-06-8040": [
+      "equations"
+    ],
+    "6-07-8040": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8040": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8040": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8040": [
+      "geometry"
+    ],
+    "6-219-8040": [
+      "geometry"
+    ],
+    "6-220-8040": [
+      "geometry"
+    ],
+    "6-223-8040": [
+      "modelling"
+    ],
+    "6-01-8041": [
+      "calculations"
+    ],
+    "6-02-8041": [
+      "calculations"
+    ],
+    "6-03-8041": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8041": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8041": [
+      "calculations"
+    ],
+    "6-06-8041": [
+      "calculations",
+      "geometry"
+    ],
+    "6-07-8041": [
+      "geometry"
+    ],
+    "6-210-8041": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8041": [
+      "modelling"
+    ],
+    "6-218-8041": [
+      "geometry"
+    ],
+    "6-219-8041": [
+      "geometry"
+    ],
+    "6-220-8041": [
+      "geometry"
+    ],
+    "6-223-8041": [
+      "modelling"
+    ],
+    "6-01-8042": [
+      "calculations",
+      "modelling"
+    ],
+    "6-02-8042": [
+      "calculations"
+    ],
+    "6-03-8042": [
+      "modelling",
+      "equations"
+    ],
+    "6-04-8042": [
+      "modelling"
+    ],
+    "6-05-8042": [
+      "calculations"
+    ],
+    "6-06-8042": [
+      "equations"
+    ],
+    "6-07-8042": [
+      "geometry",
+      "calculations"
+    ],
+    "6-210-8042": [
+      "modelling",
+      "geometry"
+    ],
+    "6-224-8042": [
+      "modelling",
+      "equations"
+    ],
+    "6-218-8042": [
+      "geometry"
+    ],
+    "6-219-8042": [
+      "geometry"
+    ],
+    "6-220-8042": [
+      "geometry"
+    ],
+    "6-223-8042": [
+      "modelling"
+    ],
+    "6-01-8043": [
+      "calculations"
+    ],
+    "6-02-8043": [
+      "calculations"
+    ],
+    "6-03-8043": [
+      "modelling",
+      "calculations"
+    ],
+    "6-04-8043": [
+      "modelling",
+      "calculations"
+    ],
+    "6-05-8043": [
+      "calculations"
+    ],
+    "6-06-8043": [
+      "calculations",
+      "geometry"
+    ],
+    "7-01-8001": [
+      "equations"
+    ],
+    "7-02-8001": [
+      "calculations"
+    ],
+    "7-03-8001": [
+      "calculations"
+    ],
+    "7-04-8001": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8001": [
+      "equations"
+    ],
+    "7-06-8001": [
+      "geometry"
+    ],
+    "7-07-8001": [
+      "geometry"
+    ],
+    "7-08-8001": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8001": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8001": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8001": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8002": [
+      "equations"
+    ],
+    "7-02-8002": [
+      "calculations"
+    ],
+    "7-03-8002": [
+      "calculations"
+    ],
+    "7-04-8002": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8002": [
+      "equations"
+    ],
+    "7-06-8002": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8002": [
+      "geometry"
+    ],
+    "7-08-8002": [
+      "data"
+    ],
+    "7-09-8002": [
+      "data"
+    ],
+    "7-228-8002": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8002": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8003": [
+      "equations"
+    ],
+    "7-02-8003": [
+      "calculations"
+    ],
+    "7-03-8003": [
+      "calculations"
+    ],
+    "7-04-8003": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8003": [
+      "equations"
+    ],
+    "7-06-8003": [
+      "geometry"
+    ],
+    "7-07-8003": [
+      "geometry"
+    ],
+    "7-08-8003": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8003": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8003": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8003": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8004": [
+      "equations"
+    ],
+    "7-02-8004": [
+      "calculations"
+    ],
+    "7-03-8004": [
+      "calculations"
+    ],
+    "7-04-8004": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8004": [
+      "equations"
+    ],
+    "7-06-8004": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8004": [
+      "geometry"
+    ],
+    "7-08-8004": [
+      "data"
+    ],
+    "7-09-8004": [
+      "data"
+    ],
+    "7-228-8004": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8004": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8005": [
+      "equations"
+    ],
+    "7-02-8005": [
+      "calculations"
+    ],
+    "7-03-8005": [
+      "calculations"
+    ],
+    "7-04-8005": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8005": [
+      "equations"
+    ],
+    "7-06-8005": [
+      "geometry"
+    ],
+    "7-07-8005": [
+      "geometry"
+    ],
+    "7-08-8005": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8005": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8005": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8005": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8006": [
+      "equations"
+    ],
+    "7-02-8006": [
+      "calculations"
+    ],
+    "7-03-8006": [
+      "calculations"
+    ],
+    "7-04-8006": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8006": [
+      "equations"
+    ],
+    "7-06-8006": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8006": [
+      "geometry"
+    ],
+    "7-08-8006": [
+      "data"
+    ],
+    "7-09-8006": [
+      "data"
+    ],
+    "7-228-8006": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8006": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8007": [
+      "equations"
+    ],
+    "7-02-8007": [
+      "calculations"
+    ],
+    "7-03-8007": [
+      "calculations"
+    ],
+    "7-04-8007": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8007": [
+      "equations"
+    ],
+    "7-06-8007": [
+      "geometry"
+    ],
+    "7-07-8007": [
+      "geometry"
+    ],
+    "7-08-8007": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8007": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8007": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8007": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8008": [
+      "equations"
+    ],
+    "7-02-8008": [
+      "calculations"
+    ],
+    "7-03-8008": [
+      "calculations"
+    ],
+    "7-04-8008": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8008": [
+      "equations"
+    ],
+    "7-06-8008": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8008": [
+      "geometry"
+    ],
+    "7-08-8008": [
+      "data"
+    ],
+    "7-09-8008": [
+      "data"
+    ],
+    "7-228-8008": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8008": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8009": [
+      "equations"
+    ],
+    "7-02-8009": [
+      "calculations"
+    ],
+    "7-03-8009": [
+      "calculations"
+    ],
+    "7-04-8009": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8009": [
+      "equations"
+    ],
+    "7-06-8009": [
+      "geometry"
+    ],
+    "7-07-8009": [
+      "geometry"
+    ],
+    "7-08-8009": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8009": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8009": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8009": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8010": [
+      "equations"
+    ],
+    "7-02-8010": [
+      "calculations"
+    ],
+    "7-03-8010": [
+      "calculations"
+    ],
+    "7-04-8010": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8010": [
+      "equations"
+    ],
+    "7-06-8010": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8010": [
+      "geometry"
+    ],
+    "7-08-8010": [
+      "data"
+    ],
+    "7-09-8010": [
+      "data"
+    ],
+    "7-228-8010": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8010": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8011": [
+      "equations"
+    ],
+    "7-02-8011": [
+      "calculations"
+    ],
+    "7-03-8011": [
+      "calculations"
+    ],
+    "7-04-8011": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8011": [
+      "equations"
+    ],
+    "7-06-8011": [
+      "geometry"
+    ],
+    "7-07-8011": [
+      "geometry"
+    ],
+    "7-08-8011": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8011": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8011": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8011": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8012": [
+      "equations"
+    ],
+    "7-02-8012": [
+      "calculations"
+    ],
+    "7-03-8012": [
+      "calculations"
+    ],
+    "7-04-8012": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8012": [
+      "equations"
+    ],
+    "7-06-8012": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8012": [
+      "geometry"
+    ],
+    "7-08-8012": [
+      "data"
+    ],
+    "7-09-8012": [
+      "data"
+    ],
+    "7-228-8012": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8012": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8013": [
+      "equations"
+    ],
+    "7-02-8013": [
+      "calculations"
+    ],
+    "7-03-8013": [
+      "calculations"
+    ],
+    "7-04-8013": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8013": [
+      "equations"
+    ],
+    "7-06-8013": [
+      "geometry"
+    ],
+    "7-07-8013": [
+      "geometry"
+    ],
+    "7-08-8013": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8013": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8013": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8013": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8014": [
+      "equations"
+    ],
+    "7-02-8014": [
+      "calculations"
+    ],
+    "7-03-8014": [
+      "calculations"
+    ],
+    "7-04-8014": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8014": [
+      "equations"
+    ],
+    "7-06-8014": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8014": [
+      "geometry"
+    ],
+    "7-08-8014": [
+      "data"
+    ],
+    "7-09-8014": [
+      "data"
+    ],
+    "7-228-8014": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8014": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8015": [
+      "equations"
+    ],
+    "7-02-8015": [
+      "calculations"
+    ],
+    "7-03-8015": [
+      "calculations"
+    ],
+    "7-04-8015": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8015": [
+      "equations"
+    ],
+    "7-06-8015": [
+      "geometry"
+    ],
+    "7-07-8015": [
+      "geometry"
+    ],
+    "7-08-8015": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8015": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8015": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8015": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8016": [
+      "equations"
+    ],
+    "7-02-8016": [
+      "calculations"
+    ],
+    "7-03-8016": [
+      "calculations"
+    ],
+    "7-04-8016": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8016": [
+      "equations"
+    ],
+    "7-06-8016": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8016": [
+      "geometry"
+    ],
+    "7-08-8016": [
+      "data"
+    ],
+    "7-09-8016": [
+      "data"
+    ],
+    "7-228-8016": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8016": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8017": [
+      "equations"
+    ],
+    "7-02-8017": [
+      "calculations"
+    ],
+    "7-03-8017": [
+      "calculations"
+    ],
+    "7-04-8017": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8017": [
+      "equations"
+    ],
+    "7-06-8017": [
+      "geometry"
+    ],
+    "7-07-8017": [
+      "geometry"
+    ],
+    "7-08-8017": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8017": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8017": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8017": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8018": [
+      "equations"
+    ],
+    "7-02-8018": [
+      "calculations"
+    ],
+    "7-03-8018": [
+      "calculations"
+    ],
+    "7-04-8018": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8018": [
+      "equations"
+    ],
+    "7-06-8018": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8018": [
+      "geometry"
+    ],
+    "7-08-8018": [
+      "data"
+    ],
+    "7-09-8018": [
+      "data"
+    ],
+    "7-228-8018": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8018": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8019": [
+      "equations"
+    ],
+    "7-02-8019": [
+      "calculations"
+    ],
+    "7-03-8019": [
+      "calculations"
+    ],
+    "7-04-8019": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8019": [
+      "equations"
+    ],
+    "7-06-8019": [
+      "geometry"
+    ],
+    "7-07-8019": [
+      "geometry"
+    ],
+    "7-08-8019": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8019": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8019": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8019": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8020": [
+      "equations"
+    ],
+    "7-02-8020": [
+      "calculations"
+    ],
+    "7-03-8020": [
+      "calculations"
+    ],
+    "7-04-8020": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8020": [
+      "equations"
+    ],
+    "7-06-8020": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8020": [
+      "geometry"
+    ],
+    "7-08-8020": [
+      "data"
+    ],
+    "7-09-8020": [
+      "data"
+    ],
+    "7-228-8020": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8020": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8021": [
+      "equations"
+    ],
+    "7-02-8021": [
+      "calculations"
+    ],
+    "7-03-8021": [
+      "calculations"
+    ],
+    "7-04-8021": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8021": [
+      "equations"
+    ],
+    "7-06-8021": [
+      "geometry"
+    ],
+    "7-07-8021": [
+      "geometry"
+    ],
+    "7-08-8021": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8021": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8021": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8021": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8022": [
+      "equations"
+    ],
+    "7-02-8022": [
+      "calculations"
+    ],
+    "7-03-8022": [
+      "calculations"
+    ],
+    "7-04-8022": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8022": [
+      "equations"
+    ],
+    "7-06-8022": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8022": [
+      "geometry"
+    ],
+    "7-08-8022": [
+      "data"
+    ],
+    "7-09-8022": [
+      "data"
+    ],
+    "7-228-8022": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8022": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8023": [
+      "equations"
+    ],
+    "7-02-8023": [
+      "calculations"
+    ],
+    "7-03-8023": [
+      "calculations"
+    ],
+    "7-04-8023": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8023": [
+      "equations"
+    ],
+    "7-06-8023": [
+      "geometry"
+    ],
+    "7-07-8023": [
+      "geometry"
+    ],
+    "7-08-8023": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8023": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8023": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8023": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8024": [
+      "equations"
+    ],
+    "7-02-8024": [
+      "calculations"
+    ],
+    "7-03-8024": [
+      "calculations"
+    ],
+    "7-04-8024": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8024": [
+      "equations"
+    ],
+    "7-06-8024": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8024": [
+      "geometry"
+    ],
+    "7-08-8024": [
+      "data"
+    ],
+    "7-09-8024": [
+      "data"
+    ],
+    "7-228-8024": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8024": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8025": [
+      "equations"
+    ],
+    "7-02-8025": [
+      "calculations"
+    ],
+    "7-03-8025": [
+      "calculations"
+    ],
+    "7-04-8025": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8025": [
+      "equations"
+    ],
+    "7-06-8025": [
+      "geometry"
+    ],
+    "7-07-8025": [
+      "geometry"
+    ],
+    "7-08-8025": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8025": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8025": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8025": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8026": [
+      "equations"
+    ],
+    "7-02-8026": [
+      "calculations"
+    ],
+    "7-03-8026": [
+      "calculations"
+    ],
+    "7-04-8026": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8026": [
+      "equations"
+    ],
+    "7-06-8026": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8026": [
+      "geometry"
+    ],
+    "7-08-8026": [
+      "data"
+    ],
+    "7-09-8026": [
+      "data"
+    ],
+    "7-228-8026": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8026": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8027": [
+      "equations"
+    ],
+    "7-02-8027": [
+      "calculations"
+    ],
+    "7-03-8027": [
+      "calculations"
+    ],
+    "7-04-8027": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8027": [
+      "equations"
+    ],
+    "7-06-8027": [
+      "geometry"
+    ],
+    "7-07-8027": [
+      "geometry"
+    ],
+    "7-08-8027": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8027": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8027": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8027": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8028": [
+      "equations"
+    ],
+    "7-02-8028": [
+      "calculations"
+    ],
+    "7-03-8028": [
+      "calculations"
+    ],
+    "7-04-8028": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8028": [
+      "equations"
+    ],
+    "7-06-8028": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8028": [
+      "geometry"
+    ],
+    "7-08-8028": [
+      "data"
+    ],
+    "7-09-8028": [
+      "data"
+    ],
+    "7-228-8028": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8028": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8029": [
+      "equations"
+    ],
+    "7-02-8029": [
+      "calculations"
+    ],
+    "7-03-8029": [
+      "calculations"
+    ],
+    "7-04-8029": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8029": [
+      "equations"
+    ],
+    "7-06-8029": [
+      "geometry"
+    ],
+    "7-07-8029": [
+      "geometry"
+    ],
+    "7-08-8029": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8029": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8029": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8029": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8030": [
+      "equations"
+    ],
+    "7-02-8030": [
+      "calculations"
+    ],
+    "7-03-8030": [
+      "calculations"
+    ],
+    "7-04-8030": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8030": [
+      "equations"
+    ],
+    "7-06-8030": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8030": [
+      "geometry"
+    ],
+    "7-08-8030": [
+      "data"
+    ],
+    "7-09-8030": [
+      "data"
+    ],
+    "7-228-8030": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8030": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8031": [
+      "equations"
+    ],
+    "7-02-8031": [
+      "calculations"
+    ],
+    "7-03-8031": [
+      "calculations"
+    ],
+    "7-04-8031": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8031": [
+      "equations"
+    ],
+    "7-06-8031": [
+      "geometry"
+    ],
+    "7-07-8031": [
+      "geometry"
+    ],
+    "7-08-8031": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8031": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8031": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8031": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8032": [
+      "equations"
+    ],
+    "7-02-8032": [
+      "calculations"
+    ],
+    "7-03-8032": [
+      "calculations"
+    ],
+    "7-04-8032": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8032": [
+      "equations"
+    ],
+    "7-06-8032": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8032": [
+      "geometry"
+    ],
+    "7-08-8032": [
+      "data"
+    ],
+    "7-09-8032": [
+      "data"
+    ],
+    "7-228-8032": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8032": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8033": [
+      "equations"
+    ],
+    "7-02-8033": [
+      "calculations"
+    ],
+    "7-03-8033": [
+      "calculations"
+    ],
+    "7-04-8033": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8033": [
+      "equations"
+    ],
+    "7-06-8033": [
+      "geometry"
+    ],
+    "7-07-8033": [
+      "geometry"
+    ],
+    "7-08-8033": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8033": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8033": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8033": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8034": [
+      "equations"
+    ],
+    "7-02-8034": [
+      "calculations"
+    ],
+    "7-03-8034": [
+      "calculations"
+    ],
+    "7-04-8034": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8034": [
+      "equations"
+    ],
+    "7-06-8034": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8034": [
+      "geometry"
+    ],
+    "7-08-8034": [
+      "data"
+    ],
+    "7-09-8034": [
+      "data"
+    ],
+    "7-228-8034": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8034": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8035": [
+      "equations"
+    ],
+    "7-02-8035": [
+      "calculations"
+    ],
+    "7-03-8035": [
+      "calculations"
+    ],
+    "7-04-8035": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8035": [
+      "equations"
+    ],
+    "7-06-8035": [
+      "geometry"
+    ],
+    "7-07-8035": [
+      "geometry"
+    ],
+    "7-08-8035": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8035": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8035": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8035": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8036": [
+      "equations"
+    ],
+    "7-02-8036": [
+      "calculations"
+    ],
+    "7-03-8036": [
+      "calculations"
+    ],
+    "7-04-8036": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8036": [
+      "equations"
+    ],
+    "7-06-8036": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8036": [
+      "geometry"
+    ],
+    "7-08-8036": [
+      "data"
+    ],
+    "7-09-8036": [
+      "data"
+    ],
+    "7-228-8036": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8036": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8037": [
+      "equations"
+    ],
+    "7-02-8037": [
+      "calculations"
+    ],
+    "7-03-8037": [
+      "calculations"
+    ],
+    "7-04-8037": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8037": [
+      "equations"
+    ],
+    "7-06-8037": [
+      "geometry"
+    ],
+    "7-07-8037": [
+      "geometry"
+    ],
+    "7-08-8037": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8037": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8037": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8037": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8038": [
+      "equations"
+    ],
+    "7-02-8038": [
+      "calculations"
+    ],
+    "7-03-8038": [
+      "calculations"
+    ],
+    "7-04-8038": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8038": [
+      "equations"
+    ],
+    "7-06-8038": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8038": [
+      "geometry"
+    ],
+    "7-08-8038": [
+      "data"
+    ],
+    "7-09-8038": [
+      "data"
+    ],
+    "7-228-8038": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8038": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8039": [
+      "equations"
+    ],
+    "7-02-8039": [
+      "calculations"
+    ],
+    "7-03-8039": [
+      "calculations"
+    ],
+    "7-04-8039": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8039": [
+      "equations"
+    ],
+    "7-06-8039": [
+      "geometry"
+    ],
+    "7-07-8039": [
+      "geometry"
+    ],
+    "7-08-8039": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8039": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8039": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8039": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8040": [
+      "equations"
+    ],
+    "7-02-8040": [
+      "calculations"
+    ],
+    "7-03-8040": [
+      "calculations"
+    ],
+    "7-04-8040": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8040": [
+      "equations"
+    ],
+    "7-06-8040": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8040": [
+      "geometry"
+    ],
+    "7-08-8040": [
+      "data"
+    ],
+    "7-09-8040": [
+      "data"
+    ],
+    "7-228-8040": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8040": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8041": [
+      "equations"
+    ],
+    "7-02-8041": [
+      "calculations"
+    ],
+    "7-03-8041": [
+      "calculations"
+    ],
+    "7-04-8041": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8041": [
+      "equations"
+    ],
+    "7-06-8041": [
+      "geometry"
+    ],
+    "7-07-8041": [
+      "geometry"
+    ],
+    "7-08-8041": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8041": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8041": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8041": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8042": [
+      "equations"
+    ],
+    "7-02-8042": [
+      "calculations"
+    ],
+    "7-03-8042": [
+      "calculations"
+    ],
+    "7-04-8042": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8042": [
+      "equations"
+    ],
+    "7-06-8042": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8042": [
+      "geometry"
+    ],
+    "7-08-8042": [
+      "data"
+    ],
+    "7-09-8042": [
+      "data"
+    ],
+    "7-228-8042": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8042": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8043": [
+      "equations"
+    ],
+    "7-02-8043": [
+      "calculations"
+    ],
+    "7-03-8043": [
+      "calculations"
+    ],
+    "7-04-8043": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8043": [
+      "equations"
+    ],
+    "7-06-8043": [
+      "geometry"
+    ],
+    "7-07-8043": [
+      "geometry"
+    ],
+    "7-08-8043": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8043": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8043": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8043": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8044": [
+      "equations"
+    ],
+    "7-02-8044": [
+      "calculations"
+    ],
+    "7-03-8044": [
+      "calculations"
+    ],
+    "7-04-8044": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8044": [
+      "equations"
+    ],
+    "7-06-8044": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8044": [
+      "geometry"
+    ],
+    "7-08-8044": [
+      "data"
+    ],
+    "7-09-8044": [
+      "data"
+    ],
+    "7-228-8044": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8044": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8045": [
+      "equations"
+    ],
+    "7-02-8045": [
+      "calculations"
+    ],
+    "7-03-8045": [
+      "calculations"
+    ],
+    "7-04-8045": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8045": [
+      "equations"
+    ],
+    "7-06-8045": [
+      "geometry"
+    ],
+    "7-07-8045": [
+      "geometry"
+    ],
+    "7-08-8045": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8045": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8045": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8045": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8046": [
+      "equations"
+    ],
+    "7-02-8046": [
+      "calculations"
+    ],
+    "7-03-8046": [
+      "calculations"
+    ],
+    "7-04-8046": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8046": [
+      "equations"
+    ],
+    "7-06-8046": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8046": [
+      "geometry"
+    ],
+    "7-08-8046": [
+      "data"
+    ],
+    "7-09-8046": [
+      "data"
+    ],
+    "7-228-8046": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8046": [
+      "modelling",
+      "equations"
+    ],
+    "7-01-8047": [
+      "equations"
+    ],
+    "7-02-8047": [
+      "calculations"
+    ],
+    "7-03-8047": [
+      "calculations"
+    ],
+    "7-04-8047": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8047": [
+      "equations"
+    ],
+    "7-06-8047": [
+      "geometry"
+    ],
+    "7-07-8047": [
+      "geometry"
+    ],
+    "7-08-8047": [
+      "data",
+      "calculations"
+    ],
+    "7-09-8047": [
+      "data",
+      "calculations"
+    ],
+    "7-228-8047": [
+      "data",
+      "reasoning"
+    ],
+    "7-10-8047": [
+      "modelling",
+      "calculations"
+    ],
+    "7-01-8048": [
+      "equations"
+    ],
+    "7-02-8048": [
+      "calculations"
+    ],
+    "7-03-8048": [
+      "calculations"
+    ],
+    "7-04-8048": [
+      "graphs",
+      "equations"
+    ],
+    "7-05-8048": [
+      "equations"
+    ],
+    "7-06-8048": [
+      "geometry",
+      "equations"
+    ],
+    "7-07-8048": [
+      "geometry"
+    ],
+    "7-08-8048": [
+      "data"
+    ],
+    "7-09-8048": [
+      "data"
+    ],
+    "8-01-8001": [
+      "calculations"
+    ],
+    "8-02-8001": [
+      "equations"
+    ],
+    "8-03-8001": [
+      "calculations"
+    ],
+    "8-04-8001": [
+      "equations"
+    ],
+    "8-10-8001": [
+      "graphs"
+    ],
+    "8-05-8001": [
+      "geometry"
+    ],
+    "8-06-8001": [
+      "geometry"
+    ],
+    "8-07-8001": [
+      "geometry"
+    ],
+    "8-11-8001": [
+      "geometry"
+    ],
+    "8-08-8001": [
+      "data"
+    ],
+    "8-09-8001": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8001": [
+      "data"
+    ],
+    "8-01-8002": [
+      "calculations"
+    ],
+    "8-02-8002": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8002": [
+      "equations"
+    ],
+    "8-04-8002": [
+      "equations"
+    ],
+    "8-10-8002": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8002": [
+      "geometry"
+    ],
+    "8-06-8002": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8002": [
+      "geometry"
+    ],
+    "8-11-8002": [
+      "geometry"
+    ],
+    "8-08-8002": [
+      "data"
+    ],
+    "8-09-8002": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8002": [
+      "data"
+    ],
+    "8-01-8003": [
+      "calculations"
+    ],
+    "8-02-8003": [
+      "equations"
+    ],
+    "8-03-8003": [
+      "calculations"
+    ],
+    "8-04-8003": [
+      "equations"
+    ],
+    "8-10-8003": [
+      "graphs"
+    ],
+    "8-05-8003": [
+      "geometry"
+    ],
+    "8-06-8003": [
+      "geometry"
+    ],
+    "8-07-8003": [
+      "geometry"
+    ],
+    "8-11-8003": [
+      "geometry"
+    ],
+    "8-08-8003": [
+      "data"
+    ],
+    "8-09-8003": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8003": [
+      "data"
+    ],
+    "8-01-8004": [
+      "calculations"
+    ],
+    "8-02-8004": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8004": [
+      "equations"
+    ],
+    "8-04-8004": [
+      "equations"
+    ],
+    "8-10-8004": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8004": [
+      "geometry"
+    ],
+    "8-06-8004": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8004": [
+      "geometry"
+    ],
+    "8-11-8004": [
+      "geometry"
+    ],
+    "8-08-8004": [
+      "data"
+    ],
+    "8-09-8004": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8004": [
+      "data"
+    ],
+    "8-01-8005": [
+      "calculations"
+    ],
+    "8-02-8005": [
+      "equations"
+    ],
+    "8-03-8005": [
+      "calculations"
+    ],
+    "8-04-8005": [
+      "equations"
+    ],
+    "8-10-8005": [
+      "graphs"
+    ],
+    "8-05-8005": [
+      "geometry"
+    ],
+    "8-06-8005": [
+      "geometry"
+    ],
+    "8-07-8005": [
+      "geometry"
+    ],
+    "8-11-8005": [
+      "geometry"
+    ],
+    "8-08-8005": [
+      "data"
+    ],
+    "8-09-8005": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8005": [
+      "data"
+    ],
+    "8-01-8006": [
+      "calculations"
+    ],
+    "8-02-8006": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8006": [
+      "equations"
+    ],
+    "8-04-8006": [
+      "equations"
+    ],
+    "8-10-8006": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8006": [
+      "geometry"
+    ],
+    "8-06-8006": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8006": [
+      "geometry"
+    ],
+    "8-11-8006": [
+      "geometry"
+    ],
+    "8-08-8006": [
+      "data"
+    ],
+    "8-09-8006": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8006": [
+      "data"
+    ],
+    "8-01-8007": [
+      "calculations"
+    ],
+    "8-02-8007": [
+      "equations"
+    ],
+    "8-03-8007": [
+      "calculations"
+    ],
+    "8-04-8007": [
+      "equations"
+    ],
+    "8-10-8007": [
+      "graphs"
+    ],
+    "8-05-8007": [
+      "geometry"
+    ],
+    "8-06-8007": [
+      "geometry"
+    ],
+    "8-07-8007": [
+      "geometry"
+    ],
+    "8-11-8007": [
+      "geometry"
+    ],
+    "8-08-8007": [
+      "data"
+    ],
+    "8-09-8007": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8007": [
+      "data"
+    ],
+    "8-01-8008": [
+      "calculations"
+    ],
+    "8-02-8008": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8008": [
+      "equations"
+    ],
+    "8-04-8008": [
+      "equations"
+    ],
+    "8-10-8008": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8008": [
+      "geometry"
+    ],
+    "8-06-8008": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8008": [
+      "geometry"
+    ],
+    "8-11-8008": [
+      "geometry"
+    ],
+    "8-08-8008": [
+      "data"
+    ],
+    "8-09-8008": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8008": [
+      "data"
+    ],
+    "8-01-8009": [
+      "calculations"
+    ],
+    "8-02-8009": [
+      "equations"
+    ],
+    "8-03-8009": [
+      "calculations"
+    ],
+    "8-04-8009": [
+      "equations"
+    ],
+    "8-10-8009": [
+      "graphs"
+    ],
+    "8-05-8009": [
+      "geometry"
+    ],
+    "8-06-8009": [
+      "geometry"
+    ],
+    "8-07-8009": [
+      "geometry"
+    ],
+    "8-11-8009": [
+      "geometry"
+    ],
+    "8-08-8009": [
+      "data"
+    ],
+    "8-09-8009": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8009": [
+      "data"
+    ],
+    "8-01-8010": [
+      "calculations"
+    ],
+    "8-02-8010": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8010": [
+      "equations"
+    ],
+    "8-04-8010": [
+      "equations"
+    ],
+    "8-10-8010": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8010": [
+      "geometry"
+    ],
+    "8-06-8010": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8010": [
+      "geometry"
+    ],
+    "8-11-8010": [
+      "geometry"
+    ],
+    "8-08-8010": [
+      "data"
+    ],
+    "8-09-8010": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8010": [
+      "data"
+    ],
+    "8-01-8011": [
+      "calculations"
+    ],
+    "8-02-8011": [
+      "equations"
+    ],
+    "8-03-8011": [
+      "calculations"
+    ],
+    "8-04-8011": [
+      "equations"
+    ],
+    "8-10-8011": [
+      "graphs"
+    ],
+    "8-05-8011": [
+      "geometry"
+    ],
+    "8-06-8011": [
+      "geometry"
+    ],
+    "8-07-8011": [
+      "geometry"
+    ],
+    "8-11-8011": [
+      "geometry"
+    ],
+    "8-08-8011": [
+      "data"
+    ],
+    "8-09-8011": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8011": [
+      "data"
+    ],
+    "8-01-8012": [
+      "calculations"
+    ],
+    "8-02-8012": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8012": [
+      "equations"
+    ],
+    "8-04-8012": [
+      "equations"
+    ],
+    "8-10-8012": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8012": [
+      "geometry"
+    ],
+    "8-06-8012": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8012": [
+      "geometry"
+    ],
+    "8-11-8012": [
+      "geometry"
+    ],
+    "8-08-8012": [
+      "data"
+    ],
+    "8-09-8012": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8012": [
+      "data"
+    ],
+    "8-01-8013": [
+      "calculations"
+    ],
+    "8-02-8013": [
+      "equations"
+    ],
+    "8-03-8013": [
+      "calculations"
+    ],
+    "8-04-8013": [
+      "equations"
+    ],
+    "8-10-8013": [
+      "graphs"
+    ],
+    "8-05-8013": [
+      "geometry"
+    ],
+    "8-06-8013": [
+      "geometry"
+    ],
+    "8-07-8013": [
+      "geometry"
+    ],
+    "8-11-8013": [
+      "geometry"
+    ],
+    "8-08-8013": [
+      "data"
+    ],
+    "8-09-8013": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8013": [
+      "data"
+    ],
+    "8-01-8014": [
+      "calculations"
+    ],
+    "8-02-8014": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8014": [
+      "equations"
+    ],
+    "8-04-8014": [
+      "equations"
+    ],
+    "8-10-8014": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8014": [
+      "geometry"
+    ],
+    "8-06-8014": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8014": [
+      "geometry"
+    ],
+    "8-11-8014": [
+      "geometry"
+    ],
+    "8-08-8014": [
+      "data"
+    ],
+    "8-09-8014": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8014": [
+      "data"
+    ],
+    "8-01-8015": [
+      "calculations"
+    ],
+    "8-02-8015": [
+      "equations"
+    ],
+    "8-03-8015": [
+      "calculations"
+    ],
+    "8-04-8015": [
+      "equations"
+    ],
+    "8-10-8015": [
+      "graphs"
+    ],
+    "8-05-8015": [
+      "geometry"
+    ],
+    "8-06-8015": [
+      "geometry"
+    ],
+    "8-07-8015": [
+      "geometry"
+    ],
+    "8-11-8015": [
+      "geometry"
+    ],
+    "8-08-8015": [
+      "data"
+    ],
+    "8-09-8015": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8015": [
+      "data"
+    ],
+    "8-01-8016": [
+      "calculations"
+    ],
+    "8-02-8016": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8016": [
+      "equations"
+    ],
+    "8-04-8016": [
+      "equations"
+    ],
+    "8-10-8016": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8016": [
+      "geometry"
+    ],
+    "8-06-8016": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8016": [
+      "geometry"
+    ],
+    "8-11-8016": [
+      "geometry"
+    ],
+    "8-08-8016": [
+      "data"
+    ],
+    "8-09-8016": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8016": [
+      "data"
+    ],
+    "8-01-8017": [
+      "calculations"
+    ],
+    "8-02-8017": [
+      "equations"
+    ],
+    "8-03-8017": [
+      "calculations"
+    ],
+    "8-04-8017": [
+      "equations"
+    ],
+    "8-10-8017": [
+      "graphs"
+    ],
+    "8-05-8017": [
+      "geometry"
+    ],
+    "8-06-8017": [
+      "geometry"
+    ],
+    "8-07-8017": [
+      "geometry"
+    ],
+    "8-11-8017": [
+      "geometry"
+    ],
+    "8-08-8017": [
+      "data"
+    ],
+    "8-09-8017": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8017": [
+      "data"
+    ],
+    "8-01-8018": [
+      "calculations"
+    ],
+    "8-02-8018": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8018": [
+      "equations"
+    ],
+    "8-04-8018": [
+      "equations"
+    ],
+    "8-10-8018": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8018": [
+      "geometry"
+    ],
+    "8-06-8018": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8018": [
+      "geometry"
+    ],
+    "8-11-8018": [
+      "geometry"
+    ],
+    "8-08-8018": [
+      "data"
+    ],
+    "8-09-8018": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8018": [
+      "data"
+    ],
+    "8-01-8019": [
+      "calculations"
+    ],
+    "8-02-8019": [
+      "equations"
+    ],
+    "8-03-8019": [
+      "calculations"
+    ],
+    "8-04-8019": [
+      "equations"
+    ],
+    "8-10-8019": [
+      "graphs"
+    ],
+    "8-05-8019": [
+      "geometry"
+    ],
+    "8-06-8019": [
+      "geometry"
+    ],
+    "8-07-8019": [
+      "geometry"
+    ],
+    "8-11-8019": [
+      "geometry"
+    ],
+    "8-08-8019": [
+      "data"
+    ],
+    "8-09-8019": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8019": [
+      "data"
+    ],
+    "8-01-8020": [
+      "calculations"
+    ],
+    "8-02-8020": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8020": [
+      "equations"
+    ],
+    "8-04-8020": [
+      "equations"
+    ],
+    "8-10-8020": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8020": [
+      "geometry"
+    ],
+    "8-06-8020": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8020": [
+      "geometry"
+    ],
+    "8-11-8020": [
+      "geometry"
+    ],
+    "8-08-8020": [
+      "data"
+    ],
+    "8-09-8020": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8020": [
+      "data"
+    ],
+    "8-01-8021": [
+      "calculations"
+    ],
+    "8-02-8021": [
+      "equations"
+    ],
+    "8-03-8021": [
+      "calculations"
+    ],
+    "8-04-8021": [
+      "equations"
+    ],
+    "8-10-8021": [
+      "graphs"
+    ],
+    "8-05-8021": [
+      "geometry"
+    ],
+    "8-06-8021": [
+      "geometry"
+    ],
+    "8-07-8021": [
+      "geometry"
+    ],
+    "8-11-8021": [
+      "geometry"
+    ],
+    "8-08-8021": [
+      "data"
+    ],
+    "8-09-8021": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8021": [
+      "data"
+    ],
+    "8-01-8022": [
+      "calculations"
+    ],
+    "8-02-8022": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8022": [
+      "equations"
+    ],
+    "8-04-8022": [
+      "equations"
+    ],
+    "8-10-8022": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8022": [
+      "geometry"
+    ],
+    "8-06-8022": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8022": [
+      "geometry"
+    ],
+    "8-11-8022": [
+      "geometry"
+    ],
+    "8-08-8022": [
+      "data"
+    ],
+    "8-09-8022": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8022": [
+      "data"
+    ],
+    "8-01-8023": [
+      "calculations"
+    ],
+    "8-02-8023": [
+      "equations"
+    ],
+    "8-03-8023": [
+      "calculations"
+    ],
+    "8-04-8023": [
+      "equations"
+    ],
+    "8-10-8023": [
+      "graphs"
+    ],
+    "8-05-8023": [
+      "geometry"
+    ],
+    "8-06-8023": [
+      "geometry"
+    ],
+    "8-07-8023": [
+      "geometry"
+    ],
+    "8-11-8023": [
+      "geometry"
+    ],
+    "8-08-8023": [
+      "data"
+    ],
+    "8-09-8023": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8023": [
+      "data"
+    ],
+    "8-01-8024": [
+      "calculations"
+    ],
+    "8-02-8024": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8024": [
+      "equations"
+    ],
+    "8-04-8024": [
+      "equations"
+    ],
+    "8-10-8024": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8024": [
+      "geometry"
+    ],
+    "8-06-8024": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8024": [
+      "geometry"
+    ],
+    "8-11-8024": [
+      "geometry"
+    ],
+    "8-08-8024": [
+      "data"
+    ],
+    "8-09-8024": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8024": [
+      "data"
+    ],
+    "8-01-8025": [
+      "calculations"
+    ],
+    "8-02-8025": [
+      "equations"
+    ],
+    "8-03-8025": [
+      "calculations"
+    ],
+    "8-04-8025": [
+      "equations"
+    ],
+    "8-10-8025": [
+      "graphs"
+    ],
+    "8-05-8025": [
+      "geometry"
+    ],
+    "8-06-8025": [
+      "geometry"
+    ],
+    "8-07-8025": [
+      "geometry"
+    ],
+    "8-11-8025": [
+      "geometry"
+    ],
+    "8-08-8025": [
+      "data"
+    ],
+    "8-09-8025": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8025": [
+      "data"
+    ],
+    "8-01-8026": [
+      "calculations"
+    ],
+    "8-02-8026": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8026": [
+      "equations"
+    ],
+    "8-04-8026": [
+      "equations"
+    ],
+    "8-10-8026": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8026": [
+      "geometry"
+    ],
+    "8-06-8026": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8026": [
+      "geometry"
+    ],
+    "8-11-8026": [
+      "geometry"
+    ],
+    "8-08-8026": [
+      "data"
+    ],
+    "8-09-8026": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8026": [
+      "data"
+    ],
+    "8-01-8027": [
+      "calculations"
+    ],
+    "8-02-8027": [
+      "equations"
+    ],
+    "8-03-8027": [
+      "calculations"
+    ],
+    "8-04-8027": [
+      "equations"
+    ],
+    "8-10-8027": [
+      "graphs"
+    ],
+    "8-05-8027": [
+      "geometry"
+    ],
+    "8-06-8027": [
+      "geometry"
+    ],
+    "8-07-8027": [
+      "geometry"
+    ],
+    "8-11-8027": [
+      "geometry"
+    ],
+    "8-08-8027": [
+      "data"
+    ],
+    "8-09-8027": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8027": [
+      "data"
+    ],
+    "8-01-8028": [
+      "calculations"
+    ],
+    "8-02-8028": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8028": [
+      "equations"
+    ],
+    "8-04-8028": [
+      "equations"
+    ],
+    "8-10-8028": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8028": [
+      "geometry"
+    ],
+    "8-06-8028": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8028": [
+      "geometry"
+    ],
+    "8-11-8028": [
+      "geometry"
+    ],
+    "8-08-8028": [
+      "data"
+    ],
+    "8-09-8028": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8028": [
+      "data"
+    ],
+    "8-01-8029": [
+      "calculations"
+    ],
+    "8-02-8029": [
+      "equations"
+    ],
+    "8-03-8029": [
+      "calculations"
+    ],
+    "8-04-8029": [
+      "equations"
+    ],
+    "8-10-8029": [
+      "graphs"
+    ],
+    "8-05-8029": [
+      "geometry"
+    ],
+    "8-06-8029": [
+      "geometry"
+    ],
+    "8-07-8029": [
+      "geometry"
+    ],
+    "8-11-8029": [
+      "geometry"
+    ],
+    "8-08-8029": [
+      "data"
+    ],
+    "8-09-8029": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8029": [
+      "data"
+    ],
+    "8-01-8030": [
+      "calculations"
+    ],
+    "8-02-8030": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8030": [
+      "equations"
+    ],
+    "8-04-8030": [
+      "equations"
+    ],
+    "8-10-8030": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8030": [
+      "geometry"
+    ],
+    "8-06-8030": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8030": [
+      "geometry"
+    ],
+    "8-11-8030": [
+      "geometry"
+    ],
+    "8-08-8030": [
+      "data"
+    ],
+    "8-09-8030": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8030": [
+      "data"
+    ],
+    "8-01-8031": [
+      "calculations"
+    ],
+    "8-02-8031": [
+      "equations"
+    ],
+    "8-03-8031": [
+      "calculations"
+    ],
+    "8-04-8031": [
+      "equations"
+    ],
+    "8-10-8031": [
+      "graphs"
+    ],
+    "8-05-8031": [
+      "geometry"
+    ],
+    "8-06-8031": [
+      "geometry"
+    ],
+    "8-07-8031": [
+      "geometry"
+    ],
+    "8-11-8031": [
+      "geometry"
+    ],
+    "8-08-8031": [
+      "data"
+    ],
+    "8-09-8031": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8031": [
+      "data"
+    ],
+    "8-01-8032": [
+      "calculations"
+    ],
+    "8-02-8032": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8032": [
+      "equations"
+    ],
+    "8-04-8032": [
+      "equations"
+    ],
+    "8-10-8032": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8032": [
+      "geometry"
+    ],
+    "8-06-8032": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8032": [
+      "geometry"
+    ],
+    "8-11-8032": [
+      "geometry"
+    ],
+    "8-08-8032": [
+      "data"
+    ],
+    "8-09-8032": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8032": [
+      "data"
+    ],
+    "8-01-8033": [
+      "calculations"
+    ],
+    "8-02-8033": [
+      "equations"
+    ],
+    "8-03-8033": [
+      "calculations"
+    ],
+    "8-04-8033": [
+      "equations"
+    ],
+    "8-10-8033": [
+      "graphs"
+    ],
+    "8-05-8033": [
+      "geometry"
+    ],
+    "8-06-8033": [
+      "geometry"
+    ],
+    "8-07-8033": [
+      "geometry"
+    ],
+    "8-11-8033": [
+      "geometry"
+    ],
+    "8-08-8033": [
+      "data"
+    ],
+    "8-09-8033": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8033": [
+      "data"
+    ],
+    "8-01-8034": [
+      "calculations"
+    ],
+    "8-02-8034": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8034": [
+      "equations"
+    ],
+    "8-04-8034": [
+      "equations"
+    ],
+    "8-10-8034": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8034": [
+      "geometry"
+    ],
+    "8-06-8034": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8034": [
+      "geometry"
+    ],
+    "8-11-8034": [
+      "geometry"
+    ],
+    "8-08-8034": [
+      "data"
+    ],
+    "8-09-8034": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8034": [
+      "data"
+    ],
+    "8-01-8035": [
+      "calculations"
+    ],
+    "8-02-8035": [
+      "equations"
+    ],
+    "8-03-8035": [
+      "calculations"
+    ],
+    "8-04-8035": [
+      "equations"
+    ],
+    "8-10-8035": [
+      "graphs"
+    ],
+    "8-05-8035": [
+      "geometry"
+    ],
+    "8-06-8035": [
+      "geometry"
+    ],
+    "8-07-8035": [
+      "geometry"
+    ],
+    "8-11-8035": [
+      "geometry"
+    ],
+    "8-08-8035": [
+      "data"
+    ],
+    "8-09-8035": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8035": [
+      "data"
+    ],
+    "8-01-8036": [
+      "calculations"
+    ],
+    "8-02-8036": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8036": [
+      "equations"
+    ],
+    "8-04-8036": [
+      "equations"
+    ],
+    "8-10-8036": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8036": [
+      "geometry"
+    ],
+    "8-06-8036": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8036": [
+      "geometry"
+    ],
+    "8-11-8036": [
+      "geometry"
+    ],
+    "8-08-8036": [
+      "data"
+    ],
+    "8-09-8036": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8036": [
+      "data"
+    ],
+    "8-01-8037": [
+      "calculations"
+    ],
+    "8-02-8037": [
+      "equations"
+    ],
+    "8-03-8037": [
+      "calculations"
+    ],
+    "8-04-8037": [
+      "equations"
+    ],
+    "8-10-8037": [
+      "graphs"
+    ],
+    "8-05-8037": [
+      "geometry"
+    ],
+    "8-06-8037": [
+      "geometry"
+    ],
+    "8-07-8037": [
+      "geometry"
+    ],
+    "8-11-8037": [
+      "geometry"
+    ],
+    "8-08-8037": [
+      "data"
+    ],
+    "8-09-8037": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8037": [
+      "data"
+    ],
+    "8-01-8038": [
+      "calculations"
+    ],
+    "8-02-8038": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8038": [
+      "equations"
+    ],
+    "8-04-8038": [
+      "equations"
+    ],
+    "8-10-8038": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8038": [
+      "geometry"
+    ],
+    "8-06-8038": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8038": [
+      "geometry"
+    ],
+    "8-11-8038": [
+      "geometry"
+    ],
+    "8-08-8038": [
+      "data"
+    ],
+    "8-09-8038": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8038": [
+      "data"
+    ],
+    "8-01-8039": [
+      "calculations"
+    ],
+    "8-02-8039": [
+      "equations"
+    ],
+    "8-03-8039": [
+      "calculations"
+    ],
+    "8-04-8039": [
+      "equations"
+    ],
+    "8-10-8039": [
+      "graphs"
+    ],
+    "8-05-8039": [
+      "geometry"
+    ],
+    "8-06-8039": [
+      "geometry"
+    ],
+    "8-07-8039": [
+      "geometry"
+    ],
+    "8-11-8039": [
+      "geometry"
+    ],
+    "8-08-8039": [
+      "data"
+    ],
+    "8-09-8039": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8039": [
+      "data"
+    ],
+    "8-01-8040": [
+      "calculations"
+    ],
+    "8-02-8040": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8040": [
+      "equations"
+    ],
+    "8-04-8040": [
+      "equations"
+    ],
+    "8-10-8040": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8040": [
+      "geometry"
+    ],
+    "8-06-8040": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8040": [
+      "geometry"
+    ],
+    "8-11-8040": [
+      "geometry"
+    ],
+    "8-08-8040": [
+      "data"
+    ],
+    "8-09-8040": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8040": [
+      "data"
+    ],
+    "8-01-8041": [
+      "calculations"
+    ],
+    "8-02-8041": [
+      "equations"
+    ],
+    "8-03-8041": [
+      "calculations"
+    ],
+    "8-04-8041": [
+      "equations"
+    ],
+    "8-10-8041": [
+      "graphs"
+    ],
+    "8-05-8041": [
+      "geometry"
+    ],
+    "8-06-8041": [
+      "geometry"
+    ],
+    "8-07-8041": [
+      "geometry"
+    ],
+    "8-11-8041": [
+      "geometry"
+    ],
+    "8-08-8041": [
+      "data"
+    ],
+    "8-09-8041": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8041": [
+      "data"
+    ],
+    "8-01-8042": [
+      "calculations"
+    ],
+    "8-02-8042": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8042": [
+      "equations"
+    ],
+    "8-04-8042": [
+      "equations"
+    ],
+    "8-10-8042": [
+      "graphs",
+      "equations"
+    ],
+    "8-05-8042": [
+      "geometry"
+    ],
+    "8-06-8042": [
+      "geometry",
+      "equations"
+    ],
+    "8-07-8042": [
+      "geometry"
+    ],
+    "8-11-8042": [
+      "geometry"
+    ],
+    "8-08-8042": [
+      "data"
+    ],
+    "8-09-8042": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8042": [
+      "data"
+    ],
+    "8-01-8043": [
+      "calculations"
+    ],
+    "8-02-8043": [
+      "equations"
+    ],
+    "8-03-8043": [
+      "calculations"
+    ],
+    "8-04-8043": [
+      "equations"
+    ],
+    "8-10-8043": [
+      "graphs"
+    ],
+    "8-05-8043": [
+      "geometry"
+    ],
+    "8-06-8043": [
+      "geometry"
+    ],
+    "8-07-8043": [
+      "geometry"
+    ],
+    "8-11-8043": [
+      "geometry"
+    ],
+    "8-08-8043": [
+      "data"
+    ],
+    "8-09-8043": [
+      "data",
+      "calculations"
+    ],
+    "8-12-8043": [
+      "data"
+    ],
+    "8-01-8044": [
+      "calculations"
+    ],
+    "8-02-8044": [
+      "equations",
+      "calculations"
+    ],
+    "8-03-8044": [
+      "equations"
+    ],
+    "8-04-8044": [
+      "equations"
+    ],
+    "9-01-8001": [
+      "calculations"
+    ],
+    "9-02-8001": [
+      "calculations"
+    ],
+    "9-03-8001": [
+      "graphs"
+    ],
+    "9-04-8001": [
+      "equations"
+    ],
+    "9-10-8001": [
+      "equations"
+    ],
+    "9-05-8001": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8001": [
+      "geometry"
+    ],
+    "9-07-8001": [
+      "geometry"
+    ],
+    "9-08-8001": [
+      "data"
+    ],
+    "9-09-8001": [
+      "data"
+    ],
+    "9-12-8001": [
+      "data"
+    ],
+    "9-01-8002": [
+      "calculations"
+    ],
+    "9-02-8002": [
+      "calculations"
+    ],
+    "9-03-8002": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8002": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8002": [
+      "equations"
+    ],
+    "9-05-8002": [
+      "geometry"
+    ],
+    "9-06-8002": [
+      "geometry"
+    ],
+    "9-07-8002": [
+      "geometry"
+    ],
+    "9-08-8002": [
+      "data"
+    ],
+    "9-09-8002": [
+      "data"
+    ],
+    "9-12-8002": [
+      "data"
+    ],
+    "9-01-8003": [
+      "calculations"
+    ],
+    "9-02-8003": [
+      "calculations"
+    ],
+    "9-03-8003": [
+      "graphs"
+    ],
+    "9-04-8003": [
+      "equations"
+    ],
+    "9-10-8003": [
+      "equations"
+    ],
+    "9-05-8003": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8003": [
+      "geometry"
+    ],
+    "9-07-8003": [
+      "geometry"
+    ],
+    "9-08-8003": [
+      "data"
+    ],
+    "9-09-8003": [
+      "data"
+    ],
+    "9-12-8003": [
+      "data"
+    ],
+    "9-01-8004": [
+      "calculations"
+    ],
+    "9-02-8004": [
+      "calculations"
+    ],
+    "9-03-8004": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8004": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8004": [
+      "equations"
+    ],
+    "9-05-8004": [
+      "geometry"
+    ],
+    "9-06-8004": [
+      "geometry"
+    ],
+    "9-07-8004": [
+      "geometry"
+    ],
+    "9-08-8004": [
+      "data"
+    ],
+    "9-09-8004": [
+      "data"
+    ],
+    "9-12-8004": [
+      "data"
+    ],
+    "9-01-8005": [
+      "calculations"
+    ],
+    "9-02-8005": [
+      "calculations"
+    ],
+    "9-03-8005": [
+      "graphs"
+    ],
+    "9-04-8005": [
+      "equations"
+    ],
+    "9-10-8005": [
+      "equations"
+    ],
+    "9-05-8005": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8005": [
+      "geometry"
+    ],
+    "9-07-8005": [
+      "geometry"
+    ],
+    "9-08-8005": [
+      "data"
+    ],
+    "9-09-8005": [
+      "data"
+    ],
+    "9-12-8005": [
+      "data"
+    ],
+    "9-01-8006": [
+      "calculations"
+    ],
+    "9-02-8006": [
+      "calculations"
+    ],
+    "9-03-8006": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8006": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8006": [
+      "equations"
+    ],
+    "9-05-8006": [
+      "geometry"
+    ],
+    "9-06-8006": [
+      "geometry"
+    ],
+    "9-07-8006": [
+      "geometry"
+    ],
+    "9-08-8006": [
+      "data"
+    ],
+    "9-09-8006": [
+      "data"
+    ],
+    "9-12-8006": [
+      "data"
+    ],
+    "9-01-8007": [
+      "calculations"
+    ],
+    "9-02-8007": [
+      "calculations"
+    ],
+    "9-03-8007": [
+      "graphs"
+    ],
+    "9-04-8007": [
+      "equations"
+    ],
+    "9-10-8007": [
+      "equations"
+    ],
+    "9-05-8007": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8007": [
+      "geometry"
+    ],
+    "9-07-8007": [
+      "geometry"
+    ],
+    "9-08-8007": [
+      "data"
+    ],
+    "9-09-8007": [
+      "data"
+    ],
+    "9-12-8007": [
+      "data"
+    ],
+    "9-01-8008": [
+      "calculations"
+    ],
+    "9-02-8008": [
+      "calculations"
+    ],
+    "9-03-8008": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8008": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8008": [
+      "equations"
+    ],
+    "9-05-8008": [
+      "geometry"
+    ],
+    "9-06-8008": [
+      "geometry"
+    ],
+    "9-07-8008": [
+      "geometry"
+    ],
+    "9-08-8008": [
+      "data"
+    ],
+    "9-09-8008": [
+      "data"
+    ],
+    "9-12-8008": [
+      "data"
+    ],
+    "9-01-8009": [
+      "calculations"
+    ],
+    "9-02-8009": [
+      "calculations"
+    ],
+    "9-03-8009": [
+      "graphs"
+    ],
+    "9-04-8009": [
+      "equations"
+    ],
+    "9-10-8009": [
+      "equations"
+    ],
+    "9-05-8009": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8009": [
+      "geometry"
+    ],
+    "9-07-8009": [
+      "geometry"
+    ],
+    "9-08-8009": [
+      "data"
+    ],
+    "9-09-8009": [
+      "data"
+    ],
+    "9-12-8009": [
+      "data"
+    ],
+    "9-01-8010": [
+      "calculations"
+    ],
+    "9-02-8010": [
+      "calculations"
+    ],
+    "9-03-8010": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8010": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8010": [
+      "equations"
+    ],
+    "9-05-8010": [
+      "geometry"
+    ],
+    "9-06-8010": [
+      "geometry"
+    ],
+    "9-07-8010": [
+      "geometry"
+    ],
+    "9-08-8010": [
+      "data"
+    ],
+    "9-09-8010": [
+      "data"
+    ],
+    "9-12-8010": [
+      "data"
+    ],
+    "9-01-8011": [
+      "calculations"
+    ],
+    "9-02-8011": [
+      "calculations"
+    ],
+    "9-03-8011": [
+      "graphs"
+    ],
+    "9-04-8011": [
+      "equations"
+    ],
+    "9-10-8011": [
+      "equations"
+    ],
+    "9-05-8011": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8011": [
+      "geometry"
+    ],
+    "9-07-8011": [
+      "geometry"
+    ],
+    "9-08-8011": [
+      "data"
+    ],
+    "9-09-8011": [
+      "data"
+    ],
+    "9-12-8011": [
+      "data"
+    ],
+    "9-01-8012": [
+      "calculations"
+    ],
+    "9-02-8012": [
+      "calculations"
+    ],
+    "9-03-8012": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8012": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8012": [
+      "equations"
+    ],
+    "9-05-8012": [
+      "geometry"
+    ],
+    "9-06-8012": [
+      "geometry"
+    ],
+    "9-07-8012": [
+      "geometry"
+    ],
+    "9-08-8012": [
+      "data"
+    ],
+    "9-09-8012": [
+      "data"
+    ],
+    "9-12-8012": [
+      "data"
+    ],
+    "9-01-8013": [
+      "calculations"
+    ],
+    "9-02-8013": [
+      "calculations"
+    ],
+    "9-03-8013": [
+      "graphs"
+    ],
+    "9-04-8013": [
+      "equations"
+    ],
+    "9-10-8013": [
+      "equations"
+    ],
+    "9-05-8013": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8013": [
+      "geometry"
+    ],
+    "9-07-8013": [
+      "geometry"
+    ],
+    "9-08-8013": [
+      "data"
+    ],
+    "9-09-8013": [
+      "data"
+    ],
+    "9-12-8013": [
+      "data"
+    ],
+    "9-01-8014": [
+      "calculations"
+    ],
+    "9-02-8014": [
+      "calculations"
+    ],
+    "9-03-8014": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8014": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8014": [
+      "equations"
+    ],
+    "9-05-8014": [
+      "geometry"
+    ],
+    "9-06-8014": [
+      "geometry"
+    ],
+    "9-07-8014": [
+      "geometry"
+    ],
+    "9-08-8014": [
+      "data"
+    ],
+    "9-09-8014": [
+      "data"
+    ],
+    "9-12-8014": [
+      "data"
+    ],
+    "9-01-8015": [
+      "calculations"
+    ],
+    "9-02-8015": [
+      "calculations"
+    ],
+    "9-03-8015": [
+      "graphs"
+    ],
+    "9-04-8015": [
+      "equations"
+    ],
+    "9-10-8015": [
+      "equations"
+    ],
+    "9-05-8015": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8015": [
+      "geometry"
+    ],
+    "9-07-8015": [
+      "geometry"
+    ],
+    "9-08-8015": [
+      "data"
+    ],
+    "9-09-8015": [
+      "data"
+    ],
+    "9-12-8015": [
+      "data"
+    ],
+    "9-01-8016": [
+      "calculations"
+    ],
+    "9-02-8016": [
+      "calculations"
+    ],
+    "9-03-8016": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8016": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8016": [
+      "equations"
+    ],
+    "9-05-8016": [
+      "geometry"
+    ],
+    "9-06-8016": [
+      "geometry"
+    ],
+    "9-07-8016": [
+      "geometry"
+    ],
+    "9-08-8016": [
+      "data"
+    ],
+    "9-09-8016": [
+      "data"
+    ],
+    "9-12-8016": [
+      "data"
+    ],
+    "9-01-8017": [
+      "calculations"
+    ],
+    "9-02-8017": [
+      "calculations"
+    ],
+    "9-03-8017": [
+      "graphs"
+    ],
+    "9-04-8017": [
+      "equations"
+    ],
+    "9-10-8017": [
+      "equations"
+    ],
+    "9-05-8017": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8017": [
+      "geometry"
+    ],
+    "9-07-8017": [
+      "geometry"
+    ],
+    "9-08-8017": [
+      "data"
+    ],
+    "9-09-8017": [
+      "data"
+    ],
+    "9-12-8017": [
+      "data"
+    ],
+    "9-01-8018": [
+      "calculations"
+    ],
+    "9-02-8018": [
+      "calculations"
+    ],
+    "9-03-8018": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8018": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8018": [
+      "equations"
+    ],
+    "9-05-8018": [
+      "geometry"
+    ],
+    "9-06-8018": [
+      "geometry"
+    ],
+    "9-07-8018": [
+      "geometry"
+    ],
+    "9-08-8018": [
+      "data"
+    ],
+    "9-09-8018": [
+      "data"
+    ],
+    "9-12-8018": [
+      "data"
+    ],
+    "9-01-8019": [
+      "calculations"
+    ],
+    "9-02-8019": [
+      "calculations"
+    ],
+    "9-03-8019": [
+      "graphs"
+    ],
+    "9-04-8019": [
+      "equations"
+    ],
+    "9-10-8019": [
+      "equations"
+    ],
+    "9-05-8019": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8019": [
+      "geometry"
+    ],
+    "9-07-8019": [
+      "geometry"
+    ],
+    "9-08-8019": [
+      "data"
+    ],
+    "9-09-8019": [
+      "data"
+    ],
+    "9-12-8019": [
+      "data"
+    ],
+    "9-01-8020": [
+      "calculations"
+    ],
+    "9-02-8020": [
+      "calculations"
+    ],
+    "9-03-8020": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8020": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8020": [
+      "equations"
+    ],
+    "9-05-8020": [
+      "geometry"
+    ],
+    "9-06-8020": [
+      "geometry"
+    ],
+    "9-07-8020": [
+      "geometry"
+    ],
+    "9-08-8020": [
+      "data"
+    ],
+    "9-09-8020": [
+      "data"
+    ],
+    "9-12-8020": [
+      "data"
+    ],
+    "9-01-8021": [
+      "calculations"
+    ],
+    "9-02-8021": [
+      "calculations"
+    ],
+    "9-03-8021": [
+      "graphs"
+    ],
+    "9-04-8021": [
+      "equations"
+    ],
+    "9-10-8021": [
+      "equations"
+    ],
+    "9-05-8021": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8021": [
+      "geometry"
+    ],
+    "9-07-8021": [
+      "geometry"
+    ],
+    "9-08-8021": [
+      "data"
+    ],
+    "9-09-8021": [
+      "data"
+    ],
+    "9-12-8021": [
+      "data"
+    ],
+    "9-01-8022": [
+      "calculations"
+    ],
+    "9-02-8022": [
+      "calculations"
+    ],
+    "9-03-8022": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8022": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8022": [
+      "equations"
+    ],
+    "9-05-8022": [
+      "geometry"
+    ],
+    "9-06-8022": [
+      "geometry"
+    ],
+    "9-07-8022": [
+      "geometry"
+    ],
+    "9-08-8022": [
+      "data"
+    ],
+    "9-09-8022": [
+      "data"
+    ],
+    "9-12-8022": [
+      "data"
+    ],
+    "9-01-8023": [
+      "calculations"
+    ],
+    "9-02-8023": [
+      "calculations"
+    ],
+    "9-03-8023": [
+      "graphs"
+    ],
+    "9-04-8023": [
+      "equations"
+    ],
+    "9-10-8023": [
+      "equations"
+    ],
+    "9-05-8023": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8023": [
+      "geometry"
+    ],
+    "9-07-8023": [
+      "geometry"
+    ],
+    "9-08-8023": [
+      "data"
+    ],
+    "9-09-8023": [
+      "data"
+    ],
+    "9-12-8023": [
+      "data"
+    ],
+    "9-01-8024": [
+      "calculations"
+    ],
+    "9-02-8024": [
+      "calculations"
+    ],
+    "9-03-8024": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8024": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8024": [
+      "equations"
+    ],
+    "9-05-8024": [
+      "geometry"
+    ],
+    "9-06-8024": [
+      "geometry"
+    ],
+    "9-07-8024": [
+      "geometry"
+    ],
+    "9-08-8024": [
+      "data"
+    ],
+    "9-09-8024": [
+      "data"
+    ],
+    "9-12-8024": [
+      "data"
+    ],
+    "9-01-8025": [
+      "calculations"
+    ],
+    "9-02-8025": [
+      "calculations"
+    ],
+    "9-03-8025": [
+      "graphs"
+    ],
+    "9-04-8025": [
+      "equations"
+    ],
+    "9-10-8025": [
+      "equations"
+    ],
+    "9-05-8025": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8025": [
+      "geometry"
+    ],
+    "9-07-8025": [
+      "geometry"
+    ],
+    "9-08-8025": [
+      "data"
+    ],
+    "9-09-8025": [
+      "data"
+    ],
+    "9-12-8025": [
+      "data"
+    ],
+    "9-01-8026": [
+      "calculations"
+    ],
+    "9-02-8026": [
+      "calculations"
+    ],
+    "9-03-8026": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8026": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8026": [
+      "equations"
+    ],
+    "9-05-8026": [
+      "geometry"
+    ],
+    "9-06-8026": [
+      "geometry"
+    ],
+    "9-07-8026": [
+      "geometry"
+    ],
+    "9-08-8026": [
+      "data"
+    ],
+    "9-09-8026": [
+      "data"
+    ],
+    "9-12-8026": [
+      "data"
+    ],
+    "9-01-8027": [
+      "calculations"
+    ],
+    "9-02-8027": [
+      "calculations"
+    ],
+    "9-03-8027": [
+      "graphs"
+    ],
+    "9-04-8027": [
+      "equations"
+    ],
+    "9-10-8027": [
+      "equations"
+    ],
+    "9-05-8027": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8027": [
+      "geometry"
+    ],
+    "9-07-8027": [
+      "geometry"
+    ],
+    "9-08-8027": [
+      "data"
+    ],
+    "9-09-8027": [
+      "data"
+    ],
+    "9-12-8027": [
+      "data"
+    ],
+    "9-01-8028": [
+      "calculations"
+    ],
+    "9-02-8028": [
+      "calculations"
+    ],
+    "9-03-8028": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8028": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8028": [
+      "equations"
+    ],
+    "9-05-8028": [
+      "geometry"
+    ],
+    "9-06-8028": [
+      "geometry"
+    ],
+    "9-07-8028": [
+      "geometry"
+    ],
+    "9-08-8028": [
+      "data"
+    ],
+    "9-09-8028": [
+      "data"
+    ],
+    "9-12-8028": [
+      "data"
+    ],
+    "9-01-8029": [
+      "calculations"
+    ],
+    "9-02-8029": [
+      "calculations"
+    ],
+    "9-03-8029": [
+      "graphs"
+    ],
+    "9-04-8029": [
+      "equations"
+    ],
+    "9-10-8029": [
+      "equations"
+    ],
+    "9-05-8029": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8029": [
+      "geometry"
+    ],
+    "9-07-8029": [
+      "geometry"
+    ],
+    "9-08-8029": [
+      "data"
+    ],
+    "9-09-8029": [
+      "data"
+    ],
+    "9-12-8029": [
+      "data"
+    ],
+    "9-01-8030": [
+      "calculations"
+    ],
+    "9-02-8030": [
+      "calculations"
+    ],
+    "9-03-8030": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8030": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8030": [
+      "equations"
+    ],
+    "9-05-8030": [
+      "geometry"
+    ],
+    "9-06-8030": [
+      "geometry"
+    ],
+    "9-07-8030": [
+      "geometry"
+    ],
+    "9-08-8030": [
+      "data"
+    ],
+    "9-09-8030": [
+      "data"
+    ],
+    "9-12-8030": [
+      "data"
+    ],
+    "9-01-8031": [
+      "calculations"
+    ],
+    "9-02-8031": [
+      "calculations"
+    ],
+    "9-03-8031": [
+      "graphs"
+    ],
+    "9-04-8031": [
+      "equations"
+    ],
+    "9-10-8031": [
+      "equations"
+    ],
+    "9-05-8031": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8031": [
+      "geometry"
+    ],
+    "9-07-8031": [
+      "geometry"
+    ],
+    "9-08-8031": [
+      "data"
+    ],
+    "9-09-8031": [
+      "data"
+    ],
+    "9-12-8031": [
+      "data"
+    ],
+    "9-01-8032": [
+      "calculations"
+    ],
+    "9-02-8032": [
+      "calculations"
+    ],
+    "9-03-8032": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8032": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8032": [
+      "equations"
+    ],
+    "9-05-8032": [
+      "geometry"
+    ],
+    "9-06-8032": [
+      "geometry"
+    ],
+    "9-07-8032": [
+      "geometry"
+    ],
+    "9-08-8032": [
+      "data"
+    ],
+    "9-09-8032": [
+      "data"
+    ],
+    "9-12-8032": [
+      "data"
+    ],
+    "9-01-8033": [
+      "calculations"
+    ],
+    "9-02-8033": [
+      "calculations"
+    ],
+    "9-03-8033": [
+      "graphs"
+    ],
+    "9-04-8033": [
+      "equations"
+    ],
+    "9-10-8033": [
+      "equations"
+    ],
+    "9-05-8033": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8033": [
+      "geometry"
+    ],
+    "9-07-8033": [
+      "geometry"
+    ],
+    "9-08-8033": [
+      "data"
+    ],
+    "9-09-8033": [
+      "data"
+    ],
+    "9-12-8033": [
+      "data"
+    ],
+    "9-01-8034": [
+      "calculations"
+    ],
+    "9-02-8034": [
+      "calculations"
+    ],
+    "9-03-8034": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8034": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8034": [
+      "equations"
+    ],
+    "9-05-8034": [
+      "geometry"
+    ],
+    "9-06-8034": [
+      "geometry"
+    ],
+    "9-07-8034": [
+      "geometry"
+    ],
+    "9-08-8034": [
+      "data"
+    ],
+    "9-09-8034": [
+      "data"
+    ],
+    "9-12-8034": [
+      "data"
+    ],
+    "9-01-8035": [
+      "calculations"
+    ],
+    "9-02-8035": [
+      "calculations"
+    ],
+    "9-03-8035": [
+      "graphs"
+    ],
+    "9-04-8035": [
+      "equations"
+    ],
+    "9-10-8035": [
+      "equations"
+    ],
+    "9-05-8035": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8035": [
+      "geometry"
+    ],
+    "9-07-8035": [
+      "geometry"
+    ],
+    "9-08-8035": [
+      "data"
+    ],
+    "9-09-8035": [
+      "data"
+    ],
+    "9-12-8035": [
+      "data"
+    ],
+    "9-01-8036": [
+      "calculations"
+    ],
+    "9-02-8036": [
+      "calculations"
+    ],
+    "9-03-8036": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8036": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8036": [
+      "equations"
+    ],
+    "9-05-8036": [
+      "geometry"
+    ],
+    "9-06-8036": [
+      "geometry"
+    ],
+    "9-07-8036": [
+      "geometry"
+    ],
+    "9-08-8036": [
+      "data"
+    ],
+    "9-09-8036": [
+      "data"
+    ],
+    "9-12-8036": [
+      "data"
+    ],
+    "9-01-8037": [
+      "calculations"
+    ],
+    "9-02-8037": [
+      "calculations"
+    ],
+    "9-03-8037": [
+      "graphs"
+    ],
+    "9-04-8037": [
+      "equations"
+    ],
+    "9-10-8037": [
+      "equations"
+    ],
+    "9-05-8037": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8037": [
+      "geometry"
+    ],
+    "9-07-8037": [
+      "geometry"
+    ],
+    "9-08-8037": [
+      "data"
+    ],
+    "9-09-8037": [
+      "data"
+    ],
+    "9-12-8037": [
+      "data"
+    ],
+    "9-01-8038": [
+      "calculations"
+    ],
+    "9-02-8038": [
+      "calculations"
+    ],
+    "9-03-8038": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8038": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8038": [
+      "equations"
+    ],
+    "9-05-8038": [
+      "geometry"
+    ],
+    "9-06-8038": [
+      "geometry"
+    ],
+    "9-07-8038": [
+      "geometry"
+    ],
+    "9-08-8038": [
+      "data"
+    ],
+    "9-09-8038": [
+      "data"
+    ],
+    "9-12-8038": [
+      "data"
+    ],
+    "9-01-8039": [
+      "calculations"
+    ],
+    "9-02-8039": [
+      "calculations"
+    ],
+    "9-03-8039": [
+      "graphs"
+    ],
+    "9-04-8039": [
+      "equations"
+    ],
+    "9-10-8039": [
+      "equations"
+    ],
+    "9-05-8039": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8039": [
+      "geometry"
+    ],
+    "9-07-8039": [
+      "geometry"
+    ],
+    "9-08-8039": [
+      "data"
+    ],
+    "9-09-8039": [
+      "data"
+    ],
+    "9-12-8039": [
+      "data"
+    ],
+    "9-01-8040": [
+      "calculations"
+    ],
+    "9-02-8040": [
+      "calculations"
+    ],
+    "9-03-8040": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8040": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8040": [
+      "equations"
+    ],
+    "9-05-8040": [
+      "geometry"
+    ],
+    "9-06-8040": [
+      "geometry"
+    ],
+    "9-07-8040": [
+      "geometry"
+    ],
+    "9-08-8040": [
+      "data"
+    ],
+    "9-09-8040": [
+      "data"
+    ],
+    "9-12-8040": [
+      "data"
+    ],
+    "9-01-8041": [
+      "calculations"
+    ],
+    "9-02-8041": [
+      "calculations"
+    ],
+    "9-03-8041": [
+      "graphs"
+    ],
+    "9-04-8041": [
+      "equations"
+    ],
+    "9-10-8041": [
+      "equations"
+    ],
+    "9-05-8041": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8041": [
+      "geometry"
+    ],
+    "9-07-8041": [
+      "geometry"
+    ],
+    "9-08-8041": [
+      "data"
+    ],
+    "9-09-8041": [
+      "data"
+    ],
+    "9-12-8041": [
+      "data"
+    ],
+    "9-01-8042": [
+      "calculations"
+    ],
+    "9-02-8042": [
+      "calculations"
+    ],
+    "9-03-8042": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8042": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8042": [
+      "equations"
+    ],
+    "9-05-8042": [
+      "geometry"
+    ],
+    "9-06-8042": [
+      "geometry"
+    ],
+    "9-07-8042": [
+      "geometry"
+    ],
+    "9-08-8042": [
+      "data"
+    ],
+    "9-09-8042": [
+      "data"
+    ],
+    "9-12-8042": [
+      "data"
+    ],
+    "9-01-8043": [
+      "calculations"
+    ],
+    "9-02-8043": [
+      "calculations"
+    ],
+    "9-03-8043": [
+      "graphs"
+    ],
+    "9-04-8043": [
+      "equations"
+    ],
+    "9-10-8043": [
+      "equations"
+    ],
+    "9-05-8043": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8043": [
+      "geometry"
+    ],
+    "9-07-8043": [
+      "geometry"
+    ],
+    "9-08-8043": [
+      "data"
+    ],
+    "9-09-8043": [
+      "data"
+    ],
+    "9-12-8043": [
+      "data"
+    ],
+    "9-01-8044": [
+      "calculations"
+    ],
+    "9-02-8044": [
+      "calculations"
+    ],
+    "9-03-8044": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8044": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8044": [
+      "equations"
+    ],
+    "9-05-8044": [
+      "geometry"
+    ],
+    "9-06-8044": [
+      "geometry"
+    ],
+    "9-07-8044": [
+      "geometry"
+    ],
+    "9-08-8044": [
+      "data"
+    ],
+    "9-09-8044": [
+      "data"
+    ],
+    "9-12-8044": [
+      "data"
+    ],
+    "9-01-8045": [
+      "calculations"
+    ],
+    "9-02-8045": [
+      "calculations"
+    ],
+    "9-03-8045": [
+      "graphs"
+    ],
+    "9-04-8045": [
+      "equations"
+    ],
+    "9-10-8045": [
+      "equations"
+    ],
+    "9-05-8045": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8045": [
+      "geometry"
+    ],
+    "9-07-8045": [
+      "geometry"
+    ],
+    "9-08-8045": [
+      "data"
+    ],
+    "9-09-8045": [
+      "data"
+    ],
+    "9-12-8045": [
+      "data"
+    ],
+    "9-01-8046": [
+      "calculations"
+    ],
+    "9-02-8046": [
+      "calculations"
+    ],
+    "9-03-8046": [
+      "graphs",
+      "equations"
+    ],
+    "9-04-8046": [
+      "equations",
+      "calculations"
+    ],
+    "9-10-8046": [
+      "equations"
+    ],
+    "9-05-8046": [
+      "geometry"
+    ],
+    "9-06-8046": [
+      "geometry"
+    ],
+    "9-07-8046": [
+      "geometry"
+    ],
+    "9-08-8046": [
+      "data"
+    ],
+    "9-09-8046": [
+      "data"
+    ],
+    "9-12-8046": [
+      "data"
+    ],
+    "9-01-8047": [
+      "calculations"
+    ],
+    "9-02-8047": [
+      "calculations"
+    ],
+    "9-03-8047": [
+      "graphs"
+    ],
+    "9-04-8047": [
+      "equations"
+    ],
+    "9-10-8047": [
+      "equations"
+    ],
+    "9-05-8047": [
+      "geometry",
+      "calculations"
+    ],
+    "9-06-8047": [
+      "geometry"
+    ],
+    "9-07-8047": [
+      "geometry"
+    ],
+    "9-08-8047": [
+      "data"
+    ],
+    "9-09-8047": [
+      "data"
+    ],
+    "9-12-8047": [
+      "data"
+    ],
+    "9-01-8048": [
+      "calculations"
+    ],
+    "9-02-8048": [
+      "calculations"
+    ],
+    "9-03-8048": [
+      "graphs",
+      "equations"
+    ],
+    "10-101-8001": [
+      "calculations"
+    ],
+    "10-102-8001": [
+      "equations"
+    ],
+    "10-103-8001": [
+      "calculations"
+    ],
+    "10-104-8001": [
+      "equations"
+    ],
+    "10-105-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8001": [
+      "calculations"
+    ],
+    "10-107-8001": [
+      "geometry"
+    ],
+    "10-108-8001": [
+      "geometry"
+    ],
+    "10-109-8001": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8001": [
+      "data"
+    ],
+    "10-111-8001": [
+      "data"
+    ],
+    "10-112-8001": [
+      "data"
+    ],
+    "10-101-8002": [
+      "calculations"
+    ],
+    "10-102-8002": [
+      "equations"
+    ],
+    "10-103-8002": [
+      "calculations"
+    ],
+    "10-104-8002": [
+      "equations"
+    ],
+    "10-105-8002": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8002": [
+      "calculations"
+    ],
+    "10-107-8002": [
+      "geometry"
+    ],
+    "10-108-8002": [
+      "geometry"
+    ],
+    "10-109-8002": [
+      "data"
+    ],
+    "10-110-8002": [
+      "data"
+    ],
+    "10-111-8002": [
+      "data"
+    ],
+    "10-112-8002": [
+      "data"
+    ],
+    "10-101-8003": [
+      "calculations"
+    ],
+    "10-102-8003": [
+      "equations"
+    ],
+    "10-103-8003": [
+      "calculations"
+    ],
+    "10-104-8003": [
+      "equations"
+    ],
+    "10-105-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8003": [
+      "calculations"
+    ],
+    "10-107-8003": [
+      "geometry"
+    ],
+    "10-108-8003": [
+      "geometry"
+    ],
+    "10-109-8003": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8003": [
+      "data"
+    ],
+    "10-111-8003": [
+      "data"
+    ],
+    "10-112-8003": [
+      "data"
+    ],
+    "10-101-8004": [
+      "calculations"
+    ],
+    "10-102-8004": [
+      "equations"
+    ],
+    "10-103-8004": [
+      "calculations"
+    ],
+    "10-104-8004": [
+      "equations"
+    ],
+    "10-105-8004": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8004": [
+      "calculations"
+    ],
+    "10-107-8004": [
+      "geometry"
+    ],
+    "10-108-8004": [
+      "geometry"
+    ],
+    "10-109-8004": [
+      "data"
+    ],
+    "10-110-8004": [
+      "data"
+    ],
+    "10-111-8004": [
+      "data"
+    ],
+    "10-112-8004": [
+      "data"
+    ],
+    "10-101-8005": [
+      "calculations"
+    ],
+    "10-102-8005": [
+      "equations"
+    ],
+    "10-103-8005": [
+      "calculations"
+    ],
+    "10-104-8005": [
+      "equations"
+    ],
+    "10-105-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8005": [
+      "calculations"
+    ],
+    "10-107-8005": [
+      "geometry"
+    ],
+    "10-108-8005": [
+      "geometry"
+    ],
+    "10-109-8005": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8005": [
+      "data"
+    ],
+    "10-111-8005": [
+      "data"
+    ],
+    "10-112-8005": [
+      "data"
+    ],
+    "10-101-8006": [
+      "calculations"
+    ],
+    "10-102-8006": [
+      "equations"
+    ],
+    "10-103-8006": [
+      "calculations"
+    ],
+    "10-104-8006": [
+      "equations"
+    ],
+    "10-105-8006": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8006": [
+      "calculations"
+    ],
+    "10-107-8006": [
+      "geometry"
+    ],
+    "10-108-8006": [
+      "geometry"
+    ],
+    "10-109-8006": [
+      "data"
+    ],
+    "10-110-8006": [
+      "data"
+    ],
+    "10-111-8006": [
+      "data"
+    ],
+    "10-112-8006": [
+      "data"
+    ],
+    "10-101-8007": [
+      "calculations"
+    ],
+    "10-102-8007": [
+      "equations"
+    ],
+    "10-103-8007": [
+      "calculations"
+    ],
+    "10-104-8007": [
+      "equations"
+    ],
+    "10-105-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8007": [
+      "calculations"
+    ],
+    "10-107-8007": [
+      "geometry"
+    ],
+    "10-108-8007": [
+      "geometry"
+    ],
+    "10-109-8007": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8007": [
+      "data"
+    ],
+    "10-111-8007": [
+      "data"
+    ],
+    "10-112-8007": [
+      "data"
+    ],
+    "10-101-8008": [
+      "calculations"
+    ],
+    "10-102-8008": [
+      "equations"
+    ],
+    "10-103-8008": [
+      "calculations"
+    ],
+    "10-104-8008": [
+      "equations"
+    ],
+    "10-105-8008": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8008": [
+      "calculations"
+    ],
+    "10-107-8008": [
+      "geometry"
+    ],
+    "10-108-8008": [
+      "geometry"
+    ],
+    "10-109-8008": [
+      "data"
+    ],
+    "10-110-8008": [
+      "data"
+    ],
+    "10-111-8008": [
+      "data"
+    ],
+    "10-112-8008": [
+      "data"
+    ],
+    "10-101-8009": [
+      "calculations"
+    ],
+    "10-102-8009": [
+      "equations"
+    ],
+    "10-103-8009": [
+      "calculations"
+    ],
+    "10-104-8009": [
+      "equations"
+    ],
+    "10-105-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8009": [
+      "calculations"
+    ],
+    "10-107-8009": [
+      "geometry"
+    ],
+    "10-108-8009": [
+      "geometry"
+    ],
+    "10-109-8009": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8009": [
+      "data"
+    ],
+    "10-111-8009": [
+      "data"
+    ],
+    "10-112-8009": [
+      "data"
+    ],
+    "10-101-8010": [
+      "calculations"
+    ],
+    "10-102-8010": [
+      "equations"
+    ],
+    "10-103-8010": [
+      "calculations"
+    ],
+    "10-104-8010": [
+      "equations"
+    ],
+    "10-105-8010": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8010": [
+      "calculations"
+    ],
+    "10-107-8010": [
+      "geometry"
+    ],
+    "10-108-8010": [
+      "geometry"
+    ],
+    "10-109-8010": [
+      "data"
+    ],
+    "10-110-8010": [
+      "data"
+    ],
+    "10-111-8010": [
+      "data"
+    ],
+    "10-112-8010": [
+      "data"
+    ],
+    "10-101-8011": [
+      "calculations"
+    ],
+    "10-102-8011": [
+      "equations"
+    ],
+    "10-103-8011": [
+      "calculations"
+    ],
+    "10-104-8011": [
+      "equations"
+    ],
+    "10-105-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8011": [
+      "calculations"
+    ],
+    "10-107-8011": [
+      "geometry"
+    ],
+    "10-108-8011": [
+      "geometry"
+    ],
+    "10-109-8011": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8011": [
+      "data"
+    ],
+    "10-111-8011": [
+      "data"
+    ],
+    "10-112-8011": [
+      "data"
+    ],
+    "10-101-8012": [
+      "calculations"
+    ],
+    "10-102-8012": [
+      "equations"
+    ],
+    "10-103-8012": [
+      "calculations"
+    ],
+    "10-104-8012": [
+      "equations"
+    ],
+    "10-105-8012": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8012": [
+      "calculations"
+    ],
+    "10-107-8012": [
+      "geometry"
+    ],
+    "10-108-8012": [
+      "geometry"
+    ],
+    "10-109-8012": [
+      "data"
+    ],
+    "10-110-8012": [
+      "data"
+    ],
+    "10-111-8012": [
+      "data"
+    ],
+    "10-112-8012": [
+      "data"
+    ],
+    "10-101-8013": [
+      "calculations"
+    ],
+    "10-102-8013": [
+      "equations"
+    ],
+    "10-103-8013": [
+      "calculations"
+    ],
+    "10-104-8013": [
+      "equations"
+    ],
+    "10-105-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8013": [
+      "calculations"
+    ],
+    "10-107-8013": [
+      "geometry"
+    ],
+    "10-108-8013": [
+      "geometry"
+    ],
+    "10-109-8013": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8013": [
+      "data"
+    ],
+    "10-111-8013": [
+      "data"
+    ],
+    "10-112-8013": [
+      "data"
+    ],
+    "10-101-8014": [
+      "calculations"
+    ],
+    "10-102-8014": [
+      "equations"
+    ],
+    "10-103-8014": [
+      "calculations"
+    ],
+    "10-104-8014": [
+      "equations"
+    ],
+    "10-105-8014": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8014": [
+      "calculations"
+    ],
+    "10-107-8014": [
+      "geometry"
+    ],
+    "10-108-8014": [
+      "geometry"
+    ],
+    "10-109-8014": [
+      "data"
+    ],
+    "10-110-8014": [
+      "data"
+    ],
+    "10-111-8014": [
+      "data"
+    ],
+    "10-112-8014": [
+      "data"
+    ],
+    "10-101-8015": [
+      "calculations"
+    ],
+    "10-102-8015": [
+      "equations"
+    ],
+    "10-103-8015": [
+      "calculations"
+    ],
+    "10-104-8015": [
+      "equations"
+    ],
+    "10-105-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8015": [
+      "calculations"
+    ],
+    "10-107-8015": [
+      "geometry"
+    ],
+    "10-108-8015": [
+      "geometry"
+    ],
+    "10-109-8015": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8015": [
+      "data"
+    ],
+    "10-111-8015": [
+      "data"
+    ],
+    "10-112-8015": [
+      "data"
+    ],
+    "10-101-8016": [
+      "calculations"
+    ],
+    "10-102-8016": [
+      "equations"
+    ],
+    "10-103-8016": [
+      "calculations"
+    ],
+    "10-104-8016": [
+      "equations"
+    ],
+    "10-105-8016": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8016": [
+      "calculations"
+    ],
+    "10-107-8016": [
+      "geometry"
+    ],
+    "10-108-8016": [
+      "geometry"
+    ],
+    "10-109-8016": [
+      "data"
+    ],
+    "10-110-8016": [
+      "data"
+    ],
+    "10-111-8016": [
+      "data"
+    ],
+    "10-112-8016": [
+      "data"
+    ],
+    "10-101-8017": [
+      "calculations"
+    ],
+    "10-102-8017": [
+      "equations"
+    ],
+    "10-103-8017": [
+      "calculations"
+    ],
+    "10-104-8017": [
+      "equations"
+    ],
+    "10-105-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8017": [
+      "calculations"
+    ],
+    "10-107-8017": [
+      "geometry"
+    ],
+    "10-108-8017": [
+      "geometry"
+    ],
+    "10-109-8017": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8017": [
+      "data"
+    ],
+    "10-111-8017": [
+      "data"
+    ],
+    "10-112-8017": [
+      "data"
+    ],
+    "10-101-8018": [
+      "calculations"
+    ],
+    "10-102-8018": [
+      "equations"
+    ],
+    "10-103-8018": [
+      "calculations"
+    ],
+    "10-104-8018": [
+      "equations"
+    ],
+    "10-105-8018": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8018": [
+      "calculations"
+    ],
+    "10-107-8018": [
+      "geometry"
+    ],
+    "10-108-8018": [
+      "geometry"
+    ],
+    "10-109-8018": [
+      "data"
+    ],
+    "10-110-8018": [
+      "data"
+    ],
+    "10-111-8018": [
+      "data"
+    ],
+    "10-112-8018": [
+      "data"
+    ],
+    "10-101-8019": [
+      "calculations"
+    ],
+    "10-102-8019": [
+      "equations"
+    ],
+    "10-103-8019": [
+      "calculations"
+    ],
+    "10-104-8019": [
+      "equations"
+    ],
+    "10-105-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8019": [
+      "calculations"
+    ],
+    "10-107-8019": [
+      "geometry"
+    ],
+    "10-108-8019": [
+      "geometry"
+    ],
+    "10-109-8019": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8019": [
+      "data"
+    ],
+    "10-111-8019": [
+      "data"
+    ],
+    "10-112-8019": [
+      "data"
+    ],
+    "10-101-8020": [
+      "calculations"
+    ],
+    "10-102-8020": [
+      "equations"
+    ],
+    "10-103-8020": [
+      "calculations"
+    ],
+    "10-104-8020": [
+      "equations"
+    ],
+    "10-105-8020": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8020": [
+      "calculations"
+    ],
+    "10-107-8020": [
+      "geometry"
+    ],
+    "10-108-8020": [
+      "geometry"
+    ],
+    "10-109-8020": [
+      "data"
+    ],
+    "10-110-8020": [
+      "data"
+    ],
+    "10-111-8020": [
+      "data"
+    ],
+    "10-112-8020": [
+      "data"
+    ],
+    "10-101-8021": [
+      "calculations"
+    ],
+    "10-102-8021": [
+      "equations"
+    ],
+    "10-103-8021": [
+      "calculations"
+    ],
+    "10-104-8021": [
+      "equations"
+    ],
+    "10-105-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8021": [
+      "calculations"
+    ],
+    "10-107-8021": [
+      "geometry"
+    ],
+    "10-108-8021": [
+      "geometry"
+    ],
+    "10-109-8021": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8021": [
+      "data"
+    ],
+    "10-111-8021": [
+      "data"
+    ],
+    "10-112-8021": [
+      "data"
+    ],
+    "10-101-8022": [
+      "calculations"
+    ],
+    "10-102-8022": [
+      "equations"
+    ],
+    "10-103-8022": [
+      "calculations"
+    ],
+    "10-104-8022": [
+      "equations"
+    ],
+    "10-105-8022": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8022": [
+      "calculations"
+    ],
+    "10-107-8022": [
+      "geometry"
+    ],
+    "10-108-8022": [
+      "geometry"
+    ],
+    "10-109-8022": [
+      "data"
+    ],
+    "10-110-8022": [
+      "data"
+    ],
+    "10-111-8022": [
+      "data"
+    ],
+    "10-112-8022": [
+      "data"
+    ],
+    "10-101-8023": [
+      "calculations"
+    ],
+    "10-102-8023": [
+      "equations"
+    ],
+    "10-103-8023": [
+      "calculations"
+    ],
+    "10-104-8023": [
+      "equations"
+    ],
+    "10-105-8023": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8023": [
+      "calculations"
+    ],
+    "10-107-8023": [
+      "geometry"
+    ],
+    "10-108-8023": [
+      "geometry"
+    ],
+    "10-109-8023": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8023": [
+      "data"
+    ],
+    "10-111-8023": [
+      "data"
+    ],
+    "10-112-8023": [
+      "data"
+    ],
+    "10-101-8024": [
+      "calculations"
+    ],
+    "10-102-8024": [
+      "equations"
+    ],
+    "10-103-8024": [
+      "calculations"
+    ],
+    "10-104-8024": [
+      "equations"
+    ],
+    "10-105-8024": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8024": [
+      "calculations"
+    ],
+    "10-107-8024": [
+      "geometry"
+    ],
+    "10-108-8024": [
+      "geometry"
+    ],
+    "10-109-8024": [
+      "data"
+    ],
+    "10-110-8024": [
+      "data"
+    ],
+    "10-111-8024": [
+      "data"
+    ],
+    "10-112-8024": [
+      "data"
+    ],
+    "10-101-8025": [
+      "calculations"
+    ],
+    "10-102-8025": [
+      "equations"
+    ],
+    "10-103-8025": [
+      "calculations"
+    ],
+    "10-104-8025": [
+      "equations"
+    ],
+    "10-105-8025": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8025": [
+      "calculations"
+    ],
+    "10-107-8025": [
+      "geometry"
+    ],
+    "10-108-8025": [
+      "geometry"
+    ],
+    "10-109-8025": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8025": [
+      "data"
+    ],
+    "10-111-8025": [
+      "data"
+    ],
+    "10-112-8025": [
+      "data"
+    ],
+    "10-101-8026": [
+      "calculations"
+    ],
+    "10-102-8026": [
+      "equations"
+    ],
+    "10-103-8026": [
+      "calculations"
+    ],
+    "10-104-8026": [
+      "equations"
+    ],
+    "10-105-8026": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8026": [
+      "calculations"
+    ],
+    "10-107-8026": [
+      "geometry"
+    ],
+    "10-108-8026": [
+      "geometry"
+    ],
+    "10-109-8026": [
+      "data"
+    ],
+    "10-110-8026": [
+      "data"
+    ],
+    "10-111-8026": [
+      "data"
+    ],
+    "10-112-8026": [
+      "data"
+    ],
+    "10-101-8027": [
+      "calculations"
+    ],
+    "10-102-8027": [
+      "equations"
+    ],
+    "10-103-8027": [
+      "calculations"
+    ],
+    "10-104-8027": [
+      "equations"
+    ],
+    "10-105-8027": [
+      "graphs",
+      "calculations"
+    ],
+    "10-106-8027": [
+      "calculations"
+    ],
+    "10-107-8027": [
+      "geometry"
+    ],
+    "10-108-8027": [
+      "geometry"
+    ],
+    "10-109-8027": [
+      "data",
+      "calculations"
+    ],
+    "10-110-8027": [
+      "data"
+    ],
+    "10-111-8027": [
+      "data"
+    ],
+    "10-01-8001": [
+      "calculations"
+    ],
+    "10-02-8001": [
+      "equations"
+    ],
+    "10-03-8001": [
+      "equations"
+    ],
+    "10-04-8001": [
+      "calculations"
+    ],
+    "10-05-8001": [
+      "equations"
+    ],
+    "10-06-8001": [
+      "calculations"
+    ],
+    "10-07-8001": [
+      "calculations"
+    ],
+    "10-08-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8001": [
+      "calculations"
+    ],
+    "10-10-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8001": [
+      "geometry"
+    ],
+    "10-12-8001": [
+      "geometry"
+    ],
+    "10-13-8001": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8001": [
+      "data"
+    ],
+    "10-15-8001": [
+      "data"
+    ],
+    "10-16-8001": [
+      "data"
+    ],
+    "10-01-8002": [
+      "calculations"
+    ],
+    "10-02-8002": [
+      "calculations"
+    ],
+    "10-03-8002": [
+      "equations"
+    ],
+    "10-04-8002": [
+      "calculations"
+    ],
+    "10-05-8002": [
+      "equations"
+    ],
+    "10-06-8002": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8002": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8002": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8002": [
+      "calculations"
+    ],
+    "10-10-8002": [
+      "graphs"
+    ],
+    "10-11-8002": [
+      "geometry"
+    ],
+    "10-12-8002": [
+      "geometry"
+    ],
+    "10-13-8002": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8002": [
+      "data"
+    ],
+    "10-15-8002": [
+      "data"
+    ],
+    "10-16-8002": [
+      "data"
+    ],
+    "10-01-8003": [
+      "calculations"
+    ],
+    "10-02-8003": [
+      "equations"
+    ],
+    "10-03-8003": [
+      "equations"
+    ],
+    "10-04-8003": [
+      "calculations"
+    ],
+    "10-05-8003": [
+      "equations"
+    ],
+    "10-06-8003": [
+      "calculations"
+    ],
+    "10-07-8003": [
+      "calculations"
+    ],
+    "10-08-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8003": [
+      "calculations"
+    ],
+    "10-10-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8003": [
+      "geometry"
+    ],
+    "10-12-8003": [
+      "geometry"
+    ],
+    "10-13-8003": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8003": [
+      "data"
+    ],
+    "10-15-8003": [
+      "data"
+    ],
+    "10-16-8003": [
+      "data"
+    ],
+    "10-01-8004": [
+      "calculations"
+    ],
+    "10-02-8004": [
+      "calculations"
+    ],
+    "10-03-8004": [
+      "equations"
+    ],
+    "10-04-8004": [
+      "calculations"
+    ],
+    "10-05-8004": [
+      "equations"
+    ],
+    "10-06-8004": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8004": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8004": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8004": [
+      "calculations"
+    ],
+    "10-10-8004": [
+      "graphs"
+    ],
+    "10-11-8004": [
+      "geometry"
+    ],
+    "10-12-8004": [
+      "geometry"
+    ],
+    "10-13-8004": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8004": [
+      "data"
+    ],
+    "10-15-8004": [
+      "data"
+    ],
+    "10-16-8004": [
+      "data"
+    ],
+    "10-01-8005": [
+      "calculations"
+    ],
+    "10-02-8005": [
+      "equations"
+    ],
+    "10-03-8005": [
+      "equations"
+    ],
+    "10-04-8005": [
+      "calculations"
+    ],
+    "10-05-8005": [
+      "equations"
+    ],
+    "10-06-8005": [
+      "calculations"
+    ],
+    "10-07-8005": [
+      "calculations"
+    ],
+    "10-08-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8005": [
+      "calculations"
+    ],
+    "10-10-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8005": [
+      "geometry"
+    ],
+    "10-12-8005": [
+      "geometry"
+    ],
+    "10-13-8005": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8005": [
+      "data"
+    ],
+    "10-15-8005": [
+      "data"
+    ],
+    "10-16-8005": [
+      "data"
+    ],
+    "10-01-8006": [
+      "calculations"
+    ],
+    "10-02-8006": [
+      "calculations"
+    ],
+    "10-03-8006": [
+      "equations"
+    ],
+    "10-04-8006": [
+      "calculations"
+    ],
+    "10-05-8006": [
+      "equations"
+    ],
+    "10-06-8006": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8006": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8006": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8006": [
+      "calculations"
+    ],
+    "10-10-8006": [
+      "graphs"
+    ],
+    "10-11-8006": [
+      "geometry"
+    ],
+    "10-12-8006": [
+      "geometry"
+    ],
+    "10-13-8006": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8006": [
+      "data"
+    ],
+    "10-15-8006": [
+      "data"
+    ],
+    "10-16-8006": [
+      "data"
+    ],
+    "10-01-8007": [
+      "calculations"
+    ],
+    "10-02-8007": [
+      "equations"
+    ],
+    "10-03-8007": [
+      "equations"
+    ],
+    "10-04-8007": [
+      "calculations"
+    ],
+    "10-05-8007": [
+      "equations"
+    ],
+    "10-06-8007": [
+      "calculations"
+    ],
+    "10-07-8007": [
+      "calculations"
+    ],
+    "10-08-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8007": [
+      "calculations"
+    ],
+    "10-10-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8007": [
+      "geometry"
+    ],
+    "10-12-8007": [
+      "geometry"
+    ],
+    "10-13-8007": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8007": [
+      "data"
+    ],
+    "10-15-8007": [
+      "data"
+    ],
+    "10-16-8007": [
+      "data"
+    ],
+    "10-01-8008": [
+      "calculations"
+    ],
+    "10-02-8008": [
+      "calculations"
+    ],
+    "10-03-8008": [
+      "equations"
+    ],
+    "10-04-8008": [
+      "calculations"
+    ],
+    "10-05-8008": [
+      "equations"
+    ],
+    "10-06-8008": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8008": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8008": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8008": [
+      "calculations"
+    ],
+    "10-10-8008": [
+      "graphs"
+    ],
+    "10-11-8008": [
+      "geometry"
+    ],
+    "10-12-8008": [
+      "geometry"
+    ],
+    "10-13-8008": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8008": [
+      "data"
+    ],
+    "10-15-8008": [
+      "data"
+    ],
+    "10-16-8008": [
+      "data"
+    ],
+    "10-01-8009": [
+      "calculations"
+    ],
+    "10-02-8009": [
+      "equations"
+    ],
+    "10-03-8009": [
+      "equations"
+    ],
+    "10-04-8009": [
+      "calculations"
+    ],
+    "10-05-8009": [
+      "equations"
+    ],
+    "10-06-8009": [
+      "calculations"
+    ],
+    "10-07-8009": [
+      "calculations"
+    ],
+    "10-08-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8009": [
+      "calculations"
+    ],
+    "10-10-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8009": [
+      "geometry"
+    ],
+    "10-12-8009": [
+      "geometry"
+    ],
+    "10-13-8009": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8009": [
+      "data"
+    ],
+    "10-15-8009": [
+      "data"
+    ],
+    "10-16-8009": [
+      "data"
+    ],
+    "10-01-8010": [
+      "calculations"
+    ],
+    "10-02-8010": [
+      "calculations"
+    ],
+    "10-03-8010": [
+      "equations"
+    ],
+    "10-04-8010": [
+      "calculations"
+    ],
+    "10-05-8010": [
+      "equations"
+    ],
+    "10-06-8010": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8010": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8010": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8010": [
+      "calculations"
+    ],
+    "10-10-8010": [
+      "graphs"
+    ],
+    "10-11-8010": [
+      "geometry"
+    ],
+    "10-12-8010": [
+      "geometry"
+    ],
+    "10-13-8010": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8010": [
+      "data"
+    ],
+    "10-15-8010": [
+      "data"
+    ],
+    "10-16-8010": [
+      "data"
+    ],
+    "10-01-8011": [
+      "calculations"
+    ],
+    "10-02-8011": [
+      "equations"
+    ],
+    "10-03-8011": [
+      "equations"
+    ],
+    "10-04-8011": [
+      "calculations"
+    ],
+    "10-05-8011": [
+      "equations"
+    ],
+    "10-06-8011": [
+      "calculations"
+    ],
+    "10-07-8011": [
+      "calculations"
+    ],
+    "10-08-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8011": [
+      "calculations"
+    ],
+    "10-10-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8011": [
+      "geometry"
+    ],
+    "10-12-8011": [
+      "geometry"
+    ],
+    "10-13-8011": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8011": [
+      "data"
+    ],
+    "10-15-8011": [
+      "data"
+    ],
+    "10-16-8011": [
+      "data"
+    ],
+    "10-01-8012": [
+      "calculations"
+    ],
+    "10-02-8012": [
+      "calculations"
+    ],
+    "10-03-8012": [
+      "equations"
+    ],
+    "10-04-8012": [
+      "calculations"
+    ],
+    "10-05-8012": [
+      "equations"
+    ],
+    "10-06-8012": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8012": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8012": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8012": [
+      "calculations"
+    ],
+    "10-10-8012": [
+      "graphs"
+    ],
+    "10-11-8012": [
+      "geometry"
+    ],
+    "10-12-8012": [
+      "geometry"
+    ],
+    "10-13-8012": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8012": [
+      "data"
+    ],
+    "10-15-8012": [
+      "data"
+    ],
+    "10-16-8012": [
+      "data"
+    ],
+    "10-01-8013": [
+      "calculations"
+    ],
+    "10-02-8013": [
+      "equations"
+    ],
+    "10-03-8013": [
+      "equations"
+    ],
+    "10-04-8013": [
+      "calculations"
+    ],
+    "10-05-8013": [
+      "equations"
+    ],
+    "10-06-8013": [
+      "calculations"
+    ],
+    "10-07-8013": [
+      "calculations"
+    ],
+    "10-08-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8013": [
+      "calculations"
+    ],
+    "10-10-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8013": [
+      "geometry"
+    ],
+    "10-12-8013": [
+      "geometry"
+    ],
+    "10-13-8013": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8013": [
+      "data"
+    ],
+    "10-15-8013": [
+      "data"
+    ],
+    "10-16-8013": [
+      "data"
+    ],
+    "10-01-8014": [
+      "calculations"
+    ],
+    "10-02-8014": [
+      "calculations"
+    ],
+    "10-03-8014": [
+      "equations"
+    ],
+    "10-04-8014": [
+      "calculations"
+    ],
+    "10-05-8014": [
+      "equations"
+    ],
+    "10-06-8014": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8014": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8014": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8014": [
+      "calculations"
+    ],
+    "10-10-8014": [
+      "graphs"
+    ],
+    "10-11-8014": [
+      "geometry"
+    ],
+    "10-12-8014": [
+      "geometry"
+    ],
+    "10-13-8014": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8014": [
+      "data"
+    ],
+    "10-15-8014": [
+      "data"
+    ],
+    "10-16-8014": [
+      "data"
+    ],
+    "10-01-8015": [
+      "calculations"
+    ],
+    "10-02-8015": [
+      "equations"
+    ],
+    "10-03-8015": [
+      "equations"
+    ],
+    "10-04-8015": [
+      "calculations"
+    ],
+    "10-05-8015": [
+      "equations"
+    ],
+    "10-06-8015": [
+      "calculations"
+    ],
+    "10-07-8015": [
+      "calculations"
+    ],
+    "10-08-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8015": [
+      "calculations"
+    ],
+    "10-10-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8015": [
+      "geometry"
+    ],
+    "10-12-8015": [
+      "geometry"
+    ],
+    "10-13-8015": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8015": [
+      "data"
+    ],
+    "10-15-8015": [
+      "data"
+    ],
+    "10-16-8015": [
+      "data"
+    ],
+    "10-01-8016": [
+      "calculations"
+    ],
+    "10-02-8016": [
+      "calculations"
+    ],
+    "10-03-8016": [
+      "equations"
+    ],
+    "10-04-8016": [
+      "calculations"
+    ],
+    "10-05-8016": [
+      "equations"
+    ],
+    "10-06-8016": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8016": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8016": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8016": [
+      "calculations"
+    ],
+    "10-10-8016": [
+      "graphs"
+    ],
+    "10-11-8016": [
+      "geometry"
+    ],
+    "10-12-8016": [
+      "geometry"
+    ],
+    "10-13-8016": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8016": [
+      "data"
+    ],
+    "10-15-8016": [
+      "data"
+    ],
+    "10-16-8016": [
+      "data"
+    ],
+    "10-01-8017": [
+      "calculations"
+    ],
+    "10-02-8017": [
+      "equations"
+    ],
+    "10-03-8017": [
+      "equations"
+    ],
+    "10-04-8017": [
+      "calculations"
+    ],
+    "10-05-8017": [
+      "equations"
+    ],
+    "10-06-8017": [
+      "calculations"
+    ],
+    "10-07-8017": [
+      "calculations"
+    ],
+    "10-08-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8017": [
+      "calculations"
+    ],
+    "10-10-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8017": [
+      "geometry"
+    ],
+    "10-12-8017": [
+      "geometry"
+    ],
+    "10-13-8017": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8017": [
+      "data"
+    ],
+    "10-15-8017": [
+      "data"
+    ],
+    "10-16-8017": [
+      "data"
+    ],
+    "10-01-8018": [
+      "calculations"
+    ],
+    "10-02-8018": [
+      "calculations"
+    ],
+    "10-03-8018": [
+      "equations"
+    ],
+    "10-04-8018": [
+      "calculations"
+    ],
+    "10-05-8018": [
+      "equations"
+    ],
+    "10-06-8018": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8018": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8018": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8018": [
+      "calculations"
+    ],
+    "10-10-8018": [
+      "graphs"
+    ],
+    "10-11-8018": [
+      "geometry"
+    ],
+    "10-12-8018": [
+      "geometry"
+    ],
+    "10-13-8018": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8018": [
+      "data"
+    ],
+    "10-15-8018": [
+      "data"
+    ],
+    "10-16-8018": [
+      "data"
+    ],
+    "10-01-8019": [
+      "calculations"
+    ],
+    "10-02-8019": [
+      "equations"
+    ],
+    "10-03-8019": [
+      "equations"
+    ],
+    "10-04-8019": [
+      "calculations"
+    ],
+    "10-05-8019": [
+      "equations"
+    ],
+    "10-06-8019": [
+      "calculations"
+    ],
+    "10-07-8019": [
+      "calculations"
+    ],
+    "10-08-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8019": [
+      "calculations"
+    ],
+    "10-10-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8019": [
+      "geometry"
+    ],
+    "10-12-8019": [
+      "geometry"
+    ],
+    "10-13-8019": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8019": [
+      "data"
+    ],
+    "10-15-8019": [
+      "data"
+    ],
+    "10-16-8019": [
+      "data"
+    ],
+    "10-01-8020": [
+      "calculations"
+    ],
+    "10-02-8020": [
+      "calculations"
+    ],
+    "10-03-8020": [
+      "equations"
+    ],
+    "10-04-8020": [
+      "calculations"
+    ],
+    "10-05-8020": [
+      "equations"
+    ],
+    "10-06-8020": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8020": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8020": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8020": [
+      "calculations"
+    ],
+    "10-10-8020": [
+      "graphs"
+    ],
+    "10-11-8020": [
+      "geometry"
+    ],
+    "10-12-8020": [
+      "geometry"
+    ],
+    "10-13-8020": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8020": [
+      "data"
+    ],
+    "10-15-8020": [
+      "data"
+    ],
+    "10-16-8020": [
+      "data"
+    ],
+    "10-01-8021": [
+      "calculations"
+    ],
+    "10-02-8021": [
+      "equations"
+    ],
+    "10-03-8021": [
+      "equations"
+    ],
+    "10-04-8021": [
+      "calculations"
+    ],
+    "10-05-8021": [
+      "equations"
+    ],
+    "10-06-8021": [
+      "calculations"
+    ],
+    "10-07-8021": [
+      "calculations"
+    ],
+    "10-08-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8021": [
+      "calculations"
+    ],
+    "10-10-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "10-11-8021": [
+      "geometry"
+    ],
+    "10-12-8021": [
+      "geometry"
+    ],
+    "10-13-8021": [
+      "geometry",
+      "calculations"
+    ],
+    "10-14-8021": [
+      "data"
+    ],
+    "10-15-8021": [
+      "data"
+    ],
+    "10-16-8021": [
+      "data"
+    ],
+    "10-01-8022": [
+      "calculations"
+    ],
+    "10-02-8022": [
+      "calculations"
+    ],
+    "10-03-8022": [
+      "equations"
+    ],
+    "10-04-8022": [
+      "calculations"
+    ],
+    "10-05-8022": [
+      "equations"
+    ],
+    "10-06-8022": [
+      "calculations",
+      "data"
+    ],
+    "10-07-8022": [
+      "equations",
+      "calculations"
+    ],
+    "10-08-8022": [
+      "graphs",
+      "calculations"
+    ],
+    "10-09-8022": [
+      "calculations"
+    ],
+    "10-10-8022": [
+      "graphs"
+    ],
+    "10-11-8022": [
+      "geometry"
+    ],
+    "10-12-8022": [
+      "geometry"
+    ],
+    "10-13-8022": [
+      "geometry",
+      "equations"
+    ],
+    "10-14-8022": [
+      "data"
+    ],
+    "10-15-8022": [
+      "data"
+    ],
+    "10-16-8022": [
+      "data"
+    ],
+    "10-01-8023": [
+      "calculations"
+    ],
+    "10-02-8023": [
+      "equations"
+    ],
+    "10-03-8023": [
+      "equations"
+    ],
+    "10-04-8023": [
+      "calculations"
+    ],
+    "10-05-8023": [
+      "equations"
+    ],
+    "10-06-8023": [
+      "calculations"
+    ],
+    "10-07-8023": [
+      "calculations"
+    ],
+    "11-101-8001": [
+      "equations"
+    ],
+    "11-102-8001": [
+      "equations"
+    ],
+    "11-103-8001": [
+      "equations"
+    ],
+    "11-104-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8001": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8001": [
+      "equations"
+    ],
+    "11-108-8001": [
+      "geometry"
+    ],
+    "11-109-8001": [
+      "geometry"
+    ],
+    "11-110-8001": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8001": [
+      "data"
+    ],
+    "11-112-8001": [
+      "data"
+    ],
+    "11-101-8002": [
+      "calculations"
+    ],
+    "11-102-8002": [
+      "equations"
+    ],
+    "11-103-8002": [
+      "equations"
+    ],
+    "11-104-8002": [
+      "graphs"
+    ],
+    "11-105-8002": [
+      "graphs"
+    ],
+    "11-106-8002": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8002": [
+      "equations"
+    ],
+    "11-108-8002": [
+      "geometry"
+    ],
+    "11-109-8002": [
+      "geometry"
+    ],
+    "11-110-8002": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8002": [
+      "data"
+    ],
+    "11-112-8002": [
+      "data"
+    ],
+    "11-101-8003": [
+      "equations"
+    ],
+    "11-102-8003": [
+      "equations"
+    ],
+    "11-103-8003": [
+      "equations"
+    ],
+    "11-104-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8003": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8003": [
+      "equations"
+    ],
+    "11-108-8003": [
+      "geometry"
+    ],
+    "11-109-8003": [
+      "geometry"
+    ],
+    "11-110-8003": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8003": [
+      "data"
+    ],
+    "11-112-8003": [
+      "data"
+    ],
+    "11-101-8004": [
+      "calculations"
+    ],
+    "11-102-8004": [
+      "equations"
+    ],
+    "11-103-8004": [
+      "equations"
+    ],
+    "11-104-8004": [
+      "graphs"
+    ],
+    "11-105-8004": [
+      "graphs"
+    ],
+    "11-106-8004": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8004": [
+      "equations"
+    ],
+    "11-108-8004": [
+      "geometry"
+    ],
+    "11-109-8004": [
+      "geometry"
+    ],
+    "11-110-8004": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8004": [
+      "data"
+    ],
+    "11-112-8004": [
+      "data"
+    ],
+    "11-101-8005": [
+      "equations"
+    ],
+    "11-102-8005": [
+      "equations"
+    ],
+    "11-103-8005": [
+      "equations"
+    ],
+    "11-104-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8005": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8005": [
+      "equations"
+    ],
+    "11-108-8005": [
+      "geometry"
+    ],
+    "11-109-8005": [
+      "geometry"
+    ],
+    "11-110-8005": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8005": [
+      "data"
+    ],
+    "11-112-8005": [
+      "data"
+    ],
+    "11-101-8006": [
+      "calculations"
+    ],
+    "11-102-8006": [
+      "equations"
+    ],
+    "11-103-8006": [
+      "equations"
+    ],
+    "11-104-8006": [
+      "graphs"
+    ],
+    "11-105-8006": [
+      "graphs"
+    ],
+    "11-106-8006": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8006": [
+      "equations"
+    ],
+    "11-108-8006": [
+      "geometry"
+    ],
+    "11-109-8006": [
+      "geometry"
+    ],
+    "11-110-8006": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8006": [
+      "data"
+    ],
+    "11-112-8006": [
+      "data"
+    ],
+    "11-101-8007": [
+      "equations"
+    ],
+    "11-102-8007": [
+      "equations"
+    ],
+    "11-103-8007": [
+      "equations"
+    ],
+    "11-104-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8007": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8007": [
+      "equations"
+    ],
+    "11-108-8007": [
+      "geometry"
+    ],
+    "11-109-8007": [
+      "geometry"
+    ],
+    "11-110-8007": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8007": [
+      "data"
+    ],
+    "11-112-8007": [
+      "data"
+    ],
+    "11-101-8008": [
+      "calculations"
+    ],
+    "11-102-8008": [
+      "equations"
+    ],
+    "11-103-8008": [
+      "equations"
+    ],
+    "11-104-8008": [
+      "graphs"
+    ],
+    "11-105-8008": [
+      "graphs"
+    ],
+    "11-106-8008": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8008": [
+      "equations"
+    ],
+    "11-108-8008": [
+      "geometry"
+    ],
+    "11-109-8008": [
+      "geometry"
+    ],
+    "11-110-8008": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8008": [
+      "data"
+    ],
+    "11-112-8008": [
+      "data"
+    ],
+    "11-101-8009": [
+      "equations"
+    ],
+    "11-102-8009": [
+      "equations"
+    ],
+    "11-103-8009": [
+      "equations"
+    ],
+    "11-104-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8009": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8009": [
+      "equations"
+    ],
+    "11-108-8009": [
+      "geometry"
+    ],
+    "11-109-8009": [
+      "geometry"
+    ],
+    "11-110-8009": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8009": [
+      "data"
+    ],
+    "11-112-8009": [
+      "data"
+    ],
+    "11-101-8010": [
+      "calculations"
+    ],
+    "11-102-8010": [
+      "equations"
+    ],
+    "11-103-8010": [
+      "equations"
+    ],
+    "11-104-8010": [
+      "graphs"
+    ],
+    "11-105-8010": [
+      "graphs"
+    ],
+    "11-106-8010": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8010": [
+      "equations"
+    ],
+    "11-108-8010": [
+      "geometry"
+    ],
+    "11-109-8010": [
+      "geometry"
+    ],
+    "11-110-8010": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8010": [
+      "data"
+    ],
+    "11-112-8010": [
+      "data"
+    ],
+    "11-101-8011": [
+      "equations"
+    ],
+    "11-102-8011": [
+      "equations"
+    ],
+    "11-103-8011": [
+      "equations"
+    ],
+    "11-104-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8011": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8011": [
+      "equations"
+    ],
+    "11-108-8011": [
+      "geometry"
+    ],
+    "11-109-8011": [
+      "geometry"
+    ],
+    "11-110-8011": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8011": [
+      "data"
+    ],
+    "11-112-8011": [
+      "data"
+    ],
+    "11-101-8012": [
+      "calculations"
+    ],
+    "11-102-8012": [
+      "equations"
+    ],
+    "11-103-8012": [
+      "equations"
+    ],
+    "11-104-8012": [
+      "graphs"
+    ],
+    "11-105-8012": [
+      "graphs"
+    ],
+    "11-106-8012": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8012": [
+      "equations"
+    ],
+    "11-108-8012": [
+      "geometry"
+    ],
+    "11-109-8012": [
+      "geometry"
+    ],
+    "11-110-8012": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8012": [
+      "data"
+    ],
+    "11-112-8012": [
+      "data"
+    ],
+    "11-101-8013": [
+      "equations"
+    ],
+    "11-102-8013": [
+      "equations"
+    ],
+    "11-103-8013": [
+      "equations"
+    ],
+    "11-104-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8013": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8013": [
+      "equations"
+    ],
+    "11-108-8013": [
+      "geometry"
+    ],
+    "11-109-8013": [
+      "geometry"
+    ],
+    "11-110-8013": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8013": [
+      "data"
+    ],
+    "11-112-8013": [
+      "data"
+    ],
+    "11-101-8014": [
+      "calculations"
+    ],
+    "11-102-8014": [
+      "equations"
+    ],
+    "11-103-8014": [
+      "equations"
+    ],
+    "11-104-8014": [
+      "graphs"
+    ],
+    "11-105-8014": [
+      "graphs"
+    ],
+    "11-106-8014": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8014": [
+      "equations"
+    ],
+    "11-108-8014": [
+      "geometry"
+    ],
+    "11-109-8014": [
+      "geometry"
+    ],
+    "11-110-8014": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8014": [
+      "data"
+    ],
+    "11-112-8014": [
+      "data"
+    ],
+    "11-101-8015": [
+      "equations"
+    ],
+    "11-102-8015": [
+      "equations"
+    ],
+    "11-103-8015": [
+      "equations"
+    ],
+    "11-104-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8015": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8015": [
+      "equations"
+    ],
+    "11-108-8015": [
+      "geometry"
+    ],
+    "11-109-8015": [
+      "geometry"
+    ],
+    "11-110-8015": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8015": [
+      "data"
+    ],
+    "11-112-8015": [
+      "data"
+    ],
+    "11-101-8016": [
+      "calculations"
+    ],
+    "11-102-8016": [
+      "equations"
+    ],
+    "11-103-8016": [
+      "equations"
+    ],
+    "11-104-8016": [
+      "graphs"
+    ],
+    "11-105-8016": [
+      "graphs"
+    ],
+    "11-106-8016": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8016": [
+      "equations"
+    ],
+    "11-108-8016": [
+      "geometry"
+    ],
+    "11-109-8016": [
+      "geometry"
+    ],
+    "11-110-8016": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8016": [
+      "data"
+    ],
+    "11-112-8016": [
+      "data"
+    ],
+    "11-101-8017": [
+      "equations"
+    ],
+    "11-102-8017": [
+      "equations"
+    ],
+    "11-103-8017": [
+      "equations"
+    ],
+    "11-104-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8017": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8017": [
+      "equations"
+    ],
+    "11-108-8017": [
+      "geometry"
+    ],
+    "11-109-8017": [
+      "geometry"
+    ],
+    "11-110-8017": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8017": [
+      "data"
+    ],
+    "11-112-8017": [
+      "data"
+    ],
+    "11-101-8018": [
+      "calculations"
+    ],
+    "11-102-8018": [
+      "equations"
+    ],
+    "11-103-8018": [
+      "equations"
+    ],
+    "11-104-8018": [
+      "graphs"
+    ],
+    "11-105-8018": [
+      "graphs"
+    ],
+    "11-106-8018": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8018": [
+      "equations"
+    ],
+    "11-108-8018": [
+      "geometry"
+    ],
+    "11-109-8018": [
+      "geometry"
+    ],
+    "11-110-8018": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8018": [
+      "data"
+    ],
+    "11-112-8018": [
+      "data"
+    ],
+    "11-101-8019": [
+      "equations"
+    ],
+    "11-102-8019": [
+      "equations"
+    ],
+    "11-103-8019": [
+      "equations"
+    ],
+    "11-104-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8019": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8019": [
+      "equations"
+    ],
+    "11-108-8019": [
+      "geometry"
+    ],
+    "11-109-8019": [
+      "geometry"
+    ],
+    "11-110-8019": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8019": [
+      "data"
+    ],
+    "11-112-8019": [
+      "data"
+    ],
+    "11-101-8020": [
+      "calculations"
+    ],
+    "11-102-8020": [
+      "equations"
+    ],
+    "11-103-8020": [
+      "equations"
+    ],
+    "11-104-8020": [
+      "graphs"
+    ],
+    "11-105-8020": [
+      "graphs"
+    ],
+    "11-106-8020": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8020": [
+      "equations"
+    ],
+    "11-108-8020": [
+      "geometry"
+    ],
+    "11-109-8020": [
+      "geometry"
+    ],
+    "11-110-8020": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8020": [
+      "data"
+    ],
+    "11-112-8020": [
+      "data"
+    ],
+    "11-101-8021": [
+      "equations"
+    ],
+    "11-102-8021": [
+      "equations"
+    ],
+    "11-103-8021": [
+      "equations"
+    ],
+    "11-104-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8021": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8021": [
+      "equations"
+    ],
+    "11-108-8021": [
+      "geometry"
+    ],
+    "11-109-8021": [
+      "geometry"
+    ],
+    "11-110-8021": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8021": [
+      "data"
+    ],
+    "11-112-8021": [
+      "data"
+    ],
+    "11-101-8022": [
+      "calculations"
+    ],
+    "11-102-8022": [
+      "equations"
+    ],
+    "11-103-8022": [
+      "equations"
+    ],
+    "11-104-8022": [
+      "graphs"
+    ],
+    "11-105-8022": [
+      "graphs"
+    ],
+    "11-106-8022": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8022": [
+      "equations"
+    ],
+    "11-108-8022": [
+      "geometry"
+    ],
+    "11-109-8022": [
+      "geometry"
+    ],
+    "11-110-8022": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8022": [
+      "data"
+    ],
+    "11-112-8022": [
+      "data"
+    ],
+    "11-101-8023": [
+      "equations"
+    ],
+    "11-102-8023": [
+      "equations"
+    ],
+    "11-103-8023": [
+      "equations"
+    ],
+    "11-104-8023": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8023": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8023": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8023": [
+      "equations"
+    ],
+    "11-108-8023": [
+      "geometry"
+    ],
+    "11-109-8023": [
+      "geometry"
+    ],
+    "11-110-8023": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8023": [
+      "data"
+    ],
+    "11-112-8023": [
+      "data"
+    ],
+    "11-101-8024": [
+      "calculations"
+    ],
+    "11-102-8024": [
+      "equations"
+    ],
+    "11-103-8024": [
+      "equations"
+    ],
+    "11-104-8024": [
+      "graphs"
+    ],
+    "11-105-8024": [
+      "graphs"
+    ],
+    "11-106-8024": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8024": [
+      "equations"
+    ],
+    "11-108-8024": [
+      "geometry"
+    ],
+    "11-109-8024": [
+      "geometry"
+    ],
+    "11-110-8024": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8024": [
+      "data"
+    ],
+    "11-112-8024": [
+      "data"
+    ],
+    "11-101-8025": [
+      "equations"
+    ],
+    "11-102-8025": [
+      "equations"
+    ],
+    "11-103-8025": [
+      "equations"
+    ],
+    "11-104-8025": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8025": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8025": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8025": [
+      "equations"
+    ],
+    "11-108-8025": [
+      "geometry"
+    ],
+    "11-109-8025": [
+      "geometry"
+    ],
+    "11-110-8025": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8025": [
+      "data"
+    ],
+    "11-112-8025": [
+      "data"
+    ],
+    "11-101-8026": [
+      "calculations"
+    ],
+    "11-102-8026": [
+      "equations"
+    ],
+    "11-103-8026": [
+      "equations"
+    ],
+    "11-104-8026": [
+      "graphs"
+    ],
+    "11-105-8026": [
+      "graphs"
+    ],
+    "11-106-8026": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8026": [
+      "equations"
+    ],
+    "11-108-8026": [
+      "geometry"
+    ],
+    "11-109-8026": [
+      "geometry"
+    ],
+    "11-110-8026": [
+      "geometry",
+      "equations"
+    ],
+    "11-111-8026": [
+      "data"
+    ],
+    "11-112-8026": [
+      "data"
+    ],
+    "11-101-8027": [
+      "equations"
+    ],
+    "11-102-8027": [
+      "equations"
+    ],
+    "11-103-8027": [
+      "equations"
+    ],
+    "11-104-8027": [
+      "graphs",
+      "calculations"
+    ],
+    "11-105-8027": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-106-8027": [
+      "graphs",
+      "calculations"
+    ],
+    "11-107-8027": [
+      "equations"
+    ],
+    "11-108-8027": [
+      "geometry"
+    ],
+    "11-109-8027": [
+      "geometry"
+    ],
+    "11-110-8027": [
+      "geometry",
+      "calculations"
+    ],
+    "11-111-8027": [
+      "data"
+    ],
+    "11-01-8001": [
+      "calculations"
+    ],
+    "11-02-8001": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8001": [
+      "equations"
+    ],
+    "11-04-8001": [
+      "equations"
+    ],
+    "11-05-8001": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8001": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8001": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8001": [
+      "geometry"
+    ],
+    "11-09-8001": [
+      "geometry"
+    ],
+    "11-10-8001": [
+      "geometry"
+    ],
+    "11-11-8001": [
+      "data"
+    ],
+    "11-12-8001": [
+      "data"
+    ],
+    "11-13-8001": [
+      "data"
+    ],
+    "11-14-8001": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8002": [
+      "calculations"
+    ],
+    "11-02-8002": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8002": [
+      "equations"
+    ],
+    "11-04-8002": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8002": [
+      "graphs"
+    ],
+    "11-06-8002": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8002": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8002": [
+      "geometry"
+    ],
+    "11-09-8002": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8002": [
+      "geometry"
+    ],
+    "11-11-8002": [
+      "data"
+    ],
+    "11-12-8002": [
+      "data"
+    ],
+    "11-13-8002": [
+      "data"
+    ],
+    "11-14-8002": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8003": [
+      "calculations"
+    ],
+    "11-02-8003": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8003": [
+      "equations"
+    ],
+    "11-04-8003": [
+      "equations"
+    ],
+    "11-05-8003": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8003": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8003": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8003": [
+      "geometry"
+    ],
+    "11-09-8003": [
+      "geometry"
+    ],
+    "11-10-8003": [
+      "geometry"
+    ],
+    "11-11-8003": [
+      "data"
+    ],
+    "11-12-8003": [
+      "data"
+    ],
+    "11-13-8003": [
+      "data"
+    ],
+    "11-14-8003": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8004": [
+      "calculations"
+    ],
+    "11-02-8004": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8004": [
+      "equations"
+    ],
+    "11-04-8004": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8004": [
+      "graphs"
+    ],
+    "11-06-8004": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8004": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8004": [
+      "geometry"
+    ],
+    "11-09-8004": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8004": [
+      "geometry"
+    ],
+    "11-11-8004": [
+      "data"
+    ],
+    "11-12-8004": [
+      "data"
+    ],
+    "11-13-8004": [
+      "data"
+    ],
+    "11-14-8004": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8005": [
+      "calculations"
+    ],
+    "11-02-8005": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8005": [
+      "equations"
+    ],
+    "11-04-8005": [
+      "equations"
+    ],
+    "11-05-8005": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8005": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8005": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8005": [
+      "geometry"
+    ],
+    "11-09-8005": [
+      "geometry"
+    ],
+    "11-10-8005": [
+      "geometry"
+    ],
+    "11-11-8005": [
+      "data"
+    ],
+    "11-12-8005": [
+      "data"
+    ],
+    "11-13-8005": [
+      "data"
+    ],
+    "11-14-8005": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8006": [
+      "calculations"
+    ],
+    "11-02-8006": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8006": [
+      "equations"
+    ],
+    "11-04-8006": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8006": [
+      "graphs"
+    ],
+    "11-06-8006": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8006": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8006": [
+      "geometry"
+    ],
+    "11-09-8006": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8006": [
+      "geometry"
+    ],
+    "11-11-8006": [
+      "data"
+    ],
+    "11-12-8006": [
+      "data"
+    ],
+    "11-13-8006": [
+      "data"
+    ],
+    "11-14-8006": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8007": [
+      "calculations"
+    ],
+    "11-02-8007": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8007": [
+      "equations"
+    ],
+    "11-04-8007": [
+      "equations"
+    ],
+    "11-05-8007": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8007": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8007": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8007": [
+      "geometry"
+    ],
+    "11-09-8007": [
+      "geometry"
+    ],
+    "11-10-8007": [
+      "geometry"
+    ],
+    "11-11-8007": [
+      "data"
+    ],
+    "11-12-8007": [
+      "data"
+    ],
+    "11-13-8007": [
+      "data"
+    ],
+    "11-14-8007": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8008": [
+      "calculations"
+    ],
+    "11-02-8008": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8008": [
+      "equations"
+    ],
+    "11-04-8008": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8008": [
+      "graphs"
+    ],
+    "11-06-8008": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8008": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8008": [
+      "geometry"
+    ],
+    "11-09-8008": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8008": [
+      "geometry"
+    ],
+    "11-11-8008": [
+      "data"
+    ],
+    "11-12-8008": [
+      "data"
+    ],
+    "11-13-8008": [
+      "data"
+    ],
+    "11-14-8008": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8009": [
+      "calculations"
+    ],
+    "11-02-8009": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8009": [
+      "equations"
+    ],
+    "11-04-8009": [
+      "equations"
+    ],
+    "11-05-8009": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8009": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8009": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8009": [
+      "geometry"
+    ],
+    "11-09-8009": [
+      "geometry"
+    ],
+    "11-10-8009": [
+      "geometry"
+    ],
+    "11-11-8009": [
+      "data"
+    ],
+    "11-12-8009": [
+      "data"
+    ],
+    "11-13-8009": [
+      "data"
+    ],
+    "11-14-8009": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8010": [
+      "calculations"
+    ],
+    "11-02-8010": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8010": [
+      "equations"
+    ],
+    "11-04-8010": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8010": [
+      "graphs"
+    ],
+    "11-06-8010": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8010": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8010": [
+      "geometry"
+    ],
+    "11-09-8010": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8010": [
+      "geometry"
+    ],
+    "11-11-8010": [
+      "data"
+    ],
+    "11-12-8010": [
+      "data"
+    ],
+    "11-13-8010": [
+      "data"
+    ],
+    "11-14-8010": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8011": [
+      "calculations"
+    ],
+    "11-02-8011": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8011": [
+      "equations"
+    ],
+    "11-04-8011": [
+      "equations"
+    ],
+    "11-05-8011": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8011": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8011": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8011": [
+      "geometry"
+    ],
+    "11-09-8011": [
+      "geometry"
+    ],
+    "11-10-8011": [
+      "geometry"
+    ],
+    "11-11-8011": [
+      "data"
+    ],
+    "11-12-8011": [
+      "data"
+    ],
+    "11-13-8011": [
+      "data"
+    ],
+    "11-14-8011": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8012": [
+      "calculations"
+    ],
+    "11-02-8012": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8012": [
+      "equations"
+    ],
+    "11-04-8012": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8012": [
+      "graphs"
+    ],
+    "11-06-8012": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8012": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8012": [
+      "geometry"
+    ],
+    "11-09-8012": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8012": [
+      "geometry"
+    ],
+    "11-11-8012": [
+      "data"
+    ],
+    "11-12-8012": [
+      "data"
+    ],
+    "11-13-8012": [
+      "data"
+    ],
+    "11-14-8012": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8013": [
+      "calculations"
+    ],
+    "11-02-8013": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8013": [
+      "equations"
+    ],
+    "11-04-8013": [
+      "equations"
+    ],
+    "11-05-8013": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8013": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8013": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8013": [
+      "geometry"
+    ],
+    "11-09-8013": [
+      "geometry"
+    ],
+    "11-10-8013": [
+      "geometry"
+    ],
+    "11-11-8013": [
+      "data"
+    ],
+    "11-12-8013": [
+      "data"
+    ],
+    "11-13-8013": [
+      "data"
+    ],
+    "11-14-8013": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8014": [
+      "calculations"
+    ],
+    "11-02-8014": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8014": [
+      "equations"
+    ],
+    "11-04-8014": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8014": [
+      "graphs"
+    ],
+    "11-06-8014": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8014": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8014": [
+      "geometry"
+    ],
+    "11-09-8014": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8014": [
+      "geometry"
+    ],
+    "11-11-8014": [
+      "data"
+    ],
+    "11-12-8014": [
+      "data"
+    ],
+    "11-13-8014": [
+      "data"
+    ],
+    "11-14-8014": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8015": [
+      "calculations"
+    ],
+    "11-02-8015": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8015": [
+      "equations"
+    ],
+    "11-04-8015": [
+      "equations"
+    ],
+    "11-05-8015": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8015": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8015": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8015": [
+      "geometry"
+    ],
+    "11-09-8015": [
+      "geometry"
+    ],
+    "11-10-8015": [
+      "geometry"
+    ],
+    "11-11-8015": [
+      "data"
+    ],
+    "11-12-8015": [
+      "data"
+    ],
+    "11-13-8015": [
+      "data"
+    ],
+    "11-14-8015": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8016": [
+      "calculations"
+    ],
+    "11-02-8016": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8016": [
+      "equations"
+    ],
+    "11-04-8016": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8016": [
+      "graphs"
+    ],
+    "11-06-8016": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8016": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8016": [
+      "geometry"
+    ],
+    "11-09-8016": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8016": [
+      "geometry"
+    ],
+    "11-11-8016": [
+      "data"
+    ],
+    "11-12-8016": [
+      "data"
+    ],
+    "11-13-8016": [
+      "data"
+    ],
+    "11-14-8016": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8017": [
+      "calculations"
+    ],
+    "11-02-8017": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8017": [
+      "equations"
+    ],
+    "11-04-8017": [
+      "equations"
+    ],
+    "11-05-8017": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8017": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8017": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8017": [
+      "geometry"
+    ],
+    "11-09-8017": [
+      "geometry"
+    ],
+    "11-10-8017": [
+      "geometry"
+    ],
+    "11-11-8017": [
+      "data"
+    ],
+    "11-12-8017": [
+      "data"
+    ],
+    "11-13-8017": [
+      "data"
+    ],
+    "11-14-8017": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8018": [
+      "calculations"
+    ],
+    "11-02-8018": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8018": [
+      "equations"
+    ],
+    "11-04-8018": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8018": [
+      "graphs"
+    ],
+    "11-06-8018": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8018": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8018": [
+      "geometry"
+    ],
+    "11-09-8018": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8018": [
+      "geometry"
+    ],
+    "11-11-8018": [
+      "data"
+    ],
+    "11-12-8018": [
+      "data"
+    ],
+    "11-13-8018": [
+      "data"
+    ],
+    "11-14-8018": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8019": [
+      "calculations"
+    ],
+    "11-02-8019": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8019": [
+      "equations"
+    ],
+    "11-04-8019": [
+      "equations"
+    ],
+    "11-05-8019": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8019": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8019": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8019": [
+      "geometry"
+    ],
+    "11-09-8019": [
+      "geometry"
+    ],
+    "11-10-8019": [
+      "geometry"
+    ],
+    "11-11-8019": [
+      "data"
+    ],
+    "11-12-8019": [
+      "data"
+    ],
+    "11-13-8019": [
+      "data"
+    ],
+    "11-14-8019": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8020": [
+      "calculations"
+    ],
+    "11-02-8020": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8020": [
+      "equations"
+    ],
+    "11-04-8020": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8020": [
+      "graphs"
+    ],
+    "11-06-8020": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8020": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8020": [
+      "geometry"
+    ],
+    "11-09-8020": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8020": [
+      "geometry"
+    ],
+    "11-11-8020": [
+      "data"
+    ],
+    "11-12-8020": [
+      "data"
+    ],
+    "11-13-8020": [
+      "data"
+    ],
+    "11-14-8020": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8021": [
+      "calculations"
+    ],
+    "11-02-8021": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8021": [
+      "equations"
+    ],
+    "11-04-8021": [
+      "equations"
+    ],
+    "11-05-8021": [
+      "geometry",
+      "graphs",
+      "modelling"
+    ],
+    "11-06-8021": [
+      "graphs",
+      "calculations"
+    ],
+    "11-07-8021": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8021": [
+      "geometry"
+    ],
+    "11-09-8021": [
+      "geometry"
+    ],
+    "11-10-8021": [
+      "geometry"
+    ],
+    "11-11-8021": [
+      "data"
+    ],
+    "11-12-8021": [
+      "data"
+    ],
+    "11-13-8021": [
+      "data"
+    ],
+    "11-14-8021": [
+      "data",
+      "graphs"
+    ],
+    "11-01-8022": [
+      "calculations"
+    ],
+    "11-02-8022": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8022": [
+      "equations"
+    ],
+    "11-04-8022": [
+      "equations",
+      "reasoning"
+    ],
+    "11-05-8022": [
+      "graphs"
+    ],
+    "11-06-8022": [
+      "graphs",
+      "geometry"
+    ],
+    "11-07-8022": [
+      "graphs",
+      "equations"
+    ],
+    "11-08-8022": [
+      "geometry"
+    ],
+    "11-09-8022": [
+      "geometry",
+      "calculations"
+    ],
+    "11-10-8022": [
+      "geometry"
+    ],
+    "11-11-8022": [
+      "data"
+    ],
+    "11-12-8022": [
+      "data"
+    ],
+    "11-13-8022": [
+      "data"
+    ],
+    "11-14-8022": [
+      "data",
+      "calculations"
+    ],
+    "11-01-8023": [
+      "calculations"
+    ],
+    "11-02-8023": [
+      "calculations",
+      "reasoning"
+    ],
+    "11-03-8023": [
+      "equations"
+    ],
+    "11-04-8023": [
+      "equations"
+    ],
+    "11-05-8023": [
+      "geometry",
+      "graphs",
+      "modelling"
     ]
   }
 }

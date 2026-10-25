@@ -38,7 +38,7 @@ async function everyPage(h){
   test(sameSet(config.competencies.map(x=>x.id),expectedDefinitions)&&config.competencies.every(x=>typeof x.title==='string'&&x.title.trim()&&typeof x.description==='string'&&x.description.trim()),'seven mathematical competencies have unique stable identifiers and useful labels');
   test(sameSet(Array.from(helper.definitions,x=>x.id),expectedDefinitions),'helper and authored competency definitions agree');
   const invalid=all.filter(q=>{const ids=tags(q);return !ids.length||ids.length!==new Set(ids).size||ids.some(id=>!expectedDefinitions.includes(id));});
-  test(all.length===3894&&byId.size===3894&&invalid.length===0,'every one of the 3,894 class and official exam examples has a nonempty, unique, valid competency set');
+  test(classes.length===7488&&exams.length===150&&byId.size===all.length&&invalid.length===0,'every one of the 7,638 class and official exam examples has a nonempty, unique, valid competency set');
   test(BANK.every(topic=>Array.isArray(config.topics[topic.id])&&config.topics[topic.id].length>0),'every class topic has an authored competency baseline');
   test(sameSet(Object.keys(config.tasks),exams.map(q=>q.id)),'all 150 official alternative examples have their own mapping and no orphan exam IDs');
   test(Object.keys(config.overrides).every(id=>byId.has(id)&&byId.get(id).source==='class'),'task overrides refer only to real class tasks');
@@ -82,7 +82,7 @@ async function everyPage(h){
   const h=createHarness();await teacher(h);await h.change('#source-filter','class:5:basic');await select(h,'calculations');
   const q=byId.get('5-01-1');await h.change('#bank-filter',q.topicId);await h.change('#difficulty-filter',q.difficulty);
   const expected=classes.filter(x=>x.grade===5&&x.level==='basic'&&x.topicId===q.topicId&&x.difficulty===q.difficulty&&tags(x).includes('calculations')).map(x=>x.id);
-  test(same(cardIds(h),expected),'source, topic and difficulty intersect with the chosen skill');
+  test(same(await everyPage(h),expected),'source, topic and difficulty intersect with the chosen skill across all pages');
   await h.input('#bank-search',q.id);test(same(cardIds(h),[q.id]),'ID search intersects with source, topic, difficulty and competency');
   await h.click(`[data-action="favorite"][data-id="${q.id}"]`);await h.change('#favorite-only',true);await h.click(`[data-action="add"][data-id="${q.id}"]`);
   test(same(cardIds(h),[q.id])&&same(selectedWork(h).ids,[q.id]),'favorite filtering remains compatible with adding the matching task to a work');
@@ -125,7 +125,7 @@ async function everyPage(h){
   test(results.some(id=>id!==original.id),'a competency-preserving alternative can still replace the original task');
  });
  test(digest()===originalDigest,'competency lookup, filtering, favorites and presets never mutate class tasks, official exam conditions, answers or source metadata');
- const report={checks,errors,scope:'Full 3,894-task metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length};
+ const report={checks,errors,scope:'Full 7,638-task metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length};
  fs.writeFileSync(path.join(root,'checks/competency-results.json'),JSON.stringify(report,null,2));
  console.log(JSON.stringify(report,null,2));if(errors.length)process.exitCode=1;
 })().catch(error=>{console.error(error);process.exitCode=1;});

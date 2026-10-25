@@ -167,7 +167,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       if(s&&typeof s.id==='string'&&/^[a-zA-Z0-9-]{1,80}$/.test(s.id)&&typeof s.first==='string'&&s.first.trim()&&typeof s.last==='string'&&s.last.trim()&&typeof s.letter==='string'&&/^[А-ЯЁA-Z]$/i.test(s.letter)){
         student={id:s.id,first:s.first.slice(0,40),last:s.last.slice(0,60),letter:s.letter.toUpperCase(),grade:Number(s.grade)};
       }
-      for(const pair of Array.isArray(saved.attempts)?saved.attempts.slice(0,8000):[]){
+      for(const pair of Array.isArray(saved.attempts)?saved.attempts.slice(0,catalogTasks.length*2):[]){
         if(!Array.isArray(pair)||typeof pair[0]!=='string')continue;
         const [key,value]=pair,id=key.split(':').at(-1);
         if(question(id)&&(key===`teacher:${id}`||student.id&&key===`student:${student.id}:${id}`)||examTaskById.has(id)&&(key===`exam-teacher:${id}`||student.id&&key===`exam-student:${student.id}:${id}`||examLearnerId&&key===`exam-guest:${examLearnerId}:${id}`))attempts.set(key,sanitizeRecord(value));
@@ -309,10 +309,10 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const hash=value=>{let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
     return [...values].sort((a,b)=>hash(`${seed}:${a.id}`)-hash(`${seed}:${b.id}`));
   }
-  function presetCandidates(){return shuffled(allTasks.filter(q=>q.topicId===filter&&q.difficulty===presetLevel&&(!trickyOnly||q.tricky)&&MathCompetencies.matches(q,competencyFilter)),presetSeed);}
+  function presetCandidates(){return shuffled(filteredTasks().filter(q=>q.source==='class'&&q.topicId===filter&&q.difficulty===presetLevel),presetSeed);}
   function renderPresets(){
     if(filter==='all')return '<div class="glass preset-panel"><h2>Заготовки по сложности</h2><p class="muted">Выберите тему. Можно посмотреть состав заготовки и добавить её к ручному выбору.</p></div>';
-    const ts=allTasks.filter(q=>q.topicId===filter&&(!trickyOnly||q.tricky)&&MathCompetencies.matches(q,competencyFilter)),pool=presetCandidates(),selected=pool.slice(0,presetCount);
+    const ts=filteredTasks().filter(q=>q.source==='class'&&q.topicId===filter),pool=presetCandidates(),selected=pool.slice(0,presetCount);
     return `<section class="glass preset-panel"><h2>Заготовки по теме</h2><div class="preset-grid">${levels.map((d,i)=>{const n=ts.filter(q=>q.difficulty===d).length;return `<button class="preset-card" type="button" data-action="preset-preview" data-difficulty="${d}" aria-pressed="${presetLevel===d}" ${n?'':'disabled'}>${difficultyBadge(d)}<span>${levelDescriptions[i]}</span><small>${taskCount(n)}</small></button>`;}).join('')}</div>${presetLevel?`<div id="preset-preview" tabindex="-1"><h3>${esc(presetLevel)} · состав заготовки</h3><label class="field" for="preset-count">Количество заданий<select id="preset-count">${pool.map((_,i)=>`<option value="${i+1}" ${i+1===presetCount?'selected':''}>${i+1}</option>`).join('')}</select></label><ol class="preset-preview-list">${selected.map(q=>`<li><strong>№ ${q.id}${work().ids.includes(q.id)?' · уже выбрано':''}</strong>${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}</li>`).join('')}</ol><div class="builder-actions">${action('preset-add','Добавить заготовку +','primary',selected.some(q=>!work().ids.includes(q.id))&&work().ids.length<WORK_LIMIT?'':'disabled')}${action('preset-shuffle','Другая подборка','secondary',pool.length>presetCount?'':'disabled')}</div><p class="muted">Добавляются только новые задания. Ручной выбор сохраняется.</p></div>`:''}</section>`;
   }
   function renderLibrary(){
@@ -330,7 +330,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const [,grade,level]=sourceFilter.split(':');return allTasks.filter(q=>q.grade===Number(grade)&&q.level===level);
   }
   function filteredTasks(){
-    return sourceTasks().filter(q=>MathCompetencies.matches(q,competencyFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(q.source==='exam'||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+taskSource(q),search));
+    const exactId=catalogById.has(search.trim())?search.trim():null;
+    return sourceTasks().filter(q=>MathCompetencies.matches(q,competencyFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(q.source==='exam'||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&(exactId?q.id===exactId:matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+taskSource(q),search)));
   }
   function validAutoCount(){const n=Number(autoCount);return String(autoCount).trim()!==''&&Number.isInteger(n)&&n>=1&&n<=WORK_LIMIT;}
   function renderAutoResult(){
@@ -499,6 +500,10 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
   });
   document.addEventListener('click',async event=>{
+    if(event.target.closest('.skip-link')){
+      event.preventDefault();
+      $('main').focus({preventScroll:true});$('main').scrollIntoView({block:'start'});return;
+    }
     const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
     const a=b.dataset.action,id=b.dataset.id;
     if(a==='back'){back();return;}

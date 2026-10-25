@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "batch": "2026-10-double",
+  "original_counts": {
+    "5:basic": 308,
+    "6:basic": 552,
+    "7:basic": 526,
+    "8:basic": 520,
+    "9:basic": 520,
+    "10:basic": 323,
+    "10:advanced": 359,
+    "11:basic": 323,
+    "11:advanced": 313
+  },
+  "original_content_sha256": {
+    "5:basic": "628589ba45cc6ca5823e6a47276e2ddb7dcd677199d6d86c0e5853b4b16a5c56",
+    "6:basic": "bcb5ccc34bf2747cb1055b3bc4b4291499fad315f8b463420865f37df5774dde",
+    "7:basic": "d19749793a307e2d3134fc491f64dc99425d40e5f7800bf990e9ff08851add6e",
+    "8:basic": "731c75272995ead5b4890931e22f27a02ad7fe6fbdfbbff08594eacc2d3f9d11",
+    "9:basic": "f48d22445a3f7c05c029c4fb366df26f01a42b8780e8e62d6dac46f94aba6e80",
+    "10:basic": "4724c59b371964478738d7b25cbd156ec788b6cf7f09100145f5ce8e3b3c1f99",
+    "10:advanced": "0415e15b249a60e0805e1ccd88407fd572dad601518b2d07c93ed2d92e7a8b40",
+    "11:basic": "dab91e284134497fbd7e01e2a25f7f1895b087c2cc995ef09b3fbcd8c9b435f3",
+    "11:advanced": "e2a2ea2a4af989e0e69a8713c27e1d5b893409c8123433f1c690fd7ca3c2a050"
+  },
+  "added_count": 3744,
+  "result_count": 7488,
+  "models": 82,
+  "families": 164,
+  "expanded_topics": 112,
+  "note": "Numeric variants share a family; counts describe catalog entries, not independent methods."
+}
