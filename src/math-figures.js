@@ -83,27 +83,31 @@ function legacyGeometryFigure(id){
 }
 function geometryFigure(id){
   if(FIGURE_CACHE.has(id))return FIGURE_CACHE.get(id);
-  const q=FIGURE_TASKS.get(id);
-  if(!q)return null;
-  if(q.figure)return q.figure;
+  const q=FIGURE_TASKS.get(id);if(!q)return null;
   const topic=FIGURE_TOPICS.get(id);
-  const generated=Number(topic.grade)<=9?planarTaskFigure(q,topic):spatialTaskFigure(q,topic);
-  if(generated){FIGURE_CACHE.set(id,generated);return generated;}
-  if(q.legacyFigure)return legacyGeometryFigure(q.legacyFigure);
-  if(Number(id.split('-')[0])<=6&&Number(id.split('-')[2])<=3)return legacyGeometryFigure(id);
-  FIGURE_CACHE.set(id,null);
-  return null;
+  let figure=q.figure||(Number(topic.grade)<=9?planarTaskFigure(q,topic):spatialTaskFigure(q,topic));
+  if(!figure&&q.legacyFigure)figure=legacyGeometryFigure(q.legacyFigure);
+  if(!figure&&Number(id.split('-')[0])<=6&&Number(id.split('-')[2])<=3)figure=legacyGeometryFigure(id);
+  const prepared=figure&&typeof guideGeometryFigure==='function'?guideGeometryFigure(q,topic,figure):figure||null;
+  FIGURE_CACHE.set(id,prepared);return prepared;
 }
-function figureSVG(id,compact=false){
-  const f=geometryFigure(id);if(!f)return '';
+function figureSVG(id,compact=false,options={}){
+  const original=geometryFigure(id);if(!original)return '';
+  const f=options.view==='section'?(original.views?.section||original.section||original):original;
   const e=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const shape=f.elements.map(p=>{
-    if(p.type==='line')return `<line x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}" ${p.dash?'stroke-dasharray="4 4"':''}/>`;
-    if(p.type==='polygon')return `<polygon points="${p.points.map(a=>a.join(',')).join(' ')}" fill="${p.fill?'#e3edda':'none'}"/>`;
-    if(p.type==='ellipse')return `<ellipse cx="${p.x}" cy="${p.y}" rx="${p.rx}" ry="${p.ry}" fill="${p.fill?'#e3edda':'none'}"/>`;
-    return `<text x="${p.x}" y="${p.y}" text-anchor="${p.anchor}" font-size="${f.caption?p.size:Math.max(16,p.size)}" stroke="none" fill="#294532">${e(p.text)}</text>`;
+  const learning=Number.isInteger(options.stage),index=learning?options.stage:-1,stage=index>=0?(f.stages||original.stages||[])[Math.min(index,(f.stages||original.stages||[]).length-1)]:null;
+  const wanted=stage?.highlight||[],matches=role=>String(role||'').split(/\s+/).some(r=>wanted.some(w=>r===w||r.startsWith(w.endsWith(':')?w:w+':')));
+  const showAuxiliary=options.showAuxiliary===true||!learning||index>=1&&stage?.showAuxiliary!==false;
+  const shape=f.elements.filter(p=>showAuxiliary||!p.auxiliary&&!String(p.role||'').split(/\s+/).includes('auxiliary')).map(p=>{
+    const selected=!!stage&&matches(p.role),color=selected?'#a34d13':'#45664c',fill=p.fill?(selected?'#fff0cc':'#e3edda'):'none';
+    const attrs=`class="figure-element${selected?' figure-highlight':''}" data-figure-role="${e(p.role||'')}" stroke="${color}" stroke-width="${selected?3:1.6}"`;
+    if(p.type==='line')return `<line ${attrs} x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}" ${p.dash?'stroke-dasharray="4 4"':''}/>`;
+    if(p.type==='polygon')return `<polygon ${attrs} points="${p.points.map(a=>a.join(',')).join(' ')}" fill="${fill}"/>`;
+    if(p.type==='ellipse')return `<ellipse ${attrs} cx="${p.x}" cy="${p.y}" rx="${p.rx}" ry="${p.ry}" fill="${fill}"/>`;
+    return `<text class="figure-element${selected?' figure-highlight':''}" data-figure-role="${e(p.role||'')}" x="${p.x}" y="${p.y}" text-anchor="${p.anchor}" font-size="${f.caption?p.size:Math.max(16,p.size)}" font-weight="${selected?700:400}" stroke="none" fill="${selected?'#943e0d':'#294532'}">${e(p.text)}</text>`;
   }).join('');
-  return `<figure class="math-figure ${compact?'compact':''}"><svg viewBox="0 0 ${f.width} ${f.height}" role="img" aria-label="${e(f.alt)}" xmlns="http://www.w3.org/2000/svg"><g stroke="#45664c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" font-family="Arial, sans-serif">${shape}</g></svg><figcaption>${e(f.caption||'Схема, не в масштабе')}</figcaption></figure>`;
+  const enlarge=options.interactive===false?'':`<button type="button" class="figure-enlarge" data-action="figure-enlarge" data-figure-id="${e(id)}"${learning?` data-figure-stage="${index}"`:''} aria-label="Увеличить чертёж задания ${e(id)}">Увеличить чертёж</button>`;
+  return `<figure class="math-figure ${compact?'compact':''}"${learning?` data-figure-stage="${index}"`:''}><svg viewBox="0 0 ${f.width} ${f.height}" role="img" aria-label="${e(f.alt)}" xmlns="http://www.w3.org/2000/svg"><g stroke="#45664c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" font-family="Arial, sans-serif">${shape}</g></svg><figcaption>${e(f.caption||'Схема, не в масштабе')}</figcaption>${stage?`<p class="figure-stage-label" role="status"><span aria-hidden="true">●</span> ${e(stage.title)}</p>`:''}${enlarge}</figure>`;
 }
 
 // Pages with drawings or a long condition reserve a full A4 page for the task.

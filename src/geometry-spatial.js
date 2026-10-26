@@ -9,6 +9,7 @@ function spatialTaskFigure(q,topic){
   let reference=true,name='';
   const namedPoints=[...String(q.prompt).matchAll(/([A-ZА-Я])\s*\(\s*([−-]?\d+(?:[.,]\d+)?)\s*;\s*([−-]?\d+(?:[.,]\d+)?)\s*;\s*([−-]?\d+(?:[.,]\d+)?)\s*\)/g)];
   function label(text,x,y,anchor='middle'){s.label(text,x,y,anchor,12);}
+  function semantic(role,draw,auxiliary=false){const before=s.figure().elements.length;draw();for(const e of s.figure().elements.slice(before)){e.role=role;if(auxiliary)e.auxiliary=true;}}
   function half(x,y,rx,ry,rear){for(let i=0;i<24;i++){const a=(rear?Math.PI:0)+i*Math.PI/24,b=a+Math.PI/24;s.line(x+rx*Math.cos(a),y+ry*Math.sin(a),x+rx*Math.cos(b),y+ry*Math.sin(b),rear);}}
   function box(a='a',b='b',h='h',diagonal=false){
     name='параллелепипед';
@@ -16,7 +17,7 @@ function spatialTaskFigure(q,topic){
     for(const [u,v] of [[A,B],[B,C],[A,A1],[B,B1],[C,C1],[A1,B1],[B1,C1],[C1,D1],[D1,A1]])s.line(...u,...v);
     for(const [u,v] of [[A,D],[D,C],[D,D1]])s.line(...u,...v,true);
     label(a,162,204);label(b,293,184);label(h,64,130);
-    if(diagonal){s.line(...A,...C1,true);label('d = ?',211,121);}
+    if(diagonal){semantic('diagonal auxiliary',()=>s.line(...A,...C1,true),true);label('d = ?',211,121);}
   }
   function prism(area='S осн.',h='h',sides=4){
     name='призма';
@@ -28,7 +29,7 @@ function spatialTaskFigure(q,topic){
     name='пирамида';const tip=[190,33],cy=178;
     const pts=Array.from({length:sides},(_,i)=>{const a=Math.PI/2+2*Math.PI*i/sides;return[190+99*Math.cos(a),cy+27*Math.sin(a)];});
     for(let i=0;i<sides;i++){const a=pts[i],b=pts[(i+1)%sides];s.line(...a,...b,(a[1]+b[1])/2<cy);s.line(...tip,...a,a[1]<cy-5);}
-    s.line(...tip,190,cy,true);s.right(190,cy);s.dot(190,cy);label('S',190,22);label('H',176,cy+15);label(h,230,143);label(area,190,228);
+    semantic('height auxiliary',()=>s.line(...tip,190,cy,true),true);s.right(190,cy);s.dot(190,cy);label('S',190,22);label('H',176,cy+15);label(h,230,143);label(area,190,228);
     if(/рассеч|сечен/.test(p)){
       const cuts=/1\/3.*2\/3/.test(p)?[1/3,2/3]:[.5];
       for(const t of cuts)s.poly(pts.map(([x,y])=>[tip[0]+(x-tip[0])*t,tip[1]+(y-tip[1])*t]),true);
@@ -37,16 +38,19 @@ function spatialTaskFigure(q,topic){
   }
   function projection(h='AH',ab='AB',hb='HB'){
     name='наклонная и её проекция';s.poly([[46,153],[273,153],[337,204],[110,204]],true);
-    s.line(160,39,160,176,true);s.line(160,39,293,176);s.line(160,176,293,176);s.right(160,176);
+    semantic('height',()=>s.line(160,39,160,176,true));semantic('side:AB',()=>s.line(160,39,293,176));semantic('projection',()=>s.line(160,176,293,176));s.right(160,176);
     label('A',160,26);label('H',146,192);label('B',304,190);label(h,99,107);label(ab,270,94);label(hb,228,199);
   }
   function round(kind,r='r',h='h',R='R',l=''){
     name=kind==='cone'?'конус':kind==='frustum'?'усечённый конус':'цилиндр';
-    const cx=188,by=179,rx=79,ty=52,tr=kind==='frustum'?44:79;
-    half(cx,by,rx,22,true);half(cx,by,rx,22,false);
-    if(kind==='cone'){s.line(cx,ty,cx-rx,by);s.line(cx,ty,cx+rx,by);label('S',cx,40);}
-    else{s.ellipse(cx,ty,tr,17);s.line(cx-tr,ty,cx-rx,by);s.line(cx+tr,ty,cx+rx,by);if(kind==='frustum'){s.line(cx,ty,cx+tr,ty);label(r,cx+tr/2,ty-28);}}
-    s.line(cx,ty,cx,by,true);s.line(cx,by,cx+rx,by);s.right(cx,by);s.dot(cx,by);label('O',cx-13,by+15);label(h,90,115,'end');label(kind==='frustum'?R:r,229,222);if(l)label(l,314,117);
+    const measure=text=>{const value=String(text).match(/\d+(?:[.,]\d+)?/);return value?Number(value[0].replace(',','.')):null;};
+    const small=measure(r),large=kind==='frustum'?measure(R):small,slant=measure(l),givenHeight=measure(h),height=givenHeight??(slant&&large&&(kind!=='frustum'||small)&&slant>Math.abs(large-(kind==='frustum'?small:0))?Math.sqrt(slant*slant-(large-(kind==='frustum'?small:0))**2):null);
+    const metric=large&&height&&(kind!=='frustum'||small),scale=metric?Math.min(90/large,126/height):1;
+    const cx=188,rx=metric?large*scale:79,span=metric?height*scale:127,by=115.5+span/2,ty=by-span,tr=kind==='frustum'?(metric?small*scale:44):rx,depth=rx*.278;
+    half(cx,by,rx,depth,true);half(cx,by,rx,depth,false);
+    if(kind==='cone'){s.line(cx,ty,cx-rx,by);s.line(cx,ty,cx+rx,by);label('S',cx,ty-12);}
+    else{s.ellipse(cx,ty,tr,tr*.278);s.line(cx-tr,ty,cx-rx,by);s.line(cx+tr,ty,cx+rx,by);if(kind==='frustum'){s.line(cx,ty,cx+tr,ty);label(r,cx+tr/2,ty-28);}}
+    semantic('height auxiliary',()=>{s.line(cx,ty,cx,by,true);s.right(cx,by);},true);semantic('radius',()=>s.line(cx,by,cx+rx,by));s.dot(cx,by);label('O',cx-13,by+15);label(h,90,115,'end');label(kind==='frustum'?R:r,229,by+43);if(l)label(l,314,117);
   }
   function sphere(r='R',d='',height='',section=false){
     name=height?'шаровой сегмент':section?'сечение шара':'шар';
@@ -90,7 +94,8 @@ function spatialTaskFigure(q,topic){
     const ah=pick('AH\\s*=\\s*('+num+')'),ab=pick('AB\\s*=\\s*('+num+')')||pick('наклонн[^.]*?(?:длиной|длины)\\s*('+num+')'),hb=pick('HB\\s*=\\s*('+num+')')||pick('проекци[яю]\\s*('+num+')');
     projection(ah?'AH = '+cm(ah):'AH',ab?'AB = '+cm(ab):'AB',hb?'HB = '+cm(hb):'HB');
   }else if(/усеч[её]нн[^.]*конус/.test(p)){
-    round('frustum');
+    const raw=String(q.prompt),r=raw.match(/\br\s*=\s*(\d+(?:[.,]\d+)?)/)?.[1],R=raw.match(/\bR\s*=\s*(\d+(?:[.,]\d+)?)/)?.[1],h=pick('(?:высот[аыу]\\s*|h\\s*=\\s*)('+num+')'),l=pick('(?:образующ[аяую]+\\s*|l\\s*=\\s*)('+num+')');
+    round('frustum',r?'r = '+cm(r):'r',h?'h = '+cm(h):'h',R?'R = '+cm(R):'R',l?'l = '+cm(l):'');
   }else if(/сфер/.test(p)&&/кас/.test(p)&&/координат/.test(p)){
     name='касание плоскостей: сечение z = z₀';s.arrow(106,196,327,196);s.arrow(106,196,106,30);s.circle(185,117,79);s.dot(185,117);s.line(106,117,185,117,true);s.line(185,117,185,196,true);s.right(106,117,1,-1);s.right(185,196,1,-1);label('x',341,200);label('y',94,26);label('O',92,211);label('C',197,108);label('r',144,107);label('r',198,160);
   }else if(/шар|сфер/.test(p)&&!/вписан|описан|переплав|два шара|двух шар|тр[её]х.*шар|цилиндр|куб|полушар|полусфер|кас.*координат/.test(p)){

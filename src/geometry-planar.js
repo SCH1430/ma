@@ -1,6 +1,7 @@
 // Condition-based sketches for the 5–9 geometry bank. Never read a stored answer.
 function planarTaskFigure(q,topic){
   if(!topic||topic.grade>9||!/геометри/i.test(topic.subject))return null;
+  const accurate=accuratePlanarFigure(q,topic);if(accurate)return accurate;
   const p=q.prompt.replace(/−/g,'-'),g=q.generation||{},n=g.parameter,form=g.form;
   const number='[-+]?\\d+(?:[.,]\\d+)?',unit=(p.match(/(?:\d|\s)(см|дм|км)(?=[.,\s²³]|$)/u)||[])[1]||(/метр|\sм(?:[.,\s]|$)/u.test(p)?'м':'');
   const numeric=x=>Number(String(x).replace(',','.'));
@@ -390,5 +391,215 @@ function planarTaskFigure(q,topic){
     pts.slice(1).forEach((pt,i)=>s.line(...pts[i],...pt));pts.forEach((pt,i)=>{s.dot(...pt);s.label(zig?String.fromCharCode(65+i):['A','M','B'][i],pt[0],pt[1]+25);});
     if(/середина/.test(p)){s.line(130,120,130,132);s.line(267,120,267,132);}reference=true;return finish(zig?'Опорная схема ломаной: длина пути складывается из длин звеньев.':'Опорная схема отрезка AB с промежуточной точкой M; порядок и длины уточните по условию.');
   }
+  return null;
+}
+
+// Metric constructions precede the symbolic reference sketches above.
+// Coordinates are derived from givens, then transformed with one uniform scale.
+function accuratePlanarFigure(q,topic){
+  const p=q.prompt.replace(/−/g,'-'),g=q.generation||{},n=g.parameter,form=g.form;
+  const num=x=>Number(String(x).replace(',','.')),fmt=x=>String(x).replace('-','−');
+  const units=(p.match(/(?:\d|\s)(см|дм|км)(?=[.,\s²³]|$)/)||[])[1]||(/\sм(?:[.,\s]|$)/.test(p)?'м':'');
+  const len=x=>`${fmt(x)}${units?' '+units:''}`,rad=x=>x*Math.PI/180,dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+  const add=(a,b)=>[a[0]+b[0],a[1]+b[1]],mul=(a,k)=>[a[0]*k,a[1]*k],sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+  const s=geometrySketch(''),tag=(role,fn)=>s.tag(role,fn);
+  const text=(label,pt,role='given',size=13)=>tag(role,()=>s.label(label,pt[0],pt[1],'middle',size));
+  const stages=(description,highlight=['given'],second='Сопоставьте искомый элемент с известными сторонами и углами.',next=['unknown','side','angle'])=>[
+    {title:'Отметьте данные',description,highlight,showAuxiliary:false},
+    {title:'Выберите связь',description:second,highlight:next,showAuxiliary:true}
+  ];
+  function finish(alt,geometry,steps){const f=s.figure('Чертёж по данным условия');f.alt=alt;f.geometry=geometry;f.stages=steps||stages('На чертеже выделены данные условия.');return f;}
+  function angleMark(v,a,b,label,name){
+    const av=sub(a,v),bv=sub(b,v),la=Math.hypot(...av),lb=Math.hypot(...bv);let start=Math.atan2(-av[1],av[0]),end=Math.atan2(-bv[1],bv[0]);
+    let sweep=(end-start+2*Math.PI)%(2*Math.PI);if(sweep>Math.PI){[start,end]=[end,start];sweep=2*Math.PI-sweep;}end=start+sweep;
+    const r=Math.min(19,la*.2,lb*.2);tag('angle:'+name,()=>s.arc(v[0],v[1],r,start,end));
+    if(label){const bis=start+sweep/2,d=Math.min(43,Math.max(28,Math.min(la,lb)*.32));text(label,[v[0]+d*Math.cos(bis),v[1]-d*Math.sin(bis)+4],`angle:${name} ${/[?x]/.test(label)?'unknown':'given'}`);}
+  }
+  function rightMark(v,a,b,name){const u=mul(sub(a,v),1/dist(a,v)),w=mul(sub(b,v),1/dist(b,v)),k=Math.min(10,dist(a,v)*.18,dist(b,v)*.18),a1=add(v,mul(u,k)),b1=add(v,mul(w,k)),c=add(a1,mul(w,k));tag('angle:'+name,()=>{s.line(...a1,...c);s.line(...c,...b1);});}
+  function sideLabel(a,b,centre,label,name){if(!label)return;const mid=mul(add(a,b),.5),normal=sub(mid,centre),d=Math.hypot(...normal)||1,offset=18;const pt=add(mid,mul(normal,offset/d));text(label,[pt[0],pt[1]+4],`side:${name} ${label.includes('?')?'unknown':'given'}`);}
+  function triangle(raw,opts={}){
+    if(!raw)return null;const aux=opts.auxiliary;
+    if(aux){const [origin,name]=[aux.from,aux.name],others=['A','B','C'].filter(x=>x!==origin),[u,v]=others.map(x=>raw[x]),a=raw[origin];let foot;
+      if(aux.kind==='height'){const d=sub(v,u),t=(sub(a,u)[0]*d[0]+sub(a,u)[1]*d[1])/(d[0]*d[0]+d[1]*d[1]);foot=add(u,mul(d,t));}
+      else if(aux.kind==='bisector'){const au=dist(a,u),av=dist(a,v);foot=add(u,mul(sub(v,u),au/(au+av)));}
+      else foot=mul(add(u,v),.5);raw={...raw,[name]:foot};
+    }
+    const fit=geometryFit(Object.values(raw)),V=Object.fromEntries(Object.entries(raw).map(([name,pt])=>[name,fit.point(pt)])),centre=mul(add(add(V.A,V.B),V.C),1/3);
+    tag('shape:ABC',()=>s.poly([V.A,V.B,V.C],true));
+    for(const edge of ['AB','BC','CA']){const [a,b]=edge,known=opts.sides?.[edge];tag(`side:${edge}${known&&!known.includes('?')?' given':''}`,()=>s.line(...V[a],...V[b]));sideLabel(V[a],V[b],centre,known,edge);}
+    for(const name of ['A','B','C']){const offset=sub(V[name],centre),mag=Math.hypot(...offset)||1;const pt=add(V[name],mul(offset,17/mag));text(name,[pt[0],pt[1]+4],'vertex:'+name,14);}
+    for(const name of ['A','B','C']){const others=['A','B','C'].filter(x=>x!==name);if(opts.right===name)rightMark(V[name],V[others[0]],V[others[1]],name);else if(opts.angles?.[name])angleMark(V[name],V[others[0]],V[others[1]],opts.angles[name],name);}
+    if(opts.equal)for(const edge of opts.equal){const [a,b]=edge,u=V[a],v=V[b],mid=mul(add(u,v),.5),delta=sub(v,u),d=Math.hypot(...delta),normal=[-delta[1]*5/d,delta[0]*5/d];tag('side:'+edge,()=>s.line(...sub(mid,normal),...add(mid,normal)));}
+    if(opts.exterior){const v=V.C,b=V.B,d=mul(sub(v,b),1/dist(v,b)),end=add(v,mul(d,42));tag('angle:exterior unknown',()=>s.line(...v,...end));angleMark(v,V.A,end,'?','exterior');}
+    if(aux){tag('auxiliary '+aux.kind,()=>s.line(...V[aux.from],...V[aux.name],true));text(aux.name,[V[aux.name][0]+11,V[aux.name][1]+17],'auxiliary vertex:'+aux.name);
+      if(aux.kind==='height'){const others=['A','B','C'].filter(x=>x!==aux.from);rightMark(V[aux.name],V[aux.from],V[others[0]],aux.name);const items=s.figure().elements;for(const e of items.filter(e=>e.role?.split(' ').includes('angle:'+aux.name)))e.auxiliary=true;}
+    }
+    if(opts.unknownAngle&&opts.unknownAngle.every(name=>V[name])){const [a,o,b]=opts.unknownAngle;tag('auxiliary unknown',()=>angleMark(V[o],V[a],V[b],'?',opts.unknownAngle.join('')));}
+    if(opts.note)text(opts.note,[200,27],'given',13);
+    const second=aux?`Используйте ${aux.kind==='height'?'перпендикулярность высоты':aux.kind==='bisector'?'деление угла биссектрисой':'деление стороны медианой'} ${aux.from}${aux.name}.`:opts.second||'Используйте связь отмеченных сторон и углов треугольника.';
+    return finish(opts.alt||'Треугольник ABC построен по числовым данным условия; искомые значения не подписаны.',{kind:'triangle',vertices:V},stages(opts.given||'Сопоставьте подписи со сторонами и углами условия.',['given'],second,aux?['auxiliary','unknown']:['unknown','angle','side']));
+  }
+  function rectangle(a,b,opts={}){
+    const raw={A:[0,0],B:[a,0],C:[a,b],D:[0,b]},points=Object.values(raw);if(opts.extension)points.push([a+opts.extension,0],[a+opts.extension,b]);
+    const fit=geometryFit(points),V=Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,fit.point(v)]));
+    if(opts.cut){const k=opts.cut,W=[[0,0],[a-k,0],[a-k,k],[a,k],[a,b],[0,b]].map(fit.point);tag('shape:rectangle',()=>s.poly(W,true));tag('auxiliary cut',()=>{s.line(...V.B,...fit.point([a-k,0]),true);s.line(...V.B,...fit.point([a,k]),true);});V.E=fit.point([a-k,0]);V.F=fit.point([a-k,k]);V.G=fit.point([a,k]);}
+    else tag('shape:rectangle',()=>s.poly([V.A,V.B,V.C,V.D],true));
+    tag(`side:AB given${opts.cut?' auxiliary':''}`,()=>s.line(...V.A,...V.B,!!opts.cut));tag('side:AD '+(opts.unknownWidth?'unknown':'given'),()=>s.line(...V.A,...V.D));
+    text(opts.aLabel||len(a),[(V.C[0]+V.D[0])/2,V.C[1]+25],'side:AB given');text(opts.bLabel||len(b),[V.A[0]-24,(V.A[1]+V.D[1])/2+4],`side:AD ${opts.unknownWidth?'unknown':'given'}`);
+    tag('angle:D',()=>s.right(...V.D));if(opts.info)text(opts.info,[(V.A[0]+V.C[0])/2,(V.A[1]+V.C[1])/2+4]);
+    if(opts.cut)text(`вырез ${opts.cut} × ${opts.cut}${units?' '+units:''}`,[200,30],'cut given');
+    if(opts.extension){const e=opts.extension,E=fit.point([a+e,0]),F=fit.point([a+e,b]);V.E=E;V.F=F;tag('auxiliary extension',()=>{s.line(...V.B,...E,true);s.line(...E,...F,true);s.line(...F,...V.C,true);});text(`+${len(e)}`,[(V.B[0]+E[0])/2,V.B[1]-17],'extension given');}
+    return finish(opts.alt||'Прямоугольник: известные размеры подписаны, неизвестная величина обозначена вопросом.',{kind:opts.cut?'cutRectangle':'rectangle',vertices:V},stages('Выделите стороны и данные о периметре или площади.',['given'],opts.extension?'Найдите, какие части границы прибавились при увеличении длины.':'Свяжите стороны с периметром или площадью фигуры.',opts.extension?['extension','auxiliary']:['unknown','side']));
+  }
+  function trapezoid(a,b,h,opts={}){
+    const raw={A:[(b-a)/2,-h],B:[(b+a)/2,-h],C:[b,0],D:[0,0],H:[(b-a)/2,0]},fit=geometryFit(Object.values(raw)),V=Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,fit.point(v)]));
+    tag('shape:trapezoid',()=>s.poly([V.A,V.B,V.C,V.D],true));tag('side:AB given',()=>s.line(...V.A,...V.B));tag('side:CD given',()=>s.line(...V.C,...V.D));tag('height auxiliary',()=>s.line(...V.A,...V.H,true));
+    text(len(a),[(V.A[0]+V.B[0])/2,V.A[1]-17],'side:AB given');text(len(b),[(V.C[0]+V.D[0])/2,V.C[1]+25],'side:CD given');text(opts.unknown?'h = ?':'h = '+len(h),[V.H[0]+42,(V.A[1]+V.H[1])/2+4],`height ${opts.unknown?'unknown':'given'}`);tag('height auxiliary',()=>s.right(...V.H));if(opts.area)text(`S = ${opts.area} см²`,[270,130]);
+    return finish('Трапеция: основания пропорциональны заданным длинам, высота перпендикулярна основаниям.',{kind:'trapezoid',vertices:V},stages('Сопоставьте основания трапеции с условием.',['side:AB','side:CD'], 'Проведите высоту — перпендикуляр между параллельными основаниями.',['height','unknown']));
+  }
+  function cyclic(angle,quad=false,opts={}){
+    const O=[200,122],r=76,at=t=>[O[0]+r*Math.cos(rad(t)),O[1]-r*Math.sin(rad(t))];tag('circumference',()=>s.circle(...O,r));
+    if(quad){
+      // Arc BCD has measure 2*A; A is placed on its complementary arc.
+      const theta=angle,raw={A:at(90),B:at(270-theta),C:at(270),D:at(270+theta)};
+      tag('shape:ABCD',()=>s.poly([raw.A,raw.B,raw.C,raw.D],true));
+      for(const edge of ['AB','BC','CD','DA'])tag('side:'+edge,()=>s.line(...raw[edge[0]],...raw[edge[1]]));
+      for(const [name,pt]of Object.entries(raw)){const d=sub(pt,O),label=add(pt,mul(d,17/r));text(name,[label[0],label[1]+4],'vertex:'+name,14);}
+      angleMark(raw.A,raw.B,raw.D,`${angle}°`,'A');angleMark(raw.C,raw.B,raw.D,'?','C');
+      return finish(`Вписанный четырёхугольник ABCD: угол A равен ${angle}°, противоположный C неизвестен.`,{kind:'cyclicQuadrilateral',vertices:raw,center:O,radius:r},stages('Выделите заданный угол вписанного четырёхугольника.',['angle:A'],'Сопоставьте противоположные углы A и C.',['angle:A','angle:C','unknown']));
+    }
+    const arc=angle,raw={A:at(270-arc/2),B:at(270+arc/2),C:at(90)};tag('shape:ABC',()=>s.poly([raw.A,raw.B,raw.C],false));
+    for(const edge of ['AB','BC','CA'])tag('side:'+edge,()=>s.line(...raw[edge[0]],...raw[edge[1]]));
+    for(const [name,pt]of Object.entries(raw)){const d=sub(pt,O),label=add(pt,mul(d,17/r));text(name,[label[0],label[1]+4],'vertex:'+name,14);}
+    tag(`arc:AB ${opts.unknownArc?'unknown':'given'}`,()=>s.arc(...O,r,rad(270-arc/2),rad(270+arc/2)));angleMark(raw.C,raw.A,raw.B,opts.givenAngle?`${opts.givenAngle}°`:'?','C');
+    if(opts.central){tag('radius given',()=>{s.line(...O,...raw.A);s.line(...O,...raw.B);});text('O',[O[0]-14,O[1]+6],'vertex:O');angleMark(O,raw.A,raw.B,`${angle}°`,'O');}
+    else text(opts.unknownArc?'дуга AB: ?':`дуга AB: ${angle}°`,[200,226],`arc:AB ${opts.unknownArc?'unknown':'given'}`);
+    return finish(opts.unknownArc?`Вписанный угол ACB равен ${opts.givenAngle}°, дуга AB неизвестна.`:`Вписанный угол ACB опирается на дугу AB с мерой ${angle}°.`,{kind:'inscribedAngle',vertices:raw,center:O,radius:r},stages('Выделите дугу AB, на которую опирается угол ACB.',['arc:AB'],'Сопоставьте вписанный угол ACB и дугу AB.',['arc:AB','angle:C','unknown']));
+  }
+  function sector(radius,angle){
+    const O=[200,122],r=77,A=[O[0]+r,O[1]],B=[O[0]+r*Math.cos(rad(angle)),O[1]-r*Math.sin(rad(angle))];tag('circumference',()=>s.circle(...O,r));
+    const arc=Array.from({length:49},(_,i)=>[O[0]+r*Math.cos(rad(angle)*i/48),O[1]-r*Math.sin(rad(angle)*i/48)]);tag('sector given',()=>s.poly([O,...arc],true));
+    tag('radius given',()=>{s.line(...O,...A);s.line(...O,...B);});text(`r = ${len(radius)}`,[238,147],'radius given');text('O',[186,141],'vertex:O');text('A',[A[0]+15,A[1]+5],'vertex:A');text('B',[B[0]+14*Math.cos(rad(angle)),B[1]-14*Math.sin(rad(angle))+4],'vertex:B');angleMark(O,A,B,`${angle}°`,'O');
+    return finish(`Круг радиуса ${radius} ${units}; выделен сектор с центральным углом ${angle}°.`,{kind:'sector',vertices:{O,A,B},center:O,radius:r},stages('Выделите радиус и центральный угол.',['radius','angle:O'],'Сопоставьте выделенный сектор с полным кругом.',['sector','angle:O']));
+  }
+  function similar(ratio,opts={}){
+    // A single transform is shared by both triangles: lengths scale by k, areas by k².
+    const base=opts.base||2,height=opts.height||1.4,gap=base*.55,small={A:[base/2,-height],B:[0,0],C:[base,0]},origin=base+gap;
+    const large=Object.fromEntries(Object.entries(small).map(([name,pt])=>[name,[origin+pt[0]*ratio,pt[1]*ratio]]));
+    const fit=geometryFit([...Object.values(small),...Object.values(large)],{left:50,top:62,right:350,bottom:180});
+    const V=Object.fromEntries(Object.entries(small).map(([name,pt])=>[name,fit.point(pt)])),W=Object.fromEntries(Object.entries(large).map(([name,pt])=>[name+'1',fit.point(pt)]));
+    tag('shape:small',()=>s.poly([V.A,V.B,V.C],true));tag('shape:large',()=>s.poly([W.A1,W.B1,W.C1],true));
+    tag('side:BC given',()=>s.line(...V.B,...V.C));tag('side:B1C1 given',()=>s.line(...W.B1,...W.C1));
+    text(opts.smallLabel||'a',[(V.B[0]+V.C[0])/2,V.B[1]+24],'side:BC given');text(opts.largeLabel||'a₁',[(W.B1[0]+W.C1[0])/2,W.B1[1]+24],'side:B1C1 given');
+    if(opts.infoSmall)text(opts.infoSmall,[(V.B[0]+V.C[0])/2,33],'given',12);if(opts.infoLarge)text(opts.infoLarge,[(W.B1[0]+W.C1[0])/2,33],opts.infoLarge.includes('?')?'unknown':'given',12);
+    if(opts.perimeter)text(opts.perimeter,[200,226],'given',12);
+    return finish('Подобные треугольники построены с одинаковыми углами и точным отношением соответствующих сторон.',{kind:'similarTriangles',vertices:{...V,...W}},stages('Найдите соответствующие стороны двух фигур.',['side:BC','side:B1C1'],'Сравните масштаб сторон и изменение площадей.',['shape:small','shape:large','unknown']));
+  }
+  function box(a,b,h){
+    const root3=Math.sqrt(3)/2,project=([x,y,z])=>[(x-y)*root3,(x+y)/2-z],raw3={A:[0,0,0],B:[a,0,0],C:[a,b,0],D:[0,b,0],A1:[0,0,h],B1:[a,0,h],C1:[a,b,h],D1:[0,b,h]},raw=Object.fromEntries(Object.entries(raw3).map(([k,v])=>[k,project(v)])),fit=geometryFit(Object.values(raw),{left:85,top:53,right:315,bottom:182}),V=Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,fit.point(v)]));
+    for(const face of [['A1','B1','C1','D1'],['A','B','B1','A1'],['B','C','C1','B1']])tag('shape:box',()=>s.poly(face.map(k=>V[k]),true));
+    for(const [u,v]of [['A','B'],['B','C'],['C','D'],['D','A'],['A1','B1'],['B1','C1'],['C1','D1'],['D1','A1'],['A','A1'],['B','B1'],['C','C1'],['D','D1']])tag(`edge:${u}${v}`,()=>s.line(...V[u],...V[v],u==='D'||v==='D'));
+    const centre=mul(add(V.A,V.C1),.5);sideLabel(V.A,V.B,centre,len(a),'AB');sideLabel(V.B,V.C,centre,len(b),'BC');sideLabel(V.C,V.C1,centre,len(h),'CC1');
+    return finish('Прямоугольный параллелепипед в изометрической проекции: три измерения пропорциональны данным условия.',{kind:'box',projection:'isometric',vertices:V},stages('Выделите длину, ширину и высоту.',['side:AB','side:BC','side:CC1'],'Сопоставьте пары одинаковых граней или три измерения объёма.',['shape:box','edge']));
+  }
+
+  if(g.model==='angles'){
+    const d=2*(n%60+1),a=form===0?21+n%120:(180-d)/2,O=[200,174],A=[55,174],B=[345,174],C=[O[0]+125*Math.cos(rad(a)),O[1]-125*Math.sin(rad(a))];
+    tag('side:OA',()=>s.line(...A,...O));tag('side:OB',()=>s.line(...O,...B));tag('side:OC',()=>s.line(...O,...C));
+    text('O',[200,198],'vertex:O');text('A',[49,195],'vertex:A');text('B',[351,195],'vertex:B');text('C',[C[0]+12,C[1]-10],'vertex:C');
+    // Use a larger radius for text so acute labels fit between their actual rays.
+    tag('angle:BOC',()=>s.arc(...O,27,0,rad(a)));tag('angle:COA',()=>s.arc(...O,38,rad(a),Math.PI));
+    text(form===0?`${a}°`:'x',[O[0]+77*Math.cos(rad(a/2)),O[1]-77*Math.sin(rad(a/2))+4],form===0?'angle:BOC given':'angle:BOC unknown');
+    text(form===0?'?':`x + ${d}°`,[O[0]+83*Math.cos(rad((a+180)/2)),O[1]-83*Math.sin(rad((a+180)/2))+4],'angle:COA unknown');
+    if(form===1)text(`Один угол на ${d}° больше другого`,[200,29],'given',13);
+    return finish(form===0?`Смежные углы: один равен ${a}°, другой неизвестен.`:`Смежные углы x и x + ${d}° построены с указанной разностью.`,{kind:'adjacentAngles',vertices:{A,O,B,C}},stages('Выделите данные о смежных углах.',['given'],'Сумма смежных углов составляет развёрнутый угол.',['angle:BOC','angle:COA']));
+  }
+  if(g.model==='triangle'){
+    if(form===0){const B=26+n%49,C=37+n%31;return triangle(geometryTriangleAngles(B,C),{angles:{B:`${B}°`,C:`${C}°`,A:'?'},given:'Отметьте два заданных угла треугольника.',second:'Сумма трёх внутренних углов треугольника равна 180°.'});}
+    const A=2*(n%65+10),base=(180-A)/2;return triangle(geometryTriangleAngles(base,base),{angles:{A:`${A}°`},equal:['AB','CA'],exterior:true,given:'Равные стороны отмечены одинаковыми штрихами; угол при вершине задан.',second:'Сначала сопоставьте равные углы при основании, затем внутренний и внешний углы.'});
+  }
+  if(g.model==='pythagoras'){const k=n+2,AB=form===0?3*k:5*k,BC=form===0?4*k:Math.sqrt((13*k)**2-AB**2),CA=form===0?Math.hypot(AB,BC):13*k;return triangle(geometryTriangleSSS(AB,BC,CA),{right:'B',sides:{AB:len(AB),BC:form===0?len(BC):'b = ?',CA:form===0?'c = ?':len(CA)},second:'Используйте прямой угол и соотношение квадратов катетов и гипотенузы.'});}
+  if(g.model==='cosine_rule'){const BC=n+3,AB=n%9+2,B=form===0?60:120;return triangle({A:[AB*Math.cos(rad(B)),-AB*Math.sin(rad(B))],B:[0,0],C:[BC,0]},{sides:{AB:len(AB),BC:len(BC),CA:'c = ?'},angles:{B:`${B}°`},second:'Используйте теорему косинусов для двух сторон и угла между ними.'});}
+  if(g.model==='perimeter'){const a=n+7,b=n%9+3;return rectangle(a,b,{bLabel:form===0?'b = ?':len(b),unknownWidth:form===0,info:form===0?`P = ${2*(a+b)} м`:'',extension:form===1?n%4+2:0});}
+  if(g.model==='rectangle'){const a=n+9,b=n%8+4;return rectangle(a,b,{bLabel:form===0?'b = ?':len(b),unknownWidth:form===0,info:form===0?`S = ${a*b} м²`:'',cut:form===1?n%3+1:0});}
+  if(g.model==='trapezoid'){const a=n+5,b=n+11,h=n%8+3;return trapezoid(a,b,h,{unknown:form===1,area:form===1?(a+b)*h/2:0});}
+  if(g.model==='box')return box(n+4,n%6+3,n%5+2);
+  if(g.model==='sector')return sector(n+3,30*(n%5+1));
+  if(g.model==='inscribed_angle')return cyclic(20+n%140,form===1);
+  if(g.model==='similarity'){const a=n+4,b=n%7+2;return similar(1.5,form===0?{base:2*a,height:4*b/a,smallLabel:len(2*a),largeLabel:len(3*a),infoSmall:`S = ${4*b} см²`,infoLarge:'S = ?'}:{infoSmall:`S = ${4*a} см²`,infoLarge:`S = ${9*a} см²`,perimeter:`P₁ = ${2*(n+7)} см; P₂ = ?`});}
+  if(!g.model){
+    const decimal='(\\d+(?:[.,]\\d+)?)',D=decimal;
+    const capture=re=>p.match(new RegExp(re.source,[...new Set((re.flags+'i').replace('g','').split(''))].join(''))),value=re=>{const m=capture(re);return m?num(m[1]):null;};
+    // Exact numerical rectangles, with dimensions of cuts deliberately excluded.
+    if(/прямоугольник|прямоугольник[ауы]|прямоугольной площадки/i.test(p)&&!/вырез|состав|рамк|дорожк|разрез|двух|другой|куб|параллелепипед/.test(p)){
+      const dims=capture(new RegExp(D+'\\s*[×x]\\s*'+D)),sides=capture(new RegExp('стороны[^\\d.!?]{0,20}'+D+'\\s*(?:см)?\\s*и\\s*'+D));
+      let a=dims?num(dims[1]):sides?num(sides[1]):value(new RegExp('длин[ауы][^\\d.!?]{0,12}'+D)),b=dims?num(dims[2]):sides?num(sides[2]):value(new RegExp('ширин[ауы][^\\d.!?]{0,12}'+D));
+      const area=value(new RegExp('[Пп]лощадь[^\\d.!?]{0,22}'+D)),perimeter=value(new RegExp('[Пп]ериметр[^\\d.!?]{0,22}'+D));
+      if(!a)a=value(new RegExp('одна сторона[^\\d.!?]{0,10}'+D));
+      const unknownWidth=!b;if(a&&!b&&area)b=area/a;else if(a&&!b&&perimeter)b=perimeter/2-a;
+      if(a>0&&b>0){const increase=value(new RegExp('[Дд]лину увеличили на '+D));return rectangle(a,b,{bLabel:unknownWidth?'b = ?':len(b),unknownWidth,info:area?`S = ${area}${units?' '+units+'²':''}`:perimeter?`P = ${len(perimeter)}`:'',extension:increase||0});}
+    }
+    if(/квадрат имеет сторону|квадрат со стороной|периметр квадрата|площадь квадрата/i.test(p)&&!/вырез|разрез|вписан|описан|состав/.test(p)){
+      const a=value(new RegExp('сторон[ауы][^\\d.!?]{0,8}'+D)),P=value(new RegExp('[Пп]ериметр квадрата[^\\d.!?]{0,8}'+D)),S=value(new RegExp('[Пп]лощадь квадрата[^\\d.!?]{0,8}'+D)),edge=a||(P?P/4:S?Math.sqrt(S):0);
+      if(edge>0)return rectangle(edge,edge,{aLabel:a?len(a):'a = ?',bLabel:a?len(a):'a = ?',unknownWidth:!a,info:P?`P = ${len(P)}`:S?`S = ${S}`:''});
+    }
+    if(/трапец/.test(p)&&!/вписан|описан|наклонн|боков/.test(p)){
+      const bases=capture(new RegExp('основани[яй][^\\d.!?]{0,12}'+D+'\\s*(?:см)?\\s*и\\s*'+D)),h=value(new RegExp('высот[ауы][^\\d.!?]{0,8}'+D)),S=value(new RegExp('[Пп]лощадь трапеции[^\\d.!?]{0,8}'+D));
+      if(bases&&(h||S)){const a=num(bases[1]),b=num(bases[2]);return trapezoid(a,b,h||2*S/(a+b),{unknown:!h,area:!h?S:0});}
+    }
+    if(/параллелепипед|коробк|прямоугольный блок|аквариум|контейнер/.test(p)&&!/кубик|развёртк|вырез|увелич|уменьш|кубическ|площадь основания/.test(p)){
+      const triple=capture(new RegExp(D+'\\s*[×x]\\s*'+D+'\\s*[×x]\\s*'+D));
+      const edges=capture(new RegExp('р[её]бр[аы][^\\d.!?]{0,8}'+D+'\\s*,\\s*'+D+'\\s*и\\s*'+D));
+      const a=value(new RegExp('длин[ауы][^\\d.!?]{0,8}'+D)),b=value(new RegExp('ширин[ауы][^\\d.!?]{0,8}'+D)),h=value(new RegExp('высот[ауы][^\\d.!?]{0,8}'+D));
+      if(triple||edges){const m=triple||edges;return box(num(m[1]),num(m[2]),num(m[3]));}if(a&&b&&h)return box(a,b,h);
+    }
+    if(/сектор|длина дуги|длину дуги|дуга с центральным углом/.test(p)){
+      const radius=value(new RegExp('радиус[а-яё]*[^\\d.!?]{0,8}'+D)),angle=value(/(?:уг[ло][а-яё]*|сектор[а-яё]*|дуг[а-яё]*)\s*(?:равен|равна|=)?\s*(\d+)°/);
+      if(radius&&angle&&angle<360)return sector(radius,angle);
+    }
+    if(/вписанн.*угол|вписанные углы|центральный угол.*дуг/.test(p)&&!/диаметр|ABC и ADC/.test(p)){
+      const central=value(/центральн[^.!?]*?(\d+(?:[.,]\d+)?)°/),given=value(/[Вв]писанный угол\s*(\d+(?:[.,]\d+)?)°/),arc=value(/дуг[а-яё]*[^.!?]*?(\d+(?:[.,]\d+)?)°/);
+      if(central&&central<180)return cyclic(central,false,{central:true});if(given&&given<90)return cyclic(2*given,false,{givenAngle:given,unknownArc:true});if(arc&&arc<180)return cyclic(arc);
+    }
+    if(/вписанн.*четыр[её]хуголь|четыр[её]хуголь.*вписан/.test(p)){
+      const a=value(/угол A\s*(?:равен|=)?\s*(\d+(?:[.,]\d+)?)°/)||value(/угол\s*(\d+(?:[.,]\d+)?)°/);if(a&&a<180)return cyclic(a,true);
+    }
+    // Retain special circle, grid, composite and spatial configurations.
+    if(/окружност|диаметр|хорд|касательн|куб|параллелепипед|трапец|параллелограмм|ромб|сетка|сетке|разрез|вырез|тени|тень/.test(p))return null;
+    const isTriangle=/треуголь|в ABC|в прямоугольном ABC|две стороны.*образуют угол|стороны треугольника|катет|гипотенуз/i.test(p);
+    if(!isTriangle)return null;
+    const sideValues={},sideLabels={},canonical=edge=>edge==='BA'?'AB':edge==='CB'?'BC':edge==='AC'?'CA':edge;
+    const edgeRE=new RegExp('\\b(AB|BC|CA|BA|CB|AC)\\s*=\\s*'+D+'(?![\\d√a-zA-Z])','g');
+    for(const m of p.matchAll(edgeRE)){const edge=canonical(m[1]);sideValues[edge]=num(m[2]);sideLabels[edge]=len(num(m[2]));}
+    const angles={},angleLabels={};
+    for(const m of p.matchAll(/(?:угол\s*|∠|\b)([ABC])\s*(?:равен|равна|=|—|-)\s*(\d+(?:[.,]\d+)?)°/g)){angles[m[1]]=num(m[2]);angleLabels[m[1]]=num(m[2])+'°';}
+    const auxiliaryMatch=p.match(/(?:биссектриса|медиана|высота)\s*([ABC])([DHMN])/i)||p.match(/([ABC])([DHMN])\s*[—-]\s*(медиана|высота|биссектриса)/i);
+    let auxiliary=null;if(auxiliaryMatch){const kind=/биссектрис/i.test(auxiliaryMatch[0])?'bisector':/высот/i.test(auxiliaryMatch[0])?'height':'median';auxiliary={from:auxiliaryMatch[1],name:auxiliaryMatch[2],kind};}
+    const midpoint=p.match(/([DHMN])\s*[—-]\s*середина\s*([ABC])([ABC])/i);if(!auxiliary&&midpoint){const from=['A','B','C'].find(k=>!midpoint[2].includes(k)&&!midpoint[3].includes(k));if(from)auxiliary={from,name:midpoint[1],kind:'median'};}
+    const targetAngle=p.match(/[Нн]айдите угол\s*([ABCMDHN])([ABCMDHN])([ABCMDHN])/);
+    const opts={sides:sideLabels,angles:angleLabels,auxiliary,unknownAngle:targetAngle?targetAngle.slice(1,4):null};
+    const rightName=Object.keys(angles).find(k=>angles[k]===90);
+    if(rightName)opts.right=rightName;
+    const three=capture(new RegExp('стороны(?: треугольника)?(?: равны)?\\s*'+D+'\\s*(?:см)?\\s*[,;]\\s*'+D+'\\s*(?:см)?\\s*(?:и|[,;])\\s*'+D+'(?![\\d√])','i'));
+    if(three){const AB=num(three[1]),BC=num(three[2]),CA=num(three[3]);opts.sides={AB:len(AB),BC:len(BC),CA:len(CA)};return triangle(geometryTriangleSSS(AB,BC,CA),opts);}
+    if(['AB','BC','CA'].every(k=>sideValues[k]))return triangle(geometryTriangleSSS(sideValues.AB,sideValues.BC,sideValues.CA),opts);
+    const knownAngles=Object.keys(angles);
+    if(knownAngles.length>=2){const missing=['A','B','C'].find(k=>angles[k]===undefined);if(missing)angles[missing]=180-knownAngles.reduce((sum,k)=>sum+angles[k],0);if(missing&&!targetAngle&&!opts.angles[missing])opts.angles[missing]='?';return triangle(geometryTriangleAngles(angles.B,angles.C),opts);}
+    const pairAngles=capture(/два угла[^.!?]*?(\d+(?:[.,]\d+)?)°\s*и\s*(\d+(?:[.,]\d+)?)°/i);
+    if(pairAngles){const B=num(pairAngles[1]),C=num(pairAngles[2]);return triangle(geometryTriangleAngles(B,C),{...opts,angles:{B:B+'°',C:C+'°',A:'?'}});}
+    const top=value(/(?:угол при вершине|угол между равными сторонами)[^\d.!?]{0,16}(\d+(?:[.,]\d+)?)°/),base=value(/угол при основании[^\d.!?]{0,12}(\d+(?:[.,]\d+)?)°/);
+    if(/равнобедрен/.test(p)&&(top||base)){const apex=top||180-2*base,b=base||(180-top)/2,raw=geometryTriangleAngles(b,b);return triangle(raw,{...opts,equal:['AB','CA'],angles:top?{A:top+'°'}:{B:base+'°',C:base+'°',A:'?'}});}
+    const legs=capture(/катеты[^\d.!?]{0,40}(\d+(?:[.,]\d+)?)\s*(?:см)?\s*и\s*(\d+(?:[.,]\d+)?)/i),hyp=value(/гипотенуз[аы][^\d.!?]{0,45}(\d+(?:[.,]\d+)?)/i),leg=value(/(?:один катет|катет)[^\d.!?]{0,15}(\d+(?:[.,]\d+)?)/i);
+    if(/прямоугольн|катет|гипотенуз/.test(p)){
+      const right=rightName||'B',others=['A','B','C'].filter(x=>x!==right),hypEdge=canonical(others.join(''));
+      if(legs){const a=num(legs[1]),b=num(legs[2]),raw={[right]:[0,0],[others[0]]:[0,-a],[others[1]]:[b,0]};const aEdge=canonical(others[0]+right),bEdge=canonical(right+others[1]);return triangle(raw,{...opts,right,sides:{[aEdge]:len(a),[bEdge]:len(b),[hypEdge]:'c = ?'}});}
+      const hypLength=sideValues[hypEdge]||hyp,legEdge=Object.keys(sideValues).find(k=>k!==hypEdge),legLength=legEdge?sideValues[legEdge]:leg;
+      if(hypLength&&legLength&&hypLength>legLength){const a=legLength,b=Math.sqrt(hypLength*hypLength-a*a),first=legEdge?[...legEdge].find(x=>x!==right):others[0],second=others.find(x=>x!==first),raw={[right]:[0,0],[first]:[0,-a],[second]:[b,0]};return triangle(raw,{...opts,right,sides:{[canonical(first+right)]:len(a),[canonical(right+second)]:'b = ?',[hypEdge]:len(hypLength)}});}
+      if(rightName&&Object.keys(sideValues).length>=2){const legNames=Object.keys(sideValues).filter(k=>k!==hypEdge);if(legNames.length===2){const first=[...legNames[0]].find(x=>x!==right),second=[...legNames[1]].find(x=>x!==right);return triangle({[right]:[0,0],[first]:[0,-sideValues[legNames[0]]],[second]:[sideValues[legNames[1]],0]},{...opts,right,sides:{...sideLabels,[hypEdge]:'c = ?'}});}}
+    }
+    const sas=capture(/(?:две )?стороны(?: треугольника)?(?: равны)?\s*(\d+(?:[.,]\d+)?)\s*(?:см)?\s*и\s*(\d+(?:[.,]\d+)?)\s*(?:см)?[^.!?]*?угол(?: между ними)?\s*(\d+(?:[.,]\d+)?)°/i);
+    if(sas){const AB=num(sas[1]),BC=num(sas[2]),B=num(sas[3]);return triangle({A:[AB*Math.cos(rad(B)),-AB*Math.sin(rad(B))],B:[0,0],C:[BC,0]},{...opts,sides:{AB:len(AB),BC:len(BC),CA:'c = ?'},angles:{B:B+'°'}});}
+  }
+
   return null;
 }

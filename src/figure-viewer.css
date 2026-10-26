@@ -1,0 +1,46 @@
+/* Enlarged geometry is local to this page; its controls never enter printouts. */
+.figure-enlarge { display:block; margin:8px auto 0; min-height:44px; padding:8px 15px; border:1px solid #aac0a7; border-radius:12px; background:#fff9; color:#294532; font:inherit; font-size:12px; cursor:pointer; }
+.figure-enlarge:hover { background:#e7efdf; }
+.figure-enlarge:focus-visible { outline:3px solid #426a57; outline-offset:3px; }
+body.figure-viewer-open { overflow:hidden; }
+.figure-viewer-backdrop { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; padding:24px; background:rgb(17 34 28 / 66%); overscroll-behavior:contain; }
+.figure-viewer-backdrop[hidden] { display:none; }
+.figure-viewer-dialog { display:flex; flex-direction:column; width:min(1100px,100%); height:min(860px,calc(100dvh - 48px)); max-height:calc(100dvh - 48px); min-height:0; padding:20px; box-sizing:border-box; border:1px solid #b3c7ad; border-radius:23px; background:#f5f8ef; color:#294532; box-shadow:0 20px 90px #07170f55; }
+.figure-viewer-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:13px; }
+.figure-viewer-heading h2 { margin:0; font:600 clamp(16px,2vw,23px)/1.3 Arial,sans-serif; overflow-wrap:anywhere; }
+.figure-viewer-dialog button { min-width:44px; min-height:44px; padding:8px 13px; border:1px solid #a9bea4; border-radius:11px; background:#fff; color:#294532; font:500 14px/1.2 Arial,sans-serif; cursor:pointer; }
+.figure-viewer-dialog button:hover:not(:disabled) { background:#e3eddc; }
+.figure-viewer-dialog button:disabled { opacity:.4; cursor:default; }
+.figure-viewer-dialog button:focus-visible,.figure-viewer-viewport:focus-visible { outline:3px solid #426a57; outline-offset:3px; }
+.figure-viewer-dialog .figure-viewer-close { flex-shrink:0; padding:4px 10px; font-size:28px; line-height:1; }
+.figure-viewer-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.figure-viewer-views,.figure-viewer-zoom { display:flex; align-items:center; gap:7px; }
+.figure-viewer-views[hidden] { display:none; }
+.figure-viewer-views button[aria-pressed="true"] { border-color:#355b42; background:#355b42; color:white; }
+.figure-viewer-zoom { margin-left:auto; }
+.figure-viewer-scale { min-width:52px; text-align:center; font:600 13px/1.3 Arial,sans-serif; font-variant-numeric:tabular-nums; }
+.figure-viewer-help { flex-shrink:0; margin:12px 0; color:#52674f; font:12px/1.5 Arial,sans-serif; }
+.figure-viewer-viewport { flex:1 1 auto; min-height:0; min-width:0; width:100%; overflow:auto; border:1px solid #c5d3bd; border-radius:14px; background:#fff; overscroll-behavior:contain; touch-action:pan-x pan-y pinch-zoom; scrollbar-gutter:stable; }
+.figure-viewer-canvas { width:100%; min-width:100%; box-sizing:border-box; }
+.figure-viewer-canvas>.math-figure { width:100%; max-width:none; margin:0; padding:24px; box-sizing:border-box; border:0; border-radius:0; background:white; }
+.figure-viewer-canvas>.math-figure svg { display:block; width:100%; max-width:none; height:auto; max-height:none; }
+.figure-viewer-canvas>.math-figure figcaption { padding:8px; font-size:13px; }
+.figure-viewer-canvas .figure-enlarge,.figure-viewer-canvas .figure-controls { display:none; }
+@media screen and (max-width:600px) {
+ .figure-viewer-backdrop { padding:8px; }
+ .figure-viewer-dialog { height:calc(100dvh - 16px); max-height:calc(100dvh - 16px); padding:14px 11px; border-radius:17px; }
+ .figure-viewer-heading { margin-bottom:10px; gap:8px; }
+ .figure-viewer-toolbar { gap:9px; }
+ .figure-viewer-dialog button { padding:8px 10px; }
+ .figure-viewer-help { font-size:11px; }
+ .figure-viewer-canvas>.math-figure { padding:12px 8px; }
+}
+@media screen and (forced-colors:active) {
+ .figure-viewer-dialog,.figure-viewer-viewport,.figure-viewer-dialog button,.figure-enlarge { border:1px solid CanvasText; }
+ .figure-viewer-backdrop { background:Canvas; }
+ .figure-viewer-views button[aria-pressed="true"] { border:2px solid Highlight; }
+}
+@media print {
+ .figure-viewer-backdrop,.figure-enlarge,.figure-controls { display:none !important; }
+ body.figure-viewer-open { overflow:visible; }
+}

@@ -3,8 +3,8 @@ function geometrySketch(alt,width=400,height=240){
   const elements=[];
   const s={
     // Tag a construction without changing the vector API used by legacy figures.
-    // More specific nested tags take precedence over their surrounding group.
-    tag(role,draw){const from=elements.length;draw(s);for(let i=from;i<elements.length;i++)if(!elements[i].role)elements[i].role=role;return s;},
+    // Space-separated roles allow a known side to belong to both side:AB and given.
+    tag(role,draw){const from=elements.length;draw(s);for(let i=from;i<elements.length;i++){elements[i].role=[...new Set(((elements[i].role||'')+' '+role).trim().split(/\s+/))].join(' ');if(elements[i].role.split(/\s+/).includes('auxiliary'))elements[i].auxiliary=true;}return s;},
     line(x1,y1,x2,y2,dash=false){elements.push({type:'line',x1,y1,x2,y2,dash});},
     poly(points,fill=false){elements.push({type:'polygon',points,fill});},
     ellipse(x,y,rx,ry,fill=false){elements.push({type:'ellipse',x,y,rx,ry,fill});},

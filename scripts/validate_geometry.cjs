@@ -13,25 +13,28 @@ for(const topic of BANK)for(const q of topic.tasks){
  if(q.generation&&models.has(q.generation.model)&&geo)test(!!f,q.id+' generated geometry has a figure');
  if(!f)continue;
  figures++;if(/Опорная/.test(f.caption))referenceFigures++;else conditionFigures++;
- test(f.width>0&&f.width<=505&&f.height>0&&f.height<=320,q.id+' usable drawing dimensions');
- test(typeof f.alt==='string'&&f.alt.trim().length>10,q.id+' meaningful alternative description');
- test(Array.isArray(f.elements)&&f.elements.length>0,q.id+' vector content');
+ for(const [view,drawing] of [['original',f],...(f.section?[['section',f.section]]:[])]){
+  const f=drawing;
+ test(f.width>0&&f.width<=505&&f.height>0&&f.height<=320,q.id+' '+view+' usable drawing dimensions');
+ test(typeof f.alt==='string'&&f.alt.trim().length>10,q.id+' '+view+' meaningful alternative description');
+ test(Array.isArray(f.elements)&&f.elements.length>0,q.id+' '+view+' vector content');
  for(const e of f.elements){
-  test(['line','polygon','ellipse','text'].includes(e.type),q.id+' supported vector element');
+  test(['line','polygon','ellipse','text'].includes(e.type),q.id+' '+view+' supported vector element');
   const points=e.type==='line'?[[e.x1,e.y1],[e.x2,e.y2]]:e.type==='polygon'?e.points:e.type==='ellipse'?[[e.x-e.rx,e.y-e.ry],[e.x+e.rx,e.y+e.ry]]:[[e.x,e.y]];
-  test(points.every(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)&&x>=0&&x<=f.width&&y>=0&&y<=f.height),q.id+' drawing stays inside canvas');
+  test(points.every(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)&&x>=0&&x<=f.width&&y>=0&&y<=f.height),q.id+' '+view+' drawing stays inside canvas');
   if(e.type==='text'){
-   test(e.size>=10&&e.size<=24,q.id+' readable label size');
-   test([...String(e.text)].every(c=>!c.trim()||supported.has(c.codePointAt(0))),q.id+' PDF font supports labels');
+   test(e.size>=10&&e.size<=24,q.id+' '+view+' readable label size');
+   test([...String(e.text)].every(c=>!c.trim()||supported.has(c.codePointAt(0))),q.id+' '+view+' PDF font supports labels');
    const width=font.layout(String(e.text)).glyphs.reduce((sum,g)=>sum+g.advanceWidth,0)/font.unitsPerEm*e.size;
    const left=e.x-(e.anchor==='middle'?width/2:e.anchor==='end'?width:0);
-   test(left>=-1&&left+width<=f.width+1,q.id+' label fits drawing: '+e.text);
+   test(left>=-1&&left+width<=f.width+1,q.id+' '+view+' label fits drawing: '+e.text);
   }
+ }
  }
  if(!q.figure){
   const altered={...q,answer:999999,display:'REVEALED',solution:'REVEALED'};
   const redraw=topic.grade<=9?context.planarTaskFigure(altered,topic):context.spatialTaskFigure(altered,topic);
-  if(redraw)test(JSON.stringify(redraw)===JSON.stringify(f),q.id+' diagram depends only on the condition');
+  if(redraw)test(JSON.stringify(context.guideGeometryFigure(altered,topic,redraw))===JSON.stringify(f),q.id+' diagram depends only on the condition');
  }
  const key=q.generation?`${q.generation.model}:${q.generation.form}`:`grade:${topic.grade}`;
  if(!samples.has(key))samples.set(key,{...q,grade:topic.grade,level:topic.level,source:'class'});
@@ -42,6 +45,7 @@ for(const topic of BANK)for(const q of topic.tasks){
 }
 for(const [grade,row] of Object.entries(byGrade))test(row.figures===row.tasks,grade+' every geometry task has a figure');
 require('./geometry_invariants.cjs')(context,BANK,test);
+require('./geometry_accuracy.cjs')(context,BANK,test);
 for(const id of ['11-218-8','11-319-9']){
  const topic=BANK.find(t=>t.tasks.some(q=>q.id===id)),q=topic.tasks.find(q=>q.id===id);
  samples.set('critical:'+id,{...q,grade:topic.grade,level:topic.level,source:'class'});

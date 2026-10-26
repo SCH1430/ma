@@ -17,7 +17,7 @@ test(!bank.some(topic=>topic.tasks.some(task=>page.html.includes(task.id)||page.
 test(page.scripts.length>0&&page.scripts.every(script=>script.reference&&script.inline.trim()===''),'all scripts are external files');
 test(page.scripts.every(script=>'defer' in script.attrs&&!('async' in script.attrs)&&!script.attrs.type),'ordered classic deferred scripts support offline file loading');
 test(new Set(refs).size===refs.length,'every script is loaded exactly once');
-test(page.styles.length===2&&page.styles.every(style=>style.file),'both stylesheet references exist locally');
+test(page.styles.length===3&&page.styles.every(style=>style.file),'all stylesheet references exist locally');
 test(!/<style\b/i.test(page.html),'styles are external files');
 test(same(refs.filter(ref=>ref?.startsWith('data/tasks/')),gradeRefs),'each class has exactly one runtime task file, ordered 5 through 11');
 test(same(refs.filter(ref=>ref?.startsWith('data/exams/')),examRefs),'each exam bank has its own runtime file');

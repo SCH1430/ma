@@ -106,7 +106,8 @@ if style is None:
 (DATA / 'shell.css').write_text(style.group(1))
 shell = shell[:style.start()] + (
     '  <link rel="stylesheet" href="data/shell.css">\n'
-    '  <link rel="stylesheet" href="src/app.css">'
+    '  <link rel="stylesheet" href="src/app.css">\n'
+    '  <link rel="stylesheet" href="src/figure-viewer.css">'
 ) + shell[style.end():]
 shell = re.sub(
     r'      <section class="role-view".*?</section>',
@@ -129,7 +130,8 @@ data_scripts = [
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
-    'math-figures.js', 'learning-support.js', 'exam-support.js',
+    'figure-guidance.js', 'math-figures.js', 'learning-support.js',
+    'lesson-support.js', 'figure-viewer.js', 'exam-support.js',
     'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'pdf.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
