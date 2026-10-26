@@ -22,7 +22,8 @@ commands = [
         'validate_figure_viewer', 'validate_training', 'validate_font', 'validate_features',
         'validate_ui_state', 'validate_regressions', 'validate_exams',
         'validate_unified_work', 'validate_competencies', 'validate_auto_work',
-        'export_unified_sample', 'export_expansion_sample',
+        'validate_work_runner', 'validate_sdamgia_ui',
+        'export_unified_sample', 'export_expansion_sample', 'export_sdamgia_sample',
     ]],
     [sys.executable, '-B', 'scripts/prepare_pages.py'],
     [node, 'scripts/validate_pages.cjs'],
@@ -33,7 +34,7 @@ for command in commands:
 reports = {name: json.loads((ROOT/'checks'/f'{name}-results.json').read_text())
            for name in ['build','math','expansion','runtime','geometry','lessons','figure-viewer','training','font','features','ui-state',
                         'regression','exam','unified-work','competency','auto-work',
-                        'unified-pdf','expansion-pdf']}
+                        'unified-pdf','expansion-pdf','sdamgia-ui','sdamgia-pdf']}
 summary = {'verified_at':datetime.now(timezone.utc).isoformat(),
            'automated_status':'passed','reports':reports,
            'semantic':json.loads((ROOT/'checks/semantic-results.json').read_text())['stats'],

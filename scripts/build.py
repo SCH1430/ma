@@ -10,6 +10,7 @@ import sys
 from exam_assets import build_exam_bank, exam_bank_script
 from competency_assets import build_competency_data
 from exam_difficulty_assets import build_exam_difficulty_data
+from sdamgia_assets import build_sdamgia_bank
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,8 +24,12 @@ def encode(value):
     return json.dumps(value, ensure_ascii=False, separators=(',', ':'))
 
 
+def write_utf8(path, value):
+    path.write_text(value, encoding='utf-8', newline='\n')
+
+
 def write_constant(filename, name, value):
-    (DATA / filename).write_text(f'const {name} = {encode(value)};\n')
+    write_utf8(DATA / filename, f'const {name} = {encode(value)};\n')
 
 
 def script_tag(path, script_id=None):
@@ -53,38 +58,40 @@ for topic in bank:
         'Базовый', 'Средний', 'Повышенный', 'Суперсложный',
     ].index(q['difficulty']))
 
-(ROOT / 'checks' / 'bank.json').write_text(json.dumps(bank, ensure_ascii=False, indent=2))
-(ROOT / 'checks' / 'oracles.json').write_text(json.dumps(oracles, ensure_ascii=False, indent=2))
+write_utf8((ROOT / 'checks' / 'bank.json'), json.dumps(bank, ensure_ascii=False, indent=2))
+write_utf8((ROOT / 'checks' / 'oracles.json'), json.dumps(oracles, ensure_ascii=False, indent=2))
 semantic = runpy.run_path(str(ROOT / 'scripts' / 'semantic_audit.py'))['audit'](bank)
 exams = build_exam_bank()
-(ROOT / 'checks' / 'exam-bank.json').write_text(encode(exams))
+write_utf8((ROOT / 'checks' / 'exam-bank.json'), encode(exams))
 competencies = build_competency_data(bank, exams)
-(ROOT / 'checks' / 'competencies.json').write_text(json.dumps(competencies, ensure_ascii=False, indent=2))
+write_utf8((ROOT / 'checks' / 'competencies.json'), json.dumps(competencies, ensure_ascii=False, indent=2))
 exam_difficulty = build_exam_difficulty_data(exams)
-(ROOT / 'checks' / 'exam-difficulty.json').write_text(json.dumps(exam_difficulty, ensure_ascii=False, indent=2))
+sdamgia = build_sdamgia_bank()
+write_utf8((ROOT / 'checks' / 'exam-difficulty.json'), json.dumps(exam_difficulty, ensure_ascii=False, indent=2))
 
 for directory in [DATA, DATA / 'tasks', DATA / 'exams']:
     directory.mkdir(parents=True, exist_ok=True)
 
 # Classic scripts work when index.html is opened directly with file://. Each
 # grade is a separate runtime file, so the HTML never contains the task bank.
-(DATA / 'bank.js').write_text('const BANK = [];\nconst EXAM_BANK = [];\n')
+write_utf8((DATA / 'bank.js'), 'const BANK = [];\nconst EXAM_BANK = [];\n')
 grade_scripts = []
 for grade in range(5, 12):
     filename = f'grade_{grade:02d}.js'
     topics = [topic for topic in bank if topic['grade'] == grade]
-    (DATA / 'tasks' / filename).write_text(f'BANK.push(...{encode(topics)});\n')
+    write_utf8((DATA / 'tasks' / filename), f'BANK.push(...{encode(topics)});\n')
     grade_scripts.append(f'data/tasks/{filename}')
 
 exam_scripts = []
 for exam in exams:
     filename = f"{exam['id']}.js"
-    (DATA / 'exams' / filename).write_text(exam_bank_script([exam], append=True))
+    write_utf8((DATA / 'exams' / filename), exam_bank_script([exam], append=True))
     exam_scripts.append(f'data/exams/{filename}')
 
 write_constant('bank-stats.js', 'BANK_STATS', semantic)
 write_constant('competencies.js', 'COMPETENCY_DATA', competencies)
 write_constant('exam-difficulty.js', 'EXAM_DIFFICULTY_DATA', exam_difficulty)
+write_constant('sdamgia.js', 'SDAMGIA_BANK', sdamgia)
 vendor = SRC / 'vendor'
 font = base64.b64encode((vendor / 'DejaVuSans.ttf').read_bytes()).decode()
 write_constant('font.js', 'FONT_BASE64', font)
@@ -96,18 +103,22 @@ license_text = (
     + (vendor / 'fontkit-README.txt').read_text().split('## License')[-1]
     + '\nDejaVu Sans font:\n' + (vendor / 'dejavu-copyright.txt').read_text()
     + '\n' + (vendor / 'dejavu-license.txt').read_text()
+    + '\n\nЗадания Решу ЕГЭ / Решу ОГЭ: портал СДАМ ГИА, https://sdamgia.ru/.\n'
+    + 'Исходные номера и прямые ссылки сохранены у каждого задания отдельного банка.\n'
+    + 'Они не объявляются авторскими материалами школы 1430.\n'
 )
-(DATA / 'NOTICE.txt').write_text(license_text)
+write_utf8((DATA / 'NOTICE.txt'), license_text)
 
 shell = (SRC / 'shell.html').read_text()
 style = re.search(r'  <style>(.*?)  </style>', shell, flags=re.S)
 if style is None:
     raise ValueError('The source shell must contain its page styles')
-(DATA / 'shell.css').write_text(style.group(1))
+write_utf8((DATA / 'shell.css'), style.group(1))
 shell = shell[:style.start()] + (
     '  <link rel="stylesheet" href="data/shell.css">\n'
     '  <link rel="stylesheet" href="src/app.css">\n'
-    '  <link rel="stylesheet" href="src/figure-viewer.css">'
+    '  <link rel="stylesheet" href="src/figure-viewer.css">\n'
+    '  <link rel="stylesheet" href="src/work-runner.css">'
 ) + shell[style.end():]
 shell = re.sub(
     r'      <section class="role-view".*?</section>',
@@ -125,14 +136,14 @@ scripts = [
 ]
 data_scripts = [
     'data/bank-stats.js', 'data/bank.js', *grade_scripts, *exam_scripts,
-    'data/competencies.js', 'data/exam-difficulty.js', 'data/font.js',
+    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/font.js',
 ]
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
     'lesson-support.js', 'figure-viewer.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'pdf.js', 'app.js',
+    'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'work-runner.js', 'pdf.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)
@@ -141,7 +152,7 @@ shell, replacements = re.subn(
 )
 if replacements != 1:
     raise ValueError('The source shell must contain exactly one application script')
-(ROOT / 'index.html').write_text(shell)
+write_utf8((ROOT / 'index.html'), shell)
 print(json.dumps({
     'topics': len(bank), 'tasks': sum(len(topic['tasks']) for topic in bank),
     'classes': {grade: {

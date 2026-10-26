@@ -1,6 +1,6 @@
 // Source coverage plus real application event checks for competency-based selection.
 const fs=require('fs'),path=require('path'),crypto=require('crypto');
-const {createHarness,BANK,EXAM_BANK}=require('./validate_ui_state.cjs');
+const {createHarness,BANK,EXAM_BANK,SDAMGIA_BANK}=require('./validate_ui_state.cjs');
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'checks/competencies.json'),'utf8'));
 const expectedDefinitions=['calculations','equations','graphs','modelling','geometry','data','reasoning'];
@@ -9,11 +9,12 @@ const sameSet=(a,b)=>same([...a].sort(),[...b].sort());
 let checks=0;const errors=[];
 const test=(condition,label)=>{checks++;if(!condition)errors.push(label);};
 async function scenario(label,fn){try{await fn();}catch(error){test(false,label+': '+error.stack);}}
-const digest=()=>crypto.createHash('sha256').update(JSON.stringify([BANK,EXAM_BANK,config])).digest('hex');
+const digest=()=>crypto.createHash('sha256').update(JSON.stringify([BANK,EXAM_BANK,SDAMGIA_BANK,config])).digest('hex');
 const originalDigest=digest();
 const classes=BANK.flatMap(topic=>topic.tasks.map(q=>({...q,topicId:topic.id,grade:topic.grade,level:topic.level,subject:topic.subject,source:'class'})));
 const exams=EXAM_BANK.flatMap(exam=>exam.tasks.flatMap(task=>(task.examples?.length?task.examples:[task]).map(q=>({...q,examId:exam.id,source:'exam'}))));
-const all=[...classes,...exams],byId=new Map(all.map(q=>[q.id,q]));
+const sourced=SDAMGIA_BANK?.tasks||[];
+const all=[...classes,...exams,...sourced],byId=new Map(all.map(q=>[q.id,q]));
 const selectedWork=h=>h.state().works?.find(([key])=>key==='unified')?.[1];
 const cardIds=h=>h.document.querySelectorAll('.bank-task').map(card=>card.querySelector('[data-action="add"],[data-action="remove"]').dataset.id);
 const checked=h=>h.document.querySelectorAll('[data-competency]').filter(input=>input.checked).map(input=>input.dataset.competency);
@@ -38,7 +39,7 @@ async function everyPage(h){
   test(sameSet(config.competencies.map(x=>x.id),expectedDefinitions)&&config.competencies.every(x=>typeof x.title==='string'&&x.title.trim()&&typeof x.description==='string'&&x.description.trim()),'seven mathematical competencies have unique stable identifiers and useful labels');
   test(sameSet(Array.from(helper.definitions,x=>x.id),expectedDefinitions),'helper and authored competency definitions agree');
   const invalid=all.filter(q=>{const ids=tags(q);return !ids.length||ids.length!==new Set(ids).size||ids.some(id=>!expectedDefinitions.includes(id));});
-  test(classes.length===7488&&exams.length===150&&byId.size===all.length&&invalid.length===0,'every one of the 7,638 class and official exam examples has a nonempty, unique, valid competency set');
+  test(classes.length===7488&&exams.length===150&&byId.size===all.length&&invalid.length===0,'all existing 7,638 class/demo tasks and the source-backed bank have nonempty, unique, valid competency sets');
   test(BANK.every(topic=>Array.isArray(config.topics[topic.id])&&config.topics[topic.id].length>0),'every class topic has an authored competency baseline');
   test(sameSet(Object.keys(config.tasks),exams.map(q=>q.id)),'all 150 official alternative examples have their own mapping and no orphan exam IDs');
   test(Object.keys(config.overrides).every(id=>byId.has(id)&&byId.get(id).source==='class'),'task overrides refer only to real class tasks');
@@ -61,7 +62,7 @@ async function everyPage(h){
   await select(h,'equations');await select(h,'graphs');
   const unionSize=all.filter(q=>match(q,['equations','graphs'],tags)).length;
   const resultStatus=h.document.querySelectorAll('.bank-filters [role="status"]').find(element=>element.textContent.includes('Найдено:'));
-  test(Number(resultStatus?.textContent.match(/Найдено:\s*(\d+)/)?.[1])===unionSize&&cardIds(h).every(id=>match(byId.get(id),['equations','graphs'],tags)),'the global catalogue counts the skill union across classes and exams');
+  test(Number(resultStatus?.textContent.match(/Найдено:\s*(\d+)/)?.[1])===unionSize&&cardIds(h).every(id=>match(byId.get(id),['equations','graphs'],tags)),'the global catalogue counts the skill union across class, demo and source-backed tasks');
   await h.change('#source-filter','exam:ege-basic');
   const expected=exams.filter(q=>q.examId==='ege-basic'&&match(q,['equations','graphs'],tags)).map(q=>q.id);
   test(sameSet(checked(h),['equations','graphs'])&&same(cardIds(h),expected),'changing the source retains the two selected skills and shows their OR union');
@@ -125,7 +126,7 @@ async function everyPage(h){
   test(results.some(id=>id!==original.id),'a competency-preserving alternative can still replace the original task');
  });
  test(digest()===originalDigest,'competency lookup, filtering, favorites and presets never mutate class tasks, official exam conditions, answers or source metadata');
- const report={checks,errors,scope:'Full 7,638-task metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length};
+ const report={checks,errors,scope:'Full class/demo/source-bank metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length,sourcedTasks:sourced.length};
  fs.writeFileSync(path.join(root,'checks/competency-results.json'),JSON.stringify(report,null,2));
  console.log(JSON.stringify(report,null,2));if(errors.length)process.exitCode=1;
 })().catch(error=>{console.error(error);process.exitCode=1;});

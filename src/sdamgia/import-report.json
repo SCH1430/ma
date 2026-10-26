@@ -1,0 +1,84 @@
+{
+  "retrievedAt": "2026-10-26",
+  "taskCount": 200,
+  "subtypeCount": 25,
+  "sourceHosts": {
+    "ege-profile": "math-ege.sdamgia.ru",
+    "ege-basic": "mathb-ege.sdamgia.ru",
+    "oge": "math-oge.sdamgia.ru"
+  },
+  "skipped": [
+    {
+      "exam": "ege-profile",
+      "categoryId": 84,
+      "sourceId": "26579",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 87,
+      "sourceId": "26596",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 185,
+      "sourceId": "319355",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 185,
+      "sourceId": "510117",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 332,
+      "sourceId": "517480",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 332,
+      "sourceId": "517503",
+      "reason": "Long statement/solution; use another prototype"
+    },
+    {
+      "exam": "ege-profile",
+      "categoryId": 291,
+      "sourceId": "501507",
+      "reason": "Unsafe SVG: https://math-ege.sdamgia.ru/get_file?id=32547"
+    },
+    {
+      "exam": "ege-basic",
+      "categoryId": 8,
+      "sourceId": "27511",
+      "reason": "Unsupported answer format: -14|-14,0"
+    },
+    {
+      "exam": "ege-basic",
+      "categoryId": 8,
+      "sourceId": "27516",
+      "reason": "Unsupported answer format: -2|-2,0"
+    },
+    {
+      "exam": "ege-basic",
+      "categoryId": 8,
+      "sourceId": "27518",
+      "reason": "Unsupported answer format: 16|16,0"
+    },
+    {
+      "exam": "ege-basic",
+      "categoryId": 53,
+      "sourceId": "26676",
+      "reason": "Long statement/solution; use another prototype"
+    }
+  ],
+  "checks": [
+    "Every task downloaded from its original problem URL.",
+    "Answers compared with the hidden source answer key.",
+    "All statement and solution images embedded locally.",
+    "No generated analogues or invented source IDs."
+  ]
+}

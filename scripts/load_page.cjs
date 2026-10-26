@@ -1,7 +1,7 @@
 // Read the deployed page in browser order. Never fetch remote code during checks.
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const DEFAULT_ROOT=path.resolve(__dirname,'..');
-const DATA_NAMES=['BANK','EXAM_BANK','BANK_STATS','COMPETENCY_DATA','EXAM_DIFFICULTY_DATA','FONT_BASE64'];
+const DATA_NAMES=['BANK','EXAM_BANK','BANK_STATS','COMPETENCY_DATA','EXAM_DIFFICULTY_DATA','SDAMGIA_BANK','FONT_BASE64'];
 const cache=new Map();
 function attributes(text){
  const result={};

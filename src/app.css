@@ -644,3 +644,35 @@ sup { top:-.55em; } sub { top:.25em; }
  .lesson-example-prompt { font-size:16px; }
 }
 @media print { .lesson-example,.figure-stage-label,.hint-figure-note { display:none !important; } }
+.learning-entries { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin:22px 0 34px; }
+.learning-entry { padding:26px; min-width:0; }
+.learning-entry h2 { margin:15px 0 10px; font-size:25px; }
+.learning-entry p { line-height:1.65; color:var(--muted); }
+.subtype-filters { display:grid; grid-template-columns:minmax(180px,.65fr) minmax(0,1fr); gap:20px; padding:22px; }
+.subtype-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin:22px 0; }
+.subtype-card { padding:24px; min-width:0; display:flex; flex-direction:column; align-items:flex-start; }
+.subtype-card h2 { font-size:23px; line-height:1.35; margin:10px 0; }
+.subtype-card>p { line-height:1.6; margin:8px 0; }
+.subtype-card .builder-actions { margin-top:auto; padding-top:14px; }
+.subtype-builder-filter { margin:16px 0 0; }
+.catalog-shortcuts { margin:0 0 22px; }
+.works-current,.run-replace { padding:26px; margin:20px 0; }
+.run-replace { border:1px solid #ad7640; background:#fff8ec; }
+.sourced-content,.work-run-source-html { display:flow-root; line-height:1.9; overflow-wrap:anywhere; }
+.sourced-content p,.work-run-source-html p { margin:10px 0; }
+.sourced-content img,.work-run-source-html img { max-width:100%; height:auto; }
+.sourced-content img.tex,.work-run-source-html img.tex { display:inline; max-width:100%; vertical-align:middle; }
+.sourced-content table,.work-run-source-html table { border-collapse:collapse; max-width:100%; font-size:.92em; }
+.sourced-content td,.sourced-content th,.work-run-source-html td,.work-run-source-html th { border:1px solid #b3c2ac; padding:7px; }
+.source-original { display:inline-block; margin:13px 0; font-size:13px; text-underline-offset:3px; }
+.paper-task .sourced-content { font-size:12px; }
+.paper-task .sourced-content img.tex { max-height:85px; object-fit:contain; }
+.print-source-original img { max-width:100%; height:auto; }
+@media (max-width:650px) {
+ .learning-entries,.subtype-grid,.subtype-filters { grid-template-columns:minmax(0,1fr); }
+ .learning-entry,.subtype-card,.works-current,.run-replace { padding:20px; }
+ .subtype-card h2 { font-size:21px; }
+ .sourced-content,.work-run-source-html { font-size:16px; }
+ .works-current .builder-actions { align-items:stretch; }
+}
+@media print { .learning-entries,.catalog-shortcuts { display:none !important; } }

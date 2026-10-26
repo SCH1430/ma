@@ -1,7 +1,7 @@
 // Offline PDF creation: all layout, fonts and tasks remain in the current tab.
 async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) {
-  const unified=grade==null||tasks.some(q=>q.source==='exam'||q.examId)||new Set(tasks.map(q=>q.grade).filter(Boolean)).size>1;
-  const hasExams=tasks.some(q=>q.source==='exam'||q.examId);
+  const unified=grade==null||tasks.some(q=>q.source==='exam'||q.examId||q.source==='sdamgia')||new Set(tasks.map(q=>q.grade).filter(Boolean)).size>1;
+  const hasExams=tasks.some(q=>q.source==='exam'||q.examId),hasSourced=tasks.some(q=>q.source==='sdamgia');
   const {PDFDocument,rgb}=PDFLib;
   const doc=await PDFDocument.create();
   doc.registerFontkit(fontkit);
@@ -9,7 +9,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
   const font=await doc.embedFont(fontBytes,{subset:true});
   const ink=rgb(.13,.2,.15),muted=rgb(.32,.39,.31),line=rgb(.79,.83,.77),shade=rgb(227/255,237/255,218/255);
   doc.setTitle(title||'Самостоятельная работа');doc.setAuthor('Математическое пространство 1430');
-  doc.setSubject(unified?(hasExams?'Сборная работа по математике. Официальные задания ФИПИ 2026 и задания по темам ФРП.':'Сборная работа по математике. Задания по темам ФРП.'):`Математика, ${grade} класс. Авторские задания по темам ФРП.`);
+  doc.setSubject(hasSourced?'Сборная работа по математике. Источники указаны у каждого задания; банк Решу ЕГЭ и ОГЭ.':unified?(hasExams?'Сборная работа по математике. Официальные задания ФИПИ 2026 и задания по темам ФРП.':'Сборная работа по математике. Задания по темам ФРП.'):`Математика, ${grade} класс. Авторские задания по темам ФРП.`);
   const pages=[];
   const wrap=(text,size,width)=>{
     const lines=[];let lineText='';
@@ -116,13 +116,13 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     const left=45,right=550,width=right-left,bottom=66;
     const isExam=q=>q.source==='exam'||!!q.examId;
     const sourceLabel=q=>q.sourceLabel||(isExam(q)?`${q.examId==='oge'?'ОГЭ':q.examId==='ege-basic'?'ЕГЭ, базовый уровень':'ЕГЭ, профильный уровень'} · демоверсия 2026`:`${q.grade||String(q.id).split('-')[0]} класс${q.grade>=10?` · ${q.level==='advanced'?'углублённый':'базовый'} уровень`:''}`);
-    const taskLabel=(q,index)=>`${sourceLabel(q)}${isExam(q)?` · № ${q.number}${q.exampleNumber?` · пример ${q.exampleNumber}`:''}`:''}`;
+    const taskLabel=(q,index)=>`${sourceLabel(q)}${q.source==='sdamgia'?` · № ${q.sourceId} · ${q.topic}`:isExam(q)?` · № ${q.number}${q.exampleNumber?` · пример ${q.exampleNumber}`:''}`:''}`;
     const sources=[...new Set(tasks.map(sourceLabel))];
     const sourceSummary=sources.length>3?'Задания из разных классов и экзаменов':sources.join(' · ');
     const imageCache=new Map();
     const original=async value=>{
       const data=typeof value==='string'?value:value?.image;
-      if(!data)throw new Error('Не найден оригинальный фрагмент демоверсии ФИПИ.');
+      if(!data)throw new Error('Не найдено изображение условия или решения.');
       if(!imageCache.has(data))imageCache.set(data,doc.embedPng(data));
       return imageCache.get(data);
     };
@@ -201,14 +201,16 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
           drawnContexts.add(id);y-=8;
         }
       }
-      if(exam){
-        if(!q.images?.length)throw new Error(`Нет оригинального условия: ${taskLabel(q,index)}.`);
-        const first=await original(q.images[0]);
+      if(exam||q.source==='sdamgia'){
+        const pictures=q.source==='sdamgia'?q.printImages:q.images;
+        if(!pictures?.length)throw new Error(`Нет оригинального условия: ${taskLabel(q,index)}.`);
+        const first=await original(pictures[0]);
         const workspace=q.kind==='open'?9:4;
         const needed=48+first.height*width/first.width+22*workspace+22;
         ensure(Math.min(needed,pageTop-bottom));
         label(q,index);
-        for(const image of q.images)await drawOriginal(image,()=>label(q,index,true));
+        if(q.source==='sdamgia')flow(q.sourceUrl,7,muted,15);
+        for(const image of pictures)await drawOriginal(image,()=>label(q,index,true));
         if(q.contextImages?.length)flow('Используйте общий материал, приведённый выше.',8.5,muted,17);
         if(q.kind==='open')flow('Запишите развёрнутое решение.',9,muted,18);
         solutionLines(workspace);
@@ -229,7 +231,14 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
       key=true;sectionPages=0;nextPage();
       for(let index=0;index<tasks.length;index++){
         const q=tasks[index],exam=isExam(q);
-        if(exam&&q.kind==='open'){
+        if(q.source==='sdamgia'){
+          ensure(95);label(q,index);flow(q.sourceUrl,7,muted,15);
+          if(q.answerImages?.length){for(const image of q.answerImages)await drawOriginal(image,()=>label(q,index,true));}
+          else if(q.display&&q.kind!=='open')flow(`Ответ: ${q.display}`,11,ink,20);
+          if(!q.solutionImages?.length)throw new Error(`Нет изображения разбора: ${taskLabel(q,index)}.`);
+          for(const image of q.solutionImages)await drawOriginal(image,()=>label(q,index,true));
+          if(q.kind==='open'&&q.rubric?.length){flow('Критерии самопроверки:',10,ink,14);q.rubric.forEach((criterion,i)=>flow(`${i+1}) ${criterion}`,10,muted,14));}
+        }else if(exam&&q.kind==='open'){
           if(!q.solutionPages?.length)throw new Error(`Нет оригинальных решения и критериев ФИПИ: ${taskLabel(q,index)}.`);
           const first=await original(q.solutionPages[0]);
           ensure(Math.min(74+first.height*width/first.width,pageTop-bottom));
@@ -258,7 +267,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
         }
       }
     }
-    const footer=hasExams?(tasks.some(q=>!isExam(q))?'ФИПИ 2026 · задания по темам ФРП · школа 1430':'Официальная демоверсия ФИПИ 2026 · школа 1430'):'Задания по темам ФРП · школа 1430';
+    const footer=hasSourced?'Источники указаны у заданий · Решу ЕГЭ / ОГЭ · школа 1430':hasExams?(tasks.some(q=>!isExam(q))?'ФИПИ 2026 · задания по темам ФРП · школа 1430':'Официальная демоверсия ФИПИ 2026 · школа 1430'):'Задания по темам ФРП · школа 1430';
     pages.forEach((page,index)=>{
       page.drawLine({start:{x:left,y:47},end:{x:right,y:47},thickness:.5,color:line});
       const number=`${index+1} / ${pages.length}`;
