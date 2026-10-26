@@ -19,7 +19,7 @@ commands = [
     [sys.executable, '-B', 'scripts/validate_expansion.py'],
     *[[node, f'scripts/{name}.cjs'] for name in [
         'validate_build', 'validate_runtime', 'validate_geometry', 'validate_lessons',
-        'validate_figure_viewer', 'validate_training', 'validate_font', 'validate_features',
+        'validate_figure_viewer', 'validate_training', 'validate_training_monitor', 'validate_font', 'validate_features',
         'validate_ui_state', 'validate_regressions', 'validate_exams',
         'validate_unified_work', 'validate_competencies', 'validate_auto_work',
         'validate_work_runner', 'validate_sdamgia_ui',
@@ -32,7 +32,7 @@ for command in commands:
     print('\nRunning ' + ' '.join(command), flush=True)
     subprocess.run(command, cwd=ROOT, check=True)
 reports = {name: json.loads((ROOT/'checks'/f'{name}-results.json').read_text())
-           for name in ['build','math','expansion','runtime','geometry','lessons','figure-viewer','training','font','features','ui-state',
+           for name in ['build','math','expansion','runtime','geometry','lessons','figure-viewer','training','training-monitor','font','features','ui-state',
                         'regression','exam','unified-work','competency','auto-work',
                         'unified-pdf','expansion-pdf','sdamgia-ui','sdamgia-pdf']}
 summary = {'verified_at':datetime.now(timezone.utc).isoformat(),

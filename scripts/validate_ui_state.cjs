@@ -71,8 +71,10 @@ function createHarness(store=new Map(),options={}){
  const timers=new Map(),windowListeners={},blobs=new Map();let timerId=0,networkCalls=0;
  const document={listeners:{},downloads:[],title:'',activeElement:null,addEventListener(type,handler){(this.listeners[type]??=[]).push(handler);},createElement(tag){return new Element(tag,this);},getElementById(id){return this.body.querySelector('#'+id);},querySelector(selector){return this.body.querySelector(selector);},querySelectorAll(selector){return this.body.querySelectorAll(selector);},async dispatch(type,target,extra={}){const event={type,target,preventDefault(){this.defaultPrevented=true;},...extra};for(let node=target;node;node=node.parentElement)for(const handler of node.listeners[type]||[])await handler(event);for(const handler of this.listeners[type]||[])await handler(event);await Promise.resolve();await Promise.resolve();}};
  document.body=new Element('body',document);
+ document.documentElement=new Element('html',document);document.documentElement.append(document.body);document.visibilityState='visible';
  document.body.innerHTML='<a class="skip-link" href="#main"></a><main id="main" tabindex="-1"><div id="welcome"><button data-role="student"></button><button data-role="teacher"></button></div><section id="app" hidden></section></main><div id="notice" hidden></div>';
  const window={scrollY:0,scrollTo(){},matchMedia(){return {matches:!!options.mobile};},addEventListener(type,handler){(windowListeners[type]??=[]).push(handler);},print(){this.printed=true;}};
+ options.setupDOM?.(document,window);
  const history={entries:[],index:-1,pushState(state,title,url){this.entries=this.entries.slice(0,this.index+1);this.entries.push({state,url});this.index++;},replaceState(state,title,url){if(this.index<0){this.entries.push({state,url});this.index=0;}else this.entries[this.index]={state,url};},back(){if(this.index>0){const entry=this.entries[--this.index];for(const handler of windowListeners.popstate||[])handler({state:entry.state});}}};
  const localStorage={getItem(key){if(options.failStorage)throw Error('storage disabled');return store.get(key)??null;},setItem(key,value){if(options.failStorage)throw Error('storage disabled');store.set(key,value);},removeItem(key){store.delete(key);}};
  const context={BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,document,window,history,localStorage,console,Blob,atob:value=>Buffer.from(value,'base64').toString('binary'),URL:{createObjectURL(blob){const url='blob:integration-'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},crypto:{randomUUID:()=>`integration-${++generatedIdentity}`},setTimeout(callback){const id=++timerId;timers.set(id,callback);return id;},clearTimeout(id){timers.delete(id);},fetch(){networkCalls++;throw Error('network forbidden in integration checks');},...(options.createMathPDF?{createMathPDF:options.createMathPDF}:{})};
@@ -89,6 +91,7 @@ function createHarness(store=new Map(),options={}){
   async import(payload){const file=typeof payload==='string'?payload:JSON.stringify(payload),element=get('#import-file');element.files=[{size:Buffer.byteLength(file),text:async()=>file}];await document.dispatch('change',element);await Promise.resolve();await Promise.resolve();},
   flush(){const pending=[...timers.values()];timers.clear();for(const callback of pending)callback();},
   pagehide(){for(const handler of windowListeners.pagehide||[])handler();},
+  windowEvent(type,event={}){for(const handler of windowListeners[type]||[])handler(event);},
   networkCalls:()=>networkCalls
  };
 }

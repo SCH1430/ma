@@ -143,7 +143,7 @@ application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
     'lesson-support.js', 'figure-viewer.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'work-runner.js', 'pdf.js', 'app.js',
+    'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)

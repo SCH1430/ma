@@ -141,6 +141,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   const builderSections=new Set();
   let sourceFilter='all',search='',topicSearch='',favoriteOnly=false,bankPage=0,presetSeed=0,workOpen=false,toastTimer,saveTimer,storageOK=true,lastSaved='',lastSignature='';
   const freshId=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
+  const trainingMonitor=MathTrainingMonitor.create({onChange:()=>{persist();updateTrainingMonitor();}});
   const question=id=>catalogById.get(id);
   const currentExam=()=>exams.find(e=>e.id===route.examId);
   const currentExamTask=()=>{const task=currentExam()?.tasks[route.index];return task?examExamples(task)[route.example]:null;};
@@ -163,6 +164,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   const recordKey=id=>examTaskById.has(id)?route.role==='teacher'?`exam-teacher:${id}`:student.id?`exam-student:${student.id}:${id}`:`exam-guest:${examLearnerId}:${id}`:route.role==='student'?`student:${student.id}:${id}`:`teacher:${id}`;
   const record=id=>{const key=recordKey(id);if(!attempts.has(key))attempts.set(key,sanitizeRecord(null));return attempts.get(key);};
   function clearStudent(){
+    trainingMonitor.stop();
     for(const key of attempts.keys())if(/^(student|exam-student|exam-guest):/.test(key))attempts.delete(key);
     student={id:'',first:'',last:'',letter:'',grade:null};examLearnerId='';resumeRoute=null;activeRun=null;pendingRun=null;
   }
@@ -171,6 +173,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       const text=localStorage.getItem(STORAGE_KEY);if(!text)return;
       if(text.length>4000000)throw new Error('oversized');
       const saved=JSON.parse(text);if(saved.version!==2)return;
+      trainingMonitor.restore(saved.trainingSessions);
       competencyFilter=MathCompetencies.normalize(saved.builderCompetencies);
       if(Number.isInteger(saved.builderAuto?.count)&&saved.builderAuto.count>=1&&saved.builderAuto.count<=WORK_LIMIT)autoCount=saved.builderAuto.count;
       if(typeof saved.examLearnerId==='string'&&/^[a-zA-Z0-9-]{1,80}$/.test(saved.examLearnerId))examLearnerId=saved.examLearnerId;
@@ -208,7 +211,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     clearTimeout(saveTimer);
     if(route.view!=='home'&&route.view!=='help')resumeRoute=safeRoute(route,BANK);
     const relevant=[...attempts].filter(([,r])=>r.draft||r.tries||r.hintLevel||r.revealed||r.correct||r.checks.some(Boolean));
-    const data={version:2,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},activeRun,resumeRoute,savedAt:lastSaved};
+    const data={version:2,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},activeRun,resumeRoute,trainingSessions:trainingMonitor.snapshot(),savedAt:lastSaved};
     const text=JSON.stringify(data);
     try{
       if(text!==lastSignature){lastSaved=new Date().toISOString();data.savedAt=lastSaved;const next=JSON.stringify(data);localStorage.setItem(STORAGE_KEY,next);lastSignature=next;}
@@ -219,6 +222,26 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(persist,250);}
   const storageText=()=>storageOK?'Сохраняется на этом устройстве':route.role==='teacher'?'Автосохранение недоступно. Сохраните работу в файл.':'Автосохранение недоступно. Прогресс остаётся только в открытой вкладке.';
   const action=(key,label,cls='secondary',attrs='')=>`<button type="button" class="${cls}" data-action="${key}" ${attrs}>${label}</button>`;
+  function trainingContext(){
+    if(route.role!=='student')return null;
+    if(route.view==='train')return {kind:'topic',ref:route.topic,title:currentTopic().title,grade:route.grade};
+    if(route.view==='exam')return {kind:'exam',ref:route.examId,title:currentExam().title,grade:null};
+    if(route.view==='work-run'&&activeRun?.phase==='solving')return {kind:'work',ref:activeRun.id,title:activeRun.title,grade:null};
+    return null;
+  }
+  function trainingMonitorContent(){
+    const state=trainingMonitor.state(),sessions=trainingMonitor.snapshot();
+    if(!sessions.length)return '';
+    const status=state.fullscreen?'Полноэкранный режим включён.':state.pending?'Открываем полный экран…':state.unavailable?'Браузер не разрешил полный экран. Можно повторить попытку.':'Выход из полного экрана зафиксирован.';
+    const rows=sessions.slice().reverse().flatMap(s=>s.events.slice().reverse().map(e=>({session:s,event:e}))).slice(0,50);
+    return `${state.current?`<div class="training-screen-status ${!state.fullscreen&&!state.pending?'is-warning':''}"><div><p role="status">${status}</p><small>Выход из полного экрана, скрытие вкладки и закрытие тренажёра записываются на этом устройстве.</small></div>${!state.fullscreen?action('training-fullscreen','Вернуться на весь экран','secondary',state.pending?'disabled':''):''}</div>`:''}<details class="training-journal" id="training-journal"><summary>Журнал тренажёра</summary><p class="muted">Последние 50 событий на этом устройстве. ФИО в журнал не записываются.</p>${action('training-export','Скачать журнал','text-button')}<ol>${rows.map(({session:s,event:e})=>`<li><time datetime="${esc(e.at)}">${esc(new Date(e.at).toLocaleString('ru-RU'))}</time><div><strong>${esc(trainingMonitor.labels[e.type])}</strong><span>${s.grade?`${s.grade} класс · `:''}${esc(s.title)}</span></div></li>`).join('')}</ol></details>`;
+  }
+  function updateTrainingMonitor(){
+    const panel=$('training-monitor');if(!panel)return;
+    const open=$('training-journal')?.hasAttribute('open');
+    panel.innerHTML=trainingMonitorContent();
+    if(open)$('training-journal')?.setAttribute('open','');
+  }
   const subjectSymbols={
     'Числа и вычисления':'<path d="M4 7h8M8 3v8M15 6h5M4 17h7M15 15h5m-5 4h5"/>',
     'Текстовые задачи':'<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15M6 8h3m6 0h3M6 12h3m6 0h3"/>',
@@ -249,6 +272,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(route.role==='student'&&!student.id&&['topics','train','result'].includes(route.view))route={...route,view:'profile'};
     if(route.view==='print'&&!work().ids.length)route={...route,view:'builder'};
     if(route.view==='work-run'&&!activeRun)route={...route,view:'works'};
+    trainingMonitor.sync(trainingContext(),route.view==='result'||route.view==='work-run'&&activeRun?.phase==='results'?'completed':'closed');
     $('welcome').hidden=route.view!=='home';$('app').hidden=route.view==='home';
     document.body.classList.toggle('app-mode',route.view!=='home');
     document.body.classList.toggle('work-open',workOpen&&window.matchMedia('(max-width:650px)').matches);
@@ -260,7 +284,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       persist();return;
     }
     const pages={classes:renderClasses,levels:renderLevels,profile:renderProfile,topics:renderTopics,train:renderTrainer,result:renderResult,builder:renderBuilder,print:renderPrint,help:renderHelp,'exam-levels':renderExamLevels,exam:renderExam,subtypes:renderSubtypes,works:renderWorks,'work-run':renderWorkRunner};
-    $('app').innerHTML=pages[route.view]();
+    $('app').innerHTML=`<section id="training-monitor" aria-label="Полный экран и журнал тренажёра">${trainingMonitorContent()}</section>`+pages[route.view]();
     if(route.view==='builder'){
       syncWorkAccessibility();
       $('work-panel').scrollTop=workScroll.panel;
@@ -618,6 +642,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
     const a=b.dataset.action,id=b.dataset.id;
+    if(a==='training-fullscreen'){trainingMonitor.request();return;}
+    if(a==='training-export'){downloadFile(JSON.stringify({format:'baza-training-journal',version:1,sessions:trainingMonitor.snapshot()},null,2),'baza-training-journal.json','application/json');return;}
     if(a==='back'){back();return;}
     if(a==='home'){go('home');return;}
     if(a==='resume'){if(resumeRoute)go(resumeRoute.view,resumeRoute);return;}
@@ -768,6 +794,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   });
   window.addEventListener('popstate',event=>{if(typeof MathFigureViewer!=='undefined')MathFigureViewer.close();closeWork(false);examReferencesOpen=false;route=safeRoute(event.state?.mat1430?event.state.route:null,BANK);render(true);});
   window.addEventListener('pagehide',persist);
+  window.addEventListener('pageshow',event=>{if(event.persisted)render();});
   window.addEventListener('beforeunload',persist);
   window.addEventListener('resize',syncWorkAccessibility);
   document.addEventListener('keydown',event=>{
@@ -781,6 +808,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
         else if(!event.shiftKey&&(document.activeElement===last||document.activeElement===panel)){event.preventDefault();first?.focus();}
       }return;
     }
+    // Native Escape must only leave fullscreen, without also navigating away.
+    if(event.key==='Escape'&&trainingMonitor.state().current)return;
     if(event.key==='Escape'&&route.view!=='home'&&!event.target.matches('input,textarea,select')){event.preventDefault();back();}
   });
   restore();
