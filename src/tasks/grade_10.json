@@ -1597,10 +1597,10 @@
     "tasks": [
       {
         "id": "10-103-1",
-        "prompt": "Вычислите 4sin 30° + 2cos 60°.",
+        "prompt": "Вычислите 4sin(π/6) + 2cos(π/3).",
         "answer": 3,
         "display": "3",
-        "solution": "sin 30° = cos 60° = 1/2. Получаем 2 + 1 = 3.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Получаем 2 + 1 = 3.",
         "difficulty": "Базовый",
         "kind": "number",
         "canonicalId": "10-04-1",
@@ -1713,10 +1713,10 @@
         "oracle": "sqrt(1+(-1))"
       },
       {
-        "prompt": "Вычислите 4 · sin 30° + 3 · cos 60°.",
+        "prompt": "Вычислите 4 · sin(π/6) + 3 · cos(π/3).",
         "answer": 3.5,
         "display": "7/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (4 + 3)/2 = 7/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (4 + 3)/2 = 7/2.",
         "oracle": "4*sin(pi/6)+3*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1738,10 +1738,10 @@
         }
       },
       {
-        "prompt": "Вычислите 4 · sin²60° + 3 · cos²60°.",
+        "prompt": "Вычислите 4 · sin²(π/3) + 3 · cos²(π/3).",
         "answer": 3.75,
         "display": "15/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 4 + 3)/4 = 15/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 4 + 3)/4 = 15/4.",
         "oracle": "4*sin(pi/3)**2+3*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -1763,10 +1763,10 @@
         }
       },
       {
-        "prompt": "Вычислите 5 · sin 30° + 4 · cos 60°.",
+        "prompt": "Вычислите 5 · sin(π/6) + 4 · cos(π/3).",
         "answer": 4.5,
         "display": "9/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (5 + 4)/2 = 9/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (5 + 4)/2 = 9/2.",
         "oracle": "5*sin(pi/6)+4*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1788,10 +1788,10 @@
         }
       },
       {
-        "prompt": "Вычислите 5 · sin²60° + 4 · cos²60°.",
+        "prompt": "Вычислите 5 · sin²(π/3) + 4 · cos²(π/3).",
         "answer": 4.75,
         "display": "19/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 5 + 4)/4 = 19/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 5 + 4)/4 = 19/4.",
         "oracle": "5*sin(pi/3)**2+4*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -1813,10 +1813,10 @@
         }
       },
       {
-        "prompt": "Вычислите 6 · sin 30° + 5 · cos 60°.",
+        "prompt": "Вычислите 6 · sin(π/6) + 5 · cos(π/3).",
         "answer": 5.5,
         "display": "11/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (6 + 5)/2 = 11/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (6 + 5)/2 = 11/2.",
         "oracle": "6*sin(pi/6)+5*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1838,10 +1838,10 @@
         }
       },
       {
-        "prompt": "Вычислите 6 · sin²60° + 5 · cos²60°.",
+        "prompt": "Вычислите 6 · sin²(π/3) + 5 · cos²(π/3).",
         "answer": 5.75,
         "display": "23/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 6 + 5)/4 = 23/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 6 + 5)/4 = 23/4.",
         "oracle": "6*sin(pi/3)**2+5*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -1863,10 +1863,10 @@
         }
       },
       {
-        "prompt": "Вычислите 7 · sin 30° + 6 · cos 60°.",
+        "prompt": "Вычислите 7 · sin(π/6) + 6 · cos(π/3).",
         "answer": 6.5,
         "display": "13/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (7 + 6)/2 = 13/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (7 + 6)/2 = 13/2.",
         "oracle": "7*sin(pi/6)+6*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1888,10 +1888,10 @@
         }
       },
       {
-        "prompt": "Вычислите 7 · sin²60° + 6 · cos²60°.",
+        "prompt": "Вычислите 7 · sin²(π/3) + 6 · cos²(π/3).",
         "answer": 6.75,
         "display": "27/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 7 + 6)/4 = 27/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 7 + 6)/4 = 27/4.",
         "oracle": "7*sin(pi/3)**2+6*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -1913,10 +1913,10 @@
         }
       },
       {
-        "prompt": "Вычислите 8 · sin 30° + 7 · cos 60°.",
+        "prompt": "Вычислите 8 · sin(π/6) + 7 · cos(π/3).",
         "answer": 7.5,
         "display": "15/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (8 + 7)/2 = 15/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (8 + 7)/2 = 15/2.",
         "oracle": "8*sin(pi/6)+7*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1938,10 +1938,10 @@
         }
       },
       {
-        "prompt": "Вычислите 8 · sin²60° + 7 · cos²60°.",
+        "prompt": "Вычислите 8 · sin²(π/3) + 7 · cos²(π/3).",
         "answer": 7.75,
         "display": "31/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 8 + 7)/4 = 31/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 8 + 7)/4 = 31/4.",
         "oracle": "8*sin(pi/3)**2+7*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -1963,10 +1963,10 @@
         }
       },
       {
-        "prompt": "Вычислите 9 · sin 30° + 8 · cos 60°.",
+        "prompt": "Вычислите 9 · sin(π/6) + 8 · cos(π/3).",
         "answer": 8.5,
         "display": "17/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (9 + 8)/2 = 17/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (9 + 8)/2 = 17/2.",
         "oracle": "9*sin(pi/6)+8*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -1988,10 +1988,10 @@
         }
       },
       {
-        "prompt": "Вычислите 9 · sin²60° + 8 · cos²60°.",
+        "prompt": "Вычислите 9 · sin²(π/3) + 8 · cos²(π/3).",
         "answer": 8.75,
         "display": "35/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 9 + 8)/4 = 35/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 9 + 8)/4 = 35/4.",
         "oracle": "9*sin(pi/3)**2+8*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2013,10 +2013,10 @@
         }
       },
       {
-        "prompt": "Вычислите 10 · sin 30° + 9 · cos 60°.",
+        "prompt": "Вычислите 10 · sin(π/6) + 9 · cos(π/3).",
         "answer": 9.5,
         "display": "19/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (10 + 9)/2 = 19/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (10 + 9)/2 = 19/2.",
         "oracle": "10*sin(pi/6)+9*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2038,10 +2038,10 @@
         }
       },
       {
-        "prompt": "Вычислите 10 · sin²60° + 9 · cos²60°.",
+        "prompt": "Вычислите 10 · sin²(π/3) + 9 · cos²(π/3).",
         "answer": 9.75,
         "display": "39/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 10 + 9)/4 = 39/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 10 + 9)/4 = 39/4.",
         "oracle": "10*sin(pi/3)**2+9*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2063,10 +2063,10 @@
         }
       },
       {
-        "prompt": "Вычислите 11 · sin 30° + 10 · cos 60°.",
+        "prompt": "Вычислите 11 · sin(π/6) + 10 · cos(π/3).",
         "answer": 10.5,
         "display": "21/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (11 + 10)/2 = 21/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (11 + 10)/2 = 21/2.",
         "oracle": "11*sin(pi/6)+10*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2088,10 +2088,10 @@
         }
       },
       {
-        "prompt": "Вычислите 11 · sin²60° + 10 · cos²60°.",
+        "prompt": "Вычислите 11 · sin²(π/3) + 10 · cos²(π/3).",
         "answer": 10.75,
         "display": "43/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 11 + 10)/4 = 43/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 11 + 10)/4 = 43/4.",
         "oracle": "11*sin(pi/3)**2+10*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2113,10 +2113,10 @@
         }
       },
       {
-        "prompt": "Вычислите 12 · sin 30° + 2 · cos 60°.",
+        "prompt": "Вычислите 12 · sin(π/6) + 2 · cos(π/3).",
         "answer": 7.0,
         "display": "7",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (12 + 2)/2 = 7.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (12 + 2)/2 = 7.",
         "oracle": "12*sin(pi/6)+2*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2138,10 +2138,10 @@
         }
       },
       {
-        "prompt": "Вычислите 12 · sin²60° + 2 · cos²60°.",
+        "prompt": "Вычислите 12 · sin²(π/3) + 2 · cos²(π/3).",
         "answer": 9.5,
         "display": "19/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 12 + 2)/4 = 19/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 12 + 2)/4 = 19/2.",
         "oracle": "12*sin(pi/3)**2+2*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2163,10 +2163,10 @@
         }
       },
       {
-        "prompt": "Вычислите 13 · sin 30° + 3 · cos 60°.",
+        "prompt": "Вычислите 13 · sin(π/6) + 3 · cos(π/3).",
         "answer": 8.0,
         "display": "8",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (13 + 3)/2 = 8.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (13 + 3)/2 = 8.",
         "oracle": "13*sin(pi/6)+3*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2188,10 +2188,10 @@
         }
       },
       {
-        "prompt": "Вычислите 13 · sin²60° + 3 · cos²60°.",
+        "prompt": "Вычислите 13 · sin²(π/3) + 3 · cos²(π/3).",
         "answer": 10.5,
         "display": "21/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 13 + 3)/4 = 21/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 13 + 3)/4 = 21/2.",
         "oracle": "13*sin(pi/3)**2+3*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2213,10 +2213,10 @@
         }
       },
       {
-        "prompt": "Вычислите 14 · sin 30° + 4 · cos 60°.",
+        "prompt": "Вычислите 14 · sin(π/6) + 4 · cos(π/3).",
         "answer": 9.0,
         "display": "9",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (14 + 4)/2 = 9.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (14 + 4)/2 = 9.",
         "oracle": "14*sin(pi/6)+4*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2238,10 +2238,10 @@
         }
       },
       {
-        "prompt": "Вычислите 14 · sin²60° + 4 · cos²60°.",
+        "prompt": "Вычислите 14 · sin²(π/3) + 4 · cos²(π/3).",
         "answer": 11.5,
         "display": "23/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 14 + 4)/4 = 23/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 14 + 4)/4 = 23/2.",
         "oracle": "14*sin(pi/3)**2+4*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2263,10 +2263,10 @@
         }
       },
       {
-        "prompt": "Вычислите 15 · sin 30° + 5 · cos 60°.",
+        "prompt": "Вычислите 15 · sin(π/6) + 5 · cos(π/3).",
         "answer": 10.0,
         "display": "10",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (15 + 5)/2 = 10.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (15 + 5)/2 = 10.",
         "oracle": "15*sin(pi/6)+5*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2288,10 +2288,10 @@
         }
       },
       {
-        "prompt": "Вычислите 15 · sin²60° + 5 · cos²60°.",
+        "prompt": "Вычислите 15 · sin²(π/3) + 5 · cos²(π/3).",
         "answer": 12.5,
         "display": "25/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 15 + 5)/4 = 25/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 15 + 5)/4 = 25/2.",
         "oracle": "15*sin(pi/3)**2+5*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2313,10 +2313,10 @@
         }
       },
       {
-        "prompt": "Вычислите 16 · sin 30° + 6 · cos 60°.",
+        "prompt": "Вычислите 16 · sin(π/6) + 6 · cos(π/3).",
         "answer": 11.0,
         "display": "11",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (16 + 6)/2 = 11.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (16 + 6)/2 = 11.",
         "oracle": "16*sin(pi/6)+6*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2338,10 +2338,10 @@
         }
       },
       {
-        "prompt": "Вычислите 16 · sin²60° + 6 · cos²60°.",
+        "prompt": "Вычислите 16 · sin²(π/3) + 6 · cos²(π/3).",
         "answer": 13.5,
         "display": "27/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 16 + 6)/4 = 27/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 16 + 6)/4 = 27/2.",
         "oracle": "16*sin(pi/3)**2+6*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -2363,10 +2363,10 @@
         }
       },
       {
-        "prompt": "Вычислите 17 · sin 30° + 7 · cos 60°.",
+        "prompt": "Вычислите 17 · sin(π/6) + 7 · cos(π/3).",
         "answer": 12.0,
         "display": "12",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (17 + 7)/2 = 12.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (17 + 7)/2 = 12.",
         "oracle": "17*sin(pi/6)+7*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -2400,13 +2400,13 @@
     "tasks": [
       {
         "id": "10-104-1",
-        "prompt": "Решите sin x = 1/2 на отрезке [0°; 180°]. Укажите все корни в градусах.",
+        "prompt": "Решите sin x = 1/2 на отрезке [0; π]. Укажите все корни в радианах.",
         "answer": [
-          30,
-          150
+          0.5235987755982988,
+          2.6179938779914944
         ],
-        "display": "30; 150",
-        "solution": "На верхней полуокружности синус равен 1/2 при 30° и 150°. Оба корня лежат на отрезке.",
+        "display": "π/6; 5π/6",
+        "solution": "На верхней полуокружности синус равен 1/2 при π/6 и 5π/6. Оба корня лежат на отрезке.",
         "difficulty": "Базовый",
         "kind": "set",
         "canonicalId": "10-05-1",
@@ -2422,17 +2422,18 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(181) if abs(sin(x*pi/180)-.5)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(181)) if abs(sin(x)-.5)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-104-2",
-        "prompt": "Решите cos(2x) = 0 при 0° ≤ x < 180°. Укажите все корни в градусах.",
+        "prompt": "Решите cos(2x) = 0 при 0 ≤ x < π. Укажите все корни в радианах.",
         "answer": [
-          45,
-          135
+          0.7853981633974483,
+          2.356194490192345
         ],
-        "display": "45; 135",
-        "solution": "0° ≤ 2x < 360°. Косинус равен нулю при 90° и 270°. Делим на 2: 45° и 135°.",
+        "display": "π/4; 3π/4",
+        "solution": "0 ≤ 2x < 2π. Косинус равен нулю при π/2 и 3π/2. Делим на 2: π/4 и 3π/4.",
         "difficulty": "Средний",
         "kind": "set",
         "canonicalId": "10-05-2",
@@ -2448,18 +2449,19 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(180) if abs(cos(2*x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(180)) if abs(cos(2*x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-104-3",
-        "prompt": "Решите 2sin² x − sin x − 1 = 0 при 0° ≤ x < 360°. Укажите все корни в градусах.",
+        "prompt": "Решите 2sin² x − sin x − 1 = 0 при 0 ≤ x < 2π. Укажите все корни в радианах.",
         "answer": [
-          90,
-          210,
-          330
+          1.5707963267948966,
+          3.6651914291880923,
+          5.759586531581287
         ],
-        "display": "90; 210; 330",
-        "solution": "Пусть t = sin x. Из (2t + 1)(t − 1) = 0 получаем sin x = 1 или −1/2. Корни: 90°, 210°, 330°.",
+        "display": "π/2; 7π/6; 11π/6",
+        "solution": "Пусть t = sin x. Из (2t + 1)(t − 1) = 0 получаем sin x = 1 или −1/2. Корни: π/2, 7π/6, 11π/6.",
         "difficulty": "Средний",
         "kind": "set",
         "canonicalId": "10-05-3",
@@ -2475,14 +2477,15 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(2*sin(x*pi/180)**2-sin(x*pi/180)-1)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(2*sin(x)**2-sin(x)-1)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-104-4",
-        "prompt": "Сколько корней имеет уравнение sin x = cos x на отрезке [−180°; 360°]?",
+        "prompt": "Сколько корней имеет уравнение sin x = cos x на отрезке [−π; 2π]?",
         "answer": 3,
         "display": "3",
-        "solution": "cos x = 0 не даёт решений. Делим на cos x: tg x = 1. Корни x = 45° + 180°k. На отрезке это −135°, 45°, 225°: три корня.",
+        "solution": "cos x = 0 не даёт решений. Делим на cos x: tg x = 1. Корни x = π/4 + kπ. На отрезке это −3π/4, π/4, 5π/4: три корня.",
         "difficulty": "Повышенный",
         "kind": "number",
         "canonicalId": "10-05-4",
@@ -2498,14 +2501,14 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "len([x for x in range(-180,361) if abs(sin(x*pi/180)-cos(x*pi/180))<1e-9])"
+        "oracle": "len([x for x in (k*pi/180 for k in range(-180,361)) if abs(sin(x)-cos(x))<1e-9])"
       },
       {
         "id": "10-104-5",
-        "prompt": "Сколько корней имеет sin² x = sin x на отрезке [0°; 360°]?",
+        "prompt": "Сколько корней имеет sin² x = sin x на отрезке [0; 2π]?",
         "answer": 4,
         "display": "4",
-        "solution": "sin x(sin x − 1) = 0. Корни на закрытом отрезке: 0°, 180°, 360° и 90°. Концы 0° и 360° — разные значения аргумента, поэтому всего четыре.",
+        "solution": "sin x(sin x − 1) = 0. Корни на закрытом отрезке: 0, π, 2π и π/2. Концы 0 и 2π — разные значения аргумента, поэтому всего четыре.",
         "kind": "number",
         "difficulty": "Суперсложный",
         "tricky": true,
@@ -2523,7 +2526,7 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "len([x for x in range(361) if abs(sin(x*pi/180)**2-sin(x*pi/180))<1e-9])"
+        "oracle": "len([x for x in (k*pi/180 for k in range(361)) if abs(sin(x)**2-sin(x))<1e-9])"
       },
       {
         "prompt": "Сколько корней уравнения sin x = 0 принадлежит отрезку [0; 3π]?",
@@ -8675,10 +8678,10 @@
       {
         "id": "10-209-2",
         "semanticKey": "b10-209-2",
-        "prompt": "Найдите arcsin(−1/2) в градусах.",
-        "answer": -30.0,
-        "display": "-30.0",
-        "solution": "Главное значение arcsin лежит между −90° и 90°.",
+        "prompt": "Найдите arcsin(−1/2) в радианах.",
+        "answer": -0.5235987755982988,
+        "display": "−π/6",
+        "solution": "Главное значение arcsin лежит между −π/2 и π/2.",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -8690,15 +8693,16 @@
             "topic": "10-209"
           }
         ],
-        "oracle": "asin(-.5)*180/pi"
+        "oracle": "asin(-.5)",
+        "angleUnit": "radian"
       },
       {
         "id": "10-209-3",
         "semanticKey": "b10-209-3",
-        "prompt": "Найдите arccos(cos 240°) в градусах.",
-        "answer": 120.0,
-        "display": "120.0",
-        "solution": "Главное значение arccos принадлежит [0°;180°]; cos240°=cos120°.",
+        "prompt": "Найдите arccos(cos(4π/3)) в радианах.",
+        "answer": 2.0943951023931953,
+        "display": "2π/3",
+        "solution": "Главное значение arccos принадлежит [0;π]; cos(4π/3)=cos(2π/3).",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -8710,15 +8714,16 @@
             "topic": "10-209"
           }
         ],
-        "oracle": "acos(cos(240*pi/180))*180/pi"
+        "oracle": "acos(cos(240*pi/180))",
+        "angleUnit": "radian"
       },
       {
         "id": "10-209-4",
         "semanticKey": "b10-209-4",
-        "prompt": "Найдите arctg(tg 135°) в градусах.",
-        "answer": -45.0,
-        "display": "-45.0",
-        "solution": "Главное значение арктангенса лежит в (−90°;90°).",
+        "prompt": "Найдите arctg(tg(3π/4)) в радианах.",
+        "answer": -0.7853981633974483,
+        "display": "−π/4",
+        "solution": "Главное значение арктангенса лежит в (−π/2;π/2).",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -8730,7 +8735,8 @@
             "topic": "10-209"
           }
         ],
-        "oracle": "atan(tan(135*pi/180))*180/pi"
+        "oracle": "atan(tan(135*pi/180))",
+        "angleUnit": "radian"
       },
       {
         "id": "10-209-5",
@@ -8846,7 +8852,7 @@
       {
         "id": "10-210-1",
         "semanticKey": "b10-210-1",
-        "prompt": "Найдите sin²α+cos²α при α=73°.",
+        "prompt": "Найдите sin²α+cos²α при α=73π/180.",
         "answer": 1.0,
         "display": "1.0",
         "solution": "Основное тождество даёт 1.",
@@ -8866,10 +8872,10 @@
       {
         "id": "10-210-2",
         "semanticKey": "b10-210-2",
-        "prompt": "Найдите cos 75°·cos 15°+sin 75°·sin 15°.",
+        "prompt": "Найдите cos(5π/12)·cos(π/12)+sin(5π/12)·sin(π/12).",
         "answer": 0.5,
         "display": "1/2",
-        "solution": "Это cos(75°−15°)=cos60°.",
+        "solution": "Это cos(5π/12−π/12)=cos(π/3).",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -8886,10 +8892,10 @@
       {
         "id": "10-210-3",
         "semanticKey": "b10-210-3",
-        "prompt": "Найдите 2sin15°cos15°.",
+        "prompt": "Найдите 2sin(π/12)cos(π/12).",
         "answer": 0.5,
         "display": "1/2",
-        "solution": "По формуле двойного угла это sin30°.",
+        "solution": "По формуле двойного угла это sin(π/6).",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -8946,10 +8952,10 @@
       {
         "id": "10-210-6",
         "semanticKey": "b10-210-6",
-        "prompt": "Найдите sin10°sin50°+cos10°cos50°−cos40°.",
+        "prompt": "Найдите sin(π/18)sin(5π/18)+cos(π/18)cos(5π/18)−cos(2π/9).",
         "answer": 0.0,
         "display": "0.0",
-        "solution": "Первые два слагаемых равны cos(10°−50°)=cos40°.",
+        "solution": "Первые два слагаемых равны cos(π/18−5π/18)=cos(2π/9).",
         "kind": "number",
         "difficulty": "Повышенный",
         "authoredIndependent": true,
@@ -8986,10 +8992,10 @@
       {
         "id": "10-210-8",
         "semanticKey": "b10-210-8",
-        "prompt": "Найдите cos20°cos40°cos80°.",
+        "prompt": "Найдите cos(π/9)cos(2π/9)cos(4π/9).",
         "answer": 0.125,
         "display": "1/8",
-        "solution": "Трижды используем 2sin t cos t=sin2t; sin160°=sin20°.",
+        "solution": "Трижды используем 2sin t cos t=sin2t; sin(8π/9)=sin(π/9).",
         "kind": "number",
         "difficulty": "Суперсложный",
         "authoredIndependent": true,
@@ -9037,12 +9043,12 @@
       {
         "id": "10-211-1",
         "semanticKey": "b10-211-1",
-        "prompt": "Решите sin x=0 при 0°≤x≤180°. Ответ в градусах.",
+        "prompt": "Решите sin x=0 при 0≤x≤π. Ответ в радианах.",
         "answer": [
-          0,
-          180
+          0.0,
+          3.141592653589793
         ],
-        "display": "0; 180",
+        "display": "0; π",
         "solution": "На отрезке синус обращается в ноль в концах.",
         "kind": "set",
         "difficulty": "Базовый",
@@ -9055,18 +9061,19 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(181) if abs(sin(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(181)) if abs(sin(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-2",
         "semanticKey": "b10-211-2",
-        "prompt": "Решите tg x=−1 при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите tg x=−1 при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          135,
-          315
+          2.356194490192345,
+          5.497787143782138
         ],
-        "display": "135; 315",
-        "solution": "x=−45°+180°k; отбор даёт 135°,315°.",
+        "display": "3π/4; 7π/4",
+        "solution": "x=−π/4+kπ; отбор даёт 3π/4,7π/4.",
         "kind": "set",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -9078,17 +9085,18 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(cos(x*pi/180))>1e-9 and abs(tan(x*pi/180)+1)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(cos(x))>1e-9 and abs(tan(x)+1)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-3",
         "semanticKey": "b10-211-3",
-        "prompt": "Решите cos(x−30°)=1/2 при 0°≤x≤180°. Ответ в градусах.",
+        "prompt": "Решите cos(x−π/6)=1/2 при 0≤x≤π. Ответ в радианах.",
         "answer": [
-          90
+          1.5707963267948966
         ],
-        "display": "90",
-        "solution": "x−30°=±60°+360°k; подходит x=90°.",
+        "display": "π/2",
+        "solution": "x−π/6=±π/3+2kπ; подходит x=π/2.",
         "kind": "set",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -9100,15 +9108,16 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(181) if abs(cos((x-30)*pi/180)-.5)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(181)) if abs(cos((x-pi/6))-.5)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-4",
         "semanticKey": "b10-211-4",
-        "prompt": "Сколько корней имеет sin(3x)=0 при 0°<x<180°?",
+        "prompt": "Сколько корней имеет sin(3x)=0 при 0<x<π?",
         "answer": 2.0,
         "display": "2.0",
-        "solution": "x=60°k; внутренние корни 60°,120°.",
+        "solution": "x=kπ/3; внутренние корни π/3,2π/3.",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -9120,18 +9129,18 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "sum(abs(sin(3*x*pi/180))<1e-9 for x in range(1,180))"
+        "oracle": "sum(abs(sin(3*x))<1e-9 for x in (k*pi/180 for k in range(1,180)))"
       },
       {
         "id": "10-211-5",
         "semanticKey": "b10-211-5",
-        "prompt": "Решите 2cos²x−3cos x+1=0 при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите 2cos²x−3cos x+1=0 при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          60,
-          300
+          0.0,
+          1.0471975511965976,
+          5.235987755982989
         ],
-        "display": "0; 60; 300",
+        "display": "0; π/3; 5π/3",
         "solution": "cos x=1 или 1/2; получаем три точки.",
         "kind": "set",
         "difficulty": "Повышенный",
@@ -9144,18 +9153,19 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(2*cos(x*pi/180)**2-3*cos(x*pi/180)+1)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(2*cos(x)**2-3*cos(x)+1)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-6",
         "semanticKey": "b10-211-6",
-        "prompt": "Решите sin x·cos x=0 при −90°<x≤180°. Ответ в градусах.",
+        "prompt": "Решите sin x·cos x=0 при −π/2<x≤π. Ответ в радианах.",
         "answer": [
-          0,
-          90,
-          180
+          0.0,
+          1.5707963267948966,
+          3.141592653589793
         ],
-        "display": "0; 90; 180",
+        "display": "0; π/2; π",
         "solution": "Нуль одного множителя; левый конец исключён.",
         "kind": "set",
         "difficulty": "Повышенный",
@@ -9168,19 +9178,20 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(-89,181) if abs(sin(x*pi/180)*cos(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(-89,181)) if abs(sin(x)*cos(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-7",
         "semanticKey": "b10-211-7",
-        "prompt": "Решите sin2x=sin x при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите sin2x=sin x при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          60,
-          180,
-          300
+          0.0,
+          1.0471975511965976,
+          3.141592653589793,
+          5.235987755982989
         ],
-        "display": "0; 60; 180; 300",
+        "display": "0; π/3; π; 5π/3",
         "solution": "sin x(2cos x−1)=0; объединяем без повторов.",
         "kind": "set",
         "difficulty": "Повышенный",
@@ -9193,17 +9204,18 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(sin(2*x*pi/180)-sin(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(sin(2*x)-sin(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-8",
         "semanticKey": "b10-211-8",
-        "prompt": "Решите sin x+cos x=√2 при 0°≤x<720°. Ответ в градусах.",
+        "prompt": "Решите sin x+cos x=√2 при 0≤x<4π. Ответ в радианах.",
         "answer": [
-          45,
-          405
+          0.7853981633974483,
+          7.068583470577034
         ],
-        "display": "45; 405",
+        "display": "π/4; 9π/4",
         "solution": "Максимум суммы достигается при sin x=cos x=√2/2.",
         "kind": "set",
         "difficulty": "Суперсложный",
@@ -9216,15 +9228,16 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "[x for x in range(720) if abs(sin(x*pi/180)+cos(x*pi/180)-sqrt(2))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(720)) if abs(sin(x)+cos(x)-sqrt(2))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-211-9",
         "semanticKey": "b10-211-9",
-        "prompt": "Сколько корней имеет sin x/(1+cos x)=0 при 0°≤x≤720°?",
+        "prompt": "Сколько корней имеет sin x/(1+cos x)=0 при 0≤x≤4π?",
         "answer": 3.0,
         "display": "3.0",
-        "solution": "Нужны sin x=0 и cos x≠−1; подходят 0°,360°,720°.",
+        "solution": "Нужны sin x=0 и cos x≠−1; подходят 0,2π,4π.",
         "kind": "number",
         "difficulty": "Суперсложный",
         "authoredIndependent": true,
@@ -9236,7 +9249,7 @@
             "topic": "10-211"
           }
         ],
-        "oracle": "sum(abs(sin(x*pi/180))<1e-9 and abs(1+cos(x*pi/180))>1e-9 for x in range(721))"
+        "oracle": "sum(abs(sin(x))<1e-9 and abs(1+cos(x))>1e-9 for x in (k*pi/180 for k in range(721)))"
       }
     ]
   },
@@ -9352,10 +9365,10 @@
       {
         "id": "10-212-6",
         "semanticKey": "b10-212-6",
-        "prompt": "Найдите наименьший положительный период sin²x в градусах.",
-        "answer": 180.0,
-        "display": "180.0",
-        "solution": "sin²x=(1−cos2x)/2, период 180°.",
+        "prompt": "Найдите наименьший положительный период sin²x в радианах.",
+        "answer": 3.141592653589793,
+        "display": "π",
+        "solution": "sin²x=(1−cos2x)/2, период π.",
         "kind": "number",
         "difficulty": "Повышенный",
         "authoredIndependent": true,
@@ -9367,7 +9380,8 @@
             "topic": "10-212"
           }
         ],
-        "oracle": "360/2"
+        "oracle": "2*pi/2",
+        "angleUnit": "radian"
       },
       {
         "id": "10-212-7",
@@ -20032,10 +20046,10 @@
     "tasks": [
       {
         "id": "10-04-1",
-        "prompt": "Вычислите 4sin 30° + 2cos 60°.",
+        "prompt": "Вычислите 4sin(π/6) + 2cos(π/3).",
         "answer": 3,
         "display": "3",
-        "solution": "sin 30° = cos 60° = 1/2. Получаем 2 + 1 = 3.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Получаем 2 + 1 = 3.",
         "difficulty": "Базовый",
         "kind": "number",
         "canonicalId": "10-04-1",
@@ -20148,10 +20162,10 @@
         "oracle": "sqrt(1+(-1))"
       },
       {
-        "prompt": "Вычислите 18 · sin 30° + 8 · cos 60°.",
+        "prompt": "Вычислите 18 · sin(π/6) + 8 · cos(π/3).",
         "answer": 13.0,
         "display": "13",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (18 + 8)/2 = 13.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (18 + 8)/2 = 13.",
         "oracle": "18*sin(pi/6)+8*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20173,10 +20187,10 @@
         }
       },
       {
-        "prompt": "Вычислите 17 · sin²60° + 7 · cos²60°.",
+        "prompt": "Вычислите 17 · sin²(π/3) + 7 · cos²(π/3).",
         "answer": 14.5,
         "display": "29/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 17 + 7)/4 = 29/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 17 + 7)/4 = 29/2.",
         "oracle": "17*sin(pi/3)**2+7*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20198,10 +20212,10 @@
         }
       },
       {
-        "prompt": "Вычислите 19 · sin 30° + 9 · cos 60°.",
+        "prompt": "Вычислите 19 · sin(π/6) + 9 · cos(π/3).",
         "answer": 14.0,
         "display": "14",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (19 + 9)/2 = 14.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (19 + 9)/2 = 14.",
         "oracle": "19*sin(pi/6)+9*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20223,10 +20237,10 @@
         }
       },
       {
-        "prompt": "Вычислите 18 · sin²60° + 8 · cos²60°.",
+        "prompt": "Вычислите 18 · sin²(π/3) + 8 · cos²(π/3).",
         "answer": 15.5,
         "display": "31/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 18 + 8)/4 = 31/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 18 + 8)/4 = 31/2.",
         "oracle": "18*sin(pi/3)**2+8*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20248,10 +20262,10 @@
         }
       },
       {
-        "prompt": "Вычислите 20 · sin 30° + 10 · cos 60°.",
+        "prompt": "Вычислите 20 · sin(π/6) + 10 · cos(π/3).",
         "answer": 15.0,
         "display": "15",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (20 + 10)/2 = 15.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (20 + 10)/2 = 15.",
         "oracle": "20*sin(pi/6)+10*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20273,10 +20287,10 @@
         }
       },
       {
-        "prompt": "Вычислите 19 · sin²60° + 9 · cos²60°.",
+        "prompt": "Вычислите 19 · sin²(π/3) + 9 · cos²(π/3).",
         "answer": 16.5,
         "display": "33/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 19 + 9)/4 = 33/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 19 + 9)/4 = 33/2.",
         "oracle": "19*sin(pi/3)**2+9*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20298,10 +20312,10 @@
         }
       },
       {
-        "prompt": "Вычислите 21 · sin 30° + 2 · cos 60°.",
+        "prompt": "Вычислите 21 · sin(π/6) + 2 · cos(π/3).",
         "answer": 11.5,
         "display": "23/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (21 + 2)/2 = 23/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (21 + 2)/2 = 23/2.",
         "oracle": "21*sin(pi/6)+2*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20323,10 +20337,10 @@
         }
       },
       {
-        "prompt": "Вычислите 20 · sin²60° + 10 · cos²60°.",
+        "prompt": "Вычислите 20 · sin²(π/3) + 10 · cos²(π/3).",
         "answer": 17.5,
         "display": "35/2",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 20 + 10)/4 = 35/2.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 20 + 10)/4 = 35/2.",
         "oracle": "20*sin(pi/3)**2+10*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20348,10 +20362,10 @@
         }
       },
       {
-        "prompt": "Вычислите 22 · sin 30° + 3 · cos 60°.",
+        "prompt": "Вычислите 22 · sin(π/6) + 3 · cos(π/3).",
         "answer": 12.5,
         "display": "25/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (22 + 3)/2 = 25/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (22 + 3)/2 = 25/2.",
         "oracle": "22*sin(pi/6)+3*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20373,10 +20387,10 @@
         }
       },
       {
-        "prompt": "Вычислите 21 · sin²60° + 2 · cos²60°.",
+        "prompt": "Вычислите 21 · sin²(π/3) + 2 · cos²(π/3).",
         "answer": 16.25,
         "display": "65/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 21 + 2)/4 = 65/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 21 + 2)/4 = 65/4.",
         "oracle": "21*sin(pi/3)**2+2*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20398,10 +20412,10 @@
         }
       },
       {
-        "prompt": "Вычислите 23 · sin 30° + 4 · cos 60°.",
+        "prompt": "Вычислите 23 · sin(π/6) + 4 · cos(π/3).",
         "answer": 13.5,
         "display": "27/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (23 + 4)/2 = 27/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (23 + 4)/2 = 27/2.",
         "oracle": "23*sin(pi/6)+4*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20423,10 +20437,10 @@
         }
       },
       {
-        "prompt": "Вычислите 22 · sin²60° + 3 · cos²60°.",
+        "prompt": "Вычислите 22 · sin²(π/3) + 3 · cos²(π/3).",
         "answer": 17.25,
         "display": "69/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 22 + 3)/4 = 69/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 22 + 3)/4 = 69/4.",
         "oracle": "22*sin(pi/3)**2+3*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20448,10 +20462,10 @@
         }
       },
       {
-        "prompt": "Вычислите 24 · sin 30° + 5 · cos 60°.",
+        "prompt": "Вычислите 24 · sin(π/6) + 5 · cos(π/3).",
         "answer": 14.5,
         "display": "29/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (24 + 5)/2 = 29/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (24 + 5)/2 = 29/2.",
         "oracle": "24*sin(pi/6)+5*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20473,10 +20487,10 @@
         }
       },
       {
-        "prompt": "Вычислите 23 · sin²60° + 4 · cos²60°.",
+        "prompt": "Вычислите 23 · sin²(π/3) + 4 · cos²(π/3).",
         "answer": 18.25,
         "display": "73/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 23 + 4)/4 = 73/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 23 + 4)/4 = 73/4.",
         "oracle": "23*sin(pi/3)**2+4*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20498,10 +20512,10 @@
         }
       },
       {
-        "prompt": "Вычислите 25 · sin 30° + 6 · cos 60°.",
+        "prompt": "Вычислите 25 · sin(π/6) + 6 · cos(π/3).",
         "answer": 15.5,
         "display": "31/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (25 + 6)/2 = 31/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (25 + 6)/2 = 31/2.",
         "oracle": "25*sin(pi/6)+6*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20523,10 +20537,10 @@
         }
       },
       {
-        "prompt": "Вычислите 24 · sin²60° + 5 · cos²60°.",
+        "prompt": "Вычислите 24 · sin²(π/3) + 5 · cos²(π/3).",
         "answer": 19.25,
         "display": "77/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 24 + 5)/4 = 77/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 24 + 5)/4 = 77/4.",
         "oracle": "24*sin(pi/3)**2+5*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20548,10 +20562,10 @@
         }
       },
       {
-        "prompt": "Вычислите 26 · sin 30° + 7 · cos 60°.",
+        "prompt": "Вычислите 26 · sin(π/6) + 7 · cos(π/3).",
         "answer": 16.5,
         "display": "33/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (26 + 7)/2 = 33/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (26 + 7)/2 = 33/2.",
         "oracle": "26*sin(pi/6)+7*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20573,10 +20587,10 @@
         }
       },
       {
-        "prompt": "Вычислите 25 · sin²60° + 6 · cos²60°.",
+        "prompt": "Вычислите 25 · sin²(π/3) + 6 · cos²(π/3).",
         "answer": 20.25,
         "display": "81/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 25 + 6)/4 = 81/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 25 + 6)/4 = 81/4.",
         "oracle": "25*sin(pi/3)**2+6*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20598,10 +20612,10 @@
         }
       },
       {
-        "prompt": "Вычислите 27 · sin 30° + 8 · cos 60°.",
+        "prompt": "Вычислите 27 · sin(π/6) + 8 · cos(π/3).",
         "answer": 17.5,
         "display": "35/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (27 + 8)/2 = 35/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (27 + 8)/2 = 35/2.",
         "oracle": "27*sin(pi/6)+8*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20623,10 +20637,10 @@
         }
       },
       {
-        "prompt": "Вычислите 26 · sin²60° + 7 · cos²60°.",
+        "prompt": "Вычислите 26 · sin²(π/3) + 7 · cos²(π/3).",
         "answer": 21.25,
         "display": "85/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 26 + 7)/4 = 85/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 26 + 7)/4 = 85/4.",
         "oracle": "26*sin(pi/3)**2+7*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20648,10 +20662,10 @@
         }
       },
       {
-        "prompt": "Вычислите 28 · sin 30° + 9 · cos 60°.",
+        "prompt": "Вычислите 28 · sin(π/6) + 9 · cos(π/3).",
         "answer": 18.5,
         "display": "37/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (28 + 9)/2 = 37/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (28 + 9)/2 = 37/2.",
         "oracle": "28*sin(pi/6)+9*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20673,10 +20687,10 @@
         }
       },
       {
-        "prompt": "Вычислите 27 · sin²60° + 8 · cos²60°.",
+        "prompt": "Вычислите 27 · sin²(π/3) + 8 · cos²(π/3).",
         "answer": 22.25,
         "display": "89/4",
-        "solution": "sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · 27 + 8)/4 = 89/4.",
+        "solution": "sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · 27 + 8)/4 = 89/4.",
         "oracle": "27*sin(pi/3)**2+8*cos(pi/3)**2",
         "kind": "number",
         "difficulty": "Средний",
@@ -20698,10 +20712,10 @@
         }
       },
       {
-        "prompt": "Вычислите 29 · sin 30° + 10 · cos 60°.",
+        "prompt": "Вычислите 29 · sin(π/6) + 10 · cos(π/3).",
         "answer": 19.5,
         "display": "39/2",
-        "solution": "sin 30° = cos 60° = 1/2. Поэтому значение равно (29 + 10)/2 = 39/2.",
+        "solution": "sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно (29 + 10)/2 = 39/2.",
         "oracle": "29*sin(pi/6)+10*cos(pi/3)",
         "kind": "number",
         "difficulty": "Базовый",
@@ -20735,13 +20749,13 @@
     "tasks": [
       {
         "id": "10-05-1",
-        "prompt": "Решите sin x = 1/2 на отрезке [0°; 180°]. Укажите все корни в градусах.",
+        "prompt": "Решите sin x = 1/2 на отрезке [0; π]. Укажите все корни в радианах.",
         "answer": [
-          30,
-          150
+          0.5235987755982988,
+          2.6179938779914944
         ],
-        "display": "30; 150",
-        "solution": "На верхней полуокружности синус равен 1/2 при 30° и 150°. Оба корня лежат на отрезке.",
+        "display": "π/6; 5π/6",
+        "solution": "На верхней полуокружности синус равен 1/2 при π/6 и 5π/6. Оба корня лежат на отрезке.",
         "difficulty": "Базовый",
         "kind": "set",
         "canonicalId": "10-05-1",
@@ -20757,17 +20771,18 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(181) if abs(sin(x*pi/180)-.5)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(181)) if abs(sin(x)-.5)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-05-2",
-        "prompt": "Решите cos(2x) = 0 при 0° ≤ x < 180°. Укажите все корни в градусах.",
+        "prompt": "Решите cos(2x) = 0 при 0 ≤ x < π. Укажите все корни в радианах.",
         "answer": [
-          45,
-          135
+          0.7853981633974483,
+          2.356194490192345
         ],
-        "display": "45; 135",
-        "solution": "0° ≤ 2x < 360°. Косинус равен нулю при 90° и 270°. Делим на 2: 45° и 135°.",
+        "display": "π/4; 3π/4",
+        "solution": "0 ≤ 2x < 2π. Косинус равен нулю при π/2 и 3π/2. Делим на 2: π/4 и 3π/4.",
         "difficulty": "Средний",
         "kind": "set",
         "canonicalId": "10-05-2",
@@ -20783,18 +20798,19 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(180) if abs(cos(2*x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(180)) if abs(cos(2*x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-05-3",
-        "prompt": "Решите 2sin² x − sin x − 1 = 0 при 0° ≤ x < 360°. Укажите все корни в градусах.",
+        "prompt": "Решите 2sin² x − sin x − 1 = 0 при 0 ≤ x < 2π. Укажите все корни в радианах.",
         "answer": [
-          90,
-          210,
-          330
+          1.5707963267948966,
+          3.6651914291880923,
+          5.759586531581287
         ],
-        "display": "90; 210; 330",
-        "solution": "Пусть t = sin x. Из (2t + 1)(t − 1) = 0 получаем sin x = 1 или −1/2. Корни: 90°, 210°, 330°.",
+        "display": "π/2; 7π/6; 11π/6",
+        "solution": "Пусть t = sin x. Из (2t + 1)(t − 1) = 0 получаем sin x = 1 или −1/2. Корни: π/2, 7π/6, 11π/6.",
         "difficulty": "Средний",
         "kind": "set",
         "canonicalId": "10-05-3",
@@ -20810,14 +20826,15 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(2*sin(x*pi/180)**2-sin(x*pi/180)-1)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(2*sin(x)**2-sin(x)-1)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-05-4",
-        "prompt": "Сколько корней имеет уравнение sin x = cos x на отрезке [−180°; 360°]?",
+        "prompt": "Сколько корней имеет уравнение sin x = cos x на отрезке [−π; 2π]?",
         "answer": 3,
         "display": "3",
-        "solution": "cos x = 0 не даёт решений. Делим на cos x: tg x = 1. Корни x = 45° + 180°k. На отрезке это −135°, 45°, 225°: три корня.",
+        "solution": "cos x = 0 не даёт решений. Делим на cos x: tg x = 1. Корни x = π/4 + kπ. На отрезке это −3π/4, π/4, 5π/4: три корня.",
         "difficulty": "Повышенный",
         "kind": "number",
         "canonicalId": "10-05-4",
@@ -20833,14 +20850,14 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "len([x for x in range(-180,361) if abs(sin(x*pi/180)-cos(x*pi/180))<1e-9])"
+        "oracle": "len([x for x in (k*pi/180 for k in range(-180,361)) if abs(sin(x)-cos(x))<1e-9])"
       },
       {
         "id": "10-05-5",
-        "prompt": "Сколько корней имеет sin² x = sin x на отрезке [0°; 360°]?",
+        "prompt": "Сколько корней имеет sin² x = sin x на отрезке [0; 2π]?",
         "answer": 4,
         "display": "4",
-        "solution": "sin x(sin x − 1) = 0. Корни на закрытом отрезке: 0°, 180°, 360° и 90°. Концы 0° и 360° — разные значения аргумента, поэтому всего четыре.",
+        "solution": "sin x(sin x − 1) = 0. Корни на закрытом отрезке: 0, π, 2π и π/2. Концы 0 и 2π — разные значения аргумента, поэтому всего четыре.",
         "kind": "number",
         "difficulty": "Суперсложный",
         "tricky": true,
@@ -20858,7 +20875,7 @@
             "topic": "10-104"
           }
         ],
-        "oracle": "len([x for x in range(361) if abs(sin(x*pi/180)**2-sin(x*pi/180))<1e-9])"
+        "oracle": "len([x for x in (k*pi/180 for k in range(361)) if abs(sin(x)**2-sin(x))<1e-9])"
       },
       {
         "prompt": "Сколько корней уравнения sin x = 0 принадлежит отрезку [0; 17π]?",
@@ -29191,10 +29208,10 @@
       {
         "id": "10-310-2",
         "semanticKey": "a10-310-2",
-        "prompt": "Найдите cos²15°−sin²15°. Ответ одним радикалом.",
+        "prompt": "Найдите cos²(π/12)−sin²(π/12). Ответ одним радикалом.",
         "answer": 0.8660254037844386,
         "display": "√0.75",
-        "solution": "Это cos30°=√3/2.",
+        "solution": "Это cos(π/6)=√3/2.",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -29211,10 +29228,10 @@
       {
         "id": "10-310-3",
         "semanticKey": "a10-310-3",
-        "prompt": "Найдите sin75°−sin15°. Ответ одним радикалом.",
+        "prompt": "Найдите sin(5π/12)−sin(π/12). Ответ одним радикалом.",
         "answer": 0.7071067811865476,
         "display": "√0.5",
-        "solution": "Разность равна 2cos45°sin30°=√2/2.",
+        "solution": "Разность равна 2cos(π/4)sin(π/6)=√2/2.",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -29231,10 +29248,10 @@
       {
         "id": "10-310-4",
         "semanticKey": "a10-310-4",
-        "prompt": "Найдите tg15°·tg75°.",
+        "prompt": "Найдите tg(π/12)·tg(5π/12).",
         "answer": 1.0,
         "display": "1.0",
-        "solution": "Углы дополнительны до 90°; тангенсы взаимно обратны.",
+        "solution": "Углы дополнительны до π/2; тангенсы взаимно обратны.",
         "kind": "number",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -29251,10 +29268,10 @@
       {
         "id": "10-310-5",
         "semanticKey": "a10-310-5",
-        "prompt": "Найдите cos10°+cos130°+cos250°.",
+        "prompt": "Найдите cos(π/18)+cos(13π/18)+cos(25π/18).",
         "answer": 0.0,
         "display": "0.0",
-        "solution": "Три косинуса с шагом 120° имеют нулевую сумму.",
+        "solution": "Три косинуса с шагом 2π/3 имеют нулевую сумму.",
         "kind": "number",
         "difficulty": "Повышенный",
         "authoredIndependent": true,
@@ -29271,10 +29288,10 @@
       {
         "id": "10-310-6",
         "semanticKey": "a10-310-6",
-        "prompt": "Найдите sin²10°+sin²70°+sin²130°.",
+        "prompt": "Найдите sin²(π/18)+sin²(7π/18)+sin²(13π/18).",
         "answer": 1.5,
         "display": "3/2",
-        "solution": "Через cos2x сумма косинусов с шагом 120° обнуляется.",
+        "solution": "Через cos2x сумма косинусов с шагом 2π/3 обнуляется.",
         "kind": "number",
         "difficulty": "Повышенный",
         "authoredIndependent": true,
@@ -29311,10 +29328,10 @@
       {
         "id": "10-310-8",
         "semanticKey": "a10-310-8",
-        "prompt": "Найдите sin18°·sin54°.",
+        "prompt": "Найдите sin(π/10)·sin(3π/10).",
         "answer": 0.25,
         "display": "1/4",
-        "solution": "sin54°=cos36°; по двойному углу и пятиугольнику произведение 1/4.",
+        "solution": "sin(3π/10)=cos(π/5); по двойному углу и пятиугольнику произведение 1/4.",
         "kind": "number",
         "difficulty": "Суперсложный",
         "authoredIndependent": true,
@@ -29331,10 +29348,10 @@
       {
         "id": "10-310-9",
         "semanticKey": "a10-310-9",
-        "prompt": "Найдите cos²20°+cos²40°+cos²80°.",
+        "prompt": "Найдите cos²(π/9)+cos²(2π/9)+cos²(4π/9).",
         "answer": 1.5,
         "display": "3/2",
-        "solution": "cos40°+cos80°+cos160°=0; сумма квадратов 3/2.",
+        "solution": "cos(2π/9)+cos(4π/9)+cos(8π/9)=0; сумма квадратов 3/2.",
         "kind": "number",
         "difficulty": "Суперсложный",
         "authoredIndependent": true,
@@ -29362,13 +29379,13 @@
       {
         "id": "10-311-1",
         "semanticKey": "a10-311-1",
-        "prompt": "Решите cos²x=1 при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите cos²x=1 при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          180
+          0.0,
+          3.141592653589793
         ],
-        "display": "0; 180",
-        "solution": "cos x=±1, поэтому x=0°,180°.",
+        "display": "0; π",
+        "solution": "cos x=±1, поэтому x=0,π.",
         "kind": "set",
         "difficulty": "Базовый",
         "authoredIndependent": true,
@@ -29380,18 +29397,19 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(cos(x*pi/180)**2-1)<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(cos(x)**2-1)<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-2",
         "semanticKey": "a10-311-2",
-        "prompt": "Решите sin2x=0 при 30°≤x≤210°. Ответ в градусах.",
+        "prompt": "Решите sin2x=0 при π/6≤x≤7π/6. Ответ в радианах.",
         "answer": [
-          90,
-          180
+          1.5707963267948966,
+          3.141592653589793
         ],
-        "display": "90; 180",
-        "solution": "x=90°k, отбор даёт 90°,180°.",
+        "display": "π/2; π",
+        "solution": "x=kπ/2, отбор даёт π/2,π.",
         "kind": "set",
         "difficulty": "Средний",
         "authoredIndependent": true,
@@ -29403,19 +29421,20 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(30,211) if abs(sin(2*x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(30,211)) if abs(sin(2*x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-3",
         "semanticKey": "a10-311-3",
-        "prompt": "Решите cos x=sin2x при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите cos x=sin2x при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          30,
-          90,
-          150,
-          270
+          0.5235987755982988,
+          1.5707963267948966,
+          2.6179938779914944,
+          4.71238898038469
         ],
-        "display": "30; 90; 150; 270",
+        "display": "π/6; π/2; 5π/6; 3π/2",
         "solution": "cos x(1−2sin x)=0; четыре различных корня.",
         "kind": "set",
         "difficulty": "Средний",
@@ -29428,18 +29447,19 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(cos(x*pi/180)-sin(2*x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(cos(x)-sin(2*x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-4",
         "semanticKey": "a10-311-4",
-        "prompt": "Решите cos2x=cos x при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите cos2x=cos x при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          120,
-          240
+          0.0,
+          2.0943951023931953,
+          4.1887902047863905
         ],
-        "display": "0; 120; 240",
+        "display": "0; 2π/3; 4π/3",
         "solution": "2t²−t−1=0, t=1 или −1/2.",
         "kind": "set",
         "difficulty": "Средний",
@@ -29452,19 +29472,20 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(cos(2*x*pi/180)-cos(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(cos(2*x)-cos(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-5",
         "semanticKey": "a10-311-5",
-        "prompt": "Решите sin3x=sin x при 0°≤x<180°. Ответ в градусах.",
+        "prompt": "Решите sin3x=sin x при 0≤x<π. Ответ в радианах.",
         "answer": [
-          0,
-          45,
-          135
+          0.0,
+          0.7853981633974483,
+          2.356194490192345
         ],
-        "display": "0; 45; 135",
-        "solution": "2sin x cos2x=0; после отбора 0°,45°,135°.",
+        "display": "0; π/4; 3π/4",
+        "solution": "2sin x cos2x=0; после отбора 0,π/4,3π/4.",
         "kind": "set",
         "difficulty": "Повышенный",
         "authoredIndependent": true,
@@ -29476,19 +29497,20 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(180) if abs(sin(3*x*pi/180)-sin(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(180)) if abs(sin(3*x)-sin(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-6",
         "semanticKey": "a10-311-6",
-        "prompt": "Решите tg x=2sin x при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите tg x=2sin x при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          60,
-          180,
-          300
+          0.0,
+          1.0471975511965976,
+          3.141592653589793,
+          5.235987755982989
         ],
-        "display": "0; 60; 180; 300",
+        "display": "0; π/3; π; 5π/3",
         "solution": "cos x≠0; sin x(1−2cos x)=0.",
         "kind": "set",
         "difficulty": "Повышенный",
@@ -29501,19 +29523,20 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(cos(x*pi/180))>1e-9 and abs(tan(x*pi/180)-2*sin(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(cos(x))>1e-9 and abs(tan(x)-2*sin(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-7",
         "semanticKey": "a10-311-7",
-        "prompt": "Решите sin²x+sin x cos x=0 при 0°≤x<360°. Ответ в градусах.",
+        "prompt": "Решите sin²x+sin x cos x=0 при 0≤x<2π. Ответ в радианах.",
         "answer": [
-          0,
-          135,
-          180,
-          315
+          0.0,
+          2.356194490192345,
+          3.141592653589793,
+          5.497787143782138
         ],
-        "display": "0; 135; 180; 315",
+        "display": "0; 3π/4; π; 7π/4",
         "solution": "sin x(sin x+cos x)=0; объединяем две серии.",
         "kind": "set",
         "difficulty": "Повышенный",
@@ -29526,18 +29549,19 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(360) if abs(sin(x*pi/180)**2+sin(x*pi/180)*cos(x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(360)) if abs(sin(x)**2+sin(x)*cos(x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-8",
         "semanticKey": "a10-311-8",
-        "prompt": "Решите cos x+cos3x=0 при 0°≤x<180°. Ответ в градусах.",
+        "prompt": "Решите cos x+cos3x=0 при 0≤x<π. Ответ в радианах.",
         "answer": [
-          45,
-          90,
-          135
+          0.7853981633974483,
+          1.5707963267948966,
+          2.356194490192345
         ],
-        "display": "45; 90; 135",
+        "display": "π/4; π/2; 3π/4",
         "solution": "Сумма равна 2cos2x cos x; три различных корня.",
         "kind": "set",
         "difficulty": "Суперсложный",
@@ -29550,12 +29574,13 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "[x for x in range(180) if abs(cos(x*pi/180)+cos(3*x*pi/180))<1e-9]"
+        "oracle": "[x for x in (k*pi/180 for k in range(180)) if abs(cos(x)+cos(3*x))<1e-9]",
+        "angleUnit": "radian"
       },
       {
         "id": "10-311-9",
         "semanticKey": "a10-311-9",
-        "prompt": "Сколько корней имеет (sin2x)/(sin x)=1 при 0°≤x<720°?",
+        "prompt": "Сколько корней имеет (sin2x)/(sin x)=1 при 0≤x<4π?",
         "answer": 4.0,
         "display": "4.0",
         "solution": "sin x≠0; 2cos x=1; по два корня на период.",
@@ -29570,7 +29595,7 @@
             "topic": "10-311"
           }
         ],
-        "oracle": "sum(abs(sin(x*pi/180))>1e-9 and abs(sin(2*x*pi/180)/sin(x*pi/180)-1)<1e-9 for x in range(720))"
+        "oracle": "sum(abs(sin(x))>1e-9 and abs(sin(2*x)/sin(x)-1)<1e-9 for x in (k*pi/180 for k in range(720)))"
       }
     ]
   },

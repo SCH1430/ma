@@ -1,10 +1,12 @@
 // One local bank serves both the trainer and the print constructor.
 const WORK_LIMIT=60;
 function parseAnswer(raw) {
-  const value=String(raw).trim().replace(/−/g,'-').replace(/,/g,'.').replace(/\s+/g,'').replace(/sqrt/gi,'√');
+  const value=String(raw).trim().replace(/−/g,'-').replace(/,/g,'.').replace(/\s+/g,'').replace(/sqrt/gi,'√').replace(/pi/gi,'π');
   const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
   function atom(s){
     if(new RegExp(`^${number}$`).test(s))return Number(s);
+    const pi=s.match(/^([+-]?)(?:(\d+(?:\.\d*)?|\.\d+)\*?)?π$/);
+    if(pi)return (pi[1]==='-'?-1:1)*Number(pi[2]??1)*Math.PI;
     const m=s.match(new RegExp(`^([+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)?)(?:\\*)?√(?:\\((${number})\\)|(${number}))$`));
     if(!m)return null;
     const rad=Number(m[2]??m[3]);if(rad<0)return null;
@@ -12,6 +14,7 @@ function parseAnswer(raw) {
     return c*Math.sqrt(rad);
   }
   const parts=value.split('/');if(parts.length>2)return null;
+  if(parts[1]?.includes('π')&&parts[1].includes('*'))return null;
   const n=atom(parts[0]),d=parts.length===2?atom(parts[1]):1;
   if(n===null||d===null||d===0)return null;
   const result=n/d;return Number.isFinite(result)?result:null;
@@ -34,9 +37,10 @@ function checkAnswer(raw,q){
 }
 function answerHint(q){
   if(q.kind==='open')return 'Запишите рассуждение или выполните построение в тетради. Затем сравните с образцом и отметьте выполненные критерии.';
+  if(q.angleUnit==='radian')return q.kind==='set'?'Углы в радианах. Все корни через точку с запятой, например: π/6; 5π/6. Можно писать pi вместо π. Если корней нет, введите ∅.':'Ответ в радианах без единиц: π/6, 2π/3, −π. Можно писать pi вместо π, например 2*pi/3.';
   if(q.kind==='set')return 'Все корни через точку с запятой: −2; 1/2. Порядок не важен. Если корней нет, введите ∅ или «нет решений». Не разделяйте корни запятой.';
   if(q.precision)return `Число без единиц. Округлите до ${q.precision===3?'тысячных':q.precision+' знаков'}; точка и запятая допустимы.`;
-  return 'Число без единиц: −3, 0,75, 3/4. Корень: √2, 5√2/2 или sqrt(2). Для точного ответа используйте дробь или корень.';
+  return 'Число без единиц: −3, 0,75, 3/4. Корень: √2, 5√2/2 или sqrt(2). Число π: π/6 или pi/6. Для точного ответа используйте дробь, π или корень.';
 }
 
 // These boundaries also validate locally saved and imported data.
@@ -46,11 +50,11 @@ function sanitizeWork(raw,tasks,grade,level){
   const text=(v,n,fallback)=>typeof v==='string'&&v.trim()?v.trim().slice(0,n):fallback;
   return {ids:[...new Set(Array.isArray(raw.ids)?raw.ids:[])].filter(id=>allowed.has(id)).slice(0,grade==null?WORK_LIMIT:24),title:text(raw.title,70,'Самостоятельная работа'),variant:text(raw.variant,20,'1'),answers:raw.answers===true,...(typeof raw.seed==='string'?{seed:text(raw.seed,40,'1430')}:{})};
 }
-function sanitizeRecord(raw){
+function sanitizeRecord(raw,q){
   raw=raw&&typeof raw==='object'?raw:{};
   const count=(v,max)=>Number.isFinite(v)?Math.max(0,Math.min(max,Math.floor(v))):0;
-  const correct=raw.correct===true;
-  return {draft:typeof raw.draft==='string'?raw.draft.slice(0,4000):'',tries:count(raw.tries,10000),correct,revealed:raw.revealed===true,hintLevel:count(raw.hintLevel,2),feedback:['','format','wrong','correct','self'].includes(raw.feedback)?raw.feedback:'',everWrong:raw.everWrong===true,outcome:correct&&['independent','hinted','explained'].includes(raw.outcome)?raw.outcome:'',checks:Array.isArray(raw.checks)?raw.checks.slice(0,10).map(v=>v===true):[]};
+  const correct=raw.correct===true&&(!q||q.kind==='open'||q.angleUnit!=='radian'||checkAnswer(raw.draft??'',q).correct);
+  return {draft:typeof raw.draft==='string'?raw.draft.slice(0,4000):'',tries:count(raw.tries,10000),correct,revealed:raw.revealed===true,hintLevel:count(raw.hintLevel,2),feedback:raw.correct===true&&!correct?'':['','format','wrong','correct','self'].includes(raw.feedback)?raw.feedback:'',everWrong:raw.everWrong===true,outcome:correct&&['independent','hinted','explained'].includes(raw.outcome)?raw.outcome:'',checks:Array.isArray(raw.checks)?raw.checks.slice(0,10).map(v=>v===true):[]};
 }
 function classifyAttempt(r){
   if(!r||!r.correct)return 'pending';
@@ -171,7 +175,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       for(const pair of Array.isArray(saved.attempts)?saved.attempts.slice(0,catalogTasks.length*2):[]){
         if(!Array.isArray(pair)||typeof pair[0]!=='string')continue;
         const [key,value]=pair,id=key.split(':').at(-1);
-        if(question(id)&&(key===`teacher:${id}`||student.id&&key===`student:${student.id}:${id}`)||examTaskById.has(id)&&(key===`exam-teacher:${id}`||student.id&&key===`exam-student:${student.id}:${id}`||examLearnerId&&key===`exam-guest:${examLearnerId}:${id}`))attempts.set(key,sanitizeRecord(value));
+        if(question(id)&&(key===`teacher:${id}`||student.id&&key===`student:${student.id}:${id}`)||examTaskById.has(id)&&(key===`exam-teacher:${id}`||student.id&&key===`exam-student:${student.id}:${id}`||examLearnerId&&key===`exam-guest:${examLearnerId}:${id}`))attempts.set(key,sanitizeRecord(value,question(id)));
       }
       for(const key of Array.isArray(saved.migratedWorkKeys)?saved.migratedWorkKeys:[])if(typeof key==='string')migratedWorkKeys.add(key);
       for(const pair of Array.isArray(saved.works)?saved.works.slice(0,20):[]){
@@ -444,7 +448,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function renderHelp(){
     const groups=[...new Set(BANK.map(t=>`${t.grade}:${t.level}`))].map(key=>{const [g,l]=key.split(':');return {grade:Number(g),level:l,ts:BANK.filter(t=>t.grade===Number(g)&&t.level===l)};});
     const coverage=`<details><summary>Темы и ссылки на страницы ФРП</summary><table><thead><tr><th>Программа</th><th>Темы и объём</th><th>Страницы ФРП</th></tr></thead><tbody>${groups.map(({grade,level,ts})=>`<tr><th>${grade} класс${grade>=10?'<br>'+(level==='basic'?'Базовый':'Углублённый'):''}</th><td>${ts.map(t=>esc(t.title)).join('; ')}<br><strong>${topicCount(ts.length)} · ${taskCount(ts.reduce((n,t)=>n+t.tasks.length,0))}</strong></td><td>${[...new Set(ts.map(t=>t.ref))].map(esc).join(', ')}</td></tr>`).join('')}</tbody></table></details>`;
-    return header('О программе и заданиях.','Авторские материалы для занятий и самостоятельной практики.')+`<article class="glass source-box"><h2>Банк по темам ФРП</h2><p>В каталогах ${allTasks.length} заданий и ${BANK.length} тем. Условия, решения и рисунки созданы для проекта. Это не официальный банк ФРП и не полное покрытие программы. Числовые и шаблонные варианты объединены при подсчёте ${BANK_STATS.independent_groups} самостоятельных групп.</p><p><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_ooo_frp_matematika-5-9_baza.pdf" target="_blank" rel="noopener noreferrer">ФРП 5–9 (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_baz.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, базовый уровень (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_ugl.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, углублённый уровень (2025)</a></p>${coverage}<h2>Помощь и результаты</h2><p>У задания есть подсказка, первый шаг и полный разбор. В итогах отдельно показаны самостоятельные решения, решения с подсказкой и после разбора. Задания на доказательство, объяснение и построение проверяются по образцу и критериям самостоятельно; программа не оценивает текст автоматически.</p><h2>Ступени сложности</h2><p>${levels.map((d,i)=>`${d}: ${levelDescriptions[i].toLowerCase()}`).join('. ')}. Уровень программы 10–11 класса выбирается отдельно.</p><h2>Запись ответа</h2><p>Числа принимаются с точкой или запятой, дроби — a/b, корни — √2, 5√2/2 или sqrt(2). Несколько корней вводятся через точку с запятой. Если корней нет — ∅ или «нет решений». Единицы вводить не нужно.</p><h2>Локальное сохранение</h2><p>Прогресс текущего ученика, черновики, избранное и до 200 подборок сохраняются в этом браузере на устройстве. На главной странице есть «Продолжить». На общем компьютере нажмите «Завершить занятие / сменить ученика»: имя и ученические ответы удалятся из текущего сеанса. Работы учителя сохранятся. Очистка данных браузера удаляет локальные данные; подборки можно сохранить в JSON-файл и открыть позднее. Если браузер запрещает хранение для локального файла, интерфейс сообщит об этом.</p><h2>Варианты и PDF</h2><p>Следующий вариант подбирается по тем же темам, сложности и формату. Если равноценной замены в банке нет, исходное задание сохраняется, а число совпадений показывается. Ключ делает подбор воспроизводимым. Это сопоставимость по разметке банка, а не подтверждённое равенство времени решения.</p><p>Выбор роли меняет действия интерфейса; это не система авторизации. Тренажёр, хранение и экспорт PDF работают без сети. Для открытия ссылок на ФРП нужен интернет.</p></article>`;
+    return header('О программе и заданиях.','Авторские материалы для занятий и самостоятельной практики.')+`<article class="glass source-box"><h2>Банк по темам ФРП</h2><p>В каталогах ${allTasks.length} заданий и ${BANK.length} тем. Условия, решения и рисунки созданы для проекта. Это не официальный банк ФРП и не полное покрытие программы. Числовые и шаблонные варианты объединены при подсчёте ${BANK_STATS.independent_groups} самостоятельных групп.</p><p><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_ooo_frp_matematika-5-9_baza.pdf" target="_blank" rel="noopener noreferrer">ФРП 5–9 (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_baz.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, базовый уровень (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_ugl.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, углублённый уровень (2025)</a></p>${coverage}<h2>Помощь и результаты</h2><p>У задания есть подсказка, первый шаг и полный разбор. В итогах отдельно показаны самостоятельные решения, решения с подсказкой и после разбора. Задания на доказательство, объяснение и построение проверяются по образцу и критериям самостоятельно; программа не оценивает текст автоматически.</p><h2>Ступени сложности</h2><p>${levels.map((d,i)=>`${d}: ${levelDescriptions[i].toLowerCase()}`).join('. ')}. Уровень программы 10–11 класса выбирается отдельно.</p><h2>Запись ответа</h2><p>Числа принимаются с точкой или запятой, дроби — a/b, корни — √2, 5√2/2 или sqrt(2). Радианы — π/6, 2π/3 или 2*pi/3. Несколько корней вводятся через точку с запятой. Если корней нет — ∅ или «нет решений». Единицы вводить не нужно.</p><h2>Локальное сохранение</h2><p>Прогресс текущего ученика, черновики, избранное и до 200 подборок сохраняются в этом браузере на устройстве. На главной странице есть «Продолжить». На общем компьютере нажмите «Завершить занятие / сменить ученика»: имя и ученические ответы удалятся из текущего сеанса. Работы учителя сохранятся. Очистка данных браузера удаляет локальные данные; подборки можно сохранить в JSON-файл и открыть позднее. Если браузер запрещает хранение для локального файла, интерфейс сообщит об этом.</p><h2>Варианты и PDF</h2><p>Следующий вариант подбирается по тем же темам, сложности и формату. Если равноценной замены в банке нет, исходное задание сохраняется, а число совпадений показывается. Ключ делает подбор воспроизводимым. Это сопоставимость по разметке банка, а не подтверждённое равенство времени решения.</p><p>Выбор роли меняет действия интерфейса; это не система авторизации. Тренажёр, хранение и экспорт PDF работают без сети. Для открытия ссылок на ФРП нужен интернет.</p></article>`;
   }
   function resetFilters(keepCompetencies=false){if(!keepCompetencies)competencyFilter=[];filter='all';subjectFilter='all';difficultyFilter='all';trickyOnly=false;favoriteOnly=false;presetLevel='';search='';bankPage=0;autoResult=null;}
   function syncWorkAccessibility(){

@@ -118,10 +118,10 @@ button:disabled { cursor:not-allowed; opacity:.48; }
 .fraction>span:last-child { padding:.1em .16em 0; }
 sup,sub { font-size:.65em; line-height:0; position:relative; vertical-align:baseline; }
 sup { top:-.55em; } sub { top:.25em; }
-.math-figure { margin:20px auto 25px; width:min(100%,430px); padding:13px 15px 9px; border:1px solid #c2d3b870; border-radius:19px; background:#f6faee9e; }
+.math-figure { margin:20px auto 25px; width:min(100%,470px); padding:13px 15px 9px; border:1px solid #c2d3b870; border-radius:19px; background:#f6faee9e; }
 .math-figure svg { display:block; width:100%; height:auto; }
 .math-figure figcaption { font-size:11px; line-height:1.4; text-align:center; color:#465b43; margin-top:3px; }
-.math-figure.compact { width:min(100%,310px); margin:14px auto; }
+.math-figure.compact { width:min(100%,350px); margin:14px auto; }
 .print-question .math-figure { background:transparent; border:none; padding:0; max-width:280px; margin:10px auto; }
 .topic-card .muted { margin:0 0 16px; }
 .topic-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:auto; }

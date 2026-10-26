@@ -3,7 +3,7 @@ const root=path.resolve(__dirname,'..');
 const page=require('./load_page.cjs').loadPage(root),{BANK:bank}=page.dataValues();
 const code=page.sourceFor('src/app.js').split('/* UI */')[0];
 const support=page.sourceFor('src/learning-support.js');
-const ctx={BANK:bank};vm.createContext(ctx);vm.runInContext((support+'\n')+code+'\n'+page.sourceFor('src/math-figures.js'),ctx);
+const ctx={BANK:bank};vm.createContext(ctx);vm.runInContext((support+'\n')+code+'\n'+page.figuresCode(),ctx);
 const learning=vm.runInContext('MathLearning',ctx);
 let checks=0;const errors=[];const test=(cond,label)=>{checks++;if(!cond)errors.push(label)};
 const check=(v,q)=>ctx.checkAnswer(v,q);
@@ -43,6 +43,16 @@ for(const t of bank)for(const q of t.tasks){
 }
 for(const [v,x] of [['10/24',5/12],['-2/-4',.5],['−0,75',-.75],['5√2/2',5*Math.sqrt(2)/2],['5/sqrt(2)',5/Math.sqrt(2)],['3*sqrt(8)/2',3*Math.sqrt(2)]])test(ctx.answerMatches(v,x),'equivalent '+v);
 for(const v of ['2+2','1;2','√(2+2)','1//2','Infinity','NaN','0/0'])test(ctx.parseAnswer(v)===null,'malformed '+v);
+for(const [v,x] of [['π',Math.PI],['pi/6',Math.PI/6],['−π/3',-Math.PI/3],['2π/3',2*Math.PI/3],['2*pi/3',2*Math.PI/3],['3/2π',3/(2*Math.PI)]])test(ctx.answerMatches(v,x),'exact radian '+v);
+for(const v of ['pi+1','pi()','Math.PI','2**pi','ππ','π/0','*π','-*π','3/2*pi'])test(ctx.parseAnswer(v)===null,'malformed radian '+v);
+test(ctx.checkAnswer('pi/6;5pi/6',{kind:'set',answer:[Math.PI/6,5*Math.PI/6]}).correct,'radian root set');
+test(ctx.answerHint({angleUnit:'radian',kind:'number'}).includes('радиан'),'radian answer format');
+const radianTask={angleUnit:'radian',kind:'number',answer:Math.PI/6};
+test(!ctx.sanitizeRecord({draft:'30',correct:true},radianTask).correct,'saved degree response is rechecked after radian conversion');
+test(ctx.sanitizeRecord({draft:'pi/6',correct:true},radianTask).correct,'saved exact radian response keeps progress');
+test(ctx.sanitizeRecord({draft:'Обоснование',correct:true},{angleUnit:'radian',kind:'open'}).correct,'self-checked radian reasoning keeps progress');
+for(const [v,top,bottom] of [['π/6','π','6'],['−2π/3','−2π','3'],['3/2π','3','2π']])test(JSON.stringify(ctx.mathTokens(v))===JSON.stringify([{type:'fraction',top,bottom}]),'pi fraction '+v);
+for(const op of ['*','×','·'])test(JSON.stringify(ctx.mathTokens('3/2'+op+'π'))===JSON.stringify([{type:'fraction',top:'3',bottom:'2'},{type:'text',text:op+'π'}]),'explicit pi product stays outside denominator '+op);
 // These checks protect the mathematical grouping, not just the presence of a fraction bar.
 for(const [input,top,bottom] of [
  ['5√2/2','5√2','2'],['−√3/2','−√3','2'],['-√3/2','-√3','2'],

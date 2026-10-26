@@ -670,12 +670,12 @@ def trig_value(n, form):
     a=n+3;b=n%9+2
     if form == 0:
         value=F(a+b,2)
-        return make(f'Вычислите {a} · sin 30° + {b} · cos 60°.',value,
-                    f'sin 30° = cos 60° = 1/2. Поэтому значение равно ({a} + {b})/2 = {fmt(value)}.',
+        return make(f'Вычислите {a} · sin(π/6) + {b} · cos(π/3).',value,
+                    f'sin(π/6) = cos(π/3) = 1/2. Поэтому значение равно ({a} + {b})/2 = {fmt(value)}.',
                     f'{a}*sin(pi/6)+{b}*cos(pi/3)','calculations','Базовый')
     value=F(3*a+b,4)
-    return make(f'Вычислите {a} · sin²60° + {b} · cos²60°.',value,
-                f'sin²60° = 3/4, cos²60° = 1/4. Получаем (3 · {a} + {b})/4 = {fmt(value)}.',
+    return make(f'Вычислите {a} · sin²(π/3) + {b} · cos²(π/3).',value,
+                f'sin²(π/3) = 3/4, cos²(π/3) = 1/4. Получаем (3 · {a} + {b})/4 = {fmt(value)}.',
                 f'{a}*sin(pi/3)**2+{b}*cos(pi/3)**2','calculations','Средний')
 
 

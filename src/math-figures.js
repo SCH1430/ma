@@ -1,5 +1,7 @@
 // Shared mathematical notation and vector drawings for screen and PDF.
 const FIGURE_TASKS=new Map(BANK.flatMap(t=>t.tasks.map(q=>[q.id,q])));
+const FIGURE_TOPICS=new Map(BANK.flatMap(t=>t.tasks.map(q=>[q.id,t])));
+const FIGURE_CACHE=new Map();
 const SUPER_MAP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁽':'(','⁾':')','ⁿ':'n','ˣ':'x'};
 const SUB_MAP={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ₙ':'n','₊':'+'};
 function mathTokens(value){
@@ -9,14 +11,16 @@ function mathTokens(value){
   const radical=String.raw`[+−-]?(?:${decimal}\s*(?:[·×*]\s*)?)?√\s*(?:\([^()]+\)|${decimal})`;
   // An explicit product after the denominator stays outside: 5/2×√3 = (5/2)×√3.
   const denominatorRadical=String.raw`[+−-]?(?:${decimal}\s*)?√\s*(?:\([^()]+\)|${decimal})`;
-  const operand=String.raw`(?:${radical}|\([^()]+\)|[−-]?${decimal})`;
-  const denominator=String.raw`(?:${denominatorRadical}|\([^()]+\)|[−-]?${decimal})`;
+  const pi=String.raw`[+−-]?(?:${decimal}\s*(?:[·×*]\s*)?)?π`;
+  const denominatorPi=String.raw`[+−-]?(?:${decimal}\s*)?π`;
+  const operand=String.raw`(?:${radical}|${pi}|\([^()]+\)|[−-]?${decimal})`;
+  const denominator=String.raw`(?:${denominatorRadical}|${denominatorPi}|\([^()]+\)|[−-]?${decimal})`;
   const pattern=new RegExp(String.raw`(${operand})\s*\/\s*(${denominator})|\^(\([^)]*\)|[+-]?\d+|[a-zA-Zα-ωΑ-Ω])|([⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁽⁾ⁿˣ]+)|([₀₁₂₃₄₅₆₇₈₉ₙ₊]+)`,'g');
   let cursor=0;
   for(const m of text.matchAll(pattern)){
     let start=m.index,top=m[1];
     // In x−√3/2 the minus is a binary operator; in −√3/2 it belongs to the numerator.
-    if(top&&/^[+−-]/.test(top)&&top.includes('√')&&/[\p{L}\p{N})\]]$/u.test(text.slice(0,start).trimEnd())){start++;top=top.slice(1);}
+    if(top&&/^[+−-]/.test(top)&&/[√π]/.test(top)&&/[\p{L}\p{N})\]]$/u.test(text.slice(0,start).trimEnd())){start++;top=top.slice(1);}
     if(start>cursor)out.push({type:'text',text:text.slice(cursor,start)});
     if(top)out.push({type:'fraction',top,bottom:m[2]});
     else if(m[3])out.push({type:'sup',text:m[3]});
@@ -78,11 +82,16 @@ function legacyGeometryFigure(id){
   return {width:360,height:190,alt,elements};
 }
 function geometryFigure(id){
+  if(FIGURE_CACHE.has(id))return FIGURE_CACHE.get(id);
   const q=FIGURE_TASKS.get(id);
   if(!q)return null;
   if(q.figure)return q.figure;
+  const topic=FIGURE_TOPICS.get(id);
+  const generated=Number(topic.grade)<=9?planarTaskFigure(q,topic):spatialTaskFigure(q,topic);
+  if(generated){FIGURE_CACHE.set(id,generated);return generated;}
   if(q.legacyFigure)return legacyGeometryFigure(q.legacyFigure);
   if(Number(id.split('-')[0])<=6&&Number(id.split('-')[2])<=3)return legacyGeometryFigure(id);
+  FIGURE_CACHE.set(id,null);
   return null;
 }
 function figureSVG(id,compact=false){

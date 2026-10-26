@@ -93,8 +93,9 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
         mathRow(page,tokens,q.x-(p.anchor==='middle'?w/2:p.anchor==='end'?w:0),q.y,p.size*scale,ink);
       }
     }
-    text(page,f.caption||'Схема, не в масштабе',210,top-f.height*scale-15,7,muted);
-    return f.height*scale+22;
+    const captions=wrap(f.caption||'Схема, не в масштабе',7,Math.min(470,f.width));
+    captions.forEach((value,i)=>text(page,value,(595.28-font.widthOfTextAtSize(value,7))/2,top-f.height*scale-14-i*11,7,muted));
+    return f.height*scale+16+captions.length*11;
   }
   function base(isKey){
     const page=doc.addPage([595.28,841.89]);pages.push(page);
@@ -260,7 +261,8 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     const footer=hasExams?(tasks.some(q=>!isExam(q))?'ФИПИ 2026 · задания по темам ФРП · школа 1430':'Официальная демоверсия ФИПИ 2026 · школа 1430'):'Задания по темам ФРП · школа 1430';
     pages.forEach((page,index)=>{
       page.drawLine({start:{x:left,y:47},end:{x:right,y:47},thickness:.5,color:line});
-      text(page,footer,left,32,8,muted);text(page,`${index+1} / ${pages.length}`,520,32,8,muted);
+      const number=`${index+1} / ${pages.length}`;
+      text(page,footer,left,32,8,muted);text(page,number,right-font.widthOfTextAtSize(number,8),32,8,muted);
     });
     return doc.save();
   }
@@ -305,7 +307,8 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
   pages.forEach((page,i)=>{
     page.drawLine({start:{x:45,y:47},end:{x:550,y:47},thickness:.5,color:line});
     text(page,'Авторские задания по темам ФРП · школа 1430',45,32,8,muted);
-    text(page,`${i+1} / ${pages.length}`,520,32,8,muted);
+    const number=`${i+1} / ${pages.length}`;
+    text(page,number,550-font.widthOfTextAtSize(number,8),32,8,muted);
   });
   return doc.save();
 }

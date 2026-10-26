@@ -6,7 +6,7 @@ const PDFLib=page.vendor('pdf-lib');
 const fontkit=page.vendor('fontkit');
 const audit=require('./audit_unified_pdf.cjs')(PDFLib);
 const font=FONT_BASE64;
-const create=new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.sourceFor('src/math-figures.js')+'\n'+page.sourceFor('src/pdf.js')+'\nreturn createMathPDF;')(PDFLib,fontkit,BANK,font);
+const create=new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.figuresCode()+'\n'+page.sourceFor('src/pdf.js')+'\nreturn createMathPDF;')(PDFLib,fontkit,BANK,font);
 const classes=BANK.flatMap(t=>t.tasks.map(q=>({...q,grade:t.grade,level:t.level,source:'class',sourceLabel:`${t.grade} класс · ${t.level==='advanced'?'углублённый':'базовый'} курс`})));
 function examTask(id,number,index=0){
  const exam=EXAM_BANK.find(e=>e.id===id),parent=exam.tasks.find(t=>t.number===number),examples=parent.examples?.length?parent.examples:[parent],q=examples[index];

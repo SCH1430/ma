@@ -28,6 +28,7 @@ function loadPage(root=DEFAULT_ROOT){
  function sourceFor(reference){const script=scripts.find(script=>script.reference===reference);if(!script)throw Error('Deployed script is not referenced: '+reference);return script.code;}
  let data;
  const page={root,html,scripts,styles,localFile,sourceFor,
+  figuresCode(){return ['geometry-core','geometry-planar','geometry-spatial','math-figures'].map(name=>sourceFor(`src/${name}.js`)).join('\n');},
   runtimeCode({exclude=[]}={}){return runtime.filter(script=>!exclude.includes(script.reference)).map(script=>script.code).join('\n');},
   vendor(name){const script=scripts.find(script=>script.attrs.id==='vendor-'+name);if(!script?.file)throw Error('Missing deployed vendor: '+name);return require(script.file);},
   dataValues(){

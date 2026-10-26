@@ -25,7 +25,7 @@ PDFLib.PDFDocument.create=async(...args)=>{
  return doc;
 };
 const ctx={PDFLib,fontkit,BANK,FONT_BASE64,Uint8Array,atob:s=>Buffer.from(s,'base64').toString('binary'),console};
-Object.assign(ctx,new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.sourceFor('src/math-figures.js')+'\n'+page.sourceFor('src/pdf.js')+'\nreturn {createMathPDF,geometryFigure};')(PDFLib,fontkit,BANK,ctx.FONT_BASE64));
+Object.assign(ctx,new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.figuresCode()+'\n'+page.sourceFor('src/pdf.js')+'\nreturn {createMathPDF,geometryFigure};')(PDFLib,fontkit,BANK,ctx.FONT_BASE64));
 (async()=>{
  const groups=[...new Set(BANK.map(t=>`${t.grade}-${t.level}`))];
  for(const key of groups){

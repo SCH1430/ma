@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const root=path.resolve(__dirname,'..'),page=require('./load_page.cjs').loadPage(root);
 const {BANK,FONT_BASE64}=page.dataValues(),PDFLib=page.vendor('pdf-lib'),fontkit=page.vendor('fontkit');
 const audit=require('./audit_unified_pdf.cjs')(PDFLib);
-const create=new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.sourceFor('src/math-figures.js')+'\n'+page.sourceFor('src/pdf.js')+'\nreturn createMathPDF;')(PDFLib,fontkit,BANK,FONT_BASE64);
+const create=new Function('PDFLib','fontkit','BANK','FONT_BASE64',page.figuresCode()+'\n'+page.sourceFor('src/pdf.js')+'\nreturn createMathPDF;')(PDFLib,fontkit,BANK,FONT_BASE64);
 const families=new Map();
 for(const t of BANK)for(const q of t.tasks)if(q.generation?.batch==='2026-10-double'&&!families.has(q.family)){
  families.set(q.family,{...q,grade:t.grade,level:t.level,source:'class',sourceLabel:`${t.grade} класс · ${t.level==='advanced'?'углублённый':'базовый'} курс`});

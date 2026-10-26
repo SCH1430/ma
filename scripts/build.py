@@ -128,6 +128,7 @@ data_scripts = [
 ]
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [
+    'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'math-figures.js', 'learning-support.js', 'exam-support.js',
     'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'pdf.js', 'app.js',
 ]
