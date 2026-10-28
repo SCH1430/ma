@@ -1,6 +1,7 @@
 // Shared mathematical notation and vector drawings for screen and PDF.
 const FIGURE_TASKS=new Map(BANK.flatMap(t=>t.tasks.map(q=>[q.id,q])));
 const FIGURE_TOPICS=new Map(BANK.flatMap(t=>t.tasks.map(q=>[q.id,t])));
+if(typeof QUALITY_BANK!=='undefined')for(const q of QUALITY_BANK.tasks){FIGURE_TASKS.set(q.id,q);FIGURE_TOPICS.set(q.id,{grade:q.grade,level:q.level,subject:q.subject,title:q.topic,id:q.topicId});}
 const FIGURE_CACHE=new Map();
 const SUPER_MAP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁽':'(','⁾':')','ⁿ':'n','ˣ':'x'};
 const SUB_MAP={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ₙ':'n','₊':'+'};
@@ -84,6 +85,8 @@ function legacyGeometryFigure(id){
 function geometryFigure(id){
   if(FIGURE_CACHE.has(id))return FIGURE_CACHE.get(id);
   const q=FIGURE_TASKS.get(id);if(!q)return null;
+  // Authored packets use only diagrams reviewed together with their statement.
+  if(q.source==='quality'&&!q.figure)return null;
   const topic=FIGURE_TOPICS.get(id);
   let figure=q.figure||(Number(topic.grade)<=9?planarTaskFigure(q,topic):spatialTaskFigure(q,topic));
   if(!figure&&q.legacyFigure)figure=legacyGeometryFigure(q.legacyFigure);

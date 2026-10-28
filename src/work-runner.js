@@ -7,7 +7,7 @@ globalThis.MathWorkRunner = (() => {
   const text=(value,max=4000)=>typeof value==='string'?value.slice(0,max):'';
   const date=value=>typeof value==='string'&&/^\d{4}-\d\d-\d\dT/.test(value)&&Number.isFinite(Date.parse(value))?value.slice(0,30):'';
   const now=()=>new Date().toISOString();
-  const freshRecord=()=>({draft:'',submitted:false,correct:false,feedback:'',revealed:false,solutionBeforeAnswer:false,checks:[],reviewed:false,tries:0});
+  const freshRecord=()=>({draft:'',submitted:false,correct:false,feedback:'',revealed:false,hintUsed:false,hintBeforeAnswer:false,solutionBeforeAnswer:false,checks:[],reviewed:false,tries:0,previousAttempt:null});
   const current=session=>session?.ids?.[session.index];
   const record=(session,id=current(session))=>session?.records?.[id];
   function evaluate(raw,q,checker){
@@ -36,8 +36,11 @@ globalThis.MathWorkRunner = (() => {
     const records={};
     for(const id of ids){
       const q=byId.get(id),value=raw.records&&typeof raw.records==='object'?raw.records[id]:null,r=freshRecord();
-      if(value&&typeof value==='object'){
-        r.draft=text(value.draft);r.revealed=value.revealed===true;r.solutionBeforeAnswer=r.revealed&&value.solutionBeforeAnswer===true;
+      r.contentHash=q.contentHash||'';r.revision=q.revision||null;
+      const previous=value&&q.contentHash&&value.contentHash!==q.contentHash?value:value?.previousAttempt;
+      if(previous&&typeof previous==='object'&&typeof previous.draft==='string'&&previous.draft.trim())r.previousAttempt={draft:text(previous.draft),revision:Number.isSafeInteger(previous.revision)?previous.revision:null,contentHash:text(previous.contentHash,64)};
+      if(value&&typeof value==='object'&&(!q.contentHash||value.contentHash===q.contentHash)){
+        r.draft=text(value.draft);r.hintUsed=value.hintUsed===true;r.hintBeforeAnswer=r.hintUsed&&value.hintBeforeAnswer===true;r.revealed=value.revealed===true;r.solutionBeforeAnswer=r.revealed&&value.solutionBeforeAnswer===true;
         r.tries=Number.isSafeInteger(value.tries)?Math.max(0,Math.min(10000,value.tries)):0;
         r.checks=(Array.isArray(value.checks)?value.checks:[]).slice(0,Array.isArray(q.rubric)?Math.min(20,q.rubric.length):0).map(x=>x===true);
         r.submitted=kind(q)!=='open'&&value.submitted===true&&!!r.draft.trim();
@@ -59,7 +62,7 @@ globalThis.MathWorkRunner = (() => {
   function setDraft(session,value){
     if(!session||session.phase!=='solving')return false;
     const r=record(session),next=text(value);if(!r||r.draft===next)return false;
-    r.draft=next;r.submitted=false;r.correct=false;r.feedback='';r.reviewed=false;r.checks=[];r.solutionBeforeAnswer=false;return true;
+    r.draft=next;r.submitted=false;r.correct=false;r.feedback='';r.reviewed=false;r.checks=[];r.solutionBeforeAnswer=false;r.hintBeforeAnswer=false;return true;
   }
   function go(session,index){
     if(!session||!Number.isInteger(Number(index)))return false;
@@ -68,8 +71,9 @@ globalThis.MathWorkRunner = (() => {
   function submit(session,catalog,checker){
     if(!session||session.phase!=='solving')return null;
     const q=catalogMap(catalog).get(current(session)),r=record(session);if(!q||!r||kind(q)==='open')return null;
-    const result=evaluate(r.draft,q,checker);if(!r.correct)r.solutionBeforeAnswer=r.revealed;r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';r.tries=Math.min(10000,r.tries+1);return result;
+    const result=evaluate(r.draft,q,checker);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';r.tries=Math.min(10000,r.tries+1);return result;
   }
+  function showHint(session,catalog){const q=catalogMap(catalog).get(current(session)),r=record(session);if(!r||!q?.hint||session.phase!=='solving')return false;r.hintUsed=true;return true;}
   function reveal(session){const r=record(session);if(!r)return false;r.revealed=true;return true;}
   function setCriterion(session,catalog,index,checked){
     if(!session)return false;
@@ -88,7 +92,7 @@ globalThis.MathWorkRunner = (() => {
     const byId=catalogMap(catalog);
     for(const id of session.ids){
       const q=byId.get(id),r=record(session,id);if(!q||kind(q)==='open'||!r.draft.trim())continue;
-      const result=evaluate(r.draft,q,checker);if(!r.correct)r.solutionBeforeAnswer=r.revealed;r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';
+      const result=evaluate(r.draft,q,checker);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';
     }
     session.phase='results';session.finishedAt=now();return summary(session,byId);
   }
@@ -100,13 +104,13 @@ globalThis.MathWorkRunner = (() => {
     return r.correct?'correct':'incorrect';
   }
   function summary(session,catalog){
-    const byId=catalogMap(catalog),out={total:0,short:0,correct:0,incorrect:0,unanswered:0,pending:0,open:0,reviewed:0,awaitingReview:0,openUnanswered:0,independent:0,afterReveal:0};
+    const byId=catalogMap(catalog),out={total:0,short:0,correct:0,incorrect:0,unanswered:0,pending:0,open:0,reviewed:0,awaitingReview:0,openUnanswered:0,independent:0,afterReveal:0,afterHint:0};
     if(!session)return out;
     for(const id of session.ids){
       const q=byId.get(id),r=record(session,id);if(!q||!r)continue;
       out.total++;const s=status(q,r);
       if(kind(q)==='open'){out.open++;if(s==='reviewed')out.reviewed++;else if(s==='awaiting-review')out.awaitingReview++;else out.openUnanswered++;}
-      else{out.short++;if(s==='correct'){out.correct++;out[r.solutionBeforeAnswer?'afterReveal':'independent']++;}else if(s==='incorrect')out.incorrect++;else if(s==='pending')out.pending++;else out.unanswered++;}
+      else{out.short++;if(s==='correct'){out.correct++;out[r.solutionBeforeAnswer?'afterReveal':r.hintBeforeAnswer?'afterHint':'independent']++;}else if(s==='incorrect')out.incorrect++;else if(s==='pending')out.pending++;else out.unanswered++;}
     }
     return out;
   }
@@ -116,7 +120,7 @@ globalThis.MathWorkRunner = (() => {
     return {format:'baza-work-results',version:VERSION,sessionId:session.id,title:session.title,variant:session.variant,startedAt:session.startedAt,finishedAt:session.finishedAt,finished:session.phase==='results',summary:summary(session,byId),tasks:session.ids.map((id,index)=>{
       const q=byId.get(id),r=record(session,id);
       const state=status(q,r);
-      return {number:index+1,id,source:q.sourceLabel||q.source||'',...(q.sourceUrl?{sourceUrl:q.sourceUrl}:{}),...(q.subtypeId?{subtypeId:q.subtypeId}:{}),kind:kind(q),answer:r.draft,status:state,correct:state==='correct'?true:state==='incorrect'?false:null,reviewed:r.reviewed,revealed:r.revealed,solutionBeforeAnswer:r.solutionBeforeAnswer,checks:[...r.checks],tries:r.tries};
+      return {number:index+1,id,source:q.sourceLabel||q.source||'',...(q.sourceUrl?{sourceUrl:q.sourceUrl}:{}),...(q.subtypeId?{subtypeId:q.subtypeId}:{}),kind:kind(q),answer:r.draft,status:state,correct:state==='correct'?true:state==='incorrect'?false:null,revision:q.revision||null,contentHash:q.contentHash||'',hintUsed:r.hintUsed,hintBeforeAnswer:r.hintBeforeAnswer,previousAttempt:r.previousAttempt,reviewed:r.reviewed,revealed:r.revealed,solutionBeforeAnswer:r.solutionBeforeAnswer,checks:[...r.checks],tries:r.tries};
     })};
   }
   function render(session,catalog,options={}){
@@ -140,9 +144,9 @@ globalThis.MathWorkRunner = (() => {
     const navigation=`<nav class="work-run-numbers" aria-label="Задания работы">${session.ids.map((id,index)=>{const state=status(byId.get(id),record(session,id));return button('task',String(index+1),'task-dot run-state-'+state,`data-index="${index}" ${session.index===index?'aria-current="step"':''} aria-label="Задание ${index+1}: ${esc(label[state])}"`);}).join('')}</nav>`;
     const overview=`<div class="work-run-top"><div><span class="badge">Вариант ${esc(session.variant)} · ${session.ids.length} заданий</span><p class="muted">Ответы этой работы сохраняются отдельно от тренажёра на этом устройстве.</p></div>${button('exit','К подборкам','secondary')}</div>`;
     const source=safeUrl(q.sourceUrl)?`<a href="${esc(q.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(q.sourceLabel||'Источник')} ${q.sourceId?'№ '+esc(q.sourceId):''} ↗</a>`:esc(q.sourceLabel||q.topic||'');
-    const response=session.phase==='results'?`<div class="work-run-submitted"><strong>Ваш ответ:</strong> ${r.draft.trim()?math(r.draft):'Не записан'}<p class="run-state-text">${esc(label[status(q,r)])}${r.solutionBeforeAnswer&&kind(q)!=='open'?' · после просмотра разбора':''}</p></div>`:kind(q)==='open'?`<label class="field" for="work-run-draft">Ваше рассуждение<textarea id="work-run-draft" rows="7" maxlength="4000" aria-describedby="work-run-format">${esc(r.draft)}</textarea></label><p class="muted" id="work-run-format">${esc(hint)}</p>`:`<form id="work-run-answer-form"><div class="answer-row"><label class="field" for="work-run-answer">Ваш ответ<input id="work-run-answer" name="answer" autocomplete="off" spellcheck="false" maxlength="4000" value="${esc(r.draft)}" aria-describedby="work-run-format${r.feedback?' work-run-feedback':''}"></label><button type="submit" class="primary">Проверить</button></div><p class="muted" id="work-run-format">${esc(hint)}</p></form>${r.feedback?`<div class="feedback ${r.correct?'':'wrong'}" id="work-run-feedback" role="status" tabindex="-1">${r.feedback==='format'?'Проверьте формат ответа.':r.correct?r.solutionBeforeAnswer?'Ответ верный после просмотра разбора.':'Ответ верный.':'Ответ пока не сходится. Проверьте решение.'}</div>`:''}`;
-    const results=session.phase==='results'?`<section class="work-run-results glass" aria-labelledby="work-run-results-heading"><h2 id="work-run-results-heading">Результаты работы</h2><dl class="work-run-counts"><div><dt>Краткие ответы</dt><dd>${totals.correct} из ${totals.short} верно</dd></div><div><dt>Неверно</dt><dd>${totals.incorrect}</dd></div><div><dt>Без ответа</dt><dd>${totals.unanswered}</dd></div>${totals.open?`<div><dt>Развёрнутые ответы</dt><dd>${totals.reviewed} из ${totals.open} сверено</dd></div><div><dt>Ожидают сверки</dt><dd>${totals.awaitingReview}</dd></div><div><dt>Рассуждение не записано</dt><dd>${totals.openUnanswered}</dd></div>`:''}</dl><p class="muted">Самостоятельно верно: ${totals.independent} · после просмотра разбора: ${totals.afterReveal}. Сверка развёрнутых ответов учитывается отдельно.</p><div class="builder-actions">${button('export','Скачать результаты JSON ↓','primary')}${button('reopen','Продолжить решать','secondary')}</div><div class="work-run-table-wrap"><table class="work-run-table"><caption class="sr-only">Ответы и результаты по заданиям</caption><thead><tr><th scope="col">Задание</th><th scope="col">Ваш ответ</th><th scope="col">Результат</th></tr></thead><tbody>${session.ids.map((id,index)=>{const task=byId.get(id),answer=record(session,id);return `<tr><th scope="row">${button('task','№ '+(index+1),'text-button',`data-index="${index}"`)}</th><td>${answer.draft.trim()?esc(answer.draft):'—'}</td><td>${esc(label[status(task,answer)])}${answer.revealed?' · разбор открыт':''}</td></tr>`;}).join('')}</tbody></table></div></section>`:'';
-    return `<div class="work-runner">${overview}${results}${navigation}<article class="glass task-card work-run-card"><div class="task-meta"><span>Задание ${session.index+1} из ${session.ids.length}</span><span>${esc(q.difficulty||'')}</span></div><p class="work-run-source">${source}${q.topic||q.subtypeTitle?` · ${esc(q.subtypeTitle||q.topic)}`:''}</p>${taskBody()}${response}<div class="work-run-help">${r.revealed||session.phase==='results'?'':button('reveal','Открыть разбор','text-button')}<span class="muted">Просмотр разбора учитывается в результатах.</span></div>${r.revealed?references():session.phase==='results'?button('reveal','Посмотреть ответ и разбор','secondary'):''}</article><div class="task-nav">${button('prev','← Предыдущее','secondary',session.index?'':'disabled')}${session.index<session.ids.length-1?button('next','Следующее →','primary'):session.phase==='solving'?button('finish','Завершить работу','primary'):button('exit','К подборкам','primary')}</div>${session.phase==='solving'?`<div class="work-run-finish">${button('finish','Завершить и показать результаты','secondary')}<p class="muted">Записанные краткие ответы будут проверены, пропуски сохранятся в итогах.</p></div>`:''}</div>`;
+    const response=session.phase==='results'?`<div class="work-run-submitted"><strong>Ваш ответ:</strong> ${r.draft.trim()?math(r.draft):'Не записан'}<p class="run-state-text">${esc(label[status(q,r)])}${r.solutionBeforeAnswer&&kind(q)!=='open'?' · после просмотра разбора':''}</p></div>`:kind(q)==='open'?`<label class="field" for="work-run-draft">Ваше рассуждение<textarea id="work-run-draft" rows="7" maxlength="4000" aria-describedby="work-run-format">${esc(r.draft)}</textarea></label><p class="muted" id="work-run-format">${esc(hint)}</p>`:`<form id="work-run-answer-form"><div class="answer-row"><label class="field" for="work-run-answer">Ваш ответ<input id="work-run-answer" name="answer" autocomplete="off" spellcheck="false" maxlength="4000" value="${esc(r.draft)}" aria-describedby="work-run-format${r.feedback?' work-run-feedback':''}"></label><button type="submit" class="primary">Проверить</button></div><p class="muted" id="work-run-format">${esc(hint)}</p></form>${r.feedback?`<div class="feedback ${r.correct?'':'wrong'}" id="work-run-feedback" role="status" tabindex="-1">${r.feedback==='format'?'Проверьте формат ответа.':r.correct?r.solutionBeforeAnswer?'Ответ верный после просмотра разбора.':r.hintBeforeAnswer?'Ответ верный с подсказкой.':'Ответ верный.':'Ответ пока не сходится. Проверьте решение.'}</div>`:''}`;
+    const results=session.phase==='results'?`<section class="work-run-results glass" aria-labelledby="work-run-results-heading"><h2 id="work-run-results-heading">Результаты работы</h2><dl class="work-run-counts"><div><dt>Краткие ответы</dt><dd>${totals.correct} из ${totals.short} верно</dd></div><div><dt>Неверно</dt><dd>${totals.incorrect}</dd></div><div><dt>Без ответа</dt><dd>${totals.unanswered}</dd></div>${totals.open?`<div><dt>Развёрнутые ответы</dt><dd>${totals.reviewed} из ${totals.open} сверено</dd></div><div><dt>Ожидают сверки</dt><dd>${totals.awaitingReview}</dd></div><div><dt>Рассуждение не записано</dt><dd>${totals.openUnanswered}</dd></div>`:''}</dl><p class="muted">Самостоятельно верно: ${totals.independent} · с подсказкой: ${totals.afterHint} · после просмотра разбора: ${totals.afterReveal}. Сверка развёрнутых ответов учитывается отдельно.</p><div class="builder-actions">${button('export','Скачать результаты JSON ↓','primary')}${button('reopen','Продолжить решать','secondary')}</div><div class="work-run-table-wrap"><table class="work-run-table"><caption class="sr-only">Ответы и результаты по заданиям</caption><thead><tr><th scope="col">Задание</th><th scope="col">Ваш ответ</th><th scope="col">Результат</th></tr></thead><tbody>${session.ids.map((id,index)=>{const task=byId.get(id),answer=record(session,id);return `<tr><th scope="row">${button('task','№ '+(index+1),'text-button',`data-index="${index}"`)}</th><td>${answer.draft.trim()?esc(answer.draft):'—'}</td><td>${esc(label[status(task,answer)])}${answer.revealed?' · разбор открыт':''}</td></tr>`;}).join('')}</tbody></table></div></section>`:'';
+    return `<div class="work-runner">${overview}${results}${navigation}<article class="glass task-card work-run-card"><div class="task-meta"><span>Задание ${session.index+1} из ${session.ids.length}</span><span>${esc(q.difficulty||'')}</span></div><p class="work-run-source">${source}${q.topic||q.subtypeTitle?` · ${esc(q.subtypeTitle||q.topic)}`:''}</p>${taskBody()}${r.previousAttempt?`<details class="teacher-note"><summary>Задание обновлено. Ответ к прежней версии сохранён отдельно</summary><p>Версия ${esc(r.previousAttempt.revision||'—')}: ${esc(r.previousAttempt.draft)}</p><p class="muted">Прежний результат не оценивает выполнение новой версии задания.</p></details>`:''}${response}<div class="work-run-help">${q.hint&&!r.hintUsed&&!r.revealed&&session.phase==='solving'?button('hint','Подсказка следующего шага','secondary'):''}${r.hintUsed?`<p class="hint-panel"><strong>Следующий шаг:</strong> ${math(q.hint)}</p>`:''}${r.revealed||session.phase==='results'?'':button('reveal','Открыть разбор','text-button')}<span class="muted">Просмотр разбора учитывается в результатах.</span></div>${r.revealed?references():session.phase==='results'?button('reveal','Посмотреть ответ и разбор','secondary'):''}</article><div class="task-nav">${button('prev','← Предыдущее','secondary',session.index?'':'disabled')}${session.index<session.ids.length-1?button('next','Следующее →','primary'):session.phase==='solving'?button('finish','Завершить работу','primary'):button('exit','К подборкам','primary')}</div>${session.phase==='solving'?`<div class="work-run-finish">${button('finish','Завершить и показать результаты','secondary')}<p class="muted">Записанные краткие ответы будут проверены, пропуски сохранятся в итогах.</p></div>`:''}</div>`;
   }
-  return {createSession,sanitizeSession,setDraft,go,submit,reveal,setCriterion,review,finish,reopen,summary,exportResults,render,evaluate};
+  return {createSession,sanitizeSession,setDraft,go,submit,reveal,showHint,setCriterion,review,finish,reopen,summary,exportResults,render,evaluate};
 })();

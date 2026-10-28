@@ -12,6 +12,7 @@ from competency_assets import build_competency_data
 from exam_difficulty_assets import build_exam_difficulty_data
 from sdamgia_assets import build_sdamgia_bank
 from enrichment_assets import build_enrichment_bank
+from quality_assets import build_quality_bank
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,6 +70,7 @@ write_utf8((ROOT / 'checks' / 'competencies.json'), json.dumps(competencies, ens
 exam_difficulty = build_exam_difficulty_data(exams)
 sdamgia = build_sdamgia_bank()
 enrichment = build_enrichment_bank(bank)
+quality = build_quality_bank(bank)
 write_utf8((ROOT / 'checks' / 'exam-difficulty.json'), json.dumps(exam_difficulty, ensure_ascii=False, indent=2))
 
 for directory in [DATA, DATA / 'tasks', DATA / 'exams']:
@@ -95,6 +97,7 @@ write_constant('competencies.js', 'COMPETENCY_DATA', competencies)
 write_constant('exam-difficulty.js', 'EXAM_DIFFICULTY_DATA', exam_difficulty)
 write_constant('sdamgia.js', 'SDAMGIA_BANK', sdamgia)
 write_constant('enrichment.js', 'THINKING_BANK', enrichment)
+write_constant('quality-bank.js', 'QUALITY_BANK', quality)
 vendor = SRC / 'vendor'
 font = base64.b64encode((vendor / 'DejaVuSans.ttf').read_bytes()).decode()
 write_constant('font.js', 'FONT_BASE64', font)
@@ -139,7 +142,7 @@ scripts = [
 ]
 data_scripts = [
     'data/bank-stats.js', 'data/bank.js', *grade_scripts, *exam_scripts,
-    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/enrichment.js', 'data/font.js',
+    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/enrichment.js', 'data/quality-bank.js', 'data/font.js',
 ]
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [

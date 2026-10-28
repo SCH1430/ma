@@ -3,7 +3,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
 const root=path.resolve(__dirname,'..');
 const page=require('./load_page.cjs').loadPage(root);
-const {BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK}=page.dataValues();
+const {BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK}=page.dataValues();
 // The UI scenarios can substitute PDF capture while still using deployed app scripts.
 const source=page.runtimeCode({exclude:['src/pdf.js']});
 const KEY='mat1430.workspace.v2';
@@ -77,7 +77,7 @@ function createHarness(store=new Map(),options={}){
  options.setupDOM?.(document,window);
  const history={entries:[],index:-1,pushState(state,title,url){this.entries=this.entries.slice(0,this.index+1);this.entries.push({state,url});this.index++;},replaceState(state,title,url){if(this.index<0){this.entries.push({state,url});this.index=0;}else this.entries[this.index]={state,url};},back(){if(this.index>0){const entry=this.entries[--this.index];for(const handler of windowListeners.popstate||[])handler({state:entry.state});}}};
  const localStorage={getItem(key){if(options.failStorage)throw Error('storage disabled');return store.get(key)??null;},setItem(key,value){if(options.failStorage)throw Error('storage disabled');store.set(key,value);},removeItem(key){store.delete(key);}};
- const context={BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,document,window,history,localStorage,console,Blob,atob:value=>Buffer.from(value,'base64').toString('binary'),URL:{createObjectURL(blob){const url='blob:integration-'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},crypto:{randomUUID:()=>`integration-${++generatedIdentity}`},setTimeout(callback){const id=++timerId;timers.set(id,callback);return id;},clearTimeout(id){timers.delete(id);},fetch(){networkCalls++;throw Error('network forbidden in integration checks');},...(options.createMathPDF?{createMathPDF:options.createMathPDF}:{})};
+ const context={BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,document,window,history,localStorage,console,Blob,atob:value=>Buffer.from(value,'base64').toString('binary'),URL:{createObjectURL(blob){const url='blob:integration-'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},crypto:{randomUUID:()=>`integration-${++generatedIdentity}`},setTimeout(callback){const id=++timerId;timers.set(id,callback);return id;},clearTimeout(id){timers.delete(id);},fetch(){networkCalls++;throw Error('network forbidden in integration checks');},...(options.createMathPDF?{createMathPDF:options.createMathPDF}:{})};
  vm.createContext(context);if(options.builtPage)(options.pageRoot?require('./load_page.cjs').loadPage(options.pageRoot):page).execute(context);else vm.runInContext(source,context,{filename:'baza-app.integration.js'});
  const get=selector=>{const element=document.querySelector(selector);if(!element)throw Error('missing element: '+selector);return element;};
  return {store,document,context,window,history,get,blobs,
@@ -123,7 +123,7 @@ async function verifyExamDownload(h,exam,label){
  }
 }
 
-module.exports={createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,KEY};
+module.exports={createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,KEY};
 if(require.main===module)(async()=>{
  const store=new Map();let h=createHarness(store),originalStudent;
  await scenario('student autosave, assistance and reload',async()=>{

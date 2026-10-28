@@ -1,0 +1,338 @@
+{
+  "5-204-1": {
+    "sha256": "4448f2f2a3e9c3831ce9712b04e2c86b8bd15bae0daef14017e5e5018217e00c",
+    "skills": [
+      "remainder"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "5-206-1": {
+    "sha256": "ae5b9f9e1315dab425eb902121f8998576103a310990eed62eaaef9baf753fa7",
+    "skills": [
+      "time",
+      "units"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "5-211-1": {
+    "sha256": "daa5b8dbf03755ea0c6cfa97af506f11f4e8c002079c830819622e1a82570571",
+    "skills": [
+      "fractions"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "5-217-1": {
+    "sha256": "94f2574f0ffbe6ab9cf615f2b67b93815ab2944433ccca40e623718a1a47384d",
+    "skills": [
+      "divisibility"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "6-08-1": {
+    "sha256": "36de25891395ef57ee313b4204e431ef0d61ae0d648ef557b98cf0436268623d",
+    "skills": [
+      "symmetry",
+      "coordinates"
+    ],
+    "prerequisites": [
+      "integer-line"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "6-202-1": {
+    "sha256": "72f787916a1fddff8be411627416ec1446c843699d74e277e1f10a530bc46461",
+    "skills": [
+      "gcd-lcm"
+    ],
+    "prerequisites": [
+      "divisibility"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "6-203-1": {
+    "sha256": "f01c8391560a8d49445233a5c570748c4d44d8011fef2f89dbf7c8f3fcab98d5",
+    "skills": [
+      "integer-line"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "6-205-1": {
+    "sha256": "f9b502f888e7f5802fb6a9c4e9fb932b86e72798d8299a48f78859e8575d7842",
+    "skills": [
+      "absolute-value"
+    ],
+    "prerequisites": [
+      "integer-line"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "7-11-1": {
+    "sha256": "fee2c1a8123924d686ed5b8bbddb5f7a6ea9497bff15431ed2ba2d90eae6fdad",
+    "skills": [
+      "perimeter"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "7-12-1": {
+    "sha256": "66e849a1188bbe2571db7c7346a215003dd5d8588080c2ef26758f1b8b11159f",
+    "skills": [
+      "operations"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "8-201-1": {
+    "sha256": "a9f6663d810ce50f30ec9494723ad35831b58f02604ca615ec44e4457b0922a7",
+    "skills": [
+      "radicals"
+    ],
+    "prerequisites": [
+      "powers"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "8-203-1": {
+    "sha256": "280eb0417817d94cf035ccae8191ce416877b9f4ef135dbbb4b9062e4e1907f6",
+    "skills": [
+      "radicals"
+    ],
+    "prerequisites": [
+      "powers"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "8-204-1": {
+    "sha256": "454170d59b07cc7ea0292a74b732d4a5d939364702bd1b540db7d61b024ffbfd",
+    "skills": [
+      "powers"
+    ],
+    "prerequisites": [
+      "fractions"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "8-205-1": {
+    "sha256": "901cf3d0b35960b1d5426dd39919f4130715f3bdb799af45dd77901dc89ec4d1",
+    "skills": [
+      "domain"
+    ],
+    "prerequisites": [
+      "linear-equation"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "9-11-1": {
+    "sha256": "7a58b1ce8eaa705e1048d5f353e2b07d18f64ea549b2071acc6605b42df57063",
+    "skills": [
+      "circle"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-201-1": {
+    "sha256": "4829dfe61b8e9347db7fd057f4ef651c17b0b03202633ed3e6dec11f8de5faac",
+    "skills": [
+      "fractions"
+    ],
+    "prerequisites": [
+      "linear-equation"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-204-1": {
+    "sha256": "b2a82fbc8a368b3f1e3bb88cdc9b2b74c8fb1336cbcf2ae7236e1d6c22c6424a",
+    "skills": [
+      "radicals",
+      "domain",
+      "root-selection"
+    ],
+    "prerequisites": [
+      "powers"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-213-1": {
+    "sha256": "394ab0481e1af220ea80a4066c5a382f89ef54caf43c6ece421ced356c993e49",
+    "skills": [
+      "sequences"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-222-1": {
+    "sha256": "7ae392bfb8e1dfbda5963c6c1dcd0f99a746bd61044e08d6b1c6403708aa7570",
+    "skills": [
+      "median"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-302-1": {
+    "sha256": "9ac5af46dfbe816d4754c40c2e35d477bb7185e2d1f60eab822007d8215d7c33",
+    "skills": [
+      "polynomials"
+    ],
+    "prerequisites": [
+      "powers"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-307-1": {
+    "sha256": "f8ee946b2ddb68ae26753310c172397f5f218712115164293959d0dd980a5f34",
+    "skills": [
+      "logarithms",
+      "domain"
+    ],
+    "prerequisites": [
+      "powers"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "10-322-1": {
+    "sha256": "a0312e171a2f1c9347361902312118c08042cd21f9dace06ef832d41cfb2a3fb",
+    "skills": [
+      "conditional-probability"
+    ],
+    "prerequisites": [
+      "fractions"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-207-1": {
+    "sha256": "f9f5253dbd3139c4dd89ca67d66b11d6b4aaf7e307b8e378f4776d6bf499ce8d",
+    "skills": [
+      "systems"
+    ],
+    "prerequisites": [
+      "linear-equation"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-210-1": {
+    "sha256": "796ee8a90ba8030b5f50582965be05b4815cb77622e834790d29a6aa4352a6c2",
+    "skills": [
+      "derivative"
+    ],
+    "prerequisites": [
+      "function-value"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-213-1": {
+    "sha256": "9a440778acddc24856571caeda7dd8a86898cf81edc3b1ab33069693732501c7",
+    "skills": [
+      "integral"
+    ],
+    "prerequisites": [
+      "derivative"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-217-1": {
+    "sha256": "17887b26ad363a4abb284121ce8afd526d681969605d45302c27f6351a53e2e6",
+    "skills": [
+      "volume"
+    ],
+    "prerequisites": [
+      "area"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-302-1": {
+    "sha256": "2787153492db963702dcf4ede171834434364795adec8061fbbea14f9d2ab6e3",
+    "skills": [
+      "integer-equation"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-306-1": {
+    "sha256": "be929405cea1da81f2b6e64e62f7eaf5c4fd4b3c5548835f243864796b2f0400",
+    "skills": [
+      "parameters",
+      "quadratic-equation"
+    ],
+    "prerequisites": [
+      "operations"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-316-1": {
+    "sha256": "0b7b5a09347ba2c47f53a7f81dd7bd84b53a11af297a02e3819ea8dbd2d4a3cd",
+    "skills": [
+      "integral"
+    ],
+    "prerequisites": [
+      "derivative"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  },
+  "11-325-1": {
+    "sha256": "4b0420a1adf6fff44fee32206e2eee11f1e381e625eea2a2fe5601c912eddee3",
+    "skills": [
+      "covariance"
+    ],
+    "prerequisites": [
+      "mean"
+    ],
+    "reviewer": "assistant",
+    "note": "Skill labels reviewed against the actual statement, not inferred from its topic."
+  }
+}

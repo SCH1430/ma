@@ -130,7 +130,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   const sourcedTasks=sourceBank.tasks.map(q=>({...q,source:'sdamgia',competencies:MathCompetencies.forTask(q)}));
   const subtypeById=new Map(sourceBank.subtypes.map(s=>[s.id,s]));
   const thinkingTasks=typeof THINKING_BANK!=='undefined'?THINKING_BANK.tasks:[];
-  const catalogTasks=[...allTasks,...examWorkTasks,...sourcedTasks,...thinkingTasks].map(q=>({...q,skills:MathBankPedagogy.forTask(q)})),catalogById=new Map(catalogTasks.map(q=>[q.id,q]));
+  const qualityTasks=typeof QUALITY_BANK!=='undefined'?QUALITY_BANK.tasks:[];
+  const catalogTasks=[...allTasks,...examWorkTasks,...sourcedTasks,...thinkingTasks,...qualityTasks].map(q=>({...q,skills:MathBankPedagogy.forTask(q)})),catalogById=new Map(catalogTasks.map(q=>[q.id,q]));
   let bankTools=MathBankWorkspace.restore(null,catalogTasks),recoveryState=null,templateName='';
   const expandedFamilies=new Set();
   const attempts=new Map(),works=new Map(),favorites=new Set(),migratedWorkKeys=new Set();
@@ -453,6 +454,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function sourceTasks(){
     if(sourceFilter==='all')return catalogTasks;
     if(sourceFilter==='enrichment')return thinkingTasks;
+    if(sourceFilter==='quality')return qualityTasks;
     if(sourceFilter==='classes')return allTasks;
     if(sourceFilter==='sdamgia')return sourcedTasks;
     if(sourceFilter.startsWith('sdamgia:'))return sourcedTasks.filter(q=>q.exam===sourceFilter.slice(8));
@@ -461,13 +463,13 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function filteredTasks(){
     const query=search.trim(),exactId=catalogById.has(query)?query:null,exactSourceId=!exactId&&sourcedTasks.some(q=>String(q.sourceId)===query);
-    return sourceTasks().filter(q=>MathBankPedagogy.matches(q,bankTools.skills)&&(bankTools.format==='all'||q.format===bankTools.format)&&(bankTools.noteFilter==='all'||(bankTools.noteFilter==='excluded'?bankTools.notes[q.id]?.excluded:bankTools.notes[q.id]?.flag===bankTools.noteFilter))&&MathCompetencies.matches(q,competencyFilter)&&(subtypeFilter==='all'||q.subtypeId===subtypeFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(!['class','enrichment'].includes(q.source)||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&(exactId?q.id===exactId:exactSourceId?String(q.sourceId)===query:matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+(subtypeById.get(q.subtypeId)?.method||'')+' '+taskSource(q),search)));
+    return sourceTasks().filter(q=>MathBankPedagogy.matches(q,bankTools.skills)&&(bankTools.format==='all'||q.format===bankTools.format)&&(bankTools.noteFilter==='all'||(bankTools.noteFilter==='excluded'?bankTools.notes[q.id]?.excluded:bankTools.notes[q.id]?.flag===bankTools.noteFilter))&&MathCompetencies.matches(q,competencyFilter)&&(subtypeFilter==='all'||q.subtypeId===subtypeFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(!['class','enrichment','quality'].includes(q.source)||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&(exactId?q.id===exactId:exactSourceId?String(q.sourceId)===query:matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+(subtypeById.get(q.subtypeId)?.method||'')+' '+taskSource(q),search)));
   }
   function validAutoCount(){const n=Number(autoCount);return String(autoCount).trim()!==''&&Number.isInteger(n)&&n>=1&&n<=WORK_LIMIT;}
   function quotaTotal(){return Object.values(bankTools.quotas).reduce((sum,n)=>sum+Number(n),Number(bankTools.openCount)||0);}
   function builderContext(){return {source:sourceFilter,topic:filter,subject:subjectFilter,difficulty:difficultyFilter,search,subtype:subtypeFilter,competencies:competencyFilter,favoriteOnly,trickyOnly};}
   function applyBuilderContext(c){
-    const sources=['all','classes','enrichment','sdamgia',...exams.map(e=>'exam:'+e.id),...['oge','ege-basic','ege-profile'].map(id=>'sdamgia:'+id),...BANK.map(t=>`class:${t.grade}:${t.level}`)];
+    const sources=['all','classes','enrichment','quality','sdamgia',...exams.map(e=>'exam:'+e.id),...['oge','ege-basic','ege-profile'].map(id=>'sdamgia:'+id),...BANK.map(t=>`class:${t.grade}:${t.level}`)];
     sourceFilter=sources.includes(c?.source)?c.source:'all';filter=BANK.some(t=>t.id===c?.topic)?c.topic:'all';subjectFilter=BANK.some(t=>t.subject===c?.subject)?c.subject:'all';difficultyFilter=[...levels,'Высокий'].includes(c?.difficulty)?c.difficulty:'all';search=typeof c?.search==='string'?c.search.slice(0,200):'';subtypeFilter=subtypeById.has(c?.subtype)?c.subtype:'all';competencyFilter=MathCompetencies.normalize(c?.competencies);favoriteOnly=c?.favoriteOnly===true;trickyOnly=c?.trickyOnly===true;
   }
   function renderAssemblyOptions(list){
@@ -521,7 +523,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function renderTaskTools(q){
     const note=bankTools.notes[q.id]||{},skills=MathBankPedagogy.forTask(q),defs=MathBankPedagogy.definitions;
-    return `<div class="skill-tags">${q.format?`<span class="badge">${esc(MathBankWorkspace.formats[q.format]||q.format)}</span>`:''}${skills.map(id=>`<span>${esc(defs.find(d=>d.id===id)?.title||id)}</span>`).join('')}</div><details class="teacher-note"><summary>Заметка учителя${note.flag?` · ${esc(MathBankWorkspace.flags[note.flag])}`:''}${note.excluded?' · исключено из автосборки':''}${note.text?' · есть комментарий':''}</summary><label class="field">Метка<select data-note-flag="${esc(q.id)}"><option value="">Без метки</option>${Object.entries(MathBankWorkspace.flags).map(([id,title])=>`<option value="${id}" ${note.flag===id?'selected':''}>${title}</option>`).join('')}</select></label><label class="field">Личный комментарий<textarea rows="3" maxlength="1600" data-note-text="${esc(q.id)}">${esc(note.text||'')}</textarea></label><label class="check"><input type="checkbox" data-note-excluded="${esc(q.id)}" ${note.excluded?'checked':''}>Исключить из автосборки</label><p class="muted">Заметки сохраняются только на этом устройстве и не попадают в ученическую работу.</p></details>`;
+    return `${q.editorialStatus?`<p class="muted">Готово · версия ${q.revision} · ${esc(q.categoryLabel)}</p><details class="teacher-note"><summary>Метод и подсказка</summary><p>${mathHTML(q.method)}</p><p><strong>Следующий шаг:</strong> ${mathHTML(q.hint)}</p><p>Предварительные навыки: ${q.prerequisites.map(id=>esc(defs.find(d=>d.id===id)?.title||id)).join(', ')}.</p></details>`:''}<div class="skill-tags">${q.format?`<span class="badge">${esc(MathBankWorkspace.formats[q.format]||q.format)}</span>`:''}${skills.map(id=>`<span>${esc(defs.find(d=>d.id===id)?.title||id)}</span>`).join('')}</div><details class="teacher-note"><summary>Заметка учителя${note.flag?` · ${esc(MathBankWorkspace.flags[note.flag])}`:''}${note.excluded?' · исключено из автосборки':''}${note.text?' · есть комментарий':''}</summary><label class="field">Метка<select data-note-flag="${esc(q.id)}"><option value="">Без метки</option>${Object.entries(MathBankWorkspace.flags).map(([id,title])=>`<option value="${id}" ${note.flag===id?'selected':''}>${title}</option>`).join('')}</select></label><label class="field">Личный комментарий<textarea rows="3" maxlength="1600" data-note-text="${esc(q.id)}">${esc(note.text||'')}</textarea></label><label class="check"><input type="checkbox" data-note-excluded="${esc(q.id)}" ${note.excluded?'checked':''}>Исключить из автосборки</label><p class="muted">Заметки сохраняются только на этом устройстве и не попадают в ученическую работу.</p></details>`;
   }
   function renderFamily(group,w){
     const visible=expandedFamilies.has(group.key),first=group.tasks[0];
@@ -541,11 +543,11 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function bankTask(q,w){return `<article class="glass bank-task ${q.source==='exam'?'exam-bank-task':''}" data-task-id="${esc(q.id)}"><h3>${q.source==='class'?subjectIcon(q.subject):''}<span>${esc(taskSource(q))}</span></h3>${q.source==='exam'?`${difficultyTags(q)}<span class="badge">Оригинал ФИПИ · ${q.kind==='open'?'Развёрнутое решение':'Краткий ответ'}</span>${competencyTags(q)}${examTaskMarkup(q,true)}`:q.source==='sdamgia'?`${difficultyTags(q)}${competencyTags(q)}${sourcedPrompt(q)}${sourceLink(q)}`:`${difficultyTags(q)}${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}`}<div class="builder-actions">${action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу +','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=WORK_LIMIT?'disabled':''}`)}${action('favorite',favorites.has(q.id)?'★ В избранном':'☆ В избранное','secondary favorite-button',`data-id="${q.id}" aria-pressed="${favorites.has(q.id)}"`)}</div>${renderTaskTools(q)}</article>`;}
   function renderBuilder(){
-    const w=work(),base=sourceTasks(),classTopics=BANK.filter(t=>base.some(q=>['class','enrichment'].includes(q.source)&&q.topicId===t.id)),hasClasses=classTopics.length>0;
+    const w=work(),base=sourceTasks(),classTopics=BANK.filter(t=>base.some(q=>['class','enrichment','quality'].includes(q.source)&&q.topicId===t.id)),hasClasses=classTopics.length>0;
     const list=filteredTasks(),difficultyOptions=[...new Set(base.map(q=>q.difficulty))].sort((a,b)=>[...levels,'Высокий'].indexOf(a)-[...levels,'Высокий'].indexOf(b));
     const entries=bankTools.grouped?MathBankWorkspace.groups(list):list;
     const subjects=[...new Set(classTopics.map(t=>t.subject))],pages=Math.max(1,Math.ceil(entries.length/PAGE_SIZE));bankPage=Math.max(0,Math.min(bankPage,pages-1));
-    const shown=entries.slice(bankPage*PAGE_SIZE,(bankPage+1)*PAGE_SIZE),sourceOptions=[['all','Все классы и экзамены'],['classes','Все классы'],['enrichment','Задания на понимание · 5–11 классы'],...Array.from({length:7},(_,i)=>i+5).flatMap(g=>(g<10?['basic']:['basic','advanced']).map(l=>[`class:${g}:${l}`,`${g} класс${g>=10?' · '+(l==='advanced'?'углублённый':'базовый'):''}`])),...exams.map(e=>['exam:'+e.id,e.title+' · 2026']),['sdamgia','Решу ЕГЭ и ОГЭ · все подтипы'],...['ege-profile','ege-basic','oge'].map(id=>['sdamgia:'+id,'Решу '+sourceExamTitle(id)])];
+    const shown=entries.slice(bankPage*PAGE_SIZE,(bankPage+1)*PAGE_SIZE),sourceOptions=[['all','Все классы и экзамены'],['classes','Все классы'],['enrichment','Задания на понимание · 5–11 классы'],['quality',`Тематические пакеты · ${qualityTasks.length} заданий`],...Array.from({length:7},(_,i)=>i+5).flatMap(g=>(g<10?['basic']:['basic','advanced']).map(l=>[`class:${g}:${l}`,`${g} класс${g>=10?' · '+(l==='advanced'?'углублённый':'базовый'):''}`])),...exams.map(e=>['exam:'+e.id,e.title+' · 2026']),['sdamgia','Решу ЕГЭ и ОГЭ · все подтипы'],...['ege-profile','ege-basic','oge'].map(id=>['sdamgia:'+id,'Решу '+sourceExamTitle(id)])];
     const extraCount=Number(subjectFilter!=='all')+Number(filter!=='all')+Number(trickyOnly)+Number(favoriteOnly);
     const pagination=`<nav class="bank-pagination" aria-label="Страницы банка">${action('bank-prev','← Предыдущие','secondary',bankPage?'':'disabled')}<span>Страница ${bankPage+1} из ${pages}</span>${action('bank-next','Следующие →','secondary',bankPage<pages-1?'':'disabled')}</nav>`;
     return header('Конструктор работы.','Выбирайте задания из банка — состав работы сохраняется автоматически.')+`<div class="builder-actions catalog-shortcuts">${action('subtype-catalog','Каталог подтипов','secondary')}${action('works-home','Мои работы','secondary')}</div>`+`
@@ -760,6 +762,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       if(a==='run-exit'){go('works',{grade:null,level:null,topic:null});return;}
       if(a==='run-prev'||a==='run-next'||a==='run-task')MathWorkRunner.go(activeRun,a==='run-task'?Number(b.dataset.index):activeRun.index+(a==='run-next'?1:-1));
       else if(a==='run-reveal')MathWorkRunner.reveal(activeRun);
+      else if(a==='run-hint')MathWorkRunner.showHint(activeRun,catalogTasks);
       else if(a==='run-review')MathWorkRunner.review(activeRun,catalogTasks);
       else if(a==='run-finish')MathWorkRunner.finish(activeRun,catalogTasks,checkAnswer);
       else if(a==='run-reopen')MathWorkRunner.reopen(activeRun);
