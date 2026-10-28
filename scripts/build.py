@@ -11,6 +11,7 @@ from exam_assets import build_exam_bank, exam_bank_script
 from competency_assets import build_competency_data
 from exam_difficulty_assets import build_exam_difficulty_data
 from sdamgia_assets import build_sdamgia_bank
+from enrichment_assets import build_enrichment_bank
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,6 +68,7 @@ competencies = build_competency_data(bank, exams)
 write_utf8((ROOT / 'checks' / 'competencies.json'), json.dumps(competencies, ensure_ascii=False, indent=2))
 exam_difficulty = build_exam_difficulty_data(exams)
 sdamgia = build_sdamgia_bank()
+enrichment = build_enrichment_bank(bank)
 write_utf8((ROOT / 'checks' / 'exam-difficulty.json'), json.dumps(exam_difficulty, ensure_ascii=False, indent=2))
 
 for directory in [DATA, DATA / 'tasks', DATA / 'exams']:
@@ -92,6 +94,7 @@ write_constant('bank-stats.js', 'BANK_STATS', semantic)
 write_constant('competencies.js', 'COMPETENCY_DATA', competencies)
 write_constant('exam-difficulty.js', 'EXAM_DIFFICULTY_DATA', exam_difficulty)
 write_constant('sdamgia.js', 'SDAMGIA_BANK', sdamgia)
+write_constant('enrichment.js', 'THINKING_BANK', enrichment)
 vendor = SRC / 'vendor'
 font = base64.b64encode((vendor / 'DejaVuSans.ttf').read_bytes()).decode()
 write_constant('font.js', 'FONT_BASE64', font)
@@ -136,14 +139,14 @@ scripts = [
 ]
 data_scripts = [
     'data/bank-stats.js', 'data/bank.js', *grade_scripts, *exam_scripts,
-    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/font.js',
+    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/enrichment.js', 'data/font.js',
 ]
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
     'lesson-support.js', 'figure-viewer.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'app.js',
+    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-workspace.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)

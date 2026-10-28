@@ -129,7 +129,10 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   const sourceBank=typeof SDAMGIA_BANK!=='undefined'?SDAMGIA_BANK:{subtypes:[],tasks:[]};
   const sourcedTasks=sourceBank.tasks.map(q=>({...q,source:'sdamgia',competencies:MathCompetencies.forTask(q)}));
   const subtypeById=new Map(sourceBank.subtypes.map(s=>[s.id,s]));
-  const catalogTasks=[...allTasks,...examWorkTasks,...sourcedTasks],catalogById=new Map(catalogTasks.map(q=>[q.id,q]));
+  const thinkingTasks=typeof THINKING_BANK!=='undefined'?THINKING_BANK.tasks:[];
+  const catalogTasks=[...allTasks,...examWorkTasks,...sourcedTasks,...thinkingTasks].map(q=>({...q,skills:MathBankPedagogy.forTask(q)})),catalogById=new Map(catalogTasks.map(q=>[q.id,q]));
+  let bankTools=MathBankWorkspace.restore(null,catalogTasks),recoveryState=null,templateName='';
+  const expandedFamilies=new Set();
   const attempts=new Map(),works=new Map(),favorites=new Set(),migratedWorkKeys=new Set();
   const STORAGE_KEY='mat1430.workspace.v2',PAGE_SIZE=24;
   let student={id:'',first:'',last:'',letter:'',grade:null},examLearnerId='',library=[],resumeRoute=null,examReferencesOpen=false;
@@ -166,7 +169,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function clearStudent(){
     trainingMonitor.stop();
     for(const key of attempts.keys())if(/^(student|exam-student|exam-guest):/.test(key))attempts.delete(key);
-    student={id:'',first:'',last:'',letter:'',grade:null};examLearnerId='';resumeRoute=null;activeRun=null;pendingRun=null;
+    student={id:'',first:'',last:'',letter:'',grade:null};examLearnerId='';resumeRoute=null;activeRun=null;pendingRun=null;recoveryState=null;
   }
   function restore(){
     try{
@@ -174,6 +177,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       if(text.length>4000000)throw new Error('oversized');
       const saved=JSON.parse(text);if(saved.version!==2)return;
       trainingMonitor.restore(saved.trainingSessions);
+      try{bankTools=MathBankWorkspace.restore(saved.bankTools,catalogTasks);}catch(error){bankTools=MathBankWorkspace.restore(null,catalogTasks);}
+      if(saved.builderContext)applyBuilderContext(saved.builderContext);
       competencyFilter=MathCompetencies.normalize(saved.builderCompetencies);
       if(Number.isInteger(saved.builderAuto?.count)&&saved.builderAuto.count>=1&&saved.builderAuto.count<=WORK_LIMIT)autoCount=saved.builderAuto.count;
       if(typeof saved.examLearnerId==='string'&&/^[a-zA-Z0-9-]{1,80}$/.test(saved.examLearnerId))examLearnerId=saved.examLearnerId;
@@ -205,13 +210,14 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       const resumed=safeRoute(saved.resumeRoute,BANK);
       if(resumed.view!=='home'&&(resumed.role!=='student'||student.id||['subtypes','works','work-run'].includes(resumed.view)||examLearnerId&&['exam','exam-levels','classes'].includes(resumed.view)))resumeRoute=resumed;
       lastSaved=typeof saved.savedAt==='string'?saved.savedAt:'';
+      recoveryState=restoreRecovery(saved.recoveryState);
     }catch(error){storageOK=false;}
   }
   function persist(){
     clearTimeout(saveTimer);
     if(route.view!=='home'&&route.view!=='help')resumeRoute=safeRoute(route,BANK);
     const relevant=[...attempts].filter(([,r])=>r.draft||r.tries||r.hintLevel||r.revealed||r.correct||r.checks.some(Boolean));
-    const data={version:2,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},activeRun,resumeRoute,trainingSessions:trainingMonitor.snapshot(),savedAt:lastSaved};
+    const data={version:2,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},bankTools,builderContext:builderContext(),recoveryState,activeRun,resumeRoute,trainingSessions:trainingMonitor.snapshot(),savedAt:lastSaved};
     const text=JSON.stringify(data);
     try{
       if(text!==lastSignature){lastSaved=new Date().toISOString();data.savedAt=lastSaved;const next=JSON.stringify(data);localStorage.setItem(STORAGE_KEY,next);lastSignature=next;}
@@ -327,7 +333,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const w=work();
     return header('Мои работы.','Решайте подборки на сайте. Текущее прохождение сохраняется отдельно от тренажёра.')+`${pendingRun?`<section class="glass run-replace"><h2>Начать другую работу?</h2><p>Текущее прохождение будет заменено. Сначала можно сохранить его результаты в файл.</p><div class="builder-actions">${action('replace-run','Начать новую работу','primary')}${action('run-export','Скачать текущие результаты','secondary')}${action('cancel-run-replace','Оставить текущее прохождение','secondary')}</div></section>`:''}${activeRun?`<section class="glass works-current"><span class="badge">Текущее прохождение</span><h2>${esc(activeRun.title)}</h2><p class="muted">Вариант ${esc(activeRun.variant)} · ${taskCount(activeRun.ids.length)}</p><div class="builder-actions">${action('resume-run',activeRun.phase==='results'?'Посмотреть итоги →':'Продолжить →','primary')}${action('run-export','Скачать результаты','secondary')}</div></section>`:''}<section class="glass works-current"><h2>Открытая подборка</h2><p>${esc(w.title)} · ${taskCount(w.ids.length)}</p><div class="builder-actions">${action('run-work','Начать работу →','primary',w.ids.length?'':'disabled')}${action('import-work','Открыть файл учителя','secondary')}${route.role==='teacher'?action('builder-home','В конструктор','secondary'):''}</div><input id="import-file" type="file" accept=".json,application/json" hidden></section><section class="library-panel"><h2>Сохранённые подборки</h2>${library.length?library.map(x=>`<article class="glass library-row"><div><h3>${esc(x.title)}</h3><p class="muted">${taskCount(x.ids.length)} · Вариант ${esc(x.variant)}</p></div>${action('run-work','Решать →','primary',`data-id="${esc(x.id)}"`)}</article>`).join(''):'<p class="muted">Здесь появятся сохранённые подборки учителя. Также можно открыть JSON-файл работы.</p>'}</section>`;
   }
-  function renderWorkRunner(){return header(activeRun.title,'Ответы сохраняются на устройстве. Можно прерваться и продолжить позже.')+MathWorkRunner.render(activeRun,catalogTasks,{esc,mathHTML,figureSVG});}
+  function renderWorkRunner(){const q=question(activeRun.ids[activeRun.index]);return header(activeRun.title,'Ответы сохраняются на устройстве. Можно прерваться и продолжить позже.')+MathWorkRunner.render(activeRun,catalogTasks,{esc,mathHTML,figureSVG})+(activeRun.phase==='solving'?renderRecovery(q,activeRun.records[q.id]):'');}
   const examStatus=q=>{const r=record(q.id);return q.answerKind==='open'?r.feedback==='self'?'Сверено с критериями':r.draft?'Есть черновик':'Нужно полное решение':r.correct?r.revealed?'Верно после просмотра ответа':'Верно':r.tries?'Были попытки':'Ещё не решено';};
   const examComplete=q=>q.answerKind==='open'?record(q.id).feedback==='self':record(q.id).correct;
   function examImages(images,label,text='',lazy=false){
@@ -364,6 +370,25 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const specific=typeof MathLessons==='undefined'?null:MathLessons.feedback(q,r.draft,parseAnswer);
     return specific||'Проверьте вычисления и условия задачи. Можно открыть подсказку или первый шаг.';
   }
+  function recoveryOwner(){return route.view==='work-run'?`run:${activeRun?.id||''}`:route.role==='teacher'?'teacher':`student:${student.id||examLearnerId}`;}
+  function restoreRecovery(raw){
+    if(!raw||!question(raw.originId)||typeof raw.owner!=='string'||!Array.isArray(raw.ids)||raw.ids.length!==2)return null;
+    const original=question(raw.originId),qs=raw.ids.map(question);
+    if(qs.some(q=>!q||q.source!=='class'||!['number','set'].includes(q.kind)||q.grade!==original.grade||q.level!==original.level||!MathBankPedagogy.forTask(q).some(id=>MathBankPedagogy.forTask(original).includes(id)))||new Set([original,...qs].map(q=>q.canonicalId||q.id)).size!==3)return null;
+    const drafts=qs.map((_,i)=>typeof raw.drafts?.[i]==='string'?raw.drafts[i].slice(0,80):'');
+    const correct=qs.map((q,i)=>raw.correct?.[i]===true&&checkAnswer(drafts[i],q).correct);
+    return {originId:original.id,owner:raw.owner.slice(0,160),ids:qs.map(q=>q.id),drafts,correct,feedback:qs.map((_,i)=>correct[i]?'correct':['wrong','format'].includes(raw.feedback?.[i])?raw.feedback[i]:''),stage:correct[0]&&raw.stage===1?1:0};
+  }
+  function recoveryPlan(q){return MathBankPedagogy.recovery(question(q.id)||q,catalogTasks.filter(p=>p.grade===q.grade&&p.level===q.level&&['number','set'].includes(p.kind)&&p.source==='class'));}
+  function renderRecovery(q,r){
+    if(!q||q.kind==='open')return '';
+    const active=recoveryState?.originId===q.id&&recoveryState.owner===recoveryOwner();
+    if(!active&&r?.feedback!=='wrong')return '';
+    const full=question(q.id)||q,plan=recoveryPlan(full);
+    if(!active)return plan.simple&&plan.practice?`<section class="recovery-panel glass"><h3>Закрепить нужный навык</h3><p>Короткое объяснение → простой пример → новая задача. Эта практика хранится отдельно от результата исходного задания.</p>${action('recovery-start','Пройти два шага','secondary',`data-id="${esc(q.id)}"`)}</section>`:'';
+    const state=recoveryState,i=state.stage,task=question(state.ids[i]);
+    return `<section class="recovery-panel glass" id="recovery-panel" tabindex="-1"><span class="badge">Восстановление навыка · ${i+1} / 2</span><h3>${i?'Новая задача самостоятельно':'Простой проверочный пример'}</h3><p>${mathHTML(plan.explanation||'Повторите правило и проверьте его на новом примере.')}</p><p class="task-prompt">${mathHTML(task.prompt)}</p>${figureSVG(task.id,true)}<form id="recovery-answer-form"><label class="field" for="recovery-answer">Ваш ответ<input id="recovery-answer" maxlength="80" value="${esc(state.drafts[i])}" ${state.correct[i]?'readonly':''} aria-describedby="recovery-format"></label><p class="muted" id="recovery-format">${esc(answerHint(task))}</p><button type="submit" class="secondary" ${state.correct[i]?'disabled':''}>Проверить</button></form>${state.feedback[i]?`<p role="status">${state.correct[i]?'Верно.':state.feedback[i]==='format'?'Проверьте формат ответа.':'Пока неверно. Примените правило из объяснения и попробуйте снова.'}</p>`:''}${state.correct[i]?i?'<p class="feedback">Оба шага пройдены. Теперь вернитесь к исходному заданию и проверьте себя.</p>':action('recovery-next','Перейти к новой задаче →','primary'):''}${action('recovery-close','Вернуться к исходному заданию','text-button')}</section>`;
+  }
   function helpMarkup(q,r){
     if(r.correct)return '';
     const help=MathLearning.help(q),stage=r.hintLevel?geometryFigure(q.id)?.stages?.[Math.min(1,r.hintLevel-1)]:null;
@@ -377,7 +402,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const t=currentTopic();if(!t?.tasks.length)return header('Нет заданий.','Вернитесь к темам и измените фильтр.');
     const q=t.tasks[route.index],r=record(q.id),done=t.tasks.filter(x=>record(x.id).correct).length;
     const numeric=`<form id="answer-form"><div class="answer-row"><label class="field" for="answer">Ваш ответ<input id="answer" name="answer" autocomplete="off" spellcheck="false" maxlength="60" value="${esc(r.draft)}" ${r.correct?'readonly':''} aria-describedby="answer-format${r.feedback?' feedback':''}"></label><button class="primary" type="submit" ${r.correct?'disabled':''}>${r.correct?'Проверено ✓':'Проверить'}</button></div><p class="muted" id="answer-format">${esc(answerHint(q))}</p></form>${r.feedback?`<div id="feedback" class="feedback ${r.correct?'':'wrong'}" role="status"><strong>${r.correct?'Верно. Продолжаем!':r.feedback==='format'?'Проверьте запись ответа.':'Пока не сходится.'}</strong><p>${r.correct?mathHTML(q.solution):r.feedback==='format'?esc(answerHint(q)):mathHTML(wrongAnswerMessage(q,r))}</p></div>`:''}${helpMarkup(q,r)}${r.revealed&&!r.correct?`<div class="solution"><strong>Ответ: ${mathHTML(q.display.replace(/\./g,','))}.</strong><p>${mathHTML(q.solution)}</p></div>`:''}`;
-    return `<div class="trainer">`+header(t.title,route.role==='teacher'?'Просмотр учителя. Ученические результаты хранятся отдельно.':`${student.first}, решайте в своём темпе. Подсказки доступны на каждом шаге.`)+`${route.taskIds?'<p class="badge">Повтор выбранных заданий</p>':`<label class="field training-filter" for="training-difficulty">Сложность в этой теме<select id="training-difficulty"><option value="all">Все ступени</option>${levels.map(d=>`<option value="${d}" ${route.difficulty===d?'selected':''}>${d}</option>`).join('')}</select></label>`}<div class="progress" role="progressbar" aria-label="Завершённые задания" aria-valuemin="0" aria-valuemax="${t.tasks.length}" aria-valuenow="${done}"><span style="width:${done/t.tasks.length*100}%"></span></div>${lessonMarkup(t,q)}<article class="glass task-card"><div class="task-meta"><span class="subject-label">${subjectIcon(t.subject)}${esc(t.subject)} · ${route.grade} класс</span><span>Задание ${route.index+1} из ${t.tasks.length}</span></div>${difficultyTags(q)}<h2 class="task-prompt">${mathHTML(q.prompt)}</h2>${figureSVG(q.id,false,{stage:r.revealed||r.correct?1:r.hintLevel-1})}${q.kind==='open'?renderOpen(q,r):numeric}${r.correct?`<p class="task-outcome">${q.kind==='open'?'Самопроверка по образцу':outcomeNames[classifyAttempt(r)]}</p>`:''}</article><div class="task-nav"><div class="dots" aria-label="Номер задания">${t.tasks.map((x,i)=>action('task',String(i+1),`task-dot ${record(x.id).correct?'done':''}`,`data-index="${i}" aria-label="Задание ${i+1}, ${x.kind==='open'&&record(x.id).correct?'самопроверка':outcomeNames[classifyAttempt(record(x.id))]}" ${i===route.index?'aria-current="step"':''}`)).join('')}</div>${action(route.index===t.tasks.length-1?'finish':'next',route.index===t.tasks.length-1?'Завершить →':'Следующее →',r.correct?'primary':'secondary')}</div></div>`;
+    return `<div class="trainer">`+header(t.title,route.role==='teacher'?'Просмотр учителя. Ученические результаты хранятся отдельно.':`${student.first}, решайте в своём темпе. Подсказки доступны на каждом шаге.`)+`${route.taskIds?'<p class="badge">Повтор выбранных заданий</p>':`<label class="field training-filter" for="training-difficulty">Сложность в этой теме<select id="training-difficulty"><option value="all">Все ступени</option>${levels.map(d=>`<option value="${d}" ${route.difficulty===d?'selected':''}>${d}</option>`).join('')}</select></label>`}<div class="progress" role="progressbar" aria-label="Завершённые задания" aria-valuemin="0" aria-valuemax="${t.tasks.length}" aria-valuenow="${done}"><span style="width:${done/t.tasks.length*100}%"></span></div>${lessonMarkup(t,q)}<article class="glass task-card"><div class="task-meta"><span class="subject-label">${subjectIcon(t.subject)}${esc(t.subject)} · ${route.grade} класс</span><span>Задание ${route.index+1} из ${t.tasks.length}</span></div>${difficultyTags(q)}<h2 class="task-prompt">${mathHTML(q.prompt)}</h2>${figureSVG(q.id,false,{stage:r.revealed||r.correct?1:r.hintLevel-1})}${q.kind==='open'?renderOpen(q,r):numeric}${renderRecovery(q,r)}${r.correct?`<p class="task-outcome">${q.kind==='open'?'Самопроверка по образцу':outcomeNames[classifyAttempt(r)]}</p>`:''}</article><div class="task-nav"><div class="dots" aria-label="Номер задания">${t.tasks.map((x,i)=>action('task',String(i+1),`task-dot ${record(x.id).correct?'done':''}`,`data-index="${i}" aria-label="Задание ${i+1}, ${x.kind==='open'&&record(x.id).correct?'самопроверка':outcomeNames[classifyAttempt(record(x.id))]}" ${i===route.index?'aria-current="step"':''}`)).join('')}</div>${action(route.index===t.tasks.length-1?'finish':'next',route.index===t.tasks.length-1?'Завершить →':'Следующее →',r.correct?'primary':'secondary')}</div></div>`;
   }
   function renderResult(){
     const t=currentTopic(),counts={independent:0,hinted:0,explained:0,pending:0,self:0};
@@ -389,10 +414,10 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const hash=value=>{let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
     return [...values].sort((a,b)=>hash(`${seed}:${a.id}`)-hash(`${seed}:${b.id}`));
   }
-  function presetCandidates(){return shuffled(filteredTasks().filter(q=>q.source==='class'&&q.topicId===filter&&q.difficulty===presetLevel),presetSeed);}
+  function presetCandidates(){return shuffled(filteredTasks().filter(q=>(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded)&&q.source==='class'&&q.topicId===filter&&q.difficulty===presetLevel),presetSeed);}
   function renderPresets(){
     if(filter==='all')return '<div class="glass preset-panel"><h2>Заготовки по сложности</h2><p class="muted">Выберите тему. Можно посмотреть состав заготовки и добавить её к ручному выбору.</p></div>';
-    const ts=filteredTasks().filter(q=>q.source==='class'&&q.topicId===filter),pool=presetCandidates(),selected=pool.slice(0,presetCount);
+    const ts=filteredTasks().filter(q=>(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded)&&q.source==='class'&&q.topicId===filter),pool=presetCandidates(),selected=pool.slice(0,presetCount);
     return `<section class="glass preset-panel"><h2>Заготовки по теме</h2><div class="preset-grid">${levels.map((d,i)=>{const n=ts.filter(q=>q.difficulty===d).length;return `<button class="preset-card" type="button" data-action="preset-preview" data-difficulty="${d}" aria-pressed="${presetLevel===d}" ${n?'':'disabled'}>${difficultyBadge(d)}<span>${levelDescriptions[i]}</span><small>${taskCount(n)}</small></button>`;}).join('')}</div>${presetLevel?`<div id="preset-preview" tabindex="-1"><h3>${esc(presetLevel)} · состав заготовки</h3><label class="field" for="preset-count">Количество заданий<select id="preset-count">${pool.map((_,i)=>`<option value="${i+1}" ${i+1===presetCount?'selected':''}>${i+1}</option>`).join('')}</select></label><ol class="preset-preview-list">${selected.map(q=>`<li><strong>№ ${q.id}${work().ids.includes(q.id)?' · уже выбрано':''}</strong>${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}</li>`).join('')}</ol><div class="builder-actions">${action('preset-add','Добавить заготовку +','primary',selected.some(q=>!work().ids.includes(q.id))&&work().ids.length<WORK_LIMIT?'':'disabled')}${action('preset-shuffle','Другая подборка','secondary',pool.length>presetCount?'':'disabled')}</div><p class="muted">Добавляются только новые задания. Ручной выбор сохраняется.</p></div>`:''}</section>`;
   }
   function renderLibrary(){
@@ -427,6 +452,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function sourceTasks(){
     if(sourceFilter==='all')return catalogTasks;
+    if(sourceFilter==='enrichment')return thinkingTasks;
     if(sourceFilter==='classes')return allTasks;
     if(sourceFilter==='sdamgia')return sourcedTasks;
     if(sourceFilter.startsWith('sdamgia:'))return sourcedTasks.filter(q=>q.exam===sourceFilter.slice(8));
@@ -435,27 +461,39 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function filteredTasks(){
     const query=search.trim(),exactId=catalogById.has(query)?query:null,exactSourceId=!exactId&&sourcedTasks.some(q=>String(q.sourceId)===query);
-    return sourceTasks().filter(q=>MathCompetencies.matches(q,competencyFilter)&&(subtypeFilter==='all'||q.subtypeId===subtypeFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(q.source!=='class'||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&(exactId?q.id===exactId:exactSourceId?String(q.sourceId)===query:matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+(subtypeById.get(q.subtypeId)?.method||'')+' '+taskSource(q),search)));
+    return sourceTasks().filter(q=>MathBankPedagogy.matches(q,bankTools.skills)&&(bankTools.format==='all'||q.format===bankTools.format)&&(bankTools.noteFilter==='all'||(bankTools.noteFilter==='excluded'?bankTools.notes[q.id]?.excluded:bankTools.notes[q.id]?.flag===bankTools.noteFilter))&&MathCompetencies.matches(q,competencyFilter)&&(subtypeFilter==='all'||q.subtypeId===subtypeFilter)&&(difficultyFilter==='all'||q.difficulty===difficultyFilter)&&(!['class','enrichment'].includes(q.source)||(subjectFilter==='all'||q.subject===subjectFilter)&&(filter==='all'||q.topicId===filter)&&(!trickyOnly||q.tricky))&&(!favoriteOnly||favorites.has(q.id))&&(exactId?q.id===exactId:exactSourceId?String(q.sourceId)===query:matches(q.prompt+' '+q.id+' '+(q.topic||'')+' '+(subtypeById.get(q.subtypeId)?.method||'')+' '+taskSource(q),search)));
   }
   function validAutoCount(){const n=Number(autoCount);return String(autoCount).trim()!==''&&Number.isInteger(n)&&n>=1&&n<=WORK_LIMIT;}
+  function quotaTotal(){return Object.values(bankTools.quotas).reduce((sum,n)=>sum+Number(n),Number(bankTools.openCount)||0);}
+  function builderContext(){return {source:sourceFilter,topic:filter,subject:subjectFilter,difficulty:difficultyFilter,search,subtype:subtypeFilter,competencies:competencyFilter,favoriteOnly,trickyOnly};}
+  function applyBuilderContext(c){
+    const sources=['all','classes','enrichment','sdamgia',...exams.map(e=>'exam:'+e.id),...['oge','ege-basic','ege-profile'].map(id=>'sdamgia:'+id),...BANK.map(t=>`class:${t.grade}:${t.level}`)];
+    sourceFilter=sources.includes(c?.source)?c.source:'all';filter=BANK.some(t=>t.id===c?.topic)?c.topic:'all';subjectFilter=BANK.some(t=>t.subject===c?.subject)?c.subject:'all';difficultyFilter=[...levels,'Высокий'].includes(c?.difficulty)?c.difficulty:'all';search=typeof c?.search==='string'?c.search.slice(0,200):'';subtypeFilter=subtypeById.has(c?.subtype)?c.subtype:'all';competencyFilter=MathCompetencies.normalize(c?.competencies);favoriteOnly=c?.favoriteOnly===true;trickyOnly=c?.trickyOnly===true;
+  }
+  function renderAssemblyOptions(list){
+    const families=MathBankWorkspace.groups(list),label=group=>`${group.tasks[0].topic||group.tasks[0].sourceLabel} · ${group.tasks.length} зад. · ${String(group.tasks[0].prompt||group.tasks[0].id).slice(0,65)}`;
+    return `<div class="bank-tool-grid"><label class="field" for="selection-mode">Цель подбора<select id="selection-mode">${[['balanced','Разнообразить темы'],['diverse','Разные семейства задач'],['practice','Отработать один приём']].map(([id,title])=>`<option value="${id}" ${bankTools.mode===id?'selected':''}>${title}</option>`).join('')}</select></label>${bankTools.mode==='practice'?`<label class="field" for="practice-family">Семейство<select id="practice-family"><option value="">Подобрать автоматически</option>${families.map(g=>`<option value="${esc(g.key)}" ${bankTools.familyId===g.key?'selected':''}>${esc(label(g))}</option>`).join('')}</select></label>`:''}</div><p class="muted">В режиме разных семейств берётся не более одного задания из каждой размеченной группы. Для заданий без семейства учитывается отдельный оригинал; разные способы решения для них не гарантируются.</p><label class="check"><input id="structured-work" type="checkbox" ${bankTools.structured?'checked':''}>Задать структуру по сложности</label>${bankTools.structured?`<div class="quota-grid">${MathBankWorkspace.difficulties.map(d=>`<label class="field">${esc(d)}<input type="number" min="0" max="60" step="1" data-quota="${esc(d)}" value="${esc(bankTools.quotas[d])}" aria-label="Количество: ${esc(d)}"></label>`).join('')}<label class="field">На рассуждение<input id="open-quota" type="number" min="0" max="60" step="1" value="${esc(bankTools.openCount)}"></label></div><p class="muted" id="quota-total">Всего по структуре: ${quotaTotal()} из 60. Если нужны рассуждения, остальные количества относятся к кратким ответам. Фильтр сложности выше продолжает действовать.</p>`:''}<label class="check"><input id="exclude-marked" type="checkbox" ${bankTools.excludeMarked?'checked':''}>Не брать в автосборку задания с отметкой «Исключить»</label><div class="template-save"><label class="field" for="template-name">Название шаблона<input id="template-name" maxlength="70" value="${esc(templateName)}" placeholder="Например, проверочная по дробям"></label>${action('template-save','Сохранить настройки','secondary',bankTools.templates.length>=30?'disabled':'')}</div><p class="muted">Шаблон сохраняет фильтры, цель подбора и структуру. До 30 шаблонов на этом устройстве.</p>${bankTools.templates.length?`<ul class="bank-templates">${bankTools.templates.map(t=>`<li><span>${esc(t.name)}</span>${action('template-load','Применить','text-button',`data-template="${esc(t.id)}"`)}${action('template-delete','Удалить','text-button',`data-template="${esc(t.id)}"`)}</li>`).join('')}</ul>`:''}`;
+  }
   function renderAutoResult(){
     if(!autoResult)return '';
-    if(autoResult.invalid)return '<div id="auto-result" class="auto-result" role="status" tabindex="-1"><strong>Проверьте количество заданий</strong><p>Введите целое количество заданий от 1 до 60.</p></div>';
+    if(autoResult.invalid)return '<div id="auto-result" class="auto-result" role="status" tabindex="-1"><strong>Проверьте количество заданий</strong><p>Введите целые количества от 0 до 60; сумма структуры должна быть от 1 до 60.</p></div>';
     const r=autoResult,labels=ids=>MathCompetencies.definitions.filter(item=>ids.includes(item.id)).map(item=>item.title).join(', ');
     const heading=r.selected?`${r.mode==='build'?'Собрана новая работа':'Добавлено в работу'}: ${r.selected} из ${r.requested}`:r.capacity===0?'В работе уже 60 заданий':'Нет новых подходящих заданий';
-    return `<div id="auto-result" class="auto-result ${r.shortfall||r.missingCompetencies.length?'has-shortage':''}" role="status" tabindex="-1"><strong>${heading}</strong><p>В работе: ${taskCount(r.workSize)}. ${r.selected?`Подобрано без повторов по выбранным фильтрам.`:'Состав текущей работы не изменился.'}</p>${r.previousSaved?'<p>Предыдущая работа сохранена в «Мои подборки».</p>':''}${r.shortfall?`<p>Не хватает: ${taskCount(r.shortfall)}. ${r.mode==='append'&&r.capacity<r.requested?`Свободных мест до сборки: ${r.capacity}. `:''}По фильтрам ${r.mode==='append'?'новых ':''}доступно: ${taskCount(r.available)}.</p>`:''}${r.coveredCompetencies.length?`<p>Проверяемые компетенции: ${esc(labels(r.coveredCompetencies))}.</p>`:''}${r.missingCompetencies.length?`<p class="auto-missing">Не удалось включить компетенции: ${esc(labels(r.missingCompetencies))}. Измените фильтры или увеличьте количество заданий.</p>`:''}</div>`;
+    return `<div id="auto-result" class="auto-result ${r.shortfall||r.missingCompetencies.length?'has-shortage':''}" role="status" tabindex="-1"><strong>${heading}</strong><p>В работе: ${taskCount(r.workSize)}. ${r.selected?`Подобрано без повторов по выбранным фильтрам.`:'Состав текущей работы не изменился.'}</p>${r.searchLimited?'<p>Подбор остановлен на ограничении перебора. Не найдено полного набора; попробуйте другой запуск или смягчите условия.</p>':''}${r.quotaResults?.length?`<ul>${r.quotaResults.map(q=>`<li>${esc(q.label||q.difficulty)}: ${q.selected} из ${q.requested}${q.shortfall?` · не хватает ${q.shortfall}`:''}</li>`).join('')}</ul>`:''}${r.previousSaved?'<p>Предыдущая работа сохранена в «Мои подборки».</p>':''}${r.shortfall?`<p>Не хватает: ${taskCount(r.shortfall)}. ${r.mode==='append'&&r.capacity<r.requested?`Свободных мест до сборки: ${r.capacity}. `:''}По фильтрам ${r.mode==='append'?'новых ':''}доступно: ${taskCount(r.available)}.</p>`:''}${r.coveredCompetencies.length?`<p>Проверяемые компетенции: ${esc(labels(r.coveredCompetencies))}.</p>`:''}${r.missingCompetencies.length?`<p class="auto-missing">Не удалось включить компетенции: ${esc(labels(r.missingCompetencies))}. Измените фильтры или увеличьте количество заданий.</p>`:''}</div>`;
   }
   function renderAutoAssembly(list,w){
+    list=list.filter(q=>!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded);
     const availableNew=list.filter(q=>!w.ids.includes(q.id)).length,capacity=WORK_LIMIT-w.ids.length;
-    return `<section class="glass auto-panel" aria-labelledby="auto-heading"><div class="auto-panel-heading"><span class="badge">Подбор по фильтрам</span><h2 id="auto-heading">Автоматическая сборка</h2><p class="muted" id="auto-help">Выберите источник, компетенции и сложность выше, затем укажите количество. Конструктор подберёт задания из найденных и постарается включить каждую выбранную компетенцию.</p></div><div class="auto-build-controls"><label class="field" for="auto-count">Количество заданий<input id="auto-count" type="number" inputmode="numeric" min="1" max="${WORK_LIMIT}" step="1" required value="${esc(autoCount)}" aria-describedby="auto-help auto-available"></label><div class="auto-availability" id="auto-available"><strong>Доступно: ${taskCount(list.length)}</strong><span>Для добавления без повторов: ${taskCount(availableNew)}</span><span>Свободных мест в работе: ${capacity}</span></div></div><div class="builder-actions auto-actions">${action('auto-build','Собрать новую работу','primary',list.length?'':'disabled')}${action('auto-append','Добавить к работе','secondary',availableNew&&capacity?'':'disabled')}</div><p class="muted auto-preserve-note">При новой сборке текущая непустая работа сохранится в «Мои подборки». Каждый запуск подбирает набор заново. Учитываются все фильтры банка, включая поиск и избранное.</p>${renderAutoResult()}</section>`;
+    return `<section class="glass auto-panel" aria-labelledby="auto-heading"><div class="auto-panel-heading"><span class="badge">Подбор по фильтрам</span><h2 id="auto-heading">Автоматическая сборка</h2><p class="muted" id="auto-help">Выберите источник, компетенции и сложность выше, затем укажите количество. Конструктор подберёт задания из найденных и постарается включить каждую выбранную компетенцию.</p></div><div class="auto-build-controls"><label class="field" for="auto-count">${bankTools.structured?'Количество без структуры':'Количество заданий'}<input id="auto-count" type="number" inputmode="numeric" min="1" max="${WORK_LIMIT}" step="1" required value="${esc(autoCount)}" ${bankTools.structured?'disabled':''} aria-describedby="auto-help auto-available"></label><div class="auto-availability" id="auto-available"><strong>Доступно: ${taskCount(list.length)}</strong><span>Для добавления без повторов: ${taskCount(availableNew)}</span><span>Свободных мест в работе: ${capacity}</span></div></div><div class="builder-actions auto-actions">${action('auto-build','Собрать новую работу','primary',list.length?'':'disabled')}${action('auto-append','Добавить к работе','secondary',availableNew&&capacity?'':'disabled')}</div><p class="muted auto-preserve-note">При новой сборке текущая непустая работа сохранится в «Мои подборки». Каждый запуск подбирает набор заново. Учитываются все фильтры банка, включая поиск и избранное.</p>${renderAutoResult()}${renderAssemblyOptions(list)}</section>`;
   }
   function assembleWork(mode){
     const input=$('auto-count');if(input)autoCount=input.value;
-    if(!validAutoCount()){
+    if(bankTools.structured?!(Number.isInteger(quotaTotal())&&quotaTotal()>0&&quotaTotal()<=WORK_LIMIT&&Number.isInteger(Number(bankTools.openCount))&&Number(bankTools.openCount)>=0&&Object.values(bankTools.quotas).every(n=>Number.isInteger(Number(n))&&Number(n)>=0)):!validAutoCount()){
       autoResult={invalid:true};render();const next=$('auto-count');next?.setCustomValidity('Введите целое количество заданий от 1 до 60.');next?.reportValidity();$('auto-result')?.focus({preventScroll:true});return;
     }
     const w=work(),capacity=mode==='append'?WORK_LIMIT-w.ids.length:WORK_LIMIT;
-    const result=MathAutoWork.select(filteredTasks(),{count:Number(autoCount),seed:freshId(),competencies:competencyFilter,excludeIds:mode==='append'?w.ids:[],limit:capacity});
+    const pool=filteredTasks().filter(q=>!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded);
+    const result=MathAutoWork.select(pool,{count:Number(autoCount),seed:freshId(),competencies:competencyFilter,excludeIds:mode==='append'?w.ids:[],excludeTasks:mode==='append'?w.ids.map(question):[],limit:capacity,mode:bankTools.mode,familyId:bankTools.familyId,openCount:bankTools.structured?Number(bankTools.openCount):0,difficultyQuotas:bankTools.structured?MathBankWorkspace.difficulties.map(difficulty=>({difficulty,count:Number(bankTools.quotas[difficulty])})):undefined});
     let previousSaved=false;
     if(result.ids.length){
       if(mode==='build'){previousSaved=!!saveLibrary(w);w.ids=[...result.ids];}else w.ids.push(...result.ids);
@@ -471,17 +509,43 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const ids=new Set(MathCompetencies.forTask(q));
     return `<div class="competency-tags" aria-label="Проверяемые умения">${MathCompetencies.definitions.filter(item=>ids.has(item.id)).map(item=>`<span class="competency-tag" data-competency-tag="${item.id}" title="${esc(item.description)}">${esc(item.title)}</span>`).join('')}</div>`;
   }
+  function renderSkillFilters(base){
+    const counts=new Map();for(const q of base)for(const id of MathBankPedagogy.forTask(q))counts.set(id,(counts.get(id)||0)+1);
+    const defs=MathBankPedagogy.definitions;
+    return `<fieldset class="competency-filter"><legend>Конкретные навыки</legend><p class="muted">Достаточно совпадения хотя бы с одним выбранным навыком. Неразмеченные задания не включаются в подбор по навыку.</p><div class="competency-options">${defs.map(d=>`<label class="competency-choice"><input type="checkbox" data-skill="${d.id}" ${bankTools.skills.includes(d.id)?'checked':''}><span>${esc(d.title)}</span><small>${counts.get(d.id)||0}</small></label>`).join('')}</div>${bankTools.skills.map(id=>defs.find(d=>d.id===id)).filter(d=>d?.prerequisites.length).map(d=>`<p class="muted">Для «${esc(d.title)}» полезно знать: ${d.prerequisites.map(id=>esc(defs.find(d=>d.id===id)?.title||id)).join(', ')}.</p>`).join('')}${action('clear-skills','Снять выбор навыков','text-button',bankTools.skills.length?'':'disabled')}</fieldset>`;
+  }
+  function renderExtraBankFilters(){return `<label class="field" for="task-format">Формат задания<select id="task-format"><option value="all">Все форматы</option>${Object.entries(MathBankWorkspace.formats).map(([id,title])=>`<option value="${id}" ${bankTools.format===id?'selected':''}>${title}</option>`).join('')}</select></label><label class="field" for="note-filter">Заметки учителя<select id="note-filter"><option value="all">Все задания</option>${[...Object.entries(MathBankWorkspace.flags),['excluded','Исключённые из автосборки']].map(([id,title])=>`<option value="${id}" ${bankTools.noteFilter===id?'selected':''}>${title}</option>`).join('')}</select></label>`;}
+  function renderCoverage(base){
+    const rows=MathBankPedagogy.coverage(base);
+    return `<section class="coverage-map"><h2>Карта наполненности</h2><p class="muted">Весь выбранный источник, до остальных фильтров. Семейства — размеченные группы однотипных задач; задания без такой разметки учитываются отдельно. Число групп не равно числу доказанно разных способов решения.</p><div class="coverage-scroll" tabindex="0" role="region" aria-label="Наполненность тем"><table><thead><tr><th>Тема / раздел</th><th>Задачи</th><th>Группы</th><th>Сложность</th><th>Рассуждения</th><th>Что пополнить</th></tr></thead><tbody>${rows.map(row=>`<tr><th>${esc(row.grade?`${row.grade} класс · `:'')}${esc(row.title)}${row.grade>=10?` · ${row.level==='advanced'?'углублённый':'базовый'}`:''}</th><td>${row.count}</td><td>${row.families}<small>без разметки: ${row.unclassified}</small></td><td>${Object.entries(row.difficulties).map(([d,n])=>`${esc(d)}: ${n}`).join('<br>')}</td><td>${row.open}</td><td>${row.gaps.map(esc).join('; ')||'Основные категории представлены'}</td></tr>`).join('')}</tbody></table></div></section>`;
+  }
+  function renderTaskTools(q){
+    const note=bankTools.notes[q.id]||{},skills=MathBankPedagogy.forTask(q),defs=MathBankPedagogy.definitions;
+    return `<div class="skill-tags">${q.format?`<span class="badge">${esc(MathBankWorkspace.formats[q.format]||q.format)}</span>`:''}${skills.map(id=>`<span>${esc(defs.find(d=>d.id===id)?.title||id)}</span>`).join('')}</div><details class="teacher-note"><summary>Заметка учителя${note.flag?` · ${esc(MathBankWorkspace.flags[note.flag])}`:''}${note.excluded?' · исключено из автосборки':''}${note.text?' · есть комментарий':''}</summary><label class="field">Метка<select data-note-flag="${esc(q.id)}"><option value="">Без метки</option>${Object.entries(MathBankWorkspace.flags).map(([id,title])=>`<option value="${id}" ${note.flag===id?'selected':''}>${title}</option>`).join('')}</select></label><label class="field">Личный комментарий<textarea rows="3" maxlength="1600" data-note-text="${esc(q.id)}">${esc(note.text||'')}</textarea></label><label class="check"><input type="checkbox" data-note-excluded="${esc(q.id)}" ${note.excluded?'checked':''}>Исключить из автосборки</label><p class="muted">Заметки сохраняются только на этом устройстве и не попадают в ученическую работу.</p></details>`;
+  }
+  function renderFamily(group,w){
+    const visible=expandedFamilies.has(group.key),first=group.tasks[0];
+    return `<section class="bank-family">${bankTask(first,w)}${group.tasks.length>1?`<div class="family-toolbar">${action('family-toggle',visible?'Свернуть варианты':`Ещё варианты · ${group.tasks.length-1}`,'secondary',`data-family="${esc(group.key)}" aria-expanded="${visible}"`)}${action('family-practice','Отработать этот приём','text-button',`data-family="${esc(group.key)}"`)}</div>${visible?`<div class="family-variants">${group.tasks.slice(1).map(q=>bankTask(q,w)).join('')}</div>`:''}`:''}</section>`;
+  }
+  function updateTeacherNote(id,field,value){
+    if(route.role!=='teacher'||!question(id))return;
+    if(!bankTools.notes[id]&&Object.keys(bankTools.notes).length>=1000){notify('Достигнут предел 1000 заметок на устройстве. Очистите ненужную заметку.');return;}
+    const note=bankTools.notes[id]||{text:'',flag:'',excluded:false};note[field]=value;
+    if(note.text||note.flag||note.excluded)bankTools.notes[id]=note;else delete bankTools.notes[id];
+    autoResult=null;scheduleSave();
+  }
   function renderCompetencyFilters(base){
     const counts=new Map(MathCompetencies.definitions.map(item=>[item.id,0]));
     for(const q of base)for(const id of MathCompetencies.forTask(q))counts.set(id,counts.get(id)+1);
     return `<fieldset class="competency-filter" aria-describedby="competency-help"><legend>Компетенции ученика</legend><p id="competency-help" class="muted">Какие умения должны проверять задания? При выборе нескольких достаточно одного совпадения. Числа — количество заданий в выбранном источнике.</p><div class="competency-options">${MathCompetencies.definitions.map(item=>`<label class="competency-choice ${competencyFilter.includes(item.id)?'is-selected':''}" for="competency-${item.id}" title="${esc(item.description)}"><input type="checkbox" id="competency-${item.id}" data-competency="${item.id}" ${competencyFilter.includes(item.id)?'checked':''}><span>${esc(item.title)}</span><small class="competency-count" aria-label="${taskCount(counts.get(item.id))}">${counts.get(item.id)}</small></label>`).join('')}</div><div class="competency-selection"><span class="muted" role="status">${competencyFilter.length?`Выбрано компетенций: ${competencyFilter.length}`:'Все компетенции'}</span>${action('clear-competencies','Снять выбор','text-button',competencyFilter.length?'':'disabled')}</div></fieldset>`;
   }
-  function bankTask(q,w){return `<article class="glass bank-task ${q.source==='exam'?'exam-bank-task':''}" data-task-id="${esc(q.id)}"><h3>${q.source==='class'?subjectIcon(q.subject):''}<span>${esc(taskSource(q))}</span></h3>${q.source==='exam'?`${difficultyTags(q)}<span class="badge">Оригинал ФИПИ · ${q.kind==='open'?'Развёрнутое решение':'Краткий ответ'}</span>${competencyTags(q)}${examTaskMarkup(q,true)}`:q.source==='sdamgia'?`${difficultyTags(q)}${competencyTags(q)}${sourcedPrompt(q)}${sourceLink(q)}`:`${difficultyTags(q)}${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}`}<div class="builder-actions">${action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу +','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=WORK_LIMIT?'disabled':''}`)}${action('favorite',favorites.has(q.id)?'★ В избранном':'☆ В избранное','secondary favorite-button',`data-id="${q.id}" aria-pressed="${favorites.has(q.id)}"`)}</div></article>`;}
+  function bankTask(q,w){return `<article class="glass bank-task ${q.source==='exam'?'exam-bank-task':''}" data-task-id="${esc(q.id)}"><h3>${q.source==='class'?subjectIcon(q.subject):''}<span>${esc(taskSource(q))}</span></h3>${q.source==='exam'?`${difficultyTags(q)}<span class="badge">Оригинал ФИПИ · ${q.kind==='open'?'Развёрнутое решение':'Краткий ответ'}</span>${competencyTags(q)}${examTaskMarkup(q,true)}`:q.source==='sdamgia'?`${difficultyTags(q)}${competencyTags(q)}${sourcedPrompt(q)}${sourceLink(q)}`:`${difficultyTags(q)}${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}`}<div class="builder-actions">${action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу +','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=WORK_LIMIT?'disabled':''}`)}${action('favorite',favorites.has(q.id)?'★ В избранном':'☆ В избранное','secondary favorite-button',`data-id="${q.id}" aria-pressed="${favorites.has(q.id)}"`)}</div>${renderTaskTools(q)}</article>`;}
   function renderBuilder(){
-    const w=work(),base=sourceTasks(),classTopics=BANK.filter(t=>base.some(q=>q.source==='class'&&q.topicId===t.id)),hasClasses=classTopics.length>0;
+    const w=work(),base=sourceTasks(),classTopics=BANK.filter(t=>base.some(q=>['class','enrichment'].includes(q.source)&&q.topicId===t.id)),hasClasses=classTopics.length>0;
     const list=filteredTasks(),difficultyOptions=[...new Set(base.map(q=>q.difficulty))].sort((a,b)=>[...levels,'Высокий'].indexOf(a)-[...levels,'Высокий'].indexOf(b));
-    const subjects=[...new Set(classTopics.map(t=>t.subject))],pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));bankPage=Math.max(0,Math.min(bankPage,pages-1));
-    const shown=list.slice(bankPage*PAGE_SIZE,(bankPage+1)*PAGE_SIZE),sourceOptions=[['all','Все классы и экзамены'],['classes','Все классы'],...Array.from({length:7},(_,i)=>i+5).flatMap(g=>(g<10?['basic']:['basic','advanced']).map(l=>[`class:${g}:${l}`,`${g} класс${g>=10?' · '+(l==='advanced'?'углублённый':'базовый'):''}`])),...exams.map(e=>['exam:'+e.id,e.title+' · 2026']),['sdamgia','Решу ЕГЭ и ОГЭ · все подтипы'],...['ege-profile','ege-basic','oge'].map(id=>['sdamgia:'+id,'Решу '+sourceExamTitle(id)])];
+    const entries=bankTools.grouped?MathBankWorkspace.groups(list):list;
+    const subjects=[...new Set(classTopics.map(t=>t.subject))],pages=Math.max(1,Math.ceil(entries.length/PAGE_SIZE));bankPage=Math.max(0,Math.min(bankPage,pages-1));
+    const shown=entries.slice(bankPage*PAGE_SIZE,(bankPage+1)*PAGE_SIZE),sourceOptions=[['all','Все классы и экзамены'],['classes','Все классы'],['enrichment','Задания на понимание · 5–11 классы'],...Array.from({length:7},(_,i)=>i+5).flatMap(g=>(g<10?['basic']:['basic','advanced']).map(l=>[`class:${g}:${l}`,`${g} класс${g>=10?' · '+(l==='advanced'?'углублённый':'базовый'):''}`])),...exams.map(e=>['exam:'+e.id,e.title+' · 2026']),['sdamgia','Решу ЕГЭ и ОГЭ · все подтипы'],...['ege-profile','ege-basic','oge'].map(id=>['sdamgia:'+id,'Решу '+sourceExamTitle(id)])];
     const extraCount=Number(subjectFilter!=='all')+Number(filter!=='all')+Number(trickyOnly)+Number(favoriteOnly);
     const pagination=`<nav class="bank-pagination" aria-label="Страницы банка">${action('bank-prev','← Предыдущие','secondary',bankPage?'':'disabled')}<span>Страница ${bankPage+1} из ${pages}</span>${action('bank-next','Следующие →','secondary',bankPage<pages-1?'':'disabled')}</nav>`;
     return header('Конструктор работы.','Выбирайте задания из банка — состав работы сохраняется автоматически.')+`<div class="builder-actions catalog-shortcuts">${action('subtype-catalog','Каталог подтипов','secondary')}${action('works-home','Мои работы','secondary')}</div>`+`
@@ -493,17 +557,19 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
             <label class="field" for="difficulty-filter">Сложность<select id="difficulty-filter"><option value="all">Все ступени</option>${difficultyOptions.map(d=>`<option value="${d}" ${difficultyFilter===d?'selected':''}>${d}</option>`).join('')}</select></label>
           </div>
           ${base.some(q=>q.source==='sdamgia')?`<label class="field subtype-builder-filter" for="subtype-filter">Подтип «Решу ЕГЭ / ОГЭ»<select id="subtype-filter"><option value="all">Все подтипы</option>${sourceBank.subtypes.filter(s=>base.some(q=>q.subtypeId===s.id)).map(s=>`<option value="${esc(s.id)}" ${subtypeFilter===s.id?'selected':''}>${esc(sourceExamTitle(s.exam))} · ${esc(s.title)}</option>`).join('')}</select></label>`:''}
-          <div class="filter-switches">${builderToggle('competencies','Компетенции',competencyFilter.length)}${builderToggle('advanced','Ещё фильтры',extraCount)}${builderToggle('assembly','Автосборка и заготовки')}</div>
+          <div class="filter-switches">${builderToggle('competencies','Компетенции',competencyFilter.length)}${builderToggle('skills','Точные навыки',bankTools.skills.length)}${builderToggle('coverage','Карта банка')}${builderToggle('advanced','Ещё фильтры',extraCount)}${builderToggle('assembly','Автосборка и заготовки')}</div>
+          <div id="builder-skills" class="filter-expansion" ${builderSections.has('skills')?'':'hidden'}>${renderSkillFilters(base)}</div>
+          <div id="builder-coverage" class="filter-expansion" ${builderSections.has('coverage')?'':'hidden'}>${builderSections.has('coverage')?renderCoverage(base):''}</div>
           <div id="builder-competencies" class="filter-expansion" ${builderSections.has('competencies')?'':'hidden'}>${renderCompetencyFilters(base)}</div>
-          <div id="builder-advanced" class="filter-expansion" ${builderSections.has('advanced')?'':'hidden'}><div class="advanced-filter-grid">${hasClasses?`
+          <div id="builder-advanced" class="filter-expansion" ${builderSections.has('advanced')?'':'hidden'}><div class="advanced-filter-grid">${renderExtraBankFilters()}${hasClasses?`
             <label class="field" for="subject-filter">Предмет / раздел<select id="subject-filter"><option value="all">Все разделы</option>${subjects.map(s=>`<option value="${esc(s)}" ${subjectFilter===s?'selected':''}>${esc(s)}</option>`).join('')}</select></label>
             <label class="field" for="bank-filter">Тема класса<select id="bank-filter"><option value="all">Все темы</option>${subjects.filter(s=>subjectFilter==='all'||s===subjectFilter).map(s=>`<optgroup label="${esc(s)}">${classTopics.filter(t=>t.subject===s).map(t=>`<option value="${t.id}" ${filter===t.id?'selected':''}>${t.grade} класс · ${esc(t.title)}${t.grade>=10?' · '+(t.level==='advanced'?'углублённый':'базовый'):''}</option>`).join('')}</optgroup>`).join('')}</select></label>
             <label class="check"><input id="tricky-only" type="checkbox" ${trickyOnly?'checked':''}>Только хитрые задачи</label>`:''}<label class="check"><input id="favorite-only" type="checkbox" ${favoriteOnly?'checked':''}>Только избранное</label></div>${sourceFilter==='all'?'<p class="muted filter-note">Раздел, тема и хитрые задачи относятся к классам. Сложность учитывается для всех источников.</p>':''}</div>
           <div id="builder-assembly" class="filter-expansion" ${builderSections.has('assembly')?'':'hidden'}>${renderAutoAssembly(list,w)}${hasClasses?renderPresets():base.some(q=>q.source==='sdamgia')?`<div class="glass preset-panel"><h2>Подборка по подтипам</h2><p class="muted">Выберите подтип выше и количество заданий. Условия и разборы — из «Решу ЕГЭ / ОГЭ»; ссылка и исходный номер сохранены в карточке.</p></div>`:`<div class="glass preset-panel"><h2>Демоверсия ФИПИ 2026</h2><p class="muted">Каждый пример можно выбрать отдельно. Условия и рисунки сохранены из оригинала демоверсии.</p></div>`}</div>
           <div class="filter-results"><p class="muted" role="status">Найдено: <strong>${taskCount(list.length)}</strong></p>${action('reset-builder-filters','Сбросить фильтры','text-button filter-reset')}</div>
         </div>
-        <div class="bank-list-heading"><h2>Банк заданий</h2><span>Выберите задания для своей работы</span></div>
-        <div id="bank-list" tabindex="-1">${shown.length?shown.map(q=>bankTask(q,w)).join(''):'<p class="glass empty" style="padding:20px">Задания не найдены. Измените запрос или фильтры.</p>'}</div>${pagination}
+        <div class="bank-list-heading"><h2>Банк заданий</h2><label class="check"><input id="group-families" type="checkbox" ${bankTools.grouped?'checked':''}>Группировать однотипные</label></div>
+        <div id="bank-list" tabindex="-1">${shown.length?shown.map(row=>bankTools.grouped?renderFamily(row,w):bankTask(row,w)).join(''):'<p class="glass empty" style="padding:20px">Задания не найдены. Измените запрос или фильтры.</p>'}</div>${pagination}
       </section>${renderWorkPanel()}</div>`;
   }
   function answerKey(q,number){
@@ -524,7 +590,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const coverage=`<details><summary>Темы и ссылки на страницы ФРП</summary><table><thead><tr><th>Программа</th><th>Темы и объём</th><th>Страницы ФРП</th></tr></thead><tbody>${groups.map(({grade,level,ts})=>`<tr><th>${grade} класс${grade>=10?'<br>'+(level==='basic'?'Базовый':'Углублённый'):''}</th><td>${ts.map(t=>esc(t.title)).join('; ')}<br><strong>${topicCount(ts.length)} · ${taskCount(ts.reduce((n,t)=>n+t.tasks.length,0))}</strong></td><td>${[...new Set(ts.map(t=>t.ref))].map(esc).join(', ')}</td></tr>`).join('')}</tbody></table></details>`;
     return header('О программе и заданиях.','Авторские материалы для занятий и самостоятельной практики.')+`<article class="glass source-box"><h2>Банк по темам ФРП</h2><p>В каталогах ${allTasks.length} заданий и ${BANK.length} тем. Условия, решения и рисунки созданы для проекта. Это не официальный банк ФРП и не полное покрытие программы. Числовые и шаблонные варианты объединены при подсчёте ${BANK_STATS.independent_groups} самостоятельных групп.</p><p><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_ooo_frp_matematika-5-9_baza.pdf" target="_blank" rel="noopener noreferrer">ФРП 5–9 (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_baz.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, базовый уровень (2025)</a><br><a href="https://edsoo.ru/wp-content/uploads/2025/07/2025_soo_frp_matematika_10_11_ugl.pdf" target="_blank" rel="noopener noreferrer">ФРП 10–11, углублённый уровень (2025)</a></p>${coverage}<h2>Задания «Решу ЕГЭ / ОГЭ»</h2><p>Отдельный банк: ${sourcedTasks.length} заданий по ${sourceBank.subtypes.length} подтипам. В карточках сохранены исходный номер и ссылка на оригинал. Формулы, рисунки и разборы доступны без интернета. Номера разделов относятся к каталогу источника на дату загрузки.</p><h2>Решение подборок на сайте</h2><p>В разделе «Мои работы» можно открыть файл учителя или сохранённую подборку. Текущее прохождение, черновики и результаты сохраняются отдельно от тематического тренажёра. Итоги скачиваются в JSON. При смене ученика прохождение очищается; подборки учителя сохраняются.</p><h2>Помощь и результаты</h2><p>У задания есть подсказка, первый шаг и полный разбор. В итогах отдельно показаны самостоятельные решения, решения с подсказкой и после разбора. Задания на доказательство, объяснение и построение проверяются по образцу и критериям самостоятельно; программа не оценивает текст автоматически.</p><h2>Ступени сложности</h2><p>${levels.map((d,i)=>`${d}: ${levelDescriptions[i].toLowerCase()}`).join('. ')}. Уровень программы 10–11 класса выбирается отдельно.</p><h2>Запись ответа</h2><p>Числа принимаются с точкой или запятой, дроби — a/b, корни — √2, 5√2/2 или sqrt(2). Радианы — π/6, 2π/3 или 2*pi/3. Несколько корней вводятся через точку с запятой. Если корней нет — ∅ или «нет решений». Единицы вводить не нужно.</p><h2>Локальное сохранение</h2><p>Прогресс текущего ученика, черновики, избранное и до 200 подборок сохраняются в этом браузере на устройстве. На главной странице есть «Продолжить». На общем компьютере нажмите «Завершить занятие / сменить ученика»: имя и ученические ответы удалятся из текущего сеанса. Работы учителя сохранятся. Очистка данных браузера удаляет локальные данные; подборки можно сохранить в JSON-файл и открыть позднее. Если браузер запрещает хранение для локального файла, интерфейс сообщит об этом.</p><h2>Варианты и PDF</h2><p>Следующий вариант подбирается по тем же темам, сложности и формату. Если равноценной замены в банке нет, исходное задание сохраняется, а число совпадений показывается. Ключ делает подбор воспроизводимым. Это сопоставимость по разметке банка, а не подтверждённое равенство времени решения.</p><p>Выбор роли меняет действия интерфейса; это не система авторизации. Тренажёр, хранение и экспорт PDF работают без сети. Для открытия ссылок на внешние источники нужен интернет.</p></article>`;
   }
-  function resetFilters(keepCompetencies=false){subtypeFilter='all';if(!keepCompetencies)competencyFilter=[];filter='all';subjectFilter='all';difficultyFilter='all';trickyOnly=false;favoriteOnly=false;presetLevel='';search='';bankPage=0;autoResult=null;}
+  function resetFilters(keepCompetencies=false){if(!keepCompetencies){bankTools.skills=[];bankTools.format='all';bankTools.noteFilter='all';}subtypeFilter='all';if(!keepCompetencies)competencyFilter=[];filter='all';subjectFilter='all';difficultyFilter='all';trickyOnly=false;favoriteOnly=false;presetLevel='';search='';bankPage=0;autoResult=null;}
   function syncWorkAccessibility(){
     const panel=$('work-panel');if(!panel)return;
     const mobile=window.matchMedia('(max-width:650px)').matches,modal=mobile&&workOpen;
@@ -574,6 +640,11 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(e.id==='work-title')work().title=e.value;
     if(e.id==='work-variant')work().variant=e.value;
     if(e.id==='variant-seed')work().seed=e.value;
+    if(e.id==='template-name')templateName=e.value.slice(0,70);
+    if(e.dataset.noteText)updateTeacherNote(e.dataset.noteText,'text',e.value.slice(0,1600));
+    if(e.id==='open-quota'){bankTools.openCount=e.value;autoResult=null;if($('quota-total'))$('quota-total').textContent=`Всего по структуре: ${quotaTotal()} из 60.`;}
+    if(e.dataset.quota){bankTools.quotas[e.dataset.quota]=e.value;autoResult=null;$('auto-result')?.remove();if($('quota-total'))$('quota-total').textContent=`Всего по структуре: ${quotaTotal()} из 60. Фильтр сложности продолжает действовать.`;}
+    if(e.id==='recovery-answer'&&recoveryState){recoveryState.drafts[recoveryState.stage]=e.value;recoveryState.feedback[recoveryState.stage]='';}
     if(e.id==='auto-count'){autoCount=e.value;autoResult=null;e.setCustomValidity('');$('auto-result')?.remove();}
     if(e.matches('#first-name,#last-name'))e.setCustomValidity('');
     if(e.id==='bank-search'||e.id==='topic-search'||e.id==='subtype-search'){
@@ -585,6 +656,17 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   });
   $('app').addEventListener('change',event=>{
     const e=event.target;let rerender=false;
+    if(e.dataset.noteFlag||e.dataset.noteExcluded){const id=e.dataset.noteFlag||e.dataset.noteExcluded;updateTeacherNote(id,e.dataset.noteFlag?'flag':'excluded',e.dataset.noteFlag?(Object.hasOwn(MathBankWorkspace.flags,e.value)?e.value:''):e.checked);persist();return;}
+    if(e.dataset.skill){const ids=new Set(bankTools.skills);if(e.checked)ids.add(e.dataset.skill);else ids.delete(e.dataset.skill);bankTools.skills=MathBankPedagogy.normalize([...ids]);bankPage=0;rerender=true;}
+    if(e.id==='selection-mode'){bankTools.mode=['balanced','diverse','practice'].includes(e.value)?e.value:'balanced';rerender=true;}
+    if(e.id==='practice-family'){bankTools.familyId=e.value;rerender=true;}
+    if(e.id==='open-quota'){bankTools.openCount=e.value;autoResult=null;rerender=true;}
+    if(e.id==='structured-work'){bankTools.structured=e.checked;if(e.checked&&!quotaTotal())bankTools.quotas={...bankTools.quotas,'Базовый':3,'Повышенный':2};rerender=true;}
+    if(e.id==='exclude-marked'){bankTools.excludeMarked=e.checked;rerender=true;}
+    if(e.id==='group-families'){bankTools.grouped=e.checked;bankPage=0;rerender=true;}
+    if(e.id==='task-format'){bankTools.format=Object.hasOwn(MathBankWorkspace.formats,e.value)?e.value:'all';bankPage=0;rerender=true;}
+    if(e.id==='note-filter'){bankTools.noteFilter=e.value;bankPage=0;rerender=true;}
+    if(e.dataset.quota){bankTools.quotas[e.dataset.quota]=e.value;autoResult=null;rerender=true;}
     if(e.id==='auto-count'){autoCount=e.value;autoResult=null;e.setCustomValidity('');$('auto-result')?.remove();}
     if(e.id==='source-filter'){sourceFilter=e.value;resetFilters(true);rerender=true;}
     if(e.id==='subtype-filter'){subtypeFilter=subtypeById.has(e.value)?e.value:'all';bankPage=0;rerender=true;}
@@ -606,6 +688,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   });
   $('app').addEventListener('submit',event=>{
     event.preventDefault();
+    if(event.target.id==='recovery-answer-form'&&recoveryState){const state=recoveryState,i=state.stage,q=question(state.ids[i]);if(state.owner!==recoveryOwner()||state.correct[i])return;state.drafts[i]=$('recovery-answer').value;const result=checkAnswer(state.drafts[i],q);state.correct[i]=result.correct;state.feedback[i]=result.valid?result.correct?'correct':'wrong':'format';render();$('recovery-panel')?.focus({preventScroll:true});return;}
     if(event.target.id==='work-run-answer-form'&&route.view==='work-run'){
       MathWorkRunner.setDraft(activeRun,$('work-run-answer').value);MathWorkRunner.submit(activeRun,catalogTasks,checkAnswer);render();$('work-run-feedback')?.focus({preventScroll:true});return;
     }
@@ -642,6 +725,12 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
     const a=b.dataset.action,id=b.dataset.id;
+    if(a==='recovery-start'){
+      const q=question(id);if(!q)return;const plan=recoveryPlan(q);if(!plan.simple||!plan.practice)return;
+      recoveryState={originId:id,owner:recoveryOwner(),ids:[plan.simple.id,plan.practice.id],drafts:['',''],correct:[false,false],feedback:['',''],stage:0};render();$('recovery-panel')?.focus({preventScroll:true});return;
+    }
+    if(a==='recovery-next'&&recoveryState?.correct[0]){recoveryState.stage=1;render();$('recovery-panel')?.focus({preventScroll:true});return;}
+    if(a==='recovery-close'){recoveryState=null;render();($('answer')||$('work-run-answer'))?.focus({preventScroll:true});return;}
     if(a==='training-fullscreen'){trainingMonitor.request();return;}
     if(a==='training-export'){downloadFile(JSON.stringify({format:'baza-training-journal',version:1,sessions:trainingMonitor.snapshot()},null,2),'baza-training-journal.json','application/json');return;}
     if(a==='back'){back();return;}
@@ -735,12 +824,24 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       go('train',{index:0,difficulty:a==='repeat'?'all':route.difficulty,taskIds:a==='repeat'?null:selected.map(q=>q.id)});return;
     }
     if(route.role!=='teacher')return;
+    if(a==='clear-skills'){bankTools.skills=[];bankPage=0;autoResult=null;render();return;}
+    if(a==='family-toggle'){const key=b.dataset.family;if(expandedFamilies.has(key))expandedFamilies.delete(key);else expandedFamilies.add(key);render();Array.from(document.querySelectorAll('[data-action="family-toggle"]')).find(button=>button.dataset.family===key)?.focus({preventScroll:true});return;}
+    if(a==='family-practice'){bankTools.mode='practice';bankTools.familyId=b.dataset.family;builderSections.add('assembly');autoResult=null;render();$('selection-mode')?.focus({preventScroll:true});return;}
+    if(a==='template-save'){
+      const name=templateName.trim();if(!name){notify('Введите название шаблона.');$('template-name')?.focus();return;}
+      if(bankTools.templates.length>=30)return;
+      if(bankTools.structured?!(Number.isInteger(quotaTotal())&&quotaTotal()>0&&quotaTotal()<=60&&Number.isInteger(Number(bankTools.openCount))&&Number(bankTools.openCount)>=0&&Object.values(bankTools.quotas).every(n=>Number.isInteger(Number(n))&&Number(n)>=0)):!validAutoCount()){notify('Проверьте количества перед сохранением шаблона.');return;}
+      bankTools.templates.push({id:freshId(),name,settings:MathBankWorkspace.settings(bankTools),count:validAutoCount()?Number(autoCount):10,context:builderContext()});templateName='';render();notify('Шаблон сохранён на этом устройстве.');return;
+    }
+    if(a==='template-load'){const t=bankTools.templates.find(t=>t.id===b.dataset.template);if(!t)return;bankTools={...bankTools,...MathBankWorkspace.settings(t.settings)};applyBuilderContext(t.context);autoCount=t.count;autoResult=null;bankPage=0;builderSections.add('assembly');render();notify('Настройки шаблона применены.');return;}
+    if(a==='template-delete'){bankTools.templates=bankTools.templates.filter(t=>t.id!==b.dataset.template);render();return;}
     if(a==='toggle-builder-section'&&route.view==='builder'){
       const key=b.dataset.section;
-      if(!['competencies','advanced','assembly','variants','library'].includes(key))return;
+      if(!['competencies','skills','coverage','advanced','assembly','variants','library'].includes(key))return;
       if(builderSections.has(key))builderSections.delete(key);else builderSections.add(key);
       b.setAttribute('aria-expanded',String(builderSections.has(key)));
       $('builder-'+key).hidden=!builderSections.has(key);
+      if(key==='coverage'&&builderSections.has(key))$('builder-coverage').innerHTML=renderCoverage(sourceTasks());
       return;
     }
     if(a==='auto-build'||a==='auto-append'){assembleWork(a==='auto-build'?'build':'append');return;}
@@ -779,7 +880,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
         if(a==='new-variant'){
       const w=work(),original=[...w.ids],seed=w.seed||'1430';saveLibrary();
       const excluded=library.filter(x=>x.title===w.title).flatMap(x=>x.ids);
-      const ids=generateVariant(original,catalogTasks,seed,excluded);
+      const ids=generateVariant(original,catalogTasks,seed,[...excluded,...(bankTools.excludeMarked?Object.keys(bankTools.notes).filter(id=>bankTools.notes[id].excluded):[])]);
       const overlap=ids.filter(id=>original.includes(id)).length;
       const n=Number(w.variant);w.variant=Number.isFinite(n)&&n>=1?String(n+1):w.variant.slice(0,17)+'-2';w.ids=ids;saveLibrary();autoResult=null;render();
       notify(`Новый вариант сохранён. Заменено ${ids.length-overlap} из ${ids.length}${overlap?`; ${overlap} сохранено (экзаменационные оригиналы или нет замены)`:''}.`);return;

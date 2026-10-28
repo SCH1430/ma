@@ -689,3 +689,44 @@ sup { top:-.55em; } sub { top:.25em; }
  .works-current .builder-actions { align-items:stretch; }
 }
 @media print { .learning-entries,.catalog-shortcuts { display:none !important; } }
+.bank-tool-grid,.template-save { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:18px 0; align-items:end; }
+.quota-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(125px,1fr)); gap:12px; margin:16px 0; }
+.auto-panel>.check { display:flex; gap:10px; margin:16px 0; align-items:flex-start; }
+.bank-templates { padding:0; list-style:none; }
+.bank-templates li { display:flex; gap:12px; align-items:center; border-top:1px solid var(--line,#d4ddcd); padding:10px 0; }
+.bank-templates li>span { flex:1; overflow-wrap:anywhere; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0; }
+.skill-tags>span { background:#eff3e9; color:#3c573e; border-radius:7px; padding:5px 8px; font-size:12px; }
+.teacher-note { border-top:1px solid #d4ddcd; margin-top:14px; padding-top:12px; font-size:14px; }
+.teacher-note summary { cursor:pointer; color:#48624b; line-height:1.6; }
+.teacher-note .field { margin:14px 0; }
+.teacher-note textarea { width:100%; box-sizing:border-box; resize:vertical; }
+.teacher-note .check { display:flex; gap:10px; align-items:flex-start; }
+.teacher-note .muted { font-size:12px; }
+.bank-family { margin-bottom:20px; min-width:0; }
+.bank-family>.bank-task { margin-bottom:0; }
+.family-toolbar { display:flex; flex-wrap:wrap; gap:10px; padding:12px 16px; border:1px solid #d4ddcd; border-top:0; border-radius:0 0 14px 14px; background:#f4f6ef; }
+.family-variants { border-left:3px solid #bbcbb1; padding-left:14px; margin:16px 0 0 12px; }
+.coverage-map { min-width:0; }
+.coverage-scroll { overflow:auto; max-height:520px; border:1px solid #d4ddcd; border-radius:12px; }
+.coverage-scroll table { border-collapse:collapse; width:100%; font-size:13px; min-width:650px; }
+.coverage-scroll th,.coverage-scroll td { text-align:left; vertical-align:top; padding:12px; border-bottom:1px solid #d4ddcd; line-height:1.5; }
+.coverage-scroll thead { position:sticky; top:0; background:#e8efdf; }
+.coverage-scroll tbody th { min-width:190px; font-weight:500; }
+.coverage-scroll small { display:block; color:var(--muted); }
+.recovery-panel { padding:24px; margin:22px 0; border:1px solid #b1c6a3; background:#f1f6e9; }
+.recovery-panel h3 { margin:15px 0; }
+.recovery-panel p { line-height:1.7; }
+.recovery-panel form { margin:18px 0; }
+.recovery-panel .field { max-width:380px; }
+.recovery-panel .text-button { display:block; margin-top:16px; }
+@media(max-width:650px) {
+ .bank-tool-grid,.template-save { grid-template-columns:minmax(0,1fr); }
+ .quota-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .bank-templates li { flex-wrap:wrap; }
+ .bank-templates li>span { flex-basis:100%; }
+ .bank-list-heading { flex-wrap:wrap; gap:12px; }
+ .family-variants { padding-left:8px; margin-left:4px; }
+ .recovery-panel { padding:18px; }
+}
+@media print { .teacher-note,.family-toolbar,.recovery-panel { display:none !important; } }

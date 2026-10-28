@@ -1,6 +1,6 @@
 // Source coverage plus real application event checks for competency-based selection.
 const fs=require('fs'),path=require('path'),crypto=require('crypto');
-const {createHarness,BANK,EXAM_BANK,SDAMGIA_BANK}=require('./validate_ui_state.cjs');
+const {createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK}=require('./validate_ui_state.cjs');
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'checks/competencies.json'),'utf8'));
 const expectedDefinitions=['calculations','equations','graphs','modelling','geometry','data','reasoning'];
@@ -14,7 +14,7 @@ const originalDigest=digest();
 const classes=BANK.flatMap(topic=>topic.tasks.map(q=>({...q,topicId:topic.id,grade:topic.grade,level:topic.level,subject:topic.subject,source:'class'})));
 const exams=EXAM_BANK.flatMap(exam=>exam.tasks.flatMap(task=>(task.examples?.length?task.examples:[task]).map(q=>({...q,examId:exam.id,source:'exam'}))));
 const sourced=SDAMGIA_BANK?.tasks||[];
-const all=[...classes,...exams,...sourced],byId=new Map(all.map(q=>[q.id,q]));
+const all=[...classes,...exams,...sourced,...THINKING_BANK.tasks],byId=new Map(all.map(q=>[q.id,q]));
 const selectedWork=h=>h.state().works?.find(([key])=>key==='unified')?.[1];
 const cardIds=h=>h.document.querySelectorAll('.bank-task').map(card=>card.querySelector('[data-action="add"],[data-action="remove"]').dataset.id);
 const checked=h=>h.document.querySelectorAll('[data-competency]').filter(input=>input.checked).map(input=>input.dataset.competency);
