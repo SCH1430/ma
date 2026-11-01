@@ -14,6 +14,7 @@ from sdamgia_assets import build_sdamgia_bank
 from enrichment_assets import build_enrichment_bank
 from quality_assets import build_quality_bank
 from method_bank_assets import build_method_bank
+from pwa_assets import build_pwa
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -195,7 +196,7 @@ application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
     'lesson-support.js', 'figure-viewer.js', 'exam-seasons.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-methods.js', 'bank-workspace.js', 'answer-formats.js', 'bank-evidence.js', 'bank-editorial.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'workspace-transfer.js', 'teacher-report.js', 'learning-content.js', 'learning-path.js', 'app.js',
+    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-methods.js', 'bank-workspace.js', 'answer-formats.js', 'bank-evidence.js', 'bank-editorial.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'workspace-transfer.js', 'teacher-report.js', 'learning-content.js', 'learning-path.js', 'pwa.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)
@@ -205,11 +206,12 @@ shell, replacements = re.subn(
 if replacements != 1:
     raise ValueError('The source shell must contain exactly one application script')
 write_utf8((ROOT / 'index.html'), shell)
+pwa = build_pwa(ROOT, shell, manifest)
 print(json.dumps({
     'topics': len(bank), 'tasks': sum(len(topic['tasks']) for topic in bank),
     'classes': {grade: {
         'topics': sum(topic['grade'] == grade for topic in bank),
         'tasks': sum(len(topic['tasks']) for topic in bank if topic['grade'] == grade),
     } for grade in range(5, 12)},
-    'bytes': len(shell.encode()), 'gradeFiles': grade_scripts, 'examFiles': exam_scripts,
+    'bytes': len(shell.encode()), 'gradeFiles': grade_scripts, 'examFiles': exam_scripts, 'pwa': pwa,
 }, ensure_ascii=False))

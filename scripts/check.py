@@ -22,7 +22,7 @@ commands = [
     [sys.executable, '-B', 'scripts/validate_exam_seasons.py'],
     [sys.executable, '-B', 'scripts/method_bank_assets.py'],
     *[[node, f'scripts/{name}.cjs'] for name in [
-        'validate_build', 'validate_lazy_loading', 'validate_runtime', 'validate_geometry', 'validate_lessons',
+        'validate_build', 'validate_pwa', 'validate_app_shell', 'validate_lazy_loading', 'validate_runtime', 'validate_geometry', 'validate_lessons',
         'validate_figure_viewer', 'validate_training', 'validate_training_monitor', 'validate_font', 'validate_features',
         'validate_ui_state', 'validate_regressions', 'validate_exams',
         'validate_unified_work', 'validate_competencies', 'validate_auto_work',

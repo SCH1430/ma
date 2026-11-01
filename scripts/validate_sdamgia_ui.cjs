@@ -81,7 +81,7 @@ function cardIds(h){return h.document.querySelectorAll('.bank-task').map(card=>c
  });
  await scenario('catalogue entry for both roles',async()=>{
   for(const role of ['teacher','student']){
-   const h=createHarness();await h.click(`[data-role="${role}"]`);await h.click('[data-action="subtype-catalog"]');
+   const h=createHarness();await h.click(`[data-role="${role}"]`);await h.click('[data-action="nav-catalog"]');await h.click('[data-action="subtype-catalog"]');
    test(h.state().resumeRoute.view==='subtypes'&&h.state().resumeRoute.role===role,role+' enters the subtype catalogue without changing role');
    test(h.document.querySelectorAll('.subtype-card').length===subtypes.length,role+' can inspect every subtype');
    await h.change('#subtype-exam-filter','oge');

@@ -5,11 +5,11 @@ const {pathToFileURL}=require('node:url'),{chromium}=require('playwright');
 const {PDFDocument}=require('../src/vendor/pdf-lib.min.js');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'output/method-browser-qa'),entry=pathToFileURL(path.join(root,'index.html')).href;
 const report={scenarios:[],pageErrors:[],remoteRequests:[]};
-async function ready(page){await page.locator('[data-role="teacher"]:enabled').waitFor();}
+async function ready(page){await page.waitForFunction(()=>!document.querySelector('[data-role="teacher"]')?.disabled&&(!!document.querySelector('#dashboard')||!document.querySelector('#welcome')?.hidden));}
 async function noOverflow(page,label){const box=await page.evaluate(()=>({width:innerWidth,content:document.documentElement.scrollWidth}));assert(box.content<=box.width+1,label+': '+JSON.stringify(box));}
 async function download(page,selector,name){const event=page.waitForEvent('download',{timeout:90000});await page.locator(selector).click();const file=await event,target=path.join(out,name);await file.saveAs(target);return target;}
 async function classes(page,role){if(await page.locator('#app').isVisible()){if(!await page.locator('[data-action="home"]').count()&&await page.locator('[data-action="end-session"]').count())await page.locator('[data-action="end-session"]').click();for(let i=0;i<6&&!await page.locator('[data-action="home"]').count()&&await page.locator('#app').isVisible();i++){await page.locator('[data-action="back"]').first().click();await page.waitForTimeout(50);}if(await page.locator('#app').isVisible())await page.locator('[data-action="home"]').first().click();}await page.locator(`[data-role="${role}"]`).click();}
-async function methodHome(page,role){await classes(page,role);await page.locator('[data-action="method-home"]').click();await page.locator('.method-card').first().waitFor();}
+async function methodHome(page,role){await classes(page,role);await page.locator('[data-action="nav-catalog"]').first().click();await page.locator('[data-action="method-home"]').click();await page.locator('.method-card').first().waitFor();}
 (async()=>{
  await fs.mkdir(out,{recursive:true});const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try{

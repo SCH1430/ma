@@ -7,7 +7,7 @@ const entry=pathToFileURL(path.join(root,'index.html')).href;
 const report={scenarios:[],pageErrors:[],remoteRequests:[]};
 async function download(page,selector,name){const event=page.waitForEvent('download',{timeout:90000});await page.locator(selector).click();const file=await event,target=path.join(out,name);await file.saveAs(target);return target;}
 async function noOverflow(page,label){const size=await page.evaluate(()=>({viewport:innerWidth,content:document.documentElement.scrollWidth}));assert(size.content<=size.viewport+1,label+': horizontal overflow '+JSON.stringify(size));}
-async function ready(page){await page.locator('[data-role="teacher"]:enabled').waitFor();}
+async function ready(page){await page.waitForFunction(()=>!document.querySelector('[data-role="teacher"]')?.disabled&&(!!document.querySelector('#dashboard')||!document.querySelector('#welcome')?.hidden));}
 (async()=>{
  await fs.mkdir(out,{recursive:true});
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
@@ -50,7 +50,7 @@ async function ready(page){await page.locator('[data-role="teacher"]:enabled').w
    await page.reload();await ready(page);assert.deepEqual((await page.evaluate(()=>MathDataLoader.snapshot().loaded)).sort(),(name==='desktop'?['class:5','exam:oge-2027']:['class:5']).sort());
    await page.locator('[data-action="resume"]').click();await page.locator('[data-action="back"]').first().click();
    // Start a fresh role choice to cover the new learning entry without relying on history internals.
-   if(!await page.locator('[data-role="teacher"]').isVisible())await page.locator('[data-action="home"]').first().click();await page.locator('[data-role="teacher"]').click();
+   if(!await page.locator('[data-role="teacher"]').isVisible())await page.locator('[data-action="home"]').first().click();await page.locator('[data-role="teacher"]').click();await page.locator('[data-action="nav-catalog"]').first().click();
    await page.locator('[data-action="learning-home"]').click();await page.locator('.learning-path').waitFor();await page.locator('#learning-grade').selectOption('8');await page.locator('[data-action="learning-lesson"]').first().waitFor();await noOverflow(page,name+' learning');
    await page.screenshot({path:path.join(out,name+'-learning.png')});
    await page.locator('[data-action="learning-lesson"]').first().click();await page.locator('[data-action="learning-lesson-practice"]').waitFor();
@@ -70,7 +70,7 @@ async function ready(page){await page.locator('[data-role="teacher"]:enabled').w
   const context=await browser.newContext({viewport:{width:1366,height:900},reducedMotion:'reduce'});await context.setOffline(true);const page=await context.newPage();
   page.on('pageerror',error=>report.pageErrors.push({scenario:'student-exam',message:error.message}));
   page.on('request',request=>{if(/^https?:/.test(request.url()))report.remoteRequests.push(request.url());});
-  await page.goto(entry);await ready(page);await page.locator('[data-role="student"]').click();
+  await page.goto(entry);await ready(page);await page.locator('[data-role="student"]').click();await page.locator('[data-action="nav-catalog"]').first().click();
   const years=await page.locator('#exam-year option').evaluateAll(options=>options.map(option=>option.value));
   assert(years.includes('2026'));
   const latest=years[0];await page.locator('#exam-year').selectOption(latest);await page.locator('[data-action="exam-start"]').first().click();

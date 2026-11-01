@@ -26,6 +26,8 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
 (async()=>{
  await scenario('global teacher entry and student route boundary',async()=>{
   const h=createHarness();await h.click('[data-role="teacher"]');
+  test(!!h.document.querySelector('#dashboard')&&!!h.document.querySelector('[data-action="builder-home"]'),'teacher home exposes the constructor before choosing a class');
+  await h.click('[data-action="nav-catalog"]');
   test(h.state().resumeRoute.view==='classes'&&!!h.document.querySelector('[data-action="builder-home"]'),'class and exam catalogue exposes the teacher constructor before choosing a class');
   const catalogueHTML=h.html();test(catalogueHTML.indexOf('constructor-entry')>=0&&catalogueHTML.indexOf('constructor-entry')<catalogueHTML.indexOf('catalog-layout'),'constructor entry appears before the class and exam grids');
   await h.click('[data-action="builder-home"]');
@@ -34,7 +36,7 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
   test(['class:5:basic','class:11:basic','class:11:advanced','exam:oge','exam:ege-basic','exam:ege-profile','exam:oge-2027','exam:ege-basic-2027','exam:ege-profile-2027'].every(value=>options.includes(value)),'source filter exposes classes, upper-school programmes and all six official exam banks');
   test(h.get('[data-action="print-preview"]').disabled,'empty work cannot enter print preview');
   const student=createHarness();await student.click('[data-role="student"]');
-  test(student.get('[data-action="builder-home"]').textContent.includes('учителя'),'student catalogue clearly identifies the separate teacher constructor');
+  test(!student.document.querySelector('[data-action="builder-home"]'),'student home contains only learner actions');
   for(const view of ['builder','print']){
    const route=student.context.safeRoute({view,role:'student',grade:6,level:'basic'},BANK,EXAM_BANK);
    test(route.view==='classes'&&route.grade===null,'student cannot restore teacher '+view+' state');

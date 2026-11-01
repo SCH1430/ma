@@ -34,7 +34,7 @@ async function download(h,action){await h.click(`[data-action="${action}"]`);con
  test(student.text().includes(q.hint)&&!student.text().includes(q.solution),'Next-step hint is separate from the full solution');
  await student.input('#work-run-answer',q.display);await student.submit('#work-run-answer-form');
  test(student.state().activeRun.records[q.id].hintBeforeAnswer,'Hint assistance is recorded before correct submission');
- student.flush();student.pagehide();student=createHarness(store);await student.click('[data-action="resume"]');
+ student.flush();student.pagehide();student=createHarness(store);await student.click('[data-action="resume-run"]');
  test(student.state().activeRun.records[q.id].hintUsed,'Hint provenance survives reload');
  await student.click('[data-action="run-next"]');await student.input('#work-run-draft','Оба исходных аргумента положительны только при x > 1.');await student.click('[data-action="run-reveal"]');
  for(let i=0;i<3;i++)await student.change(`[data-run-rubric="${i}"]`,true);

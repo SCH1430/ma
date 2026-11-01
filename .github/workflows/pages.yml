@@ -37,6 +37,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Check the offline application in a real browser
         run: node scripts/browser_qa.cjs
+      - name: Check PWA installation metadata and offline class packs
+        run: node scripts/pwa_browser_qa.cjs
       - name: Check new response formats, teacher reviews and PDF
         run: node scripts/method_browser_qa.cjs
       - name: Configure GitHub Pages

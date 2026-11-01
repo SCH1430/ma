@@ -40,7 +40,7 @@ const work=h=>h.state().works.find(([key])=>key==='unified')[1];
  test(JSON.stringify(h.state().resumeRoute)===route&&!h.get('#app').hidden,'skip link keeps the current screen');
  test(h.history.entries.length===entries&&h.history.index===index,'skip link leaves application history intact');
  await h.click('[data-action="back"]');
- test(h.state().resumeRoute.view==='classes','Back still returns to the previous application screen');
+ test(!!h.document.querySelector('#dashboard'),'Back returns to the previous role home screen');
  const ids=BANK.flatMap(t=>t.tasks.map(q=>q.id));
  const attempts=ids.map(id=>[`teacher:${id}`,{correct:true,tries:1,outcome:'independent'}]);
  attempts.push(...ids.slice(0,1000).map(id=>[`student:learner:${id}`,{correct:true,tries:1,outcome:'independent'}]));

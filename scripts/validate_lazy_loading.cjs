@@ -12,6 +12,7 @@ const settle=async h=>{await h.settleAssets();await Promise.resolve();};
  assert.equal(value(h,'BANK.length'),0);assert.equal(value(h,'EXAM_BANK.length'),0);
  assert.equal(value(h,'typeof FONT_BASE64'),'undefined');assert.equal(value(h,'typeof PDFLib'),'undefined');
  await h.click('[data-role="teacher"]');
+ await h.click('[data-action="nav-catalog"]');
  assert(h.text().includes('33 темы'),'class cards use manifest counts before loading tasks');
  await h.click('[data-action="grade"][data-grade="6"]');await settle(h);
  assert.deepEqual(h.scriptLoads,['data/tasks/grade_06.js']);

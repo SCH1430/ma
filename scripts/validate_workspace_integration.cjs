@@ -35,7 +35,7 @@ const base=()=>({version:2,student:{id:'',first:'',last:'',letter:'',grade:0},at
   const again=createHarness(new Map([[KEY,JSON.stringify(exported.workspace)]]));await teacher(again);test(again.state().attempts.length===1100,'large exported workspace restores again');
  });
  await scenario('exam reveal preserves earlier independent outcome and exposes neighbours',async()=>{
-  const h=createHarness();await teacher(h);if(h.document.querySelector('#exam-year'))await h.change('#exam-year','2026');
+  const h=createHarness();await teacher(h);await h.click('[data-action="nav-catalog"]');await h.change('#exam-year','2026');
   const exam=EXAM_BANK.find(item=>item.id==='oge'&&item.year===2026),one=exam.tasks[0].examples?.[0]||exam.tasks[0],two=exam.tasks[1].examples?.[0]||exam.tasks[1];
   await h.click('[data-action="exam-start"][data-exam="oge"]');
   await h.input('#exam-answer',one.answerText);await h.submit('#exam-answer-form');test(attempt(h,one.id).outcome==='independent','correct answer before key disclosure is independent');

@@ -77,7 +77,7 @@ async function scenario(label,run){try{await run();}catch(error){test(false,labe
   let state=h.state().recoveryState;
   test(state.owner==='run:'+runId,'student work recovery belongs to its exact run');
   await h.input('#recovery-answer',answer(byId.get(state.ids[0])));await h.submit('#recovery-answer-form');await h.click('[data-action="recovery-next"]');h.pagehide();
-  h=createHarness(store);await h.click('[data-action="resume"]');state=h.state().recoveryState;
+  h=createHarness(store);await h.click('[data-action="resume-run"]');state=h.state().recoveryState;
   test(h.state().activeRun.id===runId&&state.owner==='run:'+runId&&state.stage===1,'student reload continues both the same work and recovery sequence');
   await h.input('#recovery-answer',answer(byId.get(state.ids[1])));await h.submit('#recovery-answer-form');
   const after=h.state().activeRun.records[origin.id];

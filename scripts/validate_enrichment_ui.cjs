@@ -79,7 +79,7 @@ async function downloadJSON(h,action){await h.click(`[data-action="${action}"]`)
   for(let i=0;i<q.rubric.length;i++)await h.change(`[data-run-rubric="${i}"]`,true);
   await h.click('[data-action="run-review"]');
   test(h.state().activeRun.records[q.id].reviewed&&!h.state().activeRun.records[q.id].correct,'self-review is distinct from an automatic correct answer');
-  h.flush();h.pagehide();h=createHarness(store);await h.click('[data-action="resume"]');
+  h.flush();h.pagehide();h=createHarness(store);await h.click('[data-action="resume-run"]');
   test(h.state().activeRun.records[q.id].reviewed&&h.state().activeRun.index===1,'refresh preserves the exact task and manual review');
   await h.input('#work-run-draft','Исправляю рассуждение после сверки.');h.flush();
   test(!h.state().activeRun.records[q.id].reviewed&&!h.state().activeRun.records[q.id].checks.length,'editing reasoning invalidates stale self-review');

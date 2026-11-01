@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const root=path.resolve(__dirname,'..'),ctx=vm.createContext({TextEncoder});
 for(const file of ['workspace-transfer','teacher-report'])vm.runInContext(fs.readFileSync(path.join(root,'src',file+'.js'),'utf8'),ctx);
 const backup=ctx.MathWorkspaceTransfer,report=ctx.MathTeacherReport;
-const workspace={version:2,student:{id:'one',first:'Аня',last:'Иванова'},attempts:[['student:one:q1',{draft:'1',correct:true}]],works:[['unified',{ids:['q1']}]],library:[{ids:['q1']}],favorites:['q1'],bankTools:{notes:{q1:{text:'Важно'}},templates:[{id:'t'}]},learningState:{activities:[1]},teacherReports:[],trainingSessions:[]};
+const workspace={version:2,student:{id:'one',first:'Аня',last:'Иванова'},attempts:[['student:one:q1',{draft:'1',correct:true}]],works:[['unified',{ids:['q1']}]],library:[{ids:['q1']}],favorites:['q1'],bankTools:{notes:{q1:{text:'Важно'}},templates:[{id:'t'}]},learningState:{activities:[1]},teacherReports:[],trainingSessions:[],appPreferences:{role:'student',grade:8,level:'basic'}};
 const restored=backup.parse(JSON.stringify(backup.create(workspace,'2026-11-01T10:00:00Z')));
 assert.equal(JSON.stringify(restored.workspace),JSON.stringify(backup.workspace(workspace)));
 assert.equal(backup.summary(restored.workspace).notes,1);assert.equal(backup.summary(restored.workspace).learner,'Аня Иванова');

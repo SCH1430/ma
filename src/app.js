@@ -77,8 +77,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   raw=raw&&typeof raw==='object'?raw:{};
   const home={view:'home',role:null,grade:null,level:null,topic:null,index:0,difficulty:'all',taskIds:null,examId:null,example:0};
   if(!['student','teacher'].includes(raw.role))return home;
-  const out={...home,role:raw.role,view:['home','classes','levels','profile','topics','train','result','builder','print','help','exam-levels','exam','subtypes','works','work-run','learning','backup','report','method-bank','editorial'].includes(raw.view)?raw.view:'classes'};
-  if(out.view==='home'||out.view==='classes'||out.view==='help')return out;
+  const out={...home,role:raw.role,view:['home','dashboard','devices','classes','levels','profile','topics','train','result','builder','print','help','exam-levels','exam','subtypes','works','work-run','learning','backup','report','method-bank','editorial'].includes(raw.view)?raw.view:'classes'};
+  if(['home','dashboard','devices','classes','help'].includes(out.view))return out;
   if(out.view==='backup')return out;
   if(out.view==='report')return out.role==='teacher'?out:{...out,view:'classes'};
   if(out.view==='method-bank'||out.view==='editorial'){out.contentId=typeof raw.contentId==='string'?raw.contentId.slice(0,180):'';return out.view==='editorial'&&out.role!=='teacher'?{...out,view:'classes'}:out;}
@@ -170,6 +170,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   let protectedStorageRaw=null,workspaceReloading=false,pendingBackup=null,teacherReports=[],reportImportStatus='';
   let selectedExamYear=Math.max(...exams.map(e=>e.year),2026),learningState=typeof MathLearningPath!=='undefined'?MathLearningPath.emptyState():null,learningRun=null,topicLearningId='';
   let editorialStore=typeof MathBankEditorial!=='undefined'?MathBankEditorial.createStore():null,editorialNotice='',methodView={grade:'all',topic:'all',category:'all',kind:'all',method:'all',query:''};
+  let appPreferences={role:null,grade:5,level:'basic'};
   const freshId=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
   const trainingMonitor=MathTrainingMonitor.create({onChange:()=>{persist();updateTrainingMonitor();}});
   const question=id=>catalogById.get(id);
@@ -204,6 +205,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     try{
       const text=localStorage.getItem(STORAGE_KEY);if(!text)return;original=text;
       const saved=JSON.parse(text);if(saved.version!==2)throw new Error('unsupported workspace');
+      const preferences=saved.appPreferences||{};
+      appPreferences={role:Object.hasOwn(preferences,'role')?(['student','teacher'].includes(preferences.role)?preferences.role:null):['student','teacher'].includes(saved.resumeRoute?.role)?saved.resumeRoute.role:null,grade:Number.isInteger(preferences.grade)&&preferences.grade>=5&&preferences.grade<=11?preferences.grade:Number(saved.student?.grade)>=5&&Number(saved.student?.grade)<=11?Number(saved.student.grade):5,level:preferences.level==='advanced'?'advanced':'basic'};
       trainingMonitor.restore(saved.trainingSessions);
       try{bankTools=MathBankWorkspace.restore(saved.bankTools,catalogTasks);}catch(error){bankTools=MathBankWorkspace.restore(null,catalogTasks);}
       if(saved.builderContext)applyBuilderContext(saved.builderContext);
@@ -250,13 +253,13 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function workspaceSnapshot(){
     const relevant=[...attempts].filter(([,r])=>r.draft||r.tries||r.hintLevel||r.revealed||r.correct||r.checks.some(Boolean));
-    return {version:2,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},bankTools,builderContext:builderContext(),recoveryState,activeRun,resumeRoute,trainingSessions:trainingMonitor.snapshot(),savedAt:lastSaved,teacherReports,learningState,learningRun,selectedExamYear,topicLearningId,editorialStore,methodView};
+    return {version:2,appPreferences,student,examLearnerId,attempts:relevant,works:[...works],migratedWorkKeys:[...migratedWorkKeys],library,favorites:[...favorites],builderCompetencies:competencyFilter,builderSubtype:subtypeFilter,builderAuto:{count:validAutoCount()?Number(autoCount):10},bankTools,builderContext:builderContext(),recoveryState,activeRun,resumeRoute,trainingSessions:trainingMonitor.snapshot(),savedAt:lastSaved,teacherReports,learningState,learningRun,selectedExamYear,topicLearningId,editorialStore,methodView};
   }
   function persist(){
     clearTimeout(saveTimer);if(workspaceReloading||!workspaceDataReady)return;
     if(activeRun&&typeof MathWorkRunner.flushActivity==='function')MathWorkRunner.flushActivity(activeRun);
     if(protectedStorageRaw!==null){storageOK=false;const status=$('save-state');if(status)status.textContent=storageText();return;}
-    if(route.view!=='home'&&route.view!=='help')resumeRoute=safeRoute(route,BANK);
+    if(!['home','dashboard','devices','help','backup'].includes(route.view))resumeRoute=safeRoute(route,BANK);
     const data=workspaceSnapshot();
     const text=JSON.stringify(data);
     try{
@@ -266,7 +269,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const status=$('save-state');if(status)status.textContent=storageText();
   }
   function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(persist,250);}
-  const storageText=()=>protectedStorageRaw!==null?'Прежнее сохранение не прочитано и защищено от перезаписи. Откройте резервные копии.':storageOK?'Сохраняется на этом устройстве':route.role==='teacher'?'Автосохранение недоступно. Сохраните работу в файл.':'Автосохранение недоступно. Прогресс остаётся только в открытой вкладке.';
+  const storageText=()=>bootstrapPendingWorkspace?'Для восстановления сохранения нужны материалы. Исходные данные защищены.':protectedStorageRaw!==null?'Прежнее сохранение не прочитано и защищено от перезаписи. Откройте резервные копии.':storageOK?'Сохраняется на этом устройстве':route.role==='teacher'?'Автосохранение недоступно. Сохраните работу в файл.':'Автосохранение недоступно. Прогресс остаётся только в открытой вкладке.';
   const action=(key,label,cls='secondary',attrs='')=>`<button type="button" class="${cls}" data-action="${key}" ${attrs}>${label}</button>`;
   function trainingContext(){
     if(route.role!=='student')return null;
@@ -299,18 +302,26 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function difficultyBadge(d){const i=d==='Высокий'?3:levels.indexOf(d);return `<span class="difficulty-badge difficulty--${['basic','medium','advanced','challenge'][i]}"><span class="difficulty-bars" aria-hidden="true">${levels.map((_,j)=>`<i${j<=i?' class="filled"':''}></i>`).join('')}</span>${esc(d)}</span>`;}
   const difficultyTags=q=>`<div class="difficulty">${difficultyBadge(q.difficulty)}${q.tricky?'<span class="tricky-badge">✦ Хитрая задача</span>':''}${q.kind==='open'?'<span class="badge">Рассуждение · самопроверка</span>':''}</div>`;
   const note=()=>`<div class="bottom-note"><span>Банк по классам: авторские задания по темам ФРП · школа 1430</span>${action('help','О программе и заданиях','text-button')}</div>`;
-  function header(title,subtitle){const examSession=route.role==='student'&&['exam','exam-levels','subtypes','works','work-run','learning'].includes(route.view);return `<div class="screen-head"><div class="trail">${action('back','← Назад','text-button')}<span>${roleLabel()}${route.grade?` · ${route.grade} класс`:''}</span>${route.grade>=10&&route.level?`<span class="badge">${programLabel()} курс</span>`:''}</div><h1 tabindex="-1" id="screen-title">${esc(title)}</h1><p>${esc(subtitle)}</p></div><div class="session-bar"><div><span id="save-state" role="status">${storageText()}</span>${examSession?`<span> · ${student.id?esc(student.first)+' '+esc(student.last):'Гостевое занятие'}</span>`:''}</div><div class="builder-actions">${action('backup-home','Резервные копии','text-button')}${route.role==='student'&&(student.id||examSession)?action('end-session','Завершить занятие / сменить ученика','text-button'):action('home','К выбору роли','text-button')}</div></div>`;}
+  function header(title,subtitle){
+    const examSession=route.role==='student'&&['exam','exam-levels','subtypes','works','work-run','learning'].includes(route.view);
+    return `<div class="screen-head"><div class="trail">${route.view==='dashboard'?'<span class="home-eyebrow">Математика · школа 1430</span>':action('back','← Назад','text-button')}<span>${roleLabel()}${route.grade?` · ${route.grade} класс`:''}</span>${route.grade>=10&&route.level?`<span class="badge">${programLabel()} курс</span>`:''}</div><h1 tabindex="-1" id="screen-title">${esc(title)}</h1><p>${esc(subtitle)}</p></div><div class="session-bar"><div><span id="save-state" role="status">${storageText()}</span>${examSession?`<span> · ${student.id?esc(student.first)+' '+esc(student.last):'Гостевое занятие'}</span>`:''}</div><div class="builder-actions">${['train','exam','work-run'].includes(route.view)?action('nav-home','На главную','text-button'):''}${action('backup-home','Резервные копии','text-button')}${route.role==='student'&&(student.id||examSession)?action('end-session','Сменить ученика','text-button'):''}${action('home','Сменить роль','text-button')}</div></div>`;
+  }
   function notify(text){$('notice').textContent=text;$('notice').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{$('notice').hidden=true;},3500);}
   let navigationVersion=0,sourceRequestVersion=0;
   async function ensureWorkspaceData(raw){if(dataLoader)await dataLoader.ensureWorkspace(raw);rebuildCatalog();}
   function bankCounts(){const counts=dataLoader?.manifest.counts||{classes:allTasks.length,exams:examWorkTasks.length,source:sourcedTasks.length,thinking:thinkingTasks.length,quality:qualityTasks.length,methods:typeof METHOD_BANK!=='undefined'?METHOD_BANK.tasks.length:0};const learning=typeof MathLearningContent!=='undefined'?MathLearningContent.tasks.length:0;return {...counts,learning,total:['classes','exams','source','thinking','quality','methods'].reduce((sum,key)=>sum+(counts[key]||0),learning)};}
   globalThis.MathAppData=Object.freeze({stats:bankCounts,ensureWorkspace:ensureWorkspaceData,ensureIds:async ids=>{if(dataLoader)await dataLoader.ensureIds(ids);rebuildCatalog();},ensureAll:async()=>{if(dataLoader)await dataLoader.ensureAll();rebuildCatalog();},rebuild:rebuildCatalog});
   function go(view,data={}){
+    const device=pwaState();
+    if(view==='builder'&&sourceFilter==='all'&&device.supported&&!device.online){
+      const grade=device.grades.find(item=>item.grade===appPreferences.grade&&item.downloaded)?.grade||device.grades.find(item=>item.downloaded)?.grade||appPreferences.grade;
+      sourceFilter=`class:${grade}:${grade>=10?appPreferences.level:'basic'}`;
+    }
     const next={...route,...data,view},version=++navigationVersion;
-    const commit=()=>{if(version!==navigationVersion)return;if(typeof MathFigureViewer!=='undefined')MathFigureViewer.close();closeWork(false);examReferencesOpen=false;route=safeRoute(next,BANK);history.pushState({mat1430:true,route},'',`#${route.view}`);render(true);};
+    const commit=()=>{if(version!==navigationVersion)return;persist();if(typeof MathFigureViewer!=='undefined')MathFigureViewer.close();closeWork(false);examReferencesOpen=false;route=safeRoute(next,BANK);if(route.view!=='home')appPreferences.role=route.role;if(Number.isInteger(route.grade)&&route.grade>=5&&route.grade<=11){appPreferences.grade=route.grade;if(route.level)appPreferences.level=route.level;}history.pushState({mat1430:true,route},'',`#${route.view}`);render(true);};
     if(!dataLoader?.needsRoute(next,sourceFilter)){commit();return Promise.resolve();}
     $('app').setAttribute('aria-busy','true');notify('Открываем материалы…');
-    return dataLoader.ensureRoute(next,sourceFilter).then(()=>{rebuildCatalog();commit();}).catch(error=>{console.error(error);notify('Не удалось открыть материалы. Проверьте, что папки data и src перенесены целиком, и повторите переход.');}).finally(()=>{$('app').removeAttribute('aria-busy');});
+    return dataLoader.ensureRoute(next,sourceFilter).then(()=>{rebuildCatalog();commit();}).catch(error=>{console.error(error);const state=pwaState();notify(state.localFile?'Не удалось открыть материалы. Проверьте, что папки data и src перенесены целиком, и повторите переход.':!state.online?'Эти материалы не сохранены для работы без интернета. Подключитесь к сети или выберите загруженный класс в разделе «На устройстве».':'Не удалось загрузить материалы. Проверьте подключение к интернету и повторите переход.');}).finally(()=>{$('app').removeAttribute('aria-busy');});
   }
   function back(){closeWork(false);history.back();}
   function updateHome(){
@@ -318,6 +329,41 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(!panel){panel=document.createElement('div');panel.id='resume-panel';$('welcome').append(panel);}
     const examTitle=resumeRoute?.view==='exam'?exams.find(e=>e.id===resumeRoute.examId)?.title:resumeRoute?.view==='exam-levels'?'ЕГЭ · '+selectedExamYear:'';
     panel.innerHTML=resumeRoute?`<div class="continue-card"><h2>Продолжим?</h2><p>${resumeRoute.role==='student'?student.id?`${esc(student.first)}${examTitle?'':` · ${resumeRoute.grade||student.grade} класс`}`:'Гостевое занятие':'Рабочее место учителя'}${examTitle?` · ${esc(examTitle)}${resumeRoute.view==='exam'?` · № ${exams.find(e=>e.id===resumeRoute.examId).tasks[resumeRoute.index].number}`:''}`:''} · данные сохранены на устройстве</p>${action('resume','Продолжить →','primary')}</div>`:'';
+  }
+  const navSymbols={home:'<path d="m3 10 9-7 9 7v10H3zM9 20v-7h6v7"/>',catalog:'<path d="M4 4h6v7H4zM14 4h6v7h-6zM4 15h6v5H4zM14 15h6v5h-6z"/>',works:'<path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/>',device:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4M12 6v7m-3-3 3 3 3-3"/>'};
+  function pwaState(){return globalThis.MathPWA?.getState?.()||{supported:false,localFile:globalThis.location?.protocol==='file:',ready:false,installed:false,canInstall:false,online:globalThis.navigator?.onLine!==false,updateAvailable:false,busy:false,status:'',error:'',grades:[]};}
+  function navigation(){
+    const current=route.view==='dashboard'?'home':route.view==='devices'?'device':['works','work-run','builder','print'].includes(route.view)?'works':'catalog';
+    const state=pwaState();
+    return `<nav class="app-navigation" aria-label="Основная навигация"><div class="nav-intro"><strong>БАЗА</strong><span>Математика · 1430</span></div><div class="nav-links">${[['home','Главная','nav-home'],['catalog',route.role==='teacher'?'Банк заданий':'Практика','nav-catalog'],['works','Работы','nav-works'],['device','На устройстве','nav-device']].map(([key,label,name])=>`<button type="button" class="app-nav-link" data-action="${name}" ${key===current?'aria-current="page"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${navSymbols[key]}</svg><span>${label}</span></button>`).join('')}</div><div class="nav-bottom"><span class="connection-status" id="connection-status">${state.online?'Есть интернет':'Без интернета'}</span><span>${roleLabel()}</span></div></nav>`;
+  }
+  function homeClassPicker(){return `<section class="home-class-section" aria-labelledby="home-classes-title"><div class="home-section-heading"><h2 id="home-classes-title">Практика по классам</h2>${action('nav-catalog','Весь каталог →','text-button')}</div><div class="home-class-grid">${Array.from({length:7},(_,i)=>i+5).map(grade=>`<button type="button" class="home-class-chip ${grade===appPreferences.grade?'is-selected':''}" data-action="grade" data-grade="${grade}"><strong>${grade}</strong><span>класс</span></button>`).join('')}</div></section>`;}
+  function renderDashboard(){
+    const teacher=route.role==='teacher',grade=appPreferences.grade,level=grade>=10?appPreferences.level:'basic',state=pwaState();
+    const resumed=resumeRoute?.role===route.role?resumeRoute:null;
+    const running=activeRun&&activeRun.participantRole===route.role&&activeRun.phase==='solving';
+    const continueLabel=running?activeRun.title:resumed?.view==='train'?BANK.find(t=>t.id===resumed.topic)?.title:resumed?.view==='exam'?exams.find(e=>e.id===resumed.examId)?.title:resumed?.view==='builder'?'Открытая работа':resumed?.view==='learning'?'Учебный маршрут':'Последнее занятие';
+    const resume=running||resumed;
+    const gradeAttrs=`data-grade="${grade}" data-level="${level}"`;
+    const title=teacher?'Ваше рабочее место.':student.id?`С возвращением, ${student.first}.`:'Всё начинается с любопытства.';
+    const subtitle=teacher?'Подготовьте занятие, соберите задания и посмотрите результаты учеников.':'Небольшая практика сегодня — уверенный следующий шаг завтра.';
+    return header(title,subtitle)+(bootstrapPendingWorkspace?`<section class="glass home-recovery" role="status"><h2>Вернёмся к сохранённому занятию</h2><p>Часть материалов пока недоступна. Ваш прогресс сохранён и защищён от перезаписи. Подключитесь к интернету и повторите восстановление. В разделе «На устройстве» можно сохранить класс для будущих занятий.</p>${action('workspace-retry','Повторить восстановление','primary')}${action('backup-home','Скачать исходное сохранение','secondary')}</section>`:'')+`<div id="dashboard" class="home-dashboard"><section class="home-hero glass"><div><span class="home-eyebrow">${teacher?'Подготовка к уроку':`${grade} класс · мой следующий шаг`}</span><h2>${teacher?'Хороший урок начинается с задачи.':resume?'Продолжим с того же места?':'Выберите тему и начните.'}</h2><p>${teacher?'Собирайте работы из банка, сохраняйте подборки и создавайте PDF на этом устройстве.':resume?esc(continueLabel||'Сохранённое занятие')+' · ответы и черновики сохранены.':'Задания, объяснения и короткие проверки помогут двигаться в своём темпе.'}</p><div class="builder-actions">${teacher?action('builder-home','Создать работу →','primary'):resume?action(running?'resume-run':'resume','Продолжить →','primary'):action('grade','Начать практику →','primary',`data-grade="${grade}"`)}${teacher?(resumed?action('resume','Продолжить работу','secondary'):action('works-home','Мои работы','secondary')):action('learning-home','Мой маршрут','secondary',gradeAttrs)}</div></div><div class="home-hero-mark" aria-hidden="true"><svg viewBox="0 0 180 180" fill="none"><circle cx="90" cy="90" r="65"/><ellipse cx="90" cy="90" rx="26" ry="65"/><ellipse cx="90" cy="90" rx="65" ry="24"/><path d="M25 90h130M90 25v130M45 136 135 44"/><circle cx="135" cy="44" r="5"/></svg><span>${teacher?'От вопроса к открытию':'У каждого свой путь'}</span></div></section><div class="home-action-grid">${teacher?`<article class="glass home-action-card"><span class="home-eyebrow">Работа с классом</span><h2>Результаты учеников</h2><p>Загрузите файлы результатов и найдите темы для следующего урока.</p>${action('report-home','Открыть сводку →','text-button')}</article><article class="glass home-action-card"><span class="home-eyebrow">Ваши материалы</span><h2>Сохранённые работы</h2><p>${library.length?`${library.length} ${plural(library.length,'подборка','подборки','подборок')} на этом устройстве.`:'Сохраняйте подборки, чтобы вернуться к ним на следующем занятии.'}</p>${action('works-home','Открыть работы →','text-button')}</article>`:`<article class="glass home-action-card"><span class="home-eyebrow">Диагностика и повторение</span><h2>Повторить сегодня</h2><p>Вернитесь к изученным навыкам или выберите короткую диагностику в своём маршруте.</p>${action('learning-home','Открыть маршрут →','text-button',gradeAttrs)}</article><article class="glass home-action-card"><span class="home-eyebrow">Задание учителя</span><h2>Мои работы</h2><p>Откройте файл учителя или сохранённую подборку и решайте прямо здесь.</p>${action('works-home','Открыть работу →','text-button')}</article>`}<article class="glass home-action-card home-device-card"><span class="home-eyebrow">Заниматься где удобно</span><h2>Математика с собой</h2><p>Установите приложение и сохраните нужный класс для занятий без интернета.</p>${action('nav-device','Настроить устройство →','text-button')}</article></div>${homeClassPicker()}${teacher&&library.length?`<section class="home-recent"><div class="home-section-heading"><h2>Последние подборки</h2>${action('works-home','Все работы →','text-button')}</div>${library.slice(0,3).map(item=>`<article class="glass home-recent-row"><div><h3>${esc(item.title)}</h3><p>${taskCount(item.ids.length)} · Вариант ${esc(item.variant)}</p></div>${action('dashboard-load-work','Открыть','secondary',`data-id="${esc(item.id)}"`)}</article>`).join('')}</section>`:''}${state.updateAvailable?`<aside class="glass home-update"><p>Доступна новая версия. Завершите занятие и обновите приложение, когда будет удобно.</p>${action('pwa-update','Обновить приложение','secondary',state.busy?'disabled':'')}</aside>`:''}</div>`;
+  }
+  function renderDeviceContent(){
+    const state=pwaState(),grade=appPreferences.grade,pack=state.grades.find(item=>item.grade===grade),bytes=Number(pack?.bytes)||0;
+    const size=bytes?`${(bytes/1024/1024).toLocaleString('ru-RU',{maximumFractionDigits:1})} МБ`:'';
+    const disabled=!state.supported||!state.ready||state.busy;
+    const availability=pack?.downloaded?'Доступен без интернета':pack?.downloading?'Загружаем материалы…':'Пока не загружен';
+    return `<section class="glass device-install"><span class="home-eyebrow">БАЗА всегда под рукой</span><h2>${state.installed?'Приложение установлено':'Установить на устройство'}</h2><p>Своя иконка на экране и запуск в отдельном окне. Материалы для работы без интернета скачиваются ниже.</p>${!state.installed?action('pwa-install',state.canInstall?'Установить приложение':'Как установить','primary',state.busy?'disabled':''):'<span class="badge">Открыто как приложение</span>'}<details class="install-instructions" ${!state.canInstall&&!state.installed?'open':''}><summary>Установка на телефоне и компьютере</summary><ul><li><strong>Android:</strong> откройте сайт в Chrome и выберите «Установить приложение» в меню браузера, если этот пункт доступен.</li><li><strong>iPhone и iPad:</strong> откройте сайт в Safari → «Поделиться» → «На экран “Домой”». Включите «Открыть как веб-приложение», если такой переключатель есть.</li><li><strong>Компьютер:</strong> откройте сайт в Chrome или Edge и нажмите значок установки в адресной строке либо соответствующий пункт меню.</li></ul>${state.localFile?'<p>Сейчас приложение открыто из папки. Для установки откройте опубликованную HTTPS-версию; работа с файлами остаётся доступной.</p>':''}</details></section><section class="glass device-download" aria-labelledby="offline-heading"><span class="home-eyebrow">Практика без интернета</span><h2 id="offline-heading">Сохранить класс</h2><p>Задания банка по выбранному классу, рисунки и создание PDF будут доступны на этом устройстве. Для 10–11 классов сохраняются обе программы. Дополнительно сохраняются материалы текущего рабочего места, чтобы восстановить незавершённое занятие. Остальные экзамены и дополнительные банки нужно открывать при наличии интернета.</p><div class="device-pack-picker"><label class="field" for="offline-grade">Класс<select id="offline-grade">${Array.from({length:7},(_,i)=>i+5).map(g=>`<option value="${g}" ${grade===g?'selected':''}>${g} класс${state.grades.find(item=>item.grade===g)?.downloaded?' · загружен':''}</option>`).join('')}</select></label><div class="device-pack-info"><strong id="offline-pack-status">${availability}</strong><span>${size?`От ${size}, плюс материалы рабочего места`:'Размер будет показан после подготовки приложения'}</span></div></div><div class="builder-actions">${action('pwa-download',pack?.downloaded?'Проверить загрузку':'Скачать класс','primary',`data-grade="${grade}" ${disabled||!state.online&&!pack?.downloaded?'disabled':''}`)}${pack?.downloaded?action('pwa-remove','Удалить материалы класса','secondary',`data-grade="${grade}" ${disabled?'disabled':''}`):''}</div>${!state.supported?`<p class="workspace-warning">${state.localFile?'При работе из папки файлы уже находятся на устройстве. Загрузка пакетов доступна в опубликованной HTTPS-версии.':'Этот браузер не поддерживает загрузку для работы без интернета. Откройте приложение в современном браузере по HTTPS.'}</p>`:!state.ready?'<p class="muted">Подготавливаем приложение к работе без интернета…</p>':''}<p id="pwa-status" class="device-status ${state.error?'workspace-warning':''}" role="status" aria-live="polite">${esc(state.error||state.status||(state.online?'Есть интернет. Можно загрузить материалы.':'Нет интернета. Доступны ранее сохранённые классы.'))}</p><p class="muted device-storage-note">Материалы и прогресс хранятся в этом браузере. Удаление пакета освобождает материалы класса; ответы и черновики сохраняются. Для переноса прогресса используйте резервную копию.</p></section>${state.updateAvailable?`<section class="glass device-update"><h2>Доступно обновление</h2><p>Сначала завершите занятие. Обновление перезапустит приложение.</p>${action('pwa-update','Обновить приложение','secondary',state.busy?'disabled':'')}</section>`:''}<section class="glass device-backup"><h2>Сохранить прогресс</h2><p>Скачайте резервную копию занятий, подборок и заметок или перенесите её на другое устройство.</p>${action('backup-home','Резервные копии →','secondary')}</section>`;
+  }
+  function renderDevices(){return header('На устройстве.','Установка приложения, материалы без интернета и сохранность прогресса.')+`<div id="device-content" class="device-content">${renderDeviceContent()}</div>`;}
+  function refreshDeviceState(){
+    const connection=$('connection-status');if(connection)connection.textContent=pwaState().online?'Есть интернет':'Без интернета';
+    if(route.view!=='devices')return;
+    const content=$('device-content');if(!content)return;
+    const active=document.activeElement,focusId=active?.id,focusAction=active?.dataset?.action;
+    content.innerHTML=renderDeviceContent();
+    if(focusId)$(focusId)?.focus({preventScroll:true});else if(focusAction)content.querySelector(`[data-action="${focusAction}"]`)?.focus({preventScroll:true});
   }
   function render(focus=false){
     const workScroll={panel:$('work-panel')?.scrollTop||0,paper:$('work-paper-body')?.scrollTop||0};
@@ -331,6 +377,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     trainingMonitor.sync(trainingContext(),route.view==='result'||route.view==='work-run'&&activeRun?.phase==='results'?'completed':'closed');
     $('welcome').hidden=route.view!=='home';$('app').hidden=route.view==='home';
     document.body.classList.toggle('app-mode',route.view!=='home');
+    if(route.view==='home')document.body.classList.remove('app-has-nav');
     document.body.classList.toggle('work-open',workOpen&&window.matchMedia('(max-width:650px)').matches);
     document.title=route.view==='home'?'1430 — пространство математики':`1430 — ${route.view==='exam'?currentExam().title:route.view==='exam-levels'?'ЕГЭ · '+selectedExamYear:roleLabel()}${route.grade?` · ${route.grade} класс`:''}`;
     document.querySelector('.skip-link').textContent=route.view==='home'?'Перейти к выбору роли':'Перейти к содержимому';
@@ -339,8 +386,10 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       if(focus){document.querySelector('[data-role="student"]').focus({preventScroll:true});window.scrollTo(0,0);}
       persist();return;
     }
-    const pages={classes:renderClasses,levels:renderLevels,profile:renderProfile,topics:renderTopics,train:renderTrainer,result:renderResult,builder:renderBuilder,print:renderPrint,help:renderHelp,'exam-levels':renderExamLevels,exam:renderExam,subtypes:renderSubtypes,works:renderWorks,'work-run':renderWorkRunner,backup:renderBackup,report:renderTeacherReport,learning:renderLearning,'method-bank':renderMethodBank,editorial:renderEditorial};
-    $('app').innerHTML=`<section id="training-monitor" aria-label="Полный экран и журнал тренажёра">${trainingMonitorContent()}</section>`+pages[route.view]();
+    const pages={dashboard:renderDashboard,devices:renderDevices,classes:renderClasses,levels:renderLevels,profile:renderProfile,topics:renderTopics,train:renderTrainer,result:renderResult,builder:renderBuilder,print:renderPrint,help:renderHelp,'exam-levels':renderExamLevels,exam:renderExam,subtypes:renderSubtypes,works:renderWorks,'work-run':renderWorkRunner,backup:renderBackup,report:renderTeacherReport,learning:renderLearning,'method-bank':renderMethodBank,editorial:renderEditorial};
+    const focused=['train','exam','print'].includes(route.view)||route.view==='work-run'&&activeRun?.phase==='solving';
+    document.body.classList.toggle('app-has-nav',!focused);
+    $('app').innerHTML=`<div class="application-layout ${focused?'is-focused':''}">${focused?'':navigation()}<div class="application-content"><section id="training-monitor" aria-label="Полный экран и журнал тренажёра">${trainingMonitorContent()}</section>${pages[route.view]()}</div></div>`;
     syncRunActivity();
     if(route.view==='builder'){
       syncWorkAccessibility();
@@ -361,7 +410,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function renderClasses(){
     const season=exams.filter(e=>e.year===selectedExamYear),oge=season.find(e=>examBaseId(e)==='oge');
     return header('Что будем разбирать?',route.role==='teacher'?'Выберите класс для тренажёра, соберите работу или посмотрите результаты учеников.':'Выберите класс, учебный маршрут или экзамен. Прогресс сохранится на этом устройстве.')+
-      '<section class="glass constructor-entry" aria-labelledby="constructor-heading"><div><span class="badge">Рабочее место учителя</span><h2 id="constructor-heading">Конструктор работы</h2><p>Соберите одну работу из заданий 5–11 классов, ОГЭ и ЕГЭ. Сохраните подборку и скачайте PDF.</p></div>'+action('builder-home',route.role==='teacher'?'Создать работу →':'Открыть конструктор учителя →','primary')+'</section>'+renderLearningEntries()+
+      (route.role==='teacher'?'<section class="glass constructor-entry" aria-labelledby="constructor-heading"><div><span class="badge">Рабочее место учителя</span><h2 id="constructor-heading">Конструктор работы</h2><p>Соберите одну работу из заданий 5–11 классов, ОГЭ и ЕГЭ. Сохраните подборку и скачайте PDF.</p></div>'+action('builder-home','Создать работу →','primary')+'</section>':'')+renderLearningEntries()+
       '<div class="catalog-layout"><section class="class-section" aria-labelledby="classes-heading"><h2 class="catalog-heading" id="classes-heading">По классам</h2><div class="class-grid">'+Array.from({length:7},(_,i)=>i+5).map(g=>'<button class="glass class-card" type="button" data-action="grade" data-grade="'+g+'"><strong>'+g+'<small>класс</small></strong><span>'+(g>=10?'Базовый и углублённый курсы':topicCount((dataLoader?.manifest.topics||BANK).filter(t=>t.grade===g).length))+'</span></button>').join('')+'</div></section>'+
       (season.length?'<section class="exam-section" aria-labelledby="exams-heading"><h2 class="catalog-heading" id="exams-heading">Экзамены</h2>'+seasonPicker()+'<div class="exam-entry-grid">'+(oge?'<button type="button" class="glass exam-entry-card" data-action="exam-start" data-exam="'+esc(oge.id)+'"><span class="exam-card-top">9 класс · ФИПИ</span><strong>ОГЭ</strong><span>'+esc(examSeasonLabel(oge))+' · '+oge.tasks.length+' заданий</span><span class="exam-card-link">Открыть задания →</span></button>':'')+'<button type="button" class="glass exam-entry-card" data-action="exam-levels"><span class="exam-card-top">11 класс · ФИПИ</span><strong>ЕГЭ</strong><span>'+selectedExamYear+'</span><span class="exam-card-link">Базовый и профильный →</span></button></div><p class="muted exam-catalog-note">Оригинальные материалы ФИПИ. Статус проекта указан отдельно; предыдущие годы доступны в архиве.</p></section>':'')+'</div>'+note();
   }
@@ -732,7 +781,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     panel.setAttribute('role',modal?'dialog':'complementary');
     if(modal)panel.setAttribute('aria-modal','true');else panel.removeAttribute('aria-modal');
     document.body.classList.toggle('work-open',modal);
-    for(const e of document.querySelectorAll('#builder-bank,.screen-head,.session-bar,.catalog-shortcuts'))e.inert=modal;
+    for(const e of document.querySelectorAll('#builder-bank,.screen-head,.session-bar,.catalog-shortcuts,.app-navigation'))e.inert=modal;
   }
   function closeWork(focus=true){
     if(!workOpen)return;workOpen=false;document.body.classList.remove('work-open');
@@ -758,7 +807,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       saveLibrary();works.set('unified',clean);resetFilters();sourceFilter='all';go(route.role==='teacher'?'builder':'works',{grade:null,level:null,topic:null,taskIds:null});notify('Подборка открыта. Предыдущая работа сохранена в списке.');
     }catch(error){notify('Не удалось открыть подборку. Нужен файл БАЗЫ с действующими номерами заданий.');}
   }
-  document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>{topicSearch='';go('classes',{role:b.dataset.role,grade:null,level:null,topic:null,index:0,difficulty:'all',taskIds:null});}));
+  document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>{topicSearch='';go('dashboard',{role:b.dataset.role,grade:null,level:null,topic:null,index:0,difficulty:'all',taskIds:null});}));
   $('app').addEventListener('input',event=>{
     const e=event.target;
     if(e.id==='method-query'){
@@ -796,6 +845,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   });
   $('app').addEventListener('change',async event=>{
     const e=event.target;let rerender=false;
+    if(e.id==='offline-grade'){const grade=Number(e.value);if(Number.isInteger(grade)&&grade>=5&&grade<=11){appPreferences.grade=grade;persist();refreshDeviceState();}return;}
     if(e.dataset.methodFilter){methodView=sanitizeMethodView({...methodView,[e.dataset.methodFilter]:e.value});methodPage=0;render();return;}
     if(e.id==='method-filter'){bankTools.methodId=e.value;bankPage=0;render();return;}
     if(e.id==='answer-kind-filter'){bankTools.answerKind=e.value;bankPage=0;render();return;}
@@ -823,7 +873,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(e.id==='auto-count'){autoCount=e.value;autoResult=null;e.setCustomValidity('');$('auto-result')?.remove();}
     if(e.id==='source-filter'){
       const requested=e.value,request=++sourceRequestVersion,navigation=navigationVersion;
-      if(dataLoader){try{$('app').setAttribute('aria-busy','true');await dataLoader.ensureSource(requested);rebuildCatalog();}catch(error){if(request===sourceRequestVersion&&navigation===navigationVersion){e.value=sourceFilter;notify('Не удалось открыть источник. Проверьте папку data и повторите выбор.');}return;}finally{if(request===sourceRequestVersion)$('app').removeAttribute('aria-busy');}}
+      if(dataLoader){try{$('app').setAttribute('aria-busy','true');await dataLoader.ensureSource(requested);rebuildCatalog();}catch(error){if(request===sourceRequestVersion&&navigation===navigationVersion){e.value=sourceFilter;notify(pwaState().localFile?'Не удалось открыть источник. Проверьте папку data и повторите выбор.':'Этот источник пока недоступен. Подключитесь к интернету и повторите выбор.');}return;}finally{if(request===sourceRequestVersion)$('app').removeAttribute('aria-busy');}}
       if(request!==sourceRequestVersion||navigation!==navigationVersion||route.view!=='builder')return;
       sourceFilter=requested;resetFilters(true);rerender=true;
     }
@@ -888,6 +938,30 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     const b=event.target.closest('[data-action]');if(!b||b.disabled)return;
     const a=b.dataset.action,id=b.dataset.id;
+    if(a==='workspace-retry'&&bootstrapPendingWorkspace){
+      b.disabled=true;
+      try{await ensureWorkspaceData(bootstrapPendingWorkspace);protectedStorageRaw=null;storageOK=true;bootstrapPendingWorkspace=null;finishBootstrap();notify('Рабочее место восстановлено.');}
+      catch(error){notify('Для восстановления нужны сохранённые материалы. Подключитесь к интернету и повторите попытку.');b.disabled=false;}return;
+    }
+    if(a==='nav-home'){await go('dashboard',{grade:null,level:null,topic:null});return;}
+    if(a==='nav-catalog'){await go('classes',{grade:null,level:null,topic:null});return;}
+    if(a==='nav-works'){await go('works',{grade:null,level:null,topic:null});return;}
+    if(a==='nav-device'){await go('devices',{grade:null,level:null,topic:null});return;}
+    if(a==='dashboard-load-work'&&route.role==='teacher'){
+      const saved=library.find(item=>item.id===id);if(!saved)return;
+      try{if(dataLoader){await dataLoader.ensureIds(saved.ids);rebuildCatalog();}saveLibrary();works.set('unified',sanitizeWork(saved,catalogTasks));resetFilters();sourceFilter=saved.grade?'class:'+saved.grade+':'+saved.level:'all';await go('builder',{grade:null,level:null,topic:null});}
+      catch(error){notify('Материалы подборки пока недоступны. Подключитесь к интернету или скачайте нужный класс.');}return;
+    }
+    if(['pwa-install','pwa-download','pwa-remove','pwa-update'].includes(a)){
+      const pwa=globalThis.MathPWA;if(!pwa)return;
+      try{
+        if(a==='pwa-install'){if(pwaState().canInstall)await pwa.install();else{const instructions=document.querySelector('.install-instructions');if(instructions){instructions.setAttribute('open','');instructions.scrollIntoView({block:'nearest'});instructions.querySelector('summary')?.focus({preventScroll:true});}}}
+        else if(a==='pwa-download')await pwa.downloadGrade(Number(b.dataset.grade));
+        else if(a==='pwa-remove')await pwa.removeGrade(Number(b.dataset.grade));
+        else if(['devices','dashboard'].includes(route.view)){persist();await pwa.applyUpdate();}
+      }catch(error){notify(error.message||'Не удалось выполнить действие. Повторите попытку.');}
+      refreshDeviceState();return;
+    }
     if(a==='method-home'){await go('method-bank',{grade:null,level:null,topic:null,contentId:''});return;}
     if(a==='method-reset'){methodView=sanitizeMethodView();methodPage=0;render();return;}
     if(a==='method-page-prev'||a==='method-page-next'){methodPage+=a==='method-page-next'?1:-1;render(true);return;}
@@ -935,14 +1009,14 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='training-fullscreen'){trainingMonitor.request();return;}
     if(a==='training-export'){downloadFile(JSON.stringify({format:'baza-training-journal',version:1,sessions:trainingMonitor.snapshot()},null,2),'baza-training-journal.json','application/json');return;}
     if(a==='back'){back();return;}
-    if(a==='home'){go('home');return;}
+    if(a==='home'){await go('home');appPreferences.role=null;persist();return;}
     if(a==='resume'){if(resumeRoute)go(resumeRoute.view,resumeRoute);return;}
     if(a==='help'){go('help');return;}
     if(a==='subtype-catalog'){go('subtypes',{grade:null,level:null,topic:null});return;}
     if(a==='works-home'){go('works',{grade:null,level:null,topic:null});return;}
     if(a==='subtype-practice'){
       const subtype=subtypeById.get(b.dataset.subtype);if(!subtype)return;
-      if(dataLoader){try{await dataLoader.load('subtype:'+subtype.id);rebuildCatalog();}catch(error){notify('Не удалось открыть задания подтипа. Проверьте папку data.');return;}}
+      if(dataLoader){try{await dataLoader.load('subtype:'+subtype.id);rebuildCatalog();}catch(error){notify(pwaState().localFile?'Не удалось открыть задания подтипа. Проверьте папку data.':'Задания этого подтипа не загружены. Подключитесь к интернету и повторите попытку.');return;}}
       startWorkRun({ids:sourcedTasks.filter(q=>q.subtypeId===subtype.id).slice(0,10).map(q=>q.id),title:subtype.title,variant:'Практика'});return;
     }
     if(a==='subtype-builder'){
@@ -1133,11 +1207,18 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(event.key==='Escape'&&route.view!=='home'&&!event.target.matches('input,textarea,select')){event.preventDefault();back();}
   });
   let workspaceDataReady=false;
-  function finishBootstrap(){workspaceDataReady=true;restore();history.replaceState({mat1430:true,route},'','#home');render();}
+  let bootstrapPendingWorkspace=null;
+  function finishBootstrap(){workspaceDataReady=true;restore();if(appPreferences.role)route=safeRoute({view:'dashboard',role:appPreferences.role},BANK);history.replaceState({mat1430:true,route},'',`#${route.view}`);render();}
+  globalThis.MathPWA?.subscribe?.(()=>{if(workspaceDataReady||bootstrapPendingWorkspace)refreshDeviceState();});
   let savedWorkspace=null;
   try{const raw=localStorage.getItem(STORAGE_KEY);if(raw)savedWorkspace=JSON.parse(raw);}catch(error){/* restore() reports storage availability. */}
   if(dataLoader?.needsWorkspace(savedWorkspace)){
     document.querySelectorAll('[data-role]').forEach(button=>{button.disabled=true;});notify('Восстанавливаем сохранённые материалы…');
-    ensureWorkspaceData(savedWorkspace).then(()=>{finishBootstrap();document.querySelectorAll('[data-role]').forEach(button=>{button.disabled=false;});}).catch(error=>{console.error(error);notify('Сохранение не изменено. Не удалось загрузить материалы: проверьте папки data и src и перезагрузите страницу.');});
+    ensureWorkspaceData(savedWorkspace).then(()=>{finishBootstrap();document.querySelectorAll('[data-role]').forEach(button=>{button.disabled=false;});}).catch(error=>{
+      console.error(error);bootstrapPendingWorkspace=savedWorkspace;protectedStorageRaw=localStorage.getItem(STORAGE_KEY);storageOK=false;
+      appPreferences={role:['student','teacher'].includes(savedWorkspace?.appPreferences?.role)?savedWorkspace.appPreferences.role:savedWorkspace?.resumeRoute?.role==='teacher'?'teacher':'student',grade:Number(savedWorkspace?.appPreferences?.grade)||5,level:savedWorkspace?.appPreferences?.level==='advanced'?'advanced':'basic'};
+      route=safeRoute({view:'dashboard',role:appPreferences.role},BANK);history.replaceState({mat1430:true,route},'','#dashboard');render();document.querySelectorAll('[data-role]').forEach(button=>{button.disabled=false;});
+      notify('Сохранение защищено. Подключитесь к интернету и повторите восстановление на главной странице.');
+    });
   }else finishBootstrap();
 })();

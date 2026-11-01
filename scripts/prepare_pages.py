@@ -13,7 +13,8 @@ def prepare():
     html = (ROOT / 'index.html').read_text(encoding='utf-8')
     assets = {ref for ref in re.findall(r'<(?:script|link)\b[^>]*\b(?:src|href)="([^"]+)"', html)
               if not ref.startswith('data:')}
-    assets.update(['index.html', '.nojekyll', 'data/NOTICE.txt'])
+    assets.update(['index.html', '.nojekyll', 'data/NOTICE.txt', 'service-worker.js',
+                   'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'])
     manifest_text = (ROOT / 'data/asset-manifest.js').read_text(encoding='utf-8')
     manifest = json.loads(manifest_text.split('=', 1)[1].strip().removesuffix(';'))
     assets.update(asset['file'] for asset in manifest['assets'].values())

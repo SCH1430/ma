@@ -253,7 +253,7 @@ if(require.main===module)(async()=>{
  for(const role of ['student','teacher']){
   await scenario(role+' official OGE guest visit, assets and restoration',async()=>{
    const examStore=new Map();let visitor=createHarness(examStore);
-   await visitor.click(`[data-role="${role}"]`);await visitor.change('#exam-year','2026');
+   await visitor.click(`[data-role="${role}"]`);await visitor.click('[data-action="nav-catalog"]');await visitor.change('#exam-year','2026');
    test(visitor.document.querySelectorAll('.class-section .class-card').length===7,role+' catalogue retains all seven classes');
    test(visitor.document.querySelectorAll('.exam-section .exam-entry-card').length===2,role+' catalogue offers OGE and EGE in their own section');
    test(!visitor.document.querySelector('.class-section .exam-entry-card')&&!visitor.document.querySelector('.exam-section .class-card'),role+' exams and class cards remain separate');
@@ -291,7 +291,7 @@ if(require.main===module)(async()=>{
   });
   await scenario(role+' EGE levels, independent examples and open solutions',async()=>{
    const examStore=new Map();let visitor=createHarness(examStore);
-   await visitor.click(`[data-role="${role}"]`);await visitor.change('#exam-year','2026');await visitor.click('[data-action="exam-levels"]');
+   await visitor.click(`[data-role="${role}"]`);await visitor.click('[data-action="nav-catalog"]');await visitor.change('#exam-year','2026');await visitor.click('[data-action="exam-levels"]');
    test(visitor.state().resumeRoute.view==='exam-levels'&&visitor.document.querySelectorAll('.exam-level-card').length===2&&!visitor.document.querySelector('#profile-form'),role+' EGE offers basic and profile without a school class');
    await visitor.click('[data-action="exam-start"][data-exam="ege-basic"]');
    const basic=EXAM_BANK.find(e=>e.id==='ege-basic'),matching=basic.tasks.find(q=>q.number===2),[a,b]=examExamples(matching);
@@ -311,7 +311,7 @@ if(require.main===module)(async()=>{
    await visitor.input('#exam-answer',b.answers[0]);await visitor.submit('#exam-answer-form');
    await visitor.click('[data-action="exam-example"][data-example="0"]');
    test(visitor.get('#exam-answer').value===a.answers[0]&&examRecord(visitor,a.id).correct&&examRecord(visitor,b.id).correct,role+' both example answers survive independently after reload');
-   const navigation=createHarness();await navigation.click(`[data-role="${role}"]`);await navigation.change('#exam-year','2026');await navigation.click('[data-action="exam-levels"]');await navigation.click('[data-action="exam-start"][data-exam="ege-profile"]');
+   const navigation=createHarness();await navigation.click(`[data-role="${role}"]`);await navigation.click('[data-action="nav-catalog"]');await navigation.change('#exam-year','2026');await navigation.click('[data-action="exam-levels"]');await navigation.click('[data-action="exam-start"][data-exam="ege-profile"]');
    test(navigation.document.querySelectorAll('.exam-numbers [data-action="exam-task"]').length===19,role+' profile navigation exposes all 19 official numbers');
    await navigation.click('[data-action="exam-task"][data-index="12"]');
    const profileExam=EXAM_BANK.find(e=>e.id==='ege-profile'),open=examExamples(profileExam.tasks[12])[0];

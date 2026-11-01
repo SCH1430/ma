@@ -1,13 +1,13 @@
 // Portable local workspace backups. Application restore still sanitizes every record.
 globalThis.MathWorkspaceTransfer = (() => {
   const FORMAT='baza-workspace-backup',VERSION=1,MAX_BYTES=24*1024*1024;
-  const fields=['version','student','examLearnerId','attempts','works','migratedWorkKeys','library','favorites','builderCompetencies','builderSubtype','builderAuto','bankTools','builderContext','recoveryState','activeRun','resumeRoute','trainingSessions','savedAt','learningState','learningRun','teacherReports','selectedExamYear','topicLearningId','editorialStore','methodView'];
+  const fields=['version','student','examLearnerId','attempts','works','migratedWorkKeys','library','favorites','builderCompetencies','builderSubtype','builderAuto','bankTools','builderContext','recoveryState','activeRun','resumeRoute','trainingSessions','savedAt','learningState','learningRun','teacherReports','selectedExamYear','topicLearningId','editorialStore','methodView','appPreferences'];
   const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
   const bytes=value=>typeof TextEncoder==='function'?new TextEncoder().encode(value).length:unescape(encodeURIComponent(value)).length;
   function workspace(raw){
     if(!object(raw)||raw.version!==2)throw Error('Нужна резервная копия рабочего места БАЗЫ версии 2.');
     for(const name of ['attempts','works','library','favorites','trainingSessions'])if(raw[name]!==undefined&&!Array.isArray(raw[name]))throw Error('Повреждён раздел «'+name+'».');
-    for(const name of ['student','bankTools','builderContext','builderAuto'])if(raw[name]!==undefined&&!object(raw[name]))throw Error('Повреждён раздел «'+name+'».');
+    for(const name of ['student','bankTools','builderContext','builderAuto','appPreferences'])if(raw[name]!==undefined&&!object(raw[name]))throw Error('Повреждён раздел «'+name+'».');
     if(raw.attempts?.some(pair=>!Array.isArray(pair)||pair.length!==2||typeof pair[0]!=='string'||!object(pair[1])))throw Error('Повреждены записи попыток.');
     if(raw.works?.some(pair=>!Array.isArray(pair)||pair.length!==2||typeof pair[0]!=='string'||!object(pair[1])))throw Error('Повреждены подборки.');
     if(raw.activeRun!==undefined&&raw.activeRun!==null&&!object(raw.activeRun))throw Error('Повреждено текущее прохождение.');

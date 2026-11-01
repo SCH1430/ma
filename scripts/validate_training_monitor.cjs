@@ -84,11 +84,11 @@ async function start(h,role='student'){
  test(late.document.fullscreenElement===null&&count(late,'closed')===1&&count(late,'fullscreen_enter')===0,'late fullscreen resolution after closure cannot trap another screen');
  const ended=browser();await start(ended);await ended.click('[data-action="end-session"]');
  test(count(ended,'closed')===1&&!ended.state().student.id&&ended.document.fullscreenElement===null,'changing pupil retains anonymous closure evidence and clears identity');
- const exam=browser();await exam.click('[data-role="student"]');await exam.change('#exam-year','2026');await exam.click('[data-action="exam-start"][data-exam="oge"]');
+ const exam=browser();await exam.click('[data-role="student"]');await exam.click('[data-action="nav-catalog"]');await exam.change('#exam-year','2026');await exam.click('[data-action="exam-start"][data-exam="oge"]');
  test(exam.api.requests===1&&sessions(exam)[0].kind==='exam','guest student exam also starts fullscreen monitoring');
  await exam.click('[data-action="exam-next"]');
  test(exam.api.requests===1&&sessions(exam).length===1,'exam task navigation stays in the same fullscreen session');
- const projectExam=browser();await projectExam.click('[data-role="student"]');
+ const projectExam=browser();await projectExam.click('[data-role="student"]');await projectExam.click('[data-action="nav-catalog"]');
  test(projectExam.get('#exam-year').value==='2027','latest project season is selected by default');
  await projectExam.click('[data-action="exam-start"][data-exam="oge-2027"]');
  test(projectExam.api.requests===1&&sessions(projectExam)[0].kind==='exam'&&projectExam.state().resumeRoute.examId==='oge-2027','new season starts its own correctly namespaced fullscreen exam');
