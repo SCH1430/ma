@@ -14,6 +14,9 @@ def prepare():
     assets = {ref for ref in re.findall(r'<(?:script|link)\b[^>]*\b(?:src|href)="([^"]+)"', html)
               if not ref.startswith('data:')}
     assets.update(['index.html', '.nojekyll', 'data/NOTICE.txt'])
+    manifest_text = (ROOT / 'data/asset-manifest.js').read_text(encoding='utf-8')
+    manifest = json.loads(manifest_text.split('=', 1)[1].strip().removesuffix(';'))
+    assets.update(asset['file'] for asset in manifest['assets'].values())
     # Fonts and vendor license notices accompany redistributed libraries.
     assets.update(str(p.relative_to(ROOT)) for p in (ROOT / 'src/vendor').glob('*.txt'))
     for name in assets:

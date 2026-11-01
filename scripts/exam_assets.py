@@ -1,4 +1,4 @@
-"""Embed the verified FIPI 2026 originals in the offline application.
+"""Embed verified FIPI originals, retaining IDs of archived demonstrations.
 
 The manifest stores page coordinates in the original, unmodified PDFs. PNGs are
 rendered once by render_exam_assets.py; ordinary builds need only Python's stdlib.
@@ -10,6 +10,7 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMS = ROOT / 'src' / 'exams' / '2026'
+YEARS = (2026, 2027)
 
 
 def fragment_key(exam_id, fragment):
@@ -17,21 +18,22 @@ def fragment_key(exam_id, fragment):
     return f"{exam_id}-{fragment['page']}-{coords}"
 
 
-def image_path(exam_id, fragment):
+def image_path(exam_id, fragment, year=2026):
     key = fragment_key(exam_id, fragment)
     digest = hashlib.sha256(key.encode()).hexdigest()[:20]
-    return EXAMS / 'images' / exam_id / f'{digest}.png'
+    return ROOT / 'src' / 'exams' / str(year) / 'images' / exam_id / f'{digest}.png'
 
 
-def read_manifest():
-    manifest = json.loads((EXAMS / 'manifest.json').read_text())
-    if manifest['year'] != 2026:
-        raise ValueError('Only the verified 2026 demonstration is supported')
-    expected = {'oge': 25, 'ege-basic': 21, 'ege-profile': 19}
+def read_manifest(year=2026):
+    directory = ROOT / 'src' / 'exams' / str(year)
+    manifest = json.loads((directory / 'manifest.json').read_text(encoding='utf-8'))
+    if manifest['year'] != year or year not in YEARS:
+        raise ValueError('Unsupported demonstration season')
+    expected = {'oge': 25, 'ege-basic': 21, 'ege-profile': 20 if year == 2027 else 19}
     if {e['id'] for e in manifest['exams']} != set(expected):
         raise ValueError('All three official mathematics demonstrations are required')
     for exam in manifest['exams']:
-        pdf = (EXAMS / exam['pdfPath']).read_bytes()
+        pdf = (directory / exam['pdfPath']).read_bytes()
         if hashlib.sha256(pdf).hexdigest() != exam['sha256']:
             raise ValueError(f"Original PDF checksum differs: {exam['id']}")
         if [t['number'] for t in exam['tasks']] != list(range(1, expected[exam['id']] + 1)):
@@ -39,12 +41,17 @@ def read_manifest():
     return manifest
 
 
-def build_exam_bank():
-    manifest = read_manifest()
+def build_exam_bank(years=YEARS):
+    return [exam for year in years for exam in build_exam_season(year)]
+
+
+def build_exam_season(year):
+    manifest = read_manifest(year)
+    directory = ROOT / 'src' / 'exams' / str(year)
     assets = {}
 
     def original_image(exam_id, fragment):
-        path = image_path(exam_id, fragment)
+        path = image_path(exam_id, fragment, year)
         key = str(path)
         if key not in assets:
             if not path.exists():
@@ -62,7 +69,7 @@ def build_exam_bank():
                 context = example.get('contextFragments', [])
                 fragments = example['fragments']
                 examples.append({
-                    'id': f"exam-2026-{exam_id}-{task['number']}-{index + 1}",
+                    'id': f"exam-{year}-{exam_id}-{task['number']}-{index + 1}",
                     'number': task['number'],
                     'text': example['text'],
                     'images': [original_image(exam_id, f) for f in fragments],
@@ -79,18 +86,22 @@ def build_exam_bank():
             tasks.append({**examples[0], 'examples': examples})
         def pages(field):
             return [{'image': original_image(exam_id, f), 'page': f['page'],
-                     'text': f.get('text', 'Официальные ответы и критерии ФИПИ, 2026 год.')}
+                     'text': f.get('text', f'Официальные ответы и критерии ФИПИ, {year} год.')}
                     for f in source.get(field, [])]
         bank.append({
-            'id': exam_id, 'year': 2026, 'title': source['title'],
+            'id': exam_id if year == 2026 else f'{exam_id}-{year}',
+            'baseExamId': exam_id, 'year': year, 'title': source['title'],
+            'status': 'project' if year == 2027 else 'archive',
+            'statusLabel': 'Проект' if year == 2027 else 'Архив',
+            'seasonLabel': f'{year} · ' + ('проект' if year == 2027 else 'архив'),
             'subtitle': {'oge': 'Математика · 9 класс', 'ege-basic': 'Математика · базовый уровень',
                          'ege-profile': 'Математика · профильный уровень'}[exam_id],
             'duration': 180 if exam_id == 'ege-basic' else 235,
             'sourceUrl': source['archiveUrl'],
             'sourcePageUrl': source['sourcePageUrl'],
-            'sourceTitle': 'ФИПИ · официальная демоверсия 2026',
+            'sourceTitle': f'ФИПИ · ' + ('проект демоверсии' if year == 2027 else 'демоверсия') + f' {year}',
             'archiveUrl': source['archiveUrl'], 'sha256': source['sha256'],
-            'pdfData': 'data:application/pdf;base64,' + base64.b64encode((EXAMS / source['pdfPath']).read_bytes()).decode(),
+            'pdfData': 'data:application/pdf;base64,' + base64.b64encode((directory / source['pdfPath']).read_bytes()).decode(),
             'tasks': tasks, 'answerPages': pages('answerFragments'),
             'solutionPages': pages('solutionFragments'),
         })
@@ -127,6 +138,6 @@ def exam_bank_script(bank, *, append=False):
 if __name__ == '__main__':
     bank = build_exam_bank()
     destination = ROOT / 'checks' / 'exam-bank.json'
-    destination.write_text(json.dumps(bank, ensure_ascii=False, separators=(',', ':')))
+    destination.write_text(json.dumps(bank, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print(json.dumps({'exams': len(bank), 'positions': sum(len(e['tasks']) for e in bank),
                       'examples': sum(len(t['examples']) for e in bank for t in e['tasks'])}))

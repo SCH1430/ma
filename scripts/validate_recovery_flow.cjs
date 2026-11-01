@@ -8,6 +8,7 @@ const digest=()=>crypto.createHash('sha256').update(JSON.stringify(BANK)).digest
 let checks=0;const errors=[];
 const test=(condition,label)=>{checks++;if(!condition)errors.push(label);};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const withoutCurrentClock=record=>Object.fromEntries(Object.entries(record).filter(([key])=>!['activeMs','timingRecorded'].includes(key)));
 const answer=q=>q.kind==='set'?q.answer.length?q.answer.join(';'):'∅':String(q.answer);
 const attempt=(h,id)=>h.state().attempts?.find(([key])=>key==='teacher:'+id)?.[1];
 async function trainer(store=new Map()){
@@ -79,7 +80,8 @@ async function scenario(label,run){try{await run();}catch(error){test(false,labe
   h=createHarness(store);await h.click('[data-action="resume"]');state=h.state().recoveryState;
   test(h.state().activeRun.id===runId&&state.owner==='run:'+runId&&state.stage===1,'student reload continues both the same work and recovery sequence');
   await h.input('#recovery-answer',answer(byId.get(state.ids[1])));await h.submit('#recovery-answer-form');
-  test(same(h.state().activeRun.records[origin.id],before),'student recovery does not change work grading, draft or tries');
+  const after=h.state().activeRun.records[origin.id];
+  test(same(withoutCurrentClock(after),withoutCurrentClock(before))&&after.activeMs>=before.activeMs&&(!before.timingRecorded||after.timingRecorded),'student recovery preserves every grading, draft, tries and immutable first-attempt field while the current active clock stays monotonic');
   test(!(h.state().attempts||[]).some(([key])=>key.endsWith(':'+origin.id)),'student work recovery creates no ordinary trainer result');
   await h.click('[data-action="end-session"]');
   test(h.state().recoveryState===null&&h.state().activeRun===null,'ending a student session clears recovery and work progress');

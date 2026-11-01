@@ -1,6 +1,6 @@
 // Local teacher preferences, separate from student progress and source content.
 globalThis.MathBankWorkspace = (() => {
-  const formats={error:'Найди ошибку',methods:'Сравни способы',counterexample:'Приведи контрпример',insufficient:'Достаточно ли данных?'};
+  const formats={error:'Найди ошибку',methods:'Сравни способы',counterexample:'Приведи контрпример',insufficient:'Достаточно ли данных?',contrast:'Контрастная пара',steps:'Восстановить решение',representation:'Сменить представление',boundary:'Пограничный случай'};
   const flags={good:'Для контрольной',ambiguous:'Неоднозначное условие',revision:'Нужна правка'};
   const difficulties=['Базовый','Средний','Повышенный','Суперсложный','Высокий'];
   const str=(value,max=1600)=>typeof value==='string'?value.slice(0,max):'';
@@ -8,7 +8,7 @@ globalThis.MathBankWorkspace = (() => {
   function settings(raw={}) {
     raw=raw&&typeof raw==='object'?raw:{};
     const quotas={};for(const d of difficulties)quotas[d]=count(raw.quotas?.[d]);
-    return {skills:MathBankPedagogy.normalize(raw.skills),grouped:raw.grouped===true,format:typeof raw.format==='string'&&Object.hasOwn(formats,raw.format)?raw.format:'all',mode:['balanced','diverse','practice'].includes(raw.mode)?raw.mode:'balanced',familyId:str(raw.familyId,160),structured:raw.structured===true,openCount:count(raw.openCount),quotas,noteFilter:typeof raw.noteFilter==='string'&&(Object.hasOwn(flags,raw.noteFilter)||raw.noteFilter==='excluded')?raw.noteFilter:'all',excludeMarked:raw.excludeMarked!==false};
+    return {skills:MathBankPedagogy.normalize(raw.skills),methodId:str(raw.methodId,80)||'all',answerKind:['all','number','set','sequence','open','interval','coordinates','expression','matching','steps','examples'].includes(raw.answerKind)?raw.answerKind:'all',grouped:raw.grouped===true,format:typeof raw.format==='string'&&Object.hasOwn(formats,raw.format)?raw.format:'all',mode:['balanced','diverse','practice'].includes(raw.mode)?raw.mode:'balanced',familyId:str(raw.familyId,160),structured:raw.structured===true,openCount:count(raw.openCount),quotas,noteFilter:typeof raw.noteFilter==='string'&&(Object.hasOwn(flags,raw.noteFilter)||raw.noteFilter==='excluded')?raw.noteFilter:'all',excludeMarked:raw.excludeMarked!==false};
   }
   function restore(raw,catalog) {
     const ids=new Set(catalog.map(q=>q.id)),notes=Object.create(null);

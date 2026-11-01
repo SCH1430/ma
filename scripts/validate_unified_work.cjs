@@ -12,10 +12,10 @@ const originalSourceDigest=sourceDigest();
 const work=h=>h.state().works?.find(([key])=>key==='unified')?.[1];
 const examples=q=>q.examples?.length?q.examples:[q];
 const classes=BANK.flatMap(t=>t.tasks.map(q=>({...q,grade:t.grade,level:t.level,topicId:t.id})));
-const examExamples=EXAM_BANK.flatMap(exam=>exam.tasks.flatMap(task=>examples(task).map((q,i)=>({...q,examId:exam.id,number:task.number,exampleNumber:examples(task).length>1?i+1:null,solutionPages:q.solutionPages?.length?q.solutionPages:task.solutionPages?.length?task.solutionPages:exam.solutionPages||[],source:'exam'}))));
+const examExamples=EXAM_BANK.flatMap(exam=>exam.tasks.flatMap(task=>examples(task).map((q,i)=>({...q,examId:exam.id,year:exam.year,number:task.number,exampleNumber:examples(task).length>1?i+1:null,solutionPages:q.solutionPages?.length?q.solutionPages:task.solutionPages?.length?task.solutionPages:exam.solutionPages||[],source:'exam'}))));
 const classTask=(grade,level)=>classes.find(q=>q.grade===grade&&q.level===level);
 const examTask=(examId,number,index=0)=>examExamples.filter(q=>q.examId===examId&&q.number===number)[index];
-const selected=[classTask(5,'basic'),classTask(11,'basic'),classTask(11,'advanced'),examTask('oge',1),examTask('ege-basic',2,1),examTask('ege-profile',13,1)];
+const selected=[classTask(5,'basic'),classTask(11,'basic'),classTask(11,'advanced'),examTask('oge',1),examTask('ege-basic',2,1),examTask('ege-profile',13,1),examTask('oge-2027',1),examTask('ege-basic-2027',2,1),examTask('ege-profile-2027',14,1)];
 const all=[...classes,...examExamples];
 async function scenario(label,fn){try{await fn();}catch(error){test(false,label+': '+error.stack);}}
 async function teacher(h){await h.click('[data-role="teacher"]');await h.click('[data-action="builder-home"]');}
@@ -31,7 +31,7 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
   await h.click('[data-action="builder-home"]');
   test(h.state().resumeRoute.view==='builder'&&h.state().resumeRoute.grade===null&&h.state().resumeRoute.level===null,'constructor opens with no class or programme requirement');
   const options=h.get('#source-filter').querySelectorAll('option').map(x=>x.getAttribute('value'));
-  test(['class:5:basic','class:11:basic','class:11:advanced','exam:oge','exam:ege-basic','exam:ege-profile'].every(value=>options.includes(value)),'source filter exposes classes, upper-school programmes and all three official exam banks');
+  test(['class:5:basic','class:11:basic','class:11:advanced','exam:oge','exam:ege-basic','exam:ege-profile','exam:oge-2027','exam:ege-basic-2027','exam:ege-profile-2027'].every(value=>options.includes(value)),'source filter exposes classes, upper-school programmes and all six official exam banks');
   test(h.get('[data-action="print-preview"]').disabled,'empty work cannot enter print preview');
   const student=createHarness();await student.click('[data-role="student"]');
   test(student.get('[data-action="builder-home"]').textContent.includes('учителя'),'student catalogue clearly identifies the separate teacher constructor');
@@ -50,7 +50,7 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
     await catalogue.click('[data-action="bank-next"]');
    }
    const expected=exam.tasks.flatMap(examples).map(q=>q.id);
-   test(same(actual,expected),exam.id+' constructor pagination exposes every official 2026 alternative once in source order');
+   test(same(actual,expected),exam.id+' constructor pagination exposes every official '+exam.year+' alternative once in source order');
   }
  });
  await scenario('complete OGE work and its next variant retain all 25 tasks',async()=>{
@@ -78,7 +78,7 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
    const card=h.document.querySelector('.bank-task');
    if(q.source==='exam'){
     test(same(card.querySelectorAll('.exam-task-image').map(img=>img.getAttribute('src')),[...(q.contextImages||[]),...q.images]),q.id+' displays the complete official condition and shared context');
-    test(card.textContent.includes('2026'),q.id+' visibly identifies the official demo year');
+    test(card.textContent.includes(String(q.year)),q.id+' visibly identifies the official demo year');
    }
    await h.click(`[data-action="add"][data-id="${q.id}"]`);
    test(same(work(h).ids,selected.slice(0,index+1).map(x=>x.id)),'adding '+q.id+' appends to the same work');
@@ -117,7 +117,7 @@ async function exported(h){await h.click('[data-action="export-work"]');const do
    const original=examExamples.find(item=>item.id===q.id);
    test(q.examId===original.examId&&q.number===original.number&&q.exampleNumber===original.exampleNumber,q.id+' PDF task preserves exam, official number and alternative example');
    test(same(q.images,original.images)&&same(q.contextImages,original.contextImages)&&same(q.solutionPages||[],original.solutionPages||[]),q.id+' PDF task preserves original task, shared-context and criteria assets');
-   test(typeof q.answerText==='string'&&q.display===q.answerText&&typeof q.sourceLabel==='string'&&q.sourceLabel.includes('2026'),q.id+' PDF task carries its official answer label and year');
+   test(typeof q.answerText==='string'&&q.display===q.answerText&&typeof q.sourceLabel==='string'&&q.sourceLabel.includes(String(q.year)),q.id+' PDF task carries its official answer label and year');
   }
   await h.click('[data-action="builder"]');test(same(work(h).ids,expectedIds),'return from print preview preserves mixed composition');
  });

@@ -1,0 +1,5403 @@
+{
+  "version": 1,
+  "batch": "2026-11-methods",
+  "questions": {
+    "methods-fractions-01": {
+      "id": "methods-fractions-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-01",
+      "family": "methods-fractions-01",
+      "prompt": "Вычислите 1/3+1/6.",
+      "kind": "number",
+      "answer": 0.5,
+      "display": "1/2",
+      "methodIds": [
+        "fractions-m1"
+      ],
+      "methodChoice": "Привести доли к одинаковому размеру перед сложением.",
+      "rationale": "В этой задаче важно привести доли к одинаковому размеру перед сложением.",
+      "solutionSteps": [
+        {
+          "statement": "1/3=2/6.",
+          "reason": "Обе дроби должны описывать шестые доли."
+        },
+        {
+          "statement": "2/6+1/6=3/6.",
+          "reason": "Складываем числа равных долей."
+        },
+        {
+          "statement": "3/6=1/2.",
+          "reason": "Делим числитель и знаменатель на 3."
+        }
+      ],
+      "domain": "Знаменатели 3 и 6 ненулевые.",
+      "check": "1/2−1/6=1/3.",
+      "solution": "1/3=2/6. Обе дроби должны описывать шестые доли. 2/6+1/6=3/6. Складываем числа равных долей. 3/6=1/2. Делим числитель и знаменатель на 3. Проверка: 1/2−1/6=1/3.",
+      "hint": "Обе дроби должны описывать шестые доли.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-fractions-pair-1",
+      "relatedIds": [
+        "methods-fractions-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-02": {
+      "id": "methods-fractions-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-02",
+      "family": "methods-fractions-02",
+      "prompt": "Вычислите (1/3)·(1/6).",
+      "kind": "number",
+      "answer": 0.05555555555555555,
+      "display": "1/18",
+      "methodIds": [
+        "fractions-m2"
+      ],
+      "methodChoice": "Различить произведение долей и сумму из соседней задачи.",
+      "rationale": "В этой задаче важно различить произведение долей и сумму из соседней задачи.",
+      "solutionSteps": [
+        {
+          "statement": "Умножаем 1 на 1.",
+          "reason": "При умножении перемножаются числители."
+        },
+        {
+          "statement": "Умножаем 3 на 6.",
+          "reason": "Знаменатель произведения равен 18."
+        },
+        {
+          "statement": "Получаем 1/18.",
+          "reason": "Общих делителей для сокращения нет."
+        }
+      ],
+      "domain": "Знаменатели ненулевые.",
+      "check": "(1/18): (1/6)=1/3.",
+      "solution": "Умножаем 1 на 1. При умножении перемножаются числители. Умножаем 3 на 6. Знаменатель произведения равен 18. Получаем 1/18. Общих делителей для сокращения нет. Проверка: (1/18): (1/6)=1/3.",
+      "hint": "При умножении перемножаются числители.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-fractions-pair-1",
+      "relatedIds": [
+        "methods-fractions-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-03": {
+      "id": "methods-fractions-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-03",
+      "family": "methods-fractions-03",
+      "prompt": "В коробке 20 карандашей. Синие составляют 3/4 всех карандашей. Сколько синих карандашей?",
+      "kind": "number",
+      "answer": 15,
+      "display": "15",
+      "methodIds": [
+        "fractions-m2"
+      ],
+      "methodChoice": "Найти часть известного целого умножением на долю.",
+      "rationale": "В этой задаче важно найти часть известного целого умножением на долю.",
+      "solutionSteps": [
+        {
+          "statement": "20:4=5.",
+          "reason": "Находим число карандашей в одной четверти."
+        },
+        {
+          "statement": "5·3=15.",
+          "reason": "Берём три такие доли."
+        },
+        {
+          "statement": "Синих карандашей 15.",
+          "reason": "Вопрос требует часть, а не размер всей коробки."
+        }
+      ],
+      "domain": "Количество карандашей — целое неотрицательное число.",
+      "check": "15/20=3/4.",
+      "solution": "20:4=5. Находим число карандашей в одной четверти. 5·3=15. Берём три такие доли. Синих карандашей 15. Вопрос требует часть, а не размер всей коробки. Проверка: 15/20=3/4.",
+      "hint": "Находим число карандашей в одной четверти.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-fractions-pair-2",
+      "relatedIds": [
+        "methods-fractions-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-04": {
+      "id": "methods-fractions-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-04",
+      "family": "methods-fractions-04",
+      "prompt": "В коробке 15 синих карандашей, это 3/4 всех карандашей. Сколько всего карандашей?",
+      "kind": "number",
+      "answer": 20,
+      "display": "20",
+      "methodIds": [
+        "fractions-m3"
+      ],
+      "methodChoice": "Восстановить целое из известной части; простое умножение на 3/4 ответило бы на другой вопрос.",
+      "rationale": "В этой задаче важно восстановить целое из известной части; простое умножение на 3/4 ответило бы на другой вопрос.",
+      "solutionSteps": [
+        {
+          "statement": "15:3=5.",
+          "reason": "Три четверти содержат три одинаковые доли."
+        },
+        {
+          "statement": "5·4=20.",
+          "reason": "Целое содержит четыре таких доли."
+        },
+        {
+          "statement": "Всего 20 карандашей.",
+          "reason": "Это обратная задача к нахождению части."
+        }
+      ],
+      "domain": "Доля 3/4 ненулевая; количество целое.",
+      "check": "20·3/4=15.",
+      "solution": "15:3=5. Три четверти содержат три одинаковые доли. 5·4=20. Целое содержит четыре таких доли. Всего 20 карандашей. Это обратная задача к нахождению части. Проверка: 20·3/4=15.",
+      "hint": "Три четверти содержат три одинаковые доли.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-fractions-pair-2",
+      "relatedIds": [
+        "methods-fractions-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-05": {
+      "id": "methods-fractions-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions",
+        "operations"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-05",
+      "family": "methods-fractions-05",
+      "prompt": "Упорядочьте шаги вычисления 1/2+1/3. Введите ID шагов через точку с запятой.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "c",
+          "text": "Сокращать результат не нужно: ответ 5/6."
+        },
+        {
+          "id": "b",
+          "text": "Выбираем общий знаменатель 6."
+        },
+        {
+          "id": "a",
+          "text": "Преобразуем в 3/6+2/6=5/6."
+        }
+      ],
+      "answer": [
+        "b",
+        "a",
+        "c"
+      ],
+      "responseMode": "order",
+      "display": "b;a;c",
+      "methodIds": [
+        "fractions-m1"
+      ],
+      "methodChoice": "Сначала выбрать размер доли, затем сложить и проверить сокращение.",
+      "rationale": "В этой задаче важно сначала выбрать размер доли, затем сложить и проверить сокращение.",
+      "solutionSteps": [
+        {
+          "statement": "Общий знаменатель 6.",
+          "reason": "6 делится на 2 и 3."
+        },
+        {
+          "statement": "1/2+1/3=3/6+2/6=5/6.",
+          "reason": "Числители складывают после приведения."
+        },
+        {
+          "statement": "5 и 6 взаимно просты.",
+          "reason": "Сокращение не требуется."
+        }
+      ],
+      "domain": "Обе исходные дроби определены.",
+      "check": "5/6−1/2=1/3.",
+      "solution": "Общий знаменатель 6. 6 делится на 2 и 3. 1/2+1/3=3/6+2/6=5/6. Числители складывают после приведения. 5 и 6 взаимно просты. Сокращение не требуется. Проверка: 5/6−1/2=1/3.",
+      "hint": "6 делится на 2 и 3.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-06": {
+      "id": "methods-fractions-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-06",
+      "family": "methods-fractions-06",
+      "prompt": "Дополните решение: 5/6−1/4=(10−□)/12. Какое число стоит в окошке?",
+      "kind": "number",
+      "answer": 3,
+      "display": "3",
+      "methodIds": [
+        "fractions-m1"
+      ],
+      "methodChoice": "Преобразовать именно вычитаемую дробь к двенадцатым долям.",
+      "rationale": "В этой задаче важно преобразовать именно вычитаемую дробь к двенадцатым долям.",
+      "solutionSteps": [
+        {
+          "statement": "5/6=10/12.",
+          "reason": "Умножаем числитель и знаменатель на 2."
+        },
+        {
+          "statement": "1/4=3/12.",
+          "reason": "Умножаем числитель и знаменатель на 3."
+        },
+        {
+          "statement": "В окошке 3.",
+          "reason": "Знак вычитания не меняет положительный числитель этой дроби."
+        }
+      ],
+      "domain": "Знаменатели ненулевые.",
+      "check": "(10−3)/12=7/12=5/6−1/4.",
+      "solution": "5/6=10/12. Умножаем числитель и знаменатель на 2. 1/4=3/12. Умножаем числитель и знаменатель на 3. В окошке 3. Знак вычитания не меняет положительный числитель этой дроби. Проверка: (10−3)/12=7/12=5/6−1/4.",
+      "hint": "Умножаем числитель и знаменатель на 2.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-07": {
+      "id": "methods-fractions-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "fractions"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-fractions-07",
+      "family": "methods-fractions-07",
+      "prompt": "Сопоставьте дроби и десятичные записи: a) 1/2; b) 3/4; c) 1/5.",
+      "kind": "matching",
+      "matchingItems": [
+        {
+          "id": "a",
+          "text": "1/2"
+        },
+        {
+          "id": "b",
+          "text": "3/4"
+        },
+        {
+          "id": "c",
+          "text": "1/5"
+        }
+      ],
+      "matchingOptions": [
+        {
+          "id": "1",
+          "text": "0,75"
+        },
+        {
+          "id": "2",
+          "text": "0,2"
+        },
+        {
+          "id": "3",
+          "text": "0,5"
+        }
+      ],
+      "answer": {
+        "a": "3",
+        "b": "1",
+        "c": "2"
+      },
+      "display": "a-3;b-1;c-2",
+      "methodIds": [
+        "fractions-m4"
+      ],
+      "methodChoice": "Перевести доли в десятичную запись и сравнить значения, а не форму записи.",
+      "rationale": "В этой задаче важно перевести доли в десятичную запись и сравнить значения, а не форму записи.",
+      "solutionSteps": [
+        {
+          "statement": "1/2=0,5.",
+          "reason": "Это пять десятых."
+        },
+        {
+          "statement": "3/4=0,75.",
+          "reason": "Это 75 сотых."
+        },
+        {
+          "statement": "1/5=0,2.",
+          "reason": "Одна пятая равна двум десятым."
+        }
+      ],
+      "domain": "Знаменатели ненулевые.",
+      "check": "0,75·4=3, а 0,2·5=1.",
+      "solution": "1/2=0,5. Это пять десятых. 3/4=0,75. Это 75 сотых. 1/5=0,2. Одна пятая равна двум десятым. Проверка: 0,75·4=3, а 0,2·5=1.",
+      "hint": "Это пять десятых.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "table",
+          "caption": "Одни и те же доли",
+          "headers": [
+            "Дробь",
+            "Десятичная запись"
+          ],
+          "rows": [
+            [
+              "1/2",
+              "?"
+            ],
+            [
+              "3/4",
+              "?"
+            ],
+            [
+              "1/5",
+              "?"
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "fraction",
+          "to": "decimal",
+          "skill": "fractions"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-fractions-08": {
+      "id": "methods-fractions-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-fractions",
+      "topic": "Дроби: действие и обратный вопрос",
+      "grade": 5,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Повышенный",
+      "skills": [
+        "fractions",
+        "justification"
+      ],
+      "competencies": [
+        "calculations",
+        "reasoning"
+      ],
+      "canonicalId": "methods-fractions-08",
+      "family": "methods-fractions-08",
+      "prompt": "Приведите дробь a/b, равную 2/3, где a и b — положительные целые числа, 4≤b≤60. Введите a;b.",
+      "kind": "examples",
+      "answer": null,
+      "validator": {
+        "name": "fraction-equivalent",
+        "params": {
+          "numerator": 2,
+          "denominator": 3,
+          "minDenominator": 4,
+          "maxDenominator": 60
+        }
+      },
+      "display": "4;6",
+      "methodIds": [
+        "fractions-m4"
+      ],
+      "methodChoice": "Построить любой допустимый пример, сохранив отношение, а не угадывать один эталон.",
+      "rationale": "В этой задаче важно построить любой допустимый пример, сохранив отношение, а не угадывать один эталон.",
+      "solutionSteps": [
+        {
+          "statement": "Умножим 2 и 3 на 2.",
+          "reason": "При умножении числителя и знаменателя на одно ненулевое число значение сохраняется."
+        },
+        {
+          "statement": "Получим 4/6.",
+          "reason": "Знаменатель 6 находится между 4 и 60."
+        },
+        {
+          "statement": "Возможны также 6/9 и 8/12.",
+          "reason": "У задачи несколько допустимых ответов."
+        }
+      ],
+      "domain": "a и b положительные целые, 4≤b≤60.",
+      "check": "4·3=6·2; 4≤6≤60.",
+      "solution": "Умножим 2 и 3 на 2. При умножении числителя и знаменателя на одно ненулевое число значение сохраняется. Получим 4/6. Знаменатель 6 находится между 4 и 60. Возможны также 6/9 и 8/12. У задачи несколько допустимых ответов. Проверка: 4·3=6·2; 4≤6≤60.",
+      "hint": "При умножении числителя и знаменателя на одно ненулевое число значение сохраняется.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "acceptedExamples": [
+        "4;6",
+        "6;9",
+        "8;12"
+      ],
+      "answerExplanation": "Это образцы, а не полный список. Принимается любой пример, удовлетворяющий всем условиям задачи.",
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-01": {
+      "id": "methods-percent-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-01",
+      "family": "methods-percent-01",
+      "prompt": "Цена 1000 рублей выросла на 20%, затем снизилась на 20% новой цены. Найдите итоговую цену.",
+      "kind": "number",
+      "answer": 960,
+      "display": "960",
+      "methodIds": [
+        "percent-m1"
+      ],
+      "methodChoice": "Применить два последовательных множителя, потому что база второго изменения уже другая.",
+      "rationale": "В этой задаче важно применить два последовательных множителя, потому что база второго изменения уже другая.",
+      "solutionSteps": [
+        {
+          "statement": "1000·1,2=1200.",
+          "reason": "После роста новая база равна 1200."
+        },
+        {
+          "statement": "1200·0,8=960.",
+          "reason": "После скидки остаются 80% новой цены."
+        },
+        {
+          "statement": "Итог 960 рублей.",
+          "reason": "Изменения не взаимно уничтожились."
+        }
+      ],
+      "domain": "Цены неотрицательны; скидка меньше 100%.",
+      "check": "1,2·0,8=0,96.",
+      "solution": "1000·1,2=1200. После роста новая база равна 1200. 1200·0,8=960. После скидки остаются 80% новой цены. Итог 960 рублей. Изменения не взаимно уничтожились. Проверка: 1,2·0,8=0,96.",
+      "hint": "После роста новая база равна 1200.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-percent-pair-1",
+      "relatedIds": [
+        "methods-percent-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-02": {
+      "id": "methods-percent-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-02",
+      "family": "methods-percent-02",
+      "prompt": "Цена 1000 рублей выросла на 20%, затем из новой цены вычли сумму, равную 20% исходных 1000 рублей. Найдите итог.",
+      "kind": "number",
+      "answer": 1000,
+      "display": "1000",
+      "methodIds": [
+        "percent-m2"
+      ],
+      "methodChoice": "Сохранить исходную базу второго процента, поскольку она явно указана.",
+      "rationale": "В этой задаче важно сохранить исходную базу второго процента, поскольку она явно указана.",
+      "solutionSteps": [
+        {
+          "statement": "Рост равен 1000·0,2=200.",
+          "reason": "Первое изменение прибавляет 200 рублей."
+        },
+        {
+          "statement": "Вычитают тоже 1000·0,2=200.",
+          "reason": "Во второй части указана исходная цена, а не новая."
+        },
+        {
+          "statement": "1000+200−200=1000.",
+          "reason": "Одинаковые денежные суммы взаимно уничтожаются."
+        }
+      ],
+      "domain": "Оба процента взяты от явно указанной исходной цены.",
+      "check": "1200−200=1000.",
+      "solution": "Рост равен 1000·0,2=200. Первое изменение прибавляет 200 рублей. Вычитают тоже 1000·0,2=200. Во второй части указана исходная цена, а не новая. 1000+200−200=1000. Одинаковые денежные суммы взаимно уничтожаются. Проверка: 1200−200=1000.",
+      "hint": "Первое изменение прибавляет 200 рублей.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-percent-pair-1",
+      "relatedIds": [
+        "methods-percent-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-03": {
+      "id": "methods-percent-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-03",
+      "family": "methods-percent-03",
+      "prompt": "После скидки 25% вещь стоит 1500 рублей. Какова исходная цена?",
+      "kind": "number",
+      "answer": 2000,
+      "display": "2000",
+      "methodIds": [
+        "percent-m3"
+      ],
+      "methodChoice": "Восстановить цену делением на оставшиеся 75%, а не прибавлением 25% к результату.",
+      "rationale": "В этой задаче важно восстановить цену делением на оставшиеся 75%, а не прибавлением 25% к результату.",
+      "solutionSteps": [
+        {
+          "statement": "Осталось 75% исходной цены.",
+          "reason": "100%−25%=75%."
+        },
+        {
+          "statement": "Исходная цена 1500:0,75=2000.",
+          "reason": "Результат делят на его долю от целого."
+        },
+        {
+          "statement": "Получаем 2000 рублей.",
+          "reason": "Это цена до изменения."
+        }
+      ],
+      "domain": "Множитель 0,75 положителен.",
+      "check": "2000·0,75=1500.",
+      "solution": "Осталось 75% исходной цены. 100%−25%=75%. Исходная цена 1500:0,75=2000. Результат делят на его долю от целого. Получаем 2000 рублей. Это цена до изменения. Проверка: 2000·0,75=1500.",
+      "hint": "100%−25%=75%.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-percent-pair-2",
+      "relatedIds": [
+        "methods-percent-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-04": {
+      "id": "methods-percent-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-04",
+      "family": "methods-percent-04",
+      "prompt": "Вещь стоит 1500 рублей. Какова цена после повышения на 25%?",
+      "kind": "number",
+      "answer": 1875,
+      "display": "1875",
+      "methodIds": [
+        "percent-m1"
+      ],
+      "methodChoice": "Найти новое значение известной цены; это прямой вопрос, в отличие от восстановления цены до скидки.",
+      "rationale": "В этой задаче важно найти новое значение известной цены; это прямой вопрос, в отличие от восстановления цены до скидки.",
+      "solutionSteps": [
+        {
+          "statement": "25% от 1500 равны 375.",
+          "reason": "База известна и равна 1500."
+        },
+        {
+          "statement": "1500+375=1875.",
+          "reason": "Повышение прибавляется к исходной цене."
+        },
+        {
+          "statement": "Новая цена 1875 рублей.",
+          "reason": "Использован множитель 1,25."
+        }
+      ],
+      "domain": "Рост на 25% не меняет допустимость положительной цены.",
+      "check": "1875/1500=1,25.",
+      "solution": "25% от 1500 равны 375. База известна и равна 1500. 1500+375=1875. Повышение прибавляется к исходной цене. Новая цена 1875 рублей. Использован множитель 1,25. Проверка: 1875/1500=1,25.",
+      "hint": "База известна и равна 1500.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-percent-pair-2",
+      "relatedIds": [
+        "methods-percent-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-05": {
+      "id": "methods-percent-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent",
+        "linear-equation"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-percent-05",
+      "family": "methods-percent-05",
+      "prompt": "Упорядочьте восстановление цены до скидки 20%, если после скидки платят 960 рублей.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "a",
+          "text": "Записываем 0,8x=960."
+        },
+        {
+          "id": "b",
+          "text": "Делим на 0,8: x=1200."
+        },
+        {
+          "id": "c",
+          "text": "Обозначаем исходную цену x; после скидки остаётся 80%."
+        }
+      ],
+      "answer": [
+        "c",
+        "a",
+        "b"
+      ],
+      "responseMode": "order",
+      "display": "c;a;b",
+      "methodIds": [
+        "percent-m3"
+      ],
+      "methodChoice": "Сначала определить неизвестное целое и долю, затем составить уравнение.",
+      "rationale": "В этой задаче важно сначала определить неизвестное целое и долю, затем составить уравнение.",
+      "solutionSteps": [
+        {
+          "statement": "Исходная цена x.",
+          "reason": "От неё осталось 0,8x."
+        },
+        {
+          "statement": "0,8x=960.",
+          "reason": "Связываем исходную цену и результат."
+        },
+        {
+          "statement": "x=1200.",
+          "reason": "Делим на ненулевой множитель 0,8."
+        }
+      ],
+      "domain": "x>0.",
+      "check": "1200−0,2·1200=960.",
+      "solution": "Исходная цена x. От неё осталось 0,8x. 0,8x=960. Связываем исходную цену и результат. x=1200. Делим на ненулевой множитель 0,8. Проверка: 1200−0,2·1200=960.",
+      "hint": "От неё осталось 0,8x.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-06": {
+      "id": "methods-percent-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-06",
+      "family": "methods-percent-06",
+      "prompt": "Дополните расчёт: после скидки 15% цена 1200 рублей превращается в 1200·(1−0,15)=□ рублей.",
+      "kind": "number",
+      "answer": 1020,
+      "display": "1020",
+      "methodIds": [
+        "percent-m1"
+      ],
+      "methodChoice": "Оставить 85% исходной суммы, вместо вычитания числа 15.",
+      "rationale": "В этой задаче важно оставить 85% исходной суммы, вместо вычитания числа 15.",
+      "solutionSteps": [
+        {
+          "statement": "1−0,15=0,85.",
+          "reason": "Скидка задана долей цены."
+        },
+        {
+          "statement": "1200·0,85=1020.",
+          "reason": "Считаем оставшуюся стоимость."
+        },
+        {
+          "statement": "Ответ 1020 рублей.",
+          "reason": "Единицы сохраняются."
+        }
+      ],
+      "domain": "15% находится между 0% и 100%.",
+      "check": "1200−1020=180=15% от 1200.",
+      "solution": "1−0,15=0,85. Скидка задана долей цены. 1200·0,85=1020. Считаем оставшуюся стоимость. Ответ 1020 рублей. Единицы сохраняются. Проверка: 1200−1020=180=15% от 1200.",
+      "hint": "Скидка задана долей цены.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-07": {
+      "id": "methods-percent-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-percent-07",
+      "family": "methods-percent-07",
+      "prompt": "Сопоставьте изменение исходной цены 200 рублей с результатом: a) рост 10%; b) скидка 10%; c) без изменения.",
+      "kind": "matching",
+      "matchingItems": [
+        {
+          "id": "a",
+          "text": "Рост 10%"
+        },
+        {
+          "id": "b",
+          "text": "Скидка 10%"
+        },
+        {
+          "id": "c",
+          "text": "Изменение 0%"
+        }
+      ],
+      "matchingOptions": [
+        {
+          "id": "1",
+          "text": "180"
+        },
+        {
+          "id": "2",
+          "text": "200"
+        },
+        {
+          "id": "3",
+          "text": "220"
+        }
+      ],
+      "answer": {
+        "a": "3",
+        "b": "1",
+        "c": "2"
+      },
+      "display": "a-3;b-1;c-2",
+      "methodIds": [
+        "percent-m1"
+      ],
+      "methodChoice": "Перевести проценты в множители и распознать соответствующую строку таблицы.",
+      "rationale": "В этой задаче важно перевести проценты в множители и распознать соответствующую строку таблицы.",
+      "solutionSteps": [
+        {
+          "statement": "Рост: 200·1,1=220.",
+          "reason": "Множитель больше единицы."
+        },
+        {
+          "statement": "Скидка: 200·0,9=180.",
+          "reason": "Множитель меньше единицы."
+        },
+        {
+          "statement": "Без изменения: 200·1=200.",
+          "reason": "Нулевой процент не меняет цену."
+        }
+      ],
+      "domain": "Исходная цена 200 рублей для всех трёх строк.",
+      "check": "220−200=200−180=20.",
+      "solution": "Рост: 200·1,1=220. Множитель больше единицы. Скидка: 200·0,9=180. Множитель меньше единицы. Без изменения: 200·1=200. Нулевой процент не меняет цену. Проверка: 220−200=200−180=20.",
+      "hint": "Множитель больше единицы.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "table",
+          "caption": "Изменение одной базы",
+          "headers": [
+            "Изменение",
+            "Множитель"
+          ],
+          "rows": [
+            [
+              "+10%",
+              "1,1"
+            ],
+            [
+              "−10%",
+              "0,9"
+            ],
+            [
+              "0%",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "percent",
+          "to": "table",
+          "skill": "percent"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-percent-08": {
+      "id": "methods-percent-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-percent",
+      "topic": "Проценты и меняющаяся база",
+      "grade": 6,
+      "level": "basic",
+      "subject": "Числа и вычисления",
+      "difficulty": "Повышенный",
+      "skills": [
+        "percent",
+        "powers",
+        "justification"
+      ],
+      "competencies": [
+        "calculations",
+        "reasoning"
+      ],
+      "canonicalId": "methods-percent-08",
+      "family": "methods-percent-08",
+      "prompt": "Положительная цена сначала увеличилась на p%, затем уменьшилась на p% новой цены, где 0<p<100. Докажите, что итог ниже исходного. Объясните, почему при p=0 разницы нет.",
+      "kind": "open",
+      "answer": null,
+      "display": "Множитель (1+p/100)(1−p/100)=1−(p/100)²<1 при 0<p<100; при p=0 он равен 1.",
+      "rubric": [
+        "Получен множитель 1−(p/100)².",
+        "Обосновано строгое неравенство при положительном p.",
+        "Отдельно разобран случай p=0."
+      ],
+      "methodIds": [
+        "percent-m1"
+      ],
+      "methodChoice": "Исследовать общий множитель и границу параметра, а не делать вывод по одному числовому примеру.",
+      "rationale": "В этой задаче важно исследовать общий множитель и границу параметра, а не делать вывод по одному числовому примеру.",
+      "solutionSteps": [
+        {
+          "statement": "Обозначим долю роста r=p/100.",
+          "reason": "Тогда 0<r<1."
+        },
+        {
+          "statement": "(1+r)(1−r)=1−r².",
+          "reason": "Применяем разность квадратов."
+        },
+        {
+          "statement": "При r>0 получаем 1−r²<1; при r=0 получаем 1.",
+          "reason": "Квадрат положительного числа положителен."
+        }
+      ],
+      "domain": "Исходная цена положительна, 0≤p<100.",
+      "check": "При p=20 множитель равен 24/25, а при p=0 — 1.",
+      "solution": "Обозначим долю роста r=p/100. Тогда 0<r<1. (1+r)(1−r)=1−r². Применяем разность квадратов. При r>0 получаем 1−r²<1; при r=0 получаем 1. Квадрат положительного числа положителен. Проверка: При p=20 множитель равен 24/25, а при p=0 — 1.",
+      "hint": "Тогда 0<r<1.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-01": {
+      "id": "methods-linear-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation",
+        "brackets"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-linear-01",
+      "family": "methods-linear-01",
+      "prompt": "Решите 3(x−2)=12.",
+      "kind": "number",
+      "answer": 6,
+      "display": "6",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Сначала разделить на 3 или раскрыть скобки, сохраняя множитель перед всей разностью.",
+      "rationale": "В этой задаче важно сначала разделить на 3 или раскрыть скобки, сохраняя множитель перед всей разностью.",
+      "solutionSteps": [
+        {
+          "statement": "x−2=4.",
+          "reason": "Делим обе части на 3."
+        },
+        {
+          "statement": "x=6.",
+          "reason": "Прибавляем 2 к обеим частям."
+        },
+        {
+          "statement": "Корень 6.",
+          "reason": "Это единственное решение линейного уравнения."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "3(6−2)=12.",
+      "solution": "x−2=4. Делим обе части на 3. x=6. Прибавляем 2 к обеим частям. Корень 6. Это единственное решение линейного уравнения. Проверка: 3(6−2)=12.",
+      "hint": "Делим обе части на 3.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-linear-pair-1",
+      "relatedIds": [
+        "methods-linear-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-02": {
+      "id": "methods-linear-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-linear-02",
+      "family": "methods-linear-02",
+      "prompt": "Решите 3x−2=12.",
+      "kind": "number",
+      "answer": 4.666666666666667,
+      "display": "14/3",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Различить вычитание после умножения и скобки в соседнем уравнении.",
+      "rationale": "В этой задаче важно различить вычитание после умножения и скобки в соседнем уравнении.",
+      "solutionSteps": [
+        {
+          "statement": "3x=14.",
+          "reason": "Прибавляем 2."
+        },
+        {
+          "statement": "x=14/3.",
+          "reason": "Делим на 3."
+        },
+        {
+          "statement": "Дробный корень допустим.",
+          "reason": "Не требуется округлять точный ответ."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "3·(14/3)−2=12.",
+      "solution": "3x=14. Прибавляем 2. x=14/3. Делим на 3. Дробный корень допустим. Не требуется округлять точный ответ. Проверка: 3·(14/3)−2=12.",
+      "hint": "Прибавляем 2.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-linear-pair-1",
+      "relatedIds": [
+        "methods-linear-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-03": {
+      "id": "methods-linear-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation",
+        "fractions"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-linear-03",
+      "family": "methods-linear-03",
+      "prompt": "Решите x/4=3.",
+      "kind": "number",
+      "answer": 12,
+      "display": "12",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Умножить равенство на постоянный ненулевой знаменатель.",
+      "rationale": "В этой задаче важно умножить равенство на постоянный ненулевой знаменатель.",
+      "solutionSteps": [
+        {
+          "statement": "x=3·4.",
+          "reason": "Умножаем обе части на 4."
+        },
+        {
+          "statement": "x=12.",
+          "reason": "Выполняем произведение."
+        },
+        {
+          "statement": "Получено одно решение.",
+          "reason": "Коэффициент при x ненулевой."
+        }
+      ],
+      "domain": "x∈R; знаменатель равен 4.",
+      "check": "12/4=3.",
+      "solution": "x=3·4. Умножаем обе части на 4. x=12. Выполняем произведение. Получено одно решение. Коэффициент при x ненулевой. Проверка: 12/4=3.",
+      "hint": "Умножаем обе части на 4.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-linear-pair-2",
+      "relatedIds": [
+        "methods-linear-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-04": {
+      "id": "methods-linear-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation",
+        "domain"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-linear-04",
+      "family": "methods-linear-04",
+      "prompt": "Решите 4/x=3.",
+      "kind": "number",
+      "answer": 1.3333333333333333,
+      "display": "4/3",
+      "methodIds": [
+        "linear-m2"
+      ],
+      "methodChoice": "Зафиксировать x≠0, поскольку теперь неизвестное стоит в знаменателе.",
+      "rationale": "В этой задаче важно зафиксировать x≠0, поскольку теперь неизвестное стоит в знаменателе.",
+      "solutionSteps": [
+        {
+          "statement": "x≠0.",
+          "reason": "Исходная дробь должна существовать."
+        },
+        {
+          "statement": "4=3x, значит x=4/3.",
+          "reason": "Умножаем на допустимое x и делим на 3."
+        },
+        {
+          "statement": "4/3≠0.",
+          "reason": "Найденный корень не нарушает ОДЗ."
+        }
+      ],
+      "domain": "x≠0.",
+      "check": "4/(4/3)=3.",
+      "solution": "x≠0. Исходная дробь должна существовать. 4=3x, значит x=4/3. Умножаем на допустимое x и делим на 3. 4/3≠0. Найденный корень не нарушает ОДЗ. Проверка: 4/(4/3)=3.",
+      "hint": "Исходная дробь должна существовать.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-linear-pair-2",
+      "relatedIds": [
+        "methods-linear-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-05": {
+      "id": "methods-linear-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-linear-05",
+      "family": "methods-linear-05",
+      "prompt": "Упорядочьте решение 2x+5=17.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "a",
+          "text": "x=6."
+        },
+        {
+          "id": "b",
+          "text": "2x+5=17."
+        },
+        {
+          "id": "c",
+          "text": "2x=12."
+        }
+      ],
+      "answer": [
+        "b",
+        "c",
+        "a"
+      ],
+      "responseMode": "order",
+      "display": "b;c;a",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Сначала убрать слагаемое, затем разделить на коэффициент.",
+      "rationale": "В этой задаче важно сначала убрать слагаемое, затем разделить на коэффициент.",
+      "solutionSteps": [
+        {
+          "statement": "2x+5=17.",
+          "reason": "Исходное равенство."
+        },
+        {
+          "statement": "2x=12.",
+          "reason": "Вычитаем 5 из обеих частей."
+        },
+        {
+          "statement": "x=6.",
+          "reason": "Делим на 2."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "2·6+5=17.",
+      "solution": "2x+5=17. Исходное равенство. 2x=12. Вычитаем 5 из обеих частей. x=6. Делим на 2. Проверка: 2·6+5=17.",
+      "hint": "Исходное равенство.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-06": {
+      "id": "methods-linear-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-linear-06",
+      "family": "methods-linear-06",
+      "prompt": "Дополните решение: 5x−7=13; 5x=20; x=□.",
+      "kind": "number",
+      "answer": 4,
+      "display": "4",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Завершить преобразование делением обеих частей на 5.",
+      "rationale": "В этой задаче важно завершить преобразование делением обеих частей на 5.",
+      "solutionSteps": [
+        {
+          "statement": "5x=20.",
+          "reason": "К обеим частям прибавили 7."
+        },
+        {
+          "statement": "x=20/5=4.",
+          "reason": "Коэффициент 5 не равен нулю."
+        },
+        {
+          "statement": "В окошке 4.",
+          "reason": "Это значение неизвестного, а не промежуточное 20."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "5·4−7=13.",
+      "solution": "5x=20. К обеим частям прибавили 7. x=20/5=4. Коэффициент 5 не равен нулю. В окошке 4. Это значение неизвестного, а не промежуточное 20. Проверка: 5·4−7=13.",
+      "hint": "К обеим частям прибавили 7.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-07": {
+      "id": "methods-linear-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "graph-reading"
+      ],
+      "competencies": [
+        "graphs"
+      ],
+      "canonicalId": "methods-linear-07",
+      "family": "methods-linear-07",
+      "prompt": "Стоимость задана линейной формулой y=3x+2. Дополните таблицу и укажите координаты точки графика при x=4. Введите x;y.",
+      "kind": "coordinates",
+      "answer": [
+        4,
+        14
+      ],
+      "display": "4;14",
+      "methodIds": [
+        "linear-m3"
+      ],
+      "methodChoice": "Подставить аргумент в формулу и сохранить порядок координат.",
+      "rationale": "В этой задаче важно подставить аргумент в формулу и сохранить порядок координат.",
+      "solutionSteps": [
+        {
+          "statement": "x=4.",
+          "reason": "Задан аргумент, первая координата."
+        },
+        {
+          "statement": "y=3·4+2=14.",
+          "reason": "Вычисляем значение зависимости."
+        },
+        {
+          "statement": "Точка (4;14).",
+          "reason": "Вторая координата — найденное значение."
+        }
+      ],
+      "domain": "Для модели x≥0.",
+      "check": "(0;2) и (2;8) согласуются с той же формулой.",
+      "solution": "x=4. Задан аргумент, первая координата. y=3·4+2=14. Вычисляем значение зависимости. Точка (4;14). Вторая координата — найденное значение. Проверка: (0;2) и (2;8) согласуются с той же формулой.",
+      "hint": "Задан аргумент, первая координата.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "text",
+          "caption": "Формула",
+          "text": "y=3x+2"
+        },
+        {
+          "type": "table",
+          "caption": "Значения",
+          "headers": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              8
+            ],
+            [
+              4,
+              "?"
+            ]
+          ]
+        },
+        {
+          "type": "graph",
+          "caption": "Линейная зависимость",
+          "xLabel": "x",
+          "yLabel": "y",
+          "xMin": 0,
+          "xMax": 4,
+          "yMin": 0,
+          "yMax": 15,
+          "points": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              8
+            ]
+          ],
+          "segments": [
+            [
+              [
+                0,
+                2
+              ],
+              [
+                4,
+                14
+              ]
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "formula",
+          "to": "table",
+          "skill": "function-value"
+        },
+        {
+          "from": "table",
+          "to": "graph",
+          "skill": "graph-reading"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-linear-08": {
+      "id": "methods-linear-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-linear",
+      "topic": "Линейное уравнение: структура записи",
+      "grade": 7,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Повышенный",
+      "skills": [
+        "linear-equation",
+        "justification"
+      ],
+      "competencies": [
+        "equations",
+        "reasoning"
+      ],
+      "canonicalId": "methods-linear-08",
+      "family": "methods-linear-08",
+      "prompt": "Придумайте уравнение ax+b=0 с корнем 2, где a,b — целые и 1≤|a|≤10. Введите a;b.",
+      "kind": "examples",
+      "answer": null,
+      "validator": {
+        "name": "linear-root",
+        "params": {
+          "root": 2,
+          "minCoefficient": 1,
+          "maxCoefficient": 10
+        }
+      },
+      "display": "1;-2",
+      "methodIds": [
+        "linear-m1"
+      ],
+      "methodChoice": "Построить коэффициенты по условию корня и исключить вырожденное a=0.",
+      "rationale": "В этой задаче важно построить коэффициенты по условию корня и исключить вырожденное a=0.",
+      "solutionSteps": [
+        {
+          "statement": "Требуется 2a+b=0.",
+          "reason": "Подставляем заданный корень."
+        },
+        {
+          "statement": "Выбираем a=1, тогда b=−2.",
+          "reason": "Получаем допустимые целые коэффициенты."
+        },
+        {
+          "statement": "Подойдут и a=3,b=−6.",
+          "reason": "Единственного набора коэффициентов нет."
+        }
+      ],
+      "domain": "a,b∈Z, 1≤|a|≤10.",
+      "check": "1·2−2=0; a≠0 гарантирует единственный корень.",
+      "solution": "Требуется 2a+b=0. Подставляем заданный корень. Выбираем a=1, тогда b=−2. Получаем допустимые целые коэффициенты. Подойдут и a=3,b=−6. Единственного набора коэффициентов нет. Проверка: 1·2−2=0; a≠0 гарантирует единственный корень.",
+      "hint": "Подставляем заданный корень.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "acceptedExamples": [
+        "1;-2",
+        "3;-6",
+        "-2;4"
+      ],
+      "answerExplanation": "Это образцы, а не полный список. Принимается любой пример, удовлетворяющий всем условиям задачи.",
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-01": {
+      "id": "methods-inequalities-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-01",
+      "family": "methods-inequalities-01",
+      "prompt": "Решите неравенство −2x<6. Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": -3,
+          "hi": null,
+          "loClosed": false,
+          "hiClosed": false
+        }
+      ],
+      "display": "(-3;+∞)",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "При делении на отрицательное число изменить направление неравенства.",
+      "rationale": "В этой задаче важно при делении на отрицательное число изменить направление неравенства.",
+      "solutionSteps": [
+        {
+          "statement": "−2x<6.",
+          "reason": "Коэффициент при x отрицателен."
+        },
+        {
+          "statement": "x>−3.",
+          "reason": "Деление на −2 отражает порядок чисел."
+        },
+        {
+          "statement": "Ответ (−3;+∞).",
+          "reason": "Граница −3 не включена."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "x=0 подходит, x=−4 не подходит.",
+      "solution": "−2x<6. Коэффициент при x отрицателен. x>−3. Деление на −2 отражает порядок чисел. Ответ (−3;+∞). Граница −3 не включена. Проверка: x=0 подходит, x=−4 не подходит.",
+      "hint": "Коэффициент при x отрицателен.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-inequalities-pair-1",
+      "relatedIds": [
+        "methods-inequalities-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-02": {
+      "id": "methods-inequalities-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-02",
+      "family": "methods-inequalities-02",
+      "prompt": "Решите неравенство 2x<6. Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": null,
+          "hi": 3,
+          "loClosed": false,
+          "hiClosed": false
+        }
+      ],
+      "display": "(−∞;3)",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "Сохранить направление при делении на положительное число.",
+      "rationale": "В этой задаче важно сохранить направление при делении на положительное число.",
+      "solutionSteps": [
+        {
+          "statement": "2x<6.",
+          "reason": "Коэффициент положителен."
+        },
+        {
+          "statement": "x<3.",
+          "reason": "Делим на 2 без изменения направления."
+        },
+        {
+          "statement": "Ответ (−∞;3).",
+          "reason": "Строгое неравенство исключает границу."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "x=0 подходит, x=4 не подходит.",
+      "solution": "2x<6. Коэффициент положителен. x<3. Делим на 2 без изменения направления. Ответ (−∞;3). Строгое неравенство исключает границу. Проверка: x=0 подходит, x=4 не подходит.",
+      "hint": "Коэффициент положителен.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-inequalities-pair-1",
+      "relatedIds": [
+        "methods-inequalities-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-03": {
+      "id": "methods-inequalities-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-03",
+      "family": "methods-inequalities-03",
+      "prompt": "Решите x−4≤0. Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": null,
+          "hi": 4,
+          "loClosed": false,
+          "hiClosed": true
+        }
+      ],
+      "display": "(−∞;4]",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "Отличить допустимое равенство нулю от запрета знаменателя в соседней задаче.",
+      "rationale": "В этой задаче важно отличить допустимое равенство нулю от запрета знаменателя в соседней задаче.",
+      "solutionSteps": [
+        {
+          "statement": "x−4≤0.",
+          "reason": "Ограничений знаменателя нет."
+        },
+        {
+          "statement": "x≤4.",
+          "reason": "Прибавляем 4."
+        },
+        {
+          "statement": "Ответ (−∞;4].",
+          "reason": "При x=4 получаем верное равенство 0≤0."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Граница x=4 удовлетворяет исходной записи.",
+      "solution": "x−4≤0. Ограничений знаменателя нет. x≤4. Прибавляем 4. Ответ (−∞;4]. При x=4 получаем верное равенство 0≤0. Проверка: Граница x=4 удовлетворяет исходной записи.",
+      "hint": "Ограничений знаменателя нет.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-inequalities-pair-2",
+      "relatedIds": [
+        "methods-inequalities-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-04": {
+      "id": "methods-inequalities-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality",
+        "domain"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-04",
+      "family": "methods-inequalities-04",
+      "prompt": "Решите 1/(x−4)≤0. Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": null,
+          "hi": 4,
+          "loClosed": false,
+          "hiClosed": false
+        }
+      ],
+      "display": "(−∞;4)",
+      "methodIds": [
+        "inequalities-m2"
+      ],
+      "methodChoice": "Использовать знак знаменателя, а равенство нулю проверить отдельно.",
+      "rationale": "В этой задаче важно использовать знак знаменателя, а равенство нулю проверить отдельно.",
+      "solutionSteps": [
+        {
+          "statement": "x≠4.",
+          "reason": "Знаменатель не должен быть нулём."
+        },
+        {
+          "statement": "Числитель 1 положителен; дробь неположительна только при x−4<0.",
+          "reason": "Нулём эта дробь не бывает."
+        },
+        {
+          "statement": "x<4, ответ (−∞;4).",
+          "reason": "Граница исключена исходной ОДЗ."
+        }
+      ],
+      "domain": "x≠4.",
+      "check": "При x=3 дробь −1, при x=5 она 1.",
+      "solution": "x≠4. Знаменатель не должен быть нулём. Числитель 1 положителен; дробь неположительна только при x−4<0. Нулём эта дробь не бывает. x<4, ответ (−∞;4). Граница исключена исходной ОДЗ. Проверка: При x=3 дробь −1, при x=5 она 1.",
+      "hint": "Знаменатель не должен быть нулём.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-inequalities-pair-2",
+      "relatedIds": [
+        "methods-inequalities-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-05": {
+      "id": "methods-inequalities-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-05",
+      "family": "methods-inequalities-05",
+      "prompt": "Упорядочьте решение −3x+6≥0.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "b",
+          "text": "−3x≥−6."
+        },
+        {
+          "id": "a",
+          "text": "x≤2."
+        },
+        {
+          "id": "c",
+          "text": "−3x+6≥0."
+        }
+      ],
+      "answer": [
+        "c",
+        "b",
+        "a"
+      ],
+      "responseMode": "order",
+      "display": "c;b;a",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "Выполнить сдвиг, а затем правильно разделить на отрицательный коэффициент.",
+      "rationale": "В этой задаче важно выполнить сдвиг, а затем правильно разделить на отрицательный коэффициент.",
+      "solutionSteps": [
+        {
+          "statement": "−3x+6≥0.",
+          "reason": "Исходное условие."
+        },
+        {
+          "statement": "−3x≥−6.",
+          "reason": "Вычитаем 6 из обеих частей."
+        },
+        {
+          "statement": "x≤2.",
+          "reason": "Деление на −3 меняет направление."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При x=2 обе части исходного неравенства дают 0.",
+      "solution": "−3x+6≥0. Исходное условие. −3x≥−6. Вычитаем 6 из обеих частей. x≤2. Деление на −3 меняет направление. Проверка: При x=2 обе части исходного неравенства дают 0.",
+      "hint": "Исходное условие.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-06": {
+      "id": "methods-inequalities-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-06",
+      "family": "methods-inequalities-06",
+      "prompt": "Дополните: −4x≤12; после деления получаем x≥□. Укажите число в окошке.",
+      "kind": "number",
+      "answer": -3,
+      "display": "-3",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "Изменить направление и вычислить отрицательную границу.",
+      "rationale": "В этой задаче важно изменить направление и вычислить отрицательную границу.",
+      "solutionSteps": [
+        {
+          "statement": "12:(−4)=−3.",
+          "reason": "Делим правую часть на коэффициент."
+        },
+        {
+          "statement": "x≥−3.",
+          "reason": "Отрицательный делитель меняет знак."
+        },
+        {
+          "statement": "В окошке −3.",
+          "reason": "Граница входит в множество решений."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "−4·(−3)=12.",
+      "solution": "12:(−4)=−3. Делим правую часть на коэффициент. x≥−3. Отрицательный делитель меняет знак. В окошке −3. Граница входит в множество решений. Проверка: −4·(−3)=12.",
+      "hint": "Делим правую часть на коэффициент.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-07": {
+      "id": "methods-inequalities-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "linear-inequality",
+        "graph-reading"
+      ],
+      "competencies": [
+        "equations",
+        "graphs"
+      ],
+      "canonicalId": "methods-inequalities-07",
+      "family": "methods-inequalities-07",
+      "prompt": "Прямая задана формулой y=2x−6 и таблицей. При каких x её точки лежат на оси Ox или выше? Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": 3,
+          "hi": null,
+          "loClosed": true,
+          "hiClosed": false
+        }
+      ],
+      "display": "[3;+∞)",
+      "methodIds": [
+        "inequalities-m3"
+      ],
+      "methodChoice": "Перевести геометрическое условие в y≥0 и решить неравенство.",
+      "rationale": "В этой задаче важно перевести геометрическое условие в y≥0 и решить неравенство.",
+      "solutionSteps": [
+        {
+          "statement": "Нужно y≥0.",
+          "reason": "На оси ордината ноль, выше оси — положительна."
+        },
+        {
+          "statement": "2x−6≥0, значит x≥3.",
+          "reason": "Используем данную формулу прямой."
+        },
+        {
+          "statement": "Ответ [3;+∞).",
+          "reason": "Точка пересечения с осью включена."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При x=3 значение y=0; при x=4 оно положительно.",
+      "solution": "Нужно y≥0. На оси ордината ноль, выше оси — положительна. 2x−6≥0, значит x≥3. Используем данную формулу прямой. Ответ [3;+∞). Точка пересечения с осью включена. Проверка: При x=3 значение y=0; при x=4 оно положительно.",
+      "hint": "На оси ордината ноль, выше оси — положительна.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "text",
+          "caption": "Формула",
+          "text": "y=2x−6"
+        },
+        {
+          "type": "table",
+          "caption": "Значения",
+          "headers": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              0,
+              -6
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              5,
+              4
+            ]
+          ]
+        },
+        {
+          "type": "graph",
+          "caption": "Положение относительно Ox",
+          "xLabel": "x",
+          "yLabel": "y",
+          "xMin": 0,
+          "xMax": 6,
+          "yMin": -7,
+          "yMax": 6,
+          "points": [
+            [
+              0,
+              -6
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              5,
+              4
+            ]
+          ],
+          "segments": [
+            [
+              [
+                0,
+                -6
+              ],
+              [
+                6,
+                6
+              ]
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "graph",
+          "to": "inequality",
+          "skill": "linear-inequality"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-inequalities-08": {
+      "id": "methods-inequalities-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-inequalities",
+      "topic": "Неравенства: знак и граница",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Повышенный",
+      "skills": [
+        "linear-inequality",
+        "parameters"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-inequalities-08",
+      "family": "methods-inequalities-08",
+      "prompt": "Решите 0·x≤2. Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": null,
+          "hi": null,
+          "loClosed": false,
+          "hiClosed": false
+        }
+      ],
+      "display": "(−∞;+∞)",
+      "methodIds": [
+        "inequalities-m1"
+      ],
+      "methodChoice": "Проверить нулевой коэффициент до попытки делить на него.",
+      "rationale": "В этой задаче важно проверить нулевой коэффициент до попытки делить на него.",
+      "solutionSteps": [
+        {
+          "statement": "Левая часть равна 0 при любом x.",
+          "reason": "Произведение нуля на любое действительное число равно нулю."
+        },
+        {
+          "statement": "Получаем верное утверждение 0≤2.",
+          "reason": "Условие не ограничивает x."
+        },
+        {
+          "statement": "Подходит вся числовая прямая.",
+          "reason": "Деление на коэффициент 0 недопустимо."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При любых x исходная левая часть остаётся 0.",
+      "solution": "Левая часть равна 0 при любом x. Произведение нуля на любое действительное число равно нулю. Получаем верное утверждение 0≤2. Условие не ограничивает x. Подходит вся числовая прямая. Деление на коэффициент 0 недопустимо. Проверка: При любых x исходная левая часть остаётся 0.",
+      "hint": "Произведение нуля на любое действительное число равно нулю.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-01": {
+      "id": "methods-quadratic-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "quadratic-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-01",
+      "family": "methods-quadratic-01",
+      "prompt": "Решите x²−5x+6=0.",
+      "kind": "set",
+      "answer": [
+        2,
+        3
+      ],
+      "display": "2;3",
+      "methodIds": [
+        "quadratic-m1"
+      ],
+      "methodChoice": "Замечать разложение с суммой 5 и произведением 6.",
+      "rationale": "В этой задаче важно замечать разложение с суммой 5 и произведением 6.",
+      "solutionSteps": [
+        {
+          "statement": "x²−5x+6=(x−2)(x−3).",
+          "reason": "Раскрытие скобок даёт исходный многочлен."
+        },
+        {
+          "statement": "(x−2)(x−3)=0.",
+          "reason": "Произведение равно нулю, когда хотя бы один множитель равен нулю."
+        },
+        {
+          "statement": "x=2 или x=3.",
+          "reason": "Оба случая рассмотрены."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Для 2: 4−10+6=0; для 3: 9−15+6=0.",
+      "solution": "x²−5x+6=(x−2)(x−3). Раскрытие скобок даёт исходный многочлен. (x−2)(x−3)=0. Произведение равно нулю, когда хотя бы один множитель равен нулю. x=2 или x=3. Оба случая рассмотрены. Проверка: Для 2: 4−10+6=0; для 3: 9−15+6=0.",
+      "hint": "Раскрытие скобок даёт исходный многочлен.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-quadratic-pair-1",
+      "relatedIds": [
+        "methods-quadratic-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-02": {
+      "id": "methods-quadratic-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "quadratic-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-02",
+      "family": "methods-quadratic-02",
+      "prompt": "Сколько действительных корней имеет x²−5x+7=0?",
+      "kind": "number",
+      "answer": 0,
+      "display": "0",
+      "methodIds": [
+        "quadratic-m2"
+      ],
+      "methodChoice": "Определить число корней по дискриминанту, не подбирать несуществующие целые множители.",
+      "rationale": "В этой задаче важно определить число корней по дискриминанту, не подбирать несуществующие целые множители.",
+      "solutionSteps": [
+        {
+          "statement": "D=(−5)²−4·1·7=−3.",
+          "reason": "Используем коэффициенты исходного уравнения."
+        },
+        {
+          "statement": "D<0.",
+          "reason": "Квадратный корень дискриминанта не является действительным."
+        },
+        {
+          "statement": "Действительных корней 0.",
+          "reason": "Спрашивается число корней."
+        }
+      ],
+      "domain": "Рассматриваются только действительные корни.",
+      "check": "x²−5x+7=(x−5/2)²+3/4>0.",
+      "solution": "D=(−5)²−4·1·7=−3. Используем коэффициенты исходного уравнения. D<0. Квадратный корень дискриминанта не является действительным. Действительных корней 0. Спрашивается число корней. Проверка: x²−5x+7=(x−5/2)²+3/4>0.",
+      "hint": "Используем коэффициенты исходного уравнения.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-quadratic-pair-1",
+      "relatedIds": [
+        "methods-quadratic-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-03": {
+      "id": "methods-quadratic-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "quadratic-equation",
+        "root-selection"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-03",
+      "family": "methods-quadratic-03",
+      "prompt": "Решите x²=9.",
+      "kind": "set",
+      "answer": [
+        -3,
+        3
+      ],
+      "display": "-3;3",
+      "methodIds": [
+        "quadratic-m2"
+      ],
+      "methodChoice": "Различить два решения уравнения и одно значение арифметического корня.",
+      "rationale": "В этой задаче важно различить два решения уравнения и одно значение арифметического корня.",
+      "solutionSteps": [
+        {
+          "statement": "x²−9=(x−3)(x+3).",
+          "reason": "Применяем разность квадратов."
+        },
+        {
+          "statement": "Один из множителей равен нулю.",
+          "reason": "Оба нулевых случая нужны для полноты."
+        },
+        {
+          "statement": "x=−3 или x=3.",
+          "reason": "Оба квадрата равны 9."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "(−3)²=3²=9.",
+      "solution": "x²−9=(x−3)(x+3). Применяем разность квадратов. Один из множителей равен нулю. Оба нулевых случая нужны для полноты. x=−3 или x=3. Оба квадрата равны 9. Проверка: (−3)²=3²=9.",
+      "hint": "Применяем разность квадратов.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-quadratic-pair-2",
+      "relatedIds": [
+        "methods-quadratic-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-04": {
+      "id": "methods-quadratic-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "radicals"
+      ],
+      "competencies": [
+        "calculations"
+      ],
+      "canonicalId": "methods-quadratic-04",
+      "family": "methods-quadratic-04",
+      "prompt": "Найдите значение арифметического квадратного корня √9.",
+      "kind": "number",
+      "answer": 3,
+      "display": "3",
+      "methodIds": [
+        "quadratic-m4"
+      ],
+      "methodChoice": "Использовать неотрицательное определение арифметического корня.",
+      "rationale": "В этой задаче важно использовать неотрицательное определение арифметического корня.",
+      "solutionSteps": [
+        {
+          "statement": "Ищем неотрицательное число с квадратом 9.",
+          "reason": "Это определение √9."
+        },
+        {
+          "statement": "3²=9 и 3≥0.",
+          "reason": "Оба условия определения выполнены."
+        },
+        {
+          "statement": "√9=3.",
+          "reason": "Значение −3 сюда не добавляют."
+        }
+      ],
+      "domain": "Подкоренное число 9 неотрицательно.",
+      "check": "Ответ неотрицателен, его квадрат равен 9.",
+      "solution": "Ищем неотрицательное число с квадратом 9. Это определение √9. 3²=9 и 3≥0. Оба условия определения выполнены. √9=3. Значение −3 сюда не добавляют. Проверка: Ответ неотрицателен, его квадрат равен 9.",
+      "hint": "Это определение √9.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-quadratic-pair-2",
+      "relatedIds": [
+        "methods-quadratic-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-05": {
+      "id": "methods-quadratic-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "quadratic-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-05",
+      "family": "methods-quadratic-05",
+      "prompt": "Упорядочьте решение x²−6x+5=0 выделением квадрата.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "b",
+          "text": "x=1 или x=5."
+        },
+        {
+          "id": "a",
+          "text": "x²−6x+5=(x−3)²−4."
+        },
+        {
+          "id": "c",
+          "text": "(x−3)²=4."
+        }
+      ],
+      "answer": [
+        "a",
+        "c",
+        "b"
+      ],
+      "responseMode": "order",
+      "display": "a;c;b",
+      "methodIds": [
+        "quadratic-m2"
+      ],
+      "methodChoice": "Сначала выделить квадрат, затем учесть оба знака при извлечении корней уравнения.",
+      "rationale": "В этой задаче важно сначала выделить квадрат, затем учесть оба знака при извлечении корней уравнения.",
+      "solutionSteps": [
+        {
+          "statement": "x²−6x+5=(x−3)²−4.",
+          "reason": "К квадрату x²−6x+9 добавляется −4."
+        },
+        {
+          "statement": "(x−3)²=4.",
+          "reason": "Переносим −4 в правую часть."
+        },
+        {
+          "statement": "x−3=±2, значит x=1 или 5.",
+          "reason": "Уравнение квадрата даёт две ветви."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Для 1: 1−6+5=0; для 5: 25−30+5=0.",
+      "solution": "x²−6x+5=(x−3)²−4. К квадрату x²−6x+9 добавляется −4. (x−3)²=4. Переносим −4 в правую часть. x−3=±2, значит x=1 или 5. Уравнение квадрата даёт две ветви. Проверка: Для 1: 1−6+5=0; для 5: 25−30+5=0.",
+      "hint": "К квадрату x²−6x+9 добавляется −4.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-06": {
+      "id": "methods-quadratic-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "quadratic-equation"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-06",
+      "family": "methods-quadratic-06",
+      "prompt": "Дополните расчёт для x²−4x−5=0: D=(−4)²−4·1·(−5)=□.",
+      "kind": "number",
+      "answer": 36,
+      "display": "36",
+      "methodIds": [
+        "quadratic-m2"
+      ],
+      "methodChoice": "Сохранить знак отрицательного свободного члена при вычислении D.",
+      "rationale": "В этой задаче важно сохранить знак отрицательного свободного члена при вычислении D.",
+      "solutionSteps": [
+        {
+          "statement": "(−4)²=16.",
+          "reason": "Квадрат относится ко всему коэффициенту −4."
+        },
+        {
+          "statement": "−4·1·(−5)=20.",
+          "reason": "Произведение двух отрицательных чисел положительно."
+        },
+        {
+          "statement": "D=16+20=36.",
+          "reason": "Складываем оба слагаемых."
+        }
+      ],
+      "domain": "Коэффициент при x² равен 1, не нулю.",
+      "check": "Корни 5 и −1 имеют разность 6=√36.",
+      "solution": "(−4)²=16. Квадрат относится ко всему коэффициенту −4. −4·1·(−5)=20. Произведение двух отрицательных чисел положительно. D=16+20=36. Складываем оба слагаемых. Проверка: Корни 5 и −1 имеют разность 6=√36.",
+      "hint": "Квадрат относится ко всему коэффициенту −4.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-07": {
+      "id": "methods-quadratic-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value"
+      ],
+      "competencies": [
+        "graphs"
+      ],
+      "canonicalId": "methods-quadratic-07",
+      "family": "methods-quadratic-07",
+      "prompt": "По формуле y=x²−4x+3 и таблице укажите координаты вершины параболы. Введите x;y.",
+      "kind": "coordinates",
+      "answer": [
+        2,
+        -1
+      ],
+      "display": "2;-1",
+      "methodIds": [
+        "quadratic-m3"
+      ],
+      "methodChoice": "Выделить квадрат и связать минимум формулы с центральным значением таблицы.",
+      "rationale": "В этой задаче важно выделить квадрат и связать минимум формулы с центральным значением таблицы.",
+      "solutionSteps": [
+        {
+          "statement": "y=(x−2)²−1.",
+          "reason": "Выделяем полный квадрат."
+        },
+        {
+          "statement": "Минимум квадрата равен 0 при x=2.",
+          "reason": "Квадрат действительного числа неотрицателен."
+        },
+        {
+          "statement": "Вершина (2;−1).",
+          "reason": "При x=2 формула даёт −1."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Значения при x=1 и x=3 одинаковы и равны 0.",
+      "solution": "y=(x−2)²−1. Выделяем полный квадрат. Минимум квадрата равен 0 при x=2. Квадрат действительного числа неотрицателен. Вершина (2;−1). При x=2 формула даёт −1. Проверка: Значения при x=1 и x=3 одинаковы и равны 0.",
+      "hint": "Выделяем полный квадрат.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "text",
+          "caption": "Формула",
+          "text": "y=x²−4x+3"
+        },
+        {
+          "type": "table",
+          "caption": "Значения",
+          "headers": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              3
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "formula",
+          "to": "table",
+          "skill": "function-value"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-quadratic-08": {
+      "id": "methods-quadratic-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-quadratic",
+      "topic": "Квадратные уравнения и границы",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Алгебра",
+      "difficulty": "Повышенный",
+      "skills": [
+        "quadratic-equation",
+        "powers"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-quadratic-08",
+      "family": "methods-quadratic-08",
+      "prompt": "Решите x²−4x+4≤0. Ответ дайте промежутком; одно число можно записать [a;a].",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": 2,
+          "hi": 2,
+          "loClosed": true,
+          "hiClosed": true
+        }
+      ],
+      "display": "[2;2]",
+      "methodIds": [
+        "quadratic-m2"
+      ],
+      "methodChoice": "Распознать полный квадрат и случай единственной допустимой точки.",
+      "rationale": "В этой задаче важно распознать полный квадрат и случай единственной допустимой точки.",
+      "solutionSteps": [
+        {
+          "statement": "x²−4x+4=(x−2)².",
+          "reason": "Сворачиваем квадрат разности."
+        },
+        {
+          "statement": "Квадрат всегда ≥0, поэтому ≤0 он только при равенстве нулю.",
+          "reason": "Отрицательных значений нет."
+        },
+        {
+          "statement": "x=2, ответ [2;2].",
+          "reason": "Это одноточечный промежуток."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При x=2 выражение 0; при любом другом x оно положительно.",
+      "solution": "x²−4x+4=(x−2)². Сворачиваем квадрат разности. Квадрат всегда ≥0, поэтому ≤0 он только при равенстве нулю. Отрицательных значений нет. x=2, ответ [2;2]. Это одноточечный промежуток. Проверка: При x=2 выражение 0; при любом другом x оно положительно.",
+      "hint": "Сворачиваем квадрат разности.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-01": {
+      "id": "methods-domain-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "fractions"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-domain-01",
+      "family": "methods-domain-01",
+      "prompt": "Упростите (x²−9)/(x−3), сохранив исходную ОДЗ. Введите выражение | x!=запрещённое значение.",
+      "kind": "expression",
+      "answer": {
+        "expression": "x+3",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": [
+            3
+          ]
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "x+3 | x!=3",
+      "methodIds": [
+        "domain-m1"
+      ],
+      "methodChoice": "Сократить общий множитель только после фиксации x≠3.",
+      "rationale": "В этой задаче важно сократить общий множитель только после фиксации x≠3.",
+      "solutionSteps": [
+        {
+          "statement": "x≠3.",
+          "reason": "Иначе исходный знаменатель нулевой."
+        },
+        {
+          "statement": "x²−9=(x−3)(x+3).",
+          "reason": "Используем разность квадратов."
+        },
+        {
+          "statement": "Получаем x+3 при x≠3.",
+          "reason": "Сокращаем только ненулевой множитель."
+        }
+      ],
+      "domain": "x≠3.",
+      "check": "При x=4 обе записи равны 7; при x=3 исходная запись не существует.",
+      "solution": "x≠3. Иначе исходный знаменатель нулевой. x²−9=(x−3)(x+3). Используем разность квадратов. Получаем x+3 при x≠3. Сокращаем только ненулевой множитель. Проверка: При x=4 обе записи равны 7; при x=3 исходная запись не существует.",
+      "hint": "Иначе исходный знаменатель нулевой.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-domain-pair-1",
+      "relatedIds": [
+        "methods-domain-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-02": {
+      "id": "methods-domain-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "fractions"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-domain-02",
+      "family": "methods-domain-02",
+      "prompt": "Упростите (x²+3x)/x, сохранив исходную ОДЗ.",
+      "kind": "expression",
+      "answer": {
+        "expression": "x+3",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": [
+            0
+          ]
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "x+3 | x!=0",
+      "methodIds": [
+        "domain-m1"
+      ],
+      "methodChoice": "Замечать, что одинаковый упрощённый вид может иметь другую исходную область определения.",
+      "rationale": "В этой задаче важно замечать, что одинаковый упрощённый вид может иметь другую исходную область определения.",
+      "solutionSteps": [
+        {
+          "statement": "x≠0.",
+          "reason": "Знаменатель равен x."
+        },
+        {
+          "statement": "x²+3x=x(x+3).",
+          "reason": "Выносим общий множитель."
+        },
+        {
+          "statement": "Получаем x+3 при x≠0.",
+          "reason": "Ноль по-прежнему запрещён."
+        }
+      ],
+      "domain": "x≠0.",
+      "check": "При x=3 исходное выражение равно 6; это значение в предыдущей задаче было запрещено.",
+      "solution": "x≠0. Знаменатель равен x. x²+3x=x(x+3). Выносим общий множитель. Получаем x+3 при x≠0. Ноль по-прежнему запрещён. Проверка: При x=3 исходное выражение равно 6; это значение в предыдущей задаче было запрещено.",
+      "hint": "Знаменатель равен x.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-domain-pair-1",
+      "relatedIds": [
+        "methods-domain-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-03": {
+      "id": "methods-domain-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "fractions"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-domain-03",
+      "family": "methods-domain-03",
+      "prompt": "Упростите (x²−4)/(x+2), сохранив исходную ОДЗ.",
+      "kind": "expression",
+      "answer": {
+        "expression": "x-2",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": [
+            -2
+          ]
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "x-2 | x!=-2",
+      "methodIds": [
+        "domain-m1"
+      ],
+      "methodChoice": "Раскладывать числитель на множители и сохранять ограничение знаменателя.",
+      "rationale": "В этой задаче важно раскладывать числитель на множители и сохранять ограничение знаменателя.",
+      "solutionSteps": [
+        {
+          "statement": "x≠−2.",
+          "reason": "Исходный знаменатель должен быть ненулевым."
+        },
+        {
+          "statement": "x²−4=(x−2)(x+2).",
+          "reason": "Применяем разность квадратов."
+        },
+        {
+          "statement": "Ответ x−2 при x≠−2.",
+          "reason": "Ограничение относится к исходной записи."
+        }
+      ],
+      "domain": "x≠−2.",
+      "check": "При x=0 обе записи равны −2.",
+      "solution": "x≠−2. Исходный знаменатель должен быть ненулевым. x²−4=(x−2)(x+2). Применяем разность квадратов. Ответ x−2 при x≠−2. Ограничение относится к исходной записи. Проверка: При x=0 обе записи равны −2.",
+      "hint": "Исходный знаменатель должен быть ненулевым.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-domain-pair-2",
+      "relatedIds": [
+        "methods-domain-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-04": {
+      "id": "methods-domain-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "root-selection"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-domain-04",
+      "family": "methods-domain-04",
+      "prompt": "Решите (x²−4)/(x+2)=−4.",
+      "kind": "set",
+      "answer": [],
+      "display": "∅",
+      "methodIds": [
+        "domain-m2"
+      ],
+      "methodChoice": "Отличить сокращённое выражение от разрешения запрещённого кандидата в уравнении.",
+      "rationale": "В этой задаче важно отличить сокращённое выражение от разрешения запрещённого кандидата в уравнении.",
+      "solutionSteps": [
+        {
+          "statement": "x≠−2.",
+          "reason": "Фиксируем исходную ОДЗ."
+        },
+        {
+          "statement": "При допустимых x получаем x−2=−4, кандидат x=−2.",
+          "reason": "Используем разложение числителя."
+        },
+        {
+          "statement": "Кандидат запрещён; решений нет.",
+          "reason": "В исходном знаменателе получился бы ноль."
+        }
+      ],
+      "domain": "x≠−2.",
+      "check": "Подстановка кандидата в исходную дробь невозможна.",
+      "solution": "x≠−2. Фиксируем исходную ОДЗ. При допустимых x получаем x−2=−4, кандидат x=−2. Используем разложение числителя. Кандидат запрещён; решений нет. В исходном знаменателе получился бы ноль. Проверка: Подстановка кандидата в исходную дробь невозможна.",
+      "hint": "Фиксируем исходную ОДЗ.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-domain-pair-2",
+      "relatedIds": [
+        "methods-domain-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-05": {
+      "id": "methods-domain-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "root-selection"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-domain-05",
+      "family": "methods-domain-05",
+      "prompt": "Упорядочьте решение (x²−1)/(x−1)=3.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "a",
+          "text": "Из x+1=3 находим x=2."
+        },
+        {
+          "id": "d",
+          "text": "Записываем исходное ограничение x≠1."
+        },
+        {
+          "id": "c",
+          "text": "Проверяем: (4−1)/(2−1)=3."
+        },
+        {
+          "id": "b",
+          "text": "При x≠1 сокращаем и получаем x+1=3."
+        }
+      ],
+      "answer": [
+        "d",
+        "b",
+        "a",
+        "c"
+      ],
+      "responseMode": "order",
+      "display": "d;b;a;c",
+      "methodIds": [
+        "domain-m2"
+      ],
+      "methodChoice": "Сначала задать допустимость преобразования, а последним шагом проверить найденный корень.",
+      "rationale": "В этой задаче важно сначала задать допустимость преобразования, а последним шагом проверить найденный корень.",
+      "solutionSteps": [
+        {
+          "statement": "x≠1.",
+          "reason": "Знаменатель исходной дроби ненулевой."
+        },
+        {
+          "statement": "Уравнение равносильно x+1=3 при этом ограничении.",
+          "reason": "Сокращаем ненулевой множитель x−1."
+        },
+        {
+          "statement": "x=2 подходит.",
+          "reason": "Он допустим и даёт исходное равенство."
+        }
+      ],
+      "domain": "x≠1.",
+      "check": "(2²−1)/(2−1)=3.",
+      "solution": "x≠1. Знаменатель исходной дроби ненулевой. Уравнение равносильно x+1=3 при этом ограничении. Сокращаем ненулевой множитель x−1. x=2 подходит. Он допустим и даёт исходное равенство. Проверка: (2²−1)/(2−1)=3.",
+      "hint": "Знаменатель исходной дроби ненулевой.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-06": {
+      "id": "methods-domain-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "fractions"
+      ],
+      "competencies": [
+        "calculations",
+        "equations"
+      ],
+      "canonicalId": "methods-domain-06",
+      "family": "methods-domain-06",
+      "prompt": "Дополните равенство: (x²−16)/(x−4)=□ при x≠4. Введите выражение и сохраните ОДЗ.",
+      "kind": "expression",
+      "answer": {
+        "expression": "x+4",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": [
+            4
+          ]
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "x+4 | x!=4",
+      "methodIds": [
+        "domain-m1"
+      ],
+      "methodChoice": "Заполнить пропуск после разложения разности квадратов, сохранив указанное ограничение.",
+      "rationale": "В этой задаче важно заполнить пропуск после разложения разности квадратов, сохранив указанное ограничение.",
+      "solutionSteps": [
+        {
+          "statement": "x²−16=(x−4)(x+4).",
+          "reason": "Это разность квадратов."
+        },
+        {
+          "statement": "При x≠4 множитель x−4 ненулевой.",
+          "reason": "Тогда можно сократить."
+        },
+        {
+          "statement": "В пропуске x+4, ОДЗ x≠4.",
+          "reason": "Равенство действует на исходной области."
+        }
+      ],
+      "domain": "x≠4.",
+      "check": "При x=5 обе стороны равны 9.",
+      "solution": "x²−16=(x−4)(x+4). Это разность квадратов. При x≠4 множитель x−4 ненулевой. Тогда можно сократить. В пропуске x+4, ОДЗ x≠4. Равенство действует на исходной области. Проверка: При x=5 обе стороны равны 9.",
+      "hint": "Это разность квадратов.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-07": {
+      "id": "methods-domain-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "domain",
+        "function-value"
+      ],
+      "competencies": [
+        "equations",
+        "graphs"
+      ],
+      "canonicalId": "methods-domain-07",
+      "family": "methods-domain-07",
+      "prompt": "Сопоставьте x и значение 1/(x²−4): a) x=−2; b) x=0; c) x=2. Одну опцию можно использовать несколько раз.",
+      "kind": "matching",
+      "matchingItems": [
+        {
+          "id": "a",
+          "text": "x=−2"
+        },
+        {
+          "id": "b",
+          "text": "x=0"
+        },
+        {
+          "id": "c",
+          "text": "x=2"
+        }
+      ],
+      "matchingOptions": [
+        {
+          "id": "1",
+          "text": "Не определено"
+        },
+        {
+          "id": "2",
+          "text": "−1/4"
+        },
+        {
+          "id": "3",
+          "text": "1/4"
+        }
+      ],
+      "answer": {
+        "a": "1",
+        "b": "2",
+        "c": "1"
+      },
+      "display": "a-1;b-2;c-1",
+      "methodIds": [
+        "domain-m3"
+      ],
+      "methodChoice": "Сначала проверить допустимость подстановки, затем заполнять таблицу значений.",
+      "rationale": "В этой задаче важно сначала проверить допустимость подстановки, затем заполнять таблицу значений.",
+      "solutionSteps": [
+        {
+          "statement": "При x=±2 знаменатель равен 0.",
+          "reason": "Оба значения запрещены."
+        },
+        {
+          "statement": "При x=0 знаменатель равен −4.",
+          "reason": "Это допустимая подстановка."
+        },
+        {
+          "statement": "Получаем 1/(−4)=−1/4.",
+          "reason": "Знак знаменателя сохраняется."
+        }
+      ],
+      "domain": "x≠−2 и x≠2.",
+      "check": "Знак 1/(0²−4) отрицателен.",
+      "solution": "При x=±2 знаменатель равен 0. Оба значения запрещены. При x=0 знаменатель равен −4. Это допустимая подстановка. Получаем 1/(−4)=−1/4. Знак знаменателя сохраняется. Проверка: Знак 1/(0²−4) отрицателен.",
+      "hint": "Оба значения запрещены.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "text",
+          "caption": "Формула",
+          "text": "f(x)=1/(x²−4)"
+        },
+        {
+          "type": "table",
+          "caption": "Подстановки",
+          "headers": [
+            "x",
+            "f(x)"
+          ],
+          "rows": [
+            [
+              -2,
+              "?"
+            ],
+            [
+              0,
+              "?"
+            ],
+            [
+              2,
+              "?"
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "formula",
+          "to": "table",
+          "skill": "domain"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-domain-08": {
+      "id": "methods-domain-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-domain",
+      "topic": "ОДЗ: равенство выражений и уравнений",
+      "grade": 10,
+      "level": "advanced",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Повышенный",
+      "skills": [
+        "domain",
+        "logarithms"
+      ],
+      "competencies": [
+        "equations"
+      ],
+      "canonicalId": "methods-domain-08",
+      "family": "methods-domain-08",
+      "prompt": "Найдите область определения log₂(x−1). Ответ дайте промежутком.",
+      "kind": "interval",
+      "answer": [
+        {
+          "lo": 1,
+          "hi": null,
+          "loClosed": false,
+          "hiClosed": false
+        }
+      ],
+      "display": "(1;+∞)",
+      "methodIds": [
+        "domain-m3"
+      ],
+      "methodChoice": "Использовать строго положительный аргумент; нулевой аргумент логарифма не допускается.",
+      "rationale": "В этой задаче важно использовать строго положительный аргумент; нулевой аргумент логарифма не допускается.",
+      "solutionSteps": [
+        {
+          "statement": "Основание 2 положительно и не равно 1.",
+          "reason": "Ограничения основания выполнены."
+        },
+        {
+          "statement": "Нужно x−1>0.",
+          "reason": "Аргумент действительного логарифма строго положителен."
+        },
+        {
+          "statement": "x>1, ответ (1;+∞).",
+          "reason": "Граница не включена."
+        }
+      ],
+      "domain": "x−1>0; основание 2>0, 2≠1.",
+      "check": "При x=2 аргумент равен 1, при x=1 логарифм не определён.",
+      "solution": "Основание 2 положительно и не равно 1. Ограничения основания выполнены. Нужно x−1>0. Аргумент действительного логарифма строго положителен. x>1, ответ (1;+∞). Граница не включена. Проверка: При x=2 аргумент равен 1, при x=1 логарифм не определён.",
+      "hint": "Ограничения основания выполнены.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-01": {
+      "id": "methods-functions-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value"
+      ],
+      "competencies": [
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-01",
+      "family": "methods-functions-01",
+      "prompt": "Для y=2x+1 найдите точку графика при x=3. Введите x;y.",
+      "kind": "coordinates",
+      "answer": [
+        3,
+        7
+      ],
+      "display": "3;7",
+      "methodIds": [
+        "functions-m1"
+      ],
+      "methodChoice": "Подставить известный аргумент, а не решать обратную задачу.",
+      "rationale": "В этой задаче важно подставить известный аргумент, а не решать обратную задачу.",
+      "solutionSteps": [
+        {
+          "statement": "Аргумент x=3.",
+          "reason": "Это первая координата точки."
+        },
+        {
+          "statement": "y=2·3+1=7.",
+          "reason": "Применяем формулу функции."
+        },
+        {
+          "statement": "Точка (3;7).",
+          "reason": "Сохраняем порядок координат."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "2·3+1=7.",
+      "solution": "Аргумент x=3. Это первая координата точки. y=2·3+1=7. Применяем формулу функции. Точка (3;7). Сохраняем порядок координат. Проверка: 2·3+1=7.",
+      "hint": "Это первая координата точки.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-functions-pair-1",
+      "relatedIds": [
+        "methods-functions-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-02": {
+      "id": "methods-functions-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations",
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-02",
+      "family": "methods-functions-02",
+      "prompt": "Для y=2x+1 найдите точку графика, у которой y=7. Введите x;y.",
+      "kind": "coordinates",
+      "answer": [
+        3,
+        7
+      ],
+      "display": "3;7",
+      "methodIds": [
+        "functions-m2"
+      ],
+      "methodChoice": "Составить уравнение для аргумента, хотя ответ совпадает с прямым вопросом соседней задачи.",
+      "rationale": "В этой задаче важно составить уравнение для аргумента, хотя ответ совпадает с прямым вопросом соседней задачи.",
+      "solutionSteps": [
+        {
+          "statement": "7=2x+1.",
+          "reason": "Теперь известна вторая координата."
+        },
+        {
+          "statement": "2x=6, x=3.",
+          "reason": "Решаем линейное уравнение."
+        },
+        {
+          "statement": "Точка (3;7).",
+          "reason": "Аргумент единственен, поскольку коэффициент 2 ненулевой."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Формула при найденном x даёт именно y=7.",
+      "solution": "7=2x+1. Теперь известна вторая координата. 2x=6, x=3. Решаем линейное уравнение. Точка (3;7). Аргумент единственен, поскольку коэффициент 2 ненулевой. Проверка: Формула при найденном x даёт именно y=7.",
+      "hint": "Теперь известна вторая координата.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-functions-pair-1",
+      "relatedIds": [
+        "methods-functions-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-03": {
+      "id": "methods-functions-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "brackets"
+      ],
+      "competencies": [
+        "calculations",
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-03",
+      "family": "methods-functions-03",
+      "prompt": "Пусть f(x)=2x+1. Запишите выражение f(x)+1.",
+      "kind": "expression",
+      "answer": {
+        "expression": "2*x+2",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": []
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "2*x+2",
+      "methodIds": [
+        "functions-m1"
+      ],
+      "methodChoice": "Прибавить 1 к значению функции, не изменяя её аргумент.",
+      "rationale": "В этой задаче важно прибавить 1 к значению функции, не изменяя её аргумент.",
+      "solutionSteps": [
+        {
+          "statement": "f(x)+1=(2x+1)+1.",
+          "reason": "Заменяем f(x) по определению."
+        },
+        {
+          "statement": "Складываем постоянные 1+1.",
+          "reason": "Аргумент остаётся x."
+        },
+        {
+          "statement": "Получаем 2x+2.",
+          "reason": "Это вертикальное увеличение значения на 1."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При x=0 получаем f(0)+1=2.",
+      "solution": "f(x)+1=(2x+1)+1. Заменяем f(x) по определению. Складываем постоянные 1+1. Аргумент остаётся x. Получаем 2x+2. Это вертикальное увеличение значения на 1. Проверка: При x=0 получаем f(0)+1=2.",
+      "hint": "Заменяем f(x) по определению.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-functions-pair-2",
+      "relatedIds": [
+        "methods-functions-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-04": {
+      "id": "methods-functions-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "brackets"
+      ],
+      "competencies": [
+        "calculations",
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-04",
+      "family": "methods-functions-04",
+      "prompt": "Пусть f(x)=2x+1. Запишите выражение f(x+1).",
+      "kind": "expression",
+      "answer": {
+        "expression": "2*x+3",
+        "variables": [
+          "x"
+        ],
+        "domain": {
+          "excluded": []
+        }
+      },
+      "domainPolicy": "preserve",
+      "display": "2*x+3",
+      "methodIds": [
+        "functions-m1"
+      ],
+      "methodChoice": "Заменить аргумент x целиком на x+1, в том числе внутри умножения.",
+      "rationale": "В этой задаче важно заменить аргумент x целиком на x+1, в том числе внутри умножения.",
+      "solutionSteps": [
+        {
+          "statement": "f(x+1)=2(x+1)+1.",
+          "reason": "Вместо каждого аргумента подставляем x+1."
+        },
+        {
+          "statement": "Раскрываем скобки: 2x+2+1.",
+          "reason": "Множитель 2 действует на оба слагаемых."
+        },
+        {
+          "statement": "Получаем 2x+3.",
+          "reason": "Это отличается от f(x)+1."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "При x=0 получаем f(1)=3.",
+      "solution": "f(x+1)=2(x+1)+1. Вместо каждого аргумента подставляем x+1. Раскрываем скобки: 2x+2+1. Множитель 2 действует на оба слагаемых. Получаем 2x+3. Это отличается от f(x)+1. Проверка: При x=0 получаем f(1)=3.",
+      "hint": "Вместо каждого аргумента подставляем x+1.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-functions-pair-2",
+      "relatedIds": [
+        "methods-functions-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-05": {
+      "id": "methods-functions-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-intersection",
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations",
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-05",
+      "family": "methods-functions-05",
+      "prompt": "Упорядочьте нахождение пересечения y=2x+1 и y=−x+7.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "c",
+          "text": "Подставляем x=2: y=5."
+        },
+        {
+          "id": "b",
+          "text": "Приравниваем: 2x+1=−x+7."
+        },
+        {
+          "id": "a",
+          "text": "Записываем точку (2;5)."
+        },
+        {
+          "id": "d",
+          "text": "Решаем 3x=6 и находим x=2."
+        }
+      ],
+      "answer": [
+        "b",
+        "d",
+        "c",
+        "a"
+      ],
+      "responseMode": "order",
+      "display": "b;d;c;a",
+      "methodIds": [
+        "functions-m3"
+      ],
+      "methodChoice": "Сначала найти общий аргумент, затем общую ординату и записать пару.",
+      "rationale": "В этой задаче важно сначала найти общий аргумент, затем общую ординату и записать пару.",
+      "solutionSteps": [
+        {
+          "statement": "2x+1=−x+7.",
+          "reason": "В точке пересечения ординаты совпадают."
+        },
+        {
+          "statement": "3x=6, значит x=2.",
+          "reason": "Выполняем равносильные линейные преобразования."
+        },
+        {
+          "statement": "y=5, точка (2;5).",
+          "reason": "Обе формулы дают одно значение."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "2·2+1=−2+7=5.",
+      "solution": "2x+1=−x+7. В точке пересечения ординаты совпадают. 3x=6, значит x=2. Выполняем равносильные линейные преобразования. y=5, точка (2;5). Обе формулы дают одно значение. Проверка: 2·2+1=−2+7=5.",
+      "hint": "В точке пересечения ординаты совпадают.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-06": {
+      "id": "methods-functions-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "graph-reading"
+      ],
+      "competencies": [
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-06",
+      "family": "methods-functions-06",
+      "prompt": "Линейная функция принимает значение 5 при x=1 и значение 9 при x=3. Дополните: k=(9−5)/(3−1)=□.",
+      "kind": "number",
+      "answer": 2,
+      "display": "2",
+      "methodIds": [
+        "functions-m3"
+      ],
+      "methodChoice": "Сравнить изменение значения с изменением аргумента, а не взять только разность ординат.",
+      "rationale": "В этой задаче важно сравнить изменение значения с изменением аргумента, а не взять только разность ординат.",
+      "solutionSteps": [
+        {
+          "statement": "Δy=9−5=4.",
+          "reason": "Находим изменение значения."
+        },
+        {
+          "statement": "Δx=3−1=2.",
+          "reason": "Находим изменение аргумента."
+        },
+        {
+          "statement": "k=4/2=2.",
+          "reason": "Наклон равен отношению этих изменений."
+        }
+      ],
+      "domain": "Два аргумента различны: 3−1≠0.",
+      "check": "Формула y=2x+3 даёт обе точки.",
+      "solution": "Δy=9−5=4. Находим изменение значения. Δx=3−1=2. Находим изменение аргумента. k=4/2=2. Наклон равен отношению этих изменений. Проверка: Формула y=2x+3 даёт обе точки.",
+      "hint": "Находим изменение значения.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-07": {
+      "id": "methods-functions-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "graph-reading"
+      ],
+      "competencies": [
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-07",
+      "family": "methods-functions-07",
+      "prompt": "Модель равномерного движения: за t часов пройдено s=60t километров. По таблице найдите точку графика при t=3. Введите t;s.",
+      "kind": "coordinates",
+      "answer": [
+        3,
+        180
+      ],
+      "display": "3;180",
+      "methodIds": [
+        "functions-m1"
+      ],
+      "methodChoice": "Перевести сюжет о постоянной скорости в формулу и точку графика.",
+      "rationale": "В этой задаче важно перевести сюжет о постоянной скорости в формулу и точку графика.",
+      "solutionSteps": [
+        {
+          "statement": "Скорость постоянна и равна 60 км/ч.",
+          "reason": "Это допущение модели."
+        },
+        {
+          "statement": "При t=3 получаем s=60·3=180 км.",
+          "reason": "Расстояние равно скорости, умноженной на время."
+        },
+        {
+          "statement": "На графике точка (3;180).",
+          "reason": "Аргумент — время, значение — расстояние."
+        }
+      ],
+      "domain": "t≥0; остановок и изменения скорости в модели нет.",
+      "check": "180/3=60 км/ч.",
+      "solution": "Скорость постоянна и равна 60 км/ч. Это допущение модели. При t=3 получаем s=60·3=180 км. Расстояние равно скорости, умноженной на время. На графике точка (3;180). Аргумент — время, значение — расстояние. Проверка: 180/3=60 км/ч.",
+      "hint": "Это допущение модели.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "text",
+          "caption": "Сюжет и формула",
+          "text": "Равномерное движение: s=60t"
+        },
+        {
+          "type": "table",
+          "caption": "Наблюдения модели",
+          "headers": [
+            "t, ч",
+            "s, км"
+          ],
+          "rows": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              60
+            ],
+            [
+              2,
+              120
+            ],
+            [
+              3,
+              "?"
+            ]
+          ]
+        },
+        {
+          "type": "graph",
+          "caption": "Расстояние от времени",
+          "xLabel": "t, ч",
+          "yLabel": "s, км",
+          "xMin": 0,
+          "xMax": 4,
+          "yMin": 0,
+          "yMax": 240,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              60
+            ],
+            [
+              2,
+              120
+            ]
+          ],
+          "segments": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                4,
+                240
+              ]
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "story",
+          "to": "formula",
+          "skill": "function-value"
+        },
+        {
+          "from": "table",
+          "to": "graph",
+          "skill": "graph-reading"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-functions-08": {
+      "id": "methods-functions-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-functions",
+      "topic": "Функции: значение, аргумент и модель",
+      "grade": 10,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Повышенный",
+      "skills": [
+        "function-intersection",
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations",
+        "graphs"
+      ],
+      "canonicalId": "methods-functions-08",
+      "family": "methods-functions-08",
+      "prompt": "Сколько точек пересечения у прямых y=2x+1 и y=2x−3?",
+      "kind": "number",
+      "answer": 0,
+      "display": "0",
+      "methodIds": [
+        "functions-m3"
+      ],
+      "methodChoice": "Обнаружить одинаковые угловые коэффициенты и разные свободные члены.",
+      "rationale": "В этой задаче важно обнаружить одинаковые угловые коэффициенты и разные свободные члены.",
+      "solutionSteps": [
+        {
+          "statement": "Приравниваем 2x+1=2x−3.",
+          "reason": "Это условие пересечения."
+        },
+        {
+          "statement": "После вычитания 2x получаем 1=−3.",
+          "reason": "Неизвестное исчезло."
+        },
+        {
+          "statement": "Равенство неверно, пересечений нет.",
+          "reason": "Прямые параллельны и различны."
+        }
+      ],
+      "domain": "x∈R.",
+      "check": "Разность ординат всегда 4, а не 0.",
+      "solution": "Приравниваем 2x+1=2x−3. Это условие пересечения. После вычитания 2x получаем 1=−3. Неизвестное исчезло. Равенство неверно, пересечений нет. Прямые параллельны и различны. Проверка: Разность ординат всегда 4, а не 0.",
+      "hint": "Это условие пересечения.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-01": {
+      "id": "methods-geometry-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "area"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-01",
+      "family": "methods-geometry-01",
+      "prompt": "Прямоугольник имеет стороны 3 см и 4 см. Найдите площадь в см².",
+      "kind": "number",
+      "answer": 12,
+      "display": "12",
+      "methodIds": [
+        "geometry-m1"
+      ],
+      "methodChoice": "Выбрать произведение сторон, потому что требуется площадь.",
+      "rationale": "В этой задаче важно выбрать произведение сторон, потому что требуется площадь.",
+      "solutionSteps": [
+        {
+          "statement": "S=ab.",
+          "reason": "Для прямоугольника площадь равна произведению сторон."
+        },
+        {
+          "statement": "S=3·4=12.",
+          "reason": "Подставляем длины в сантиметрах."
+        },
+        {
+          "statement": "Площадь 12 см².",
+          "reason": "Единица площади квадратная."
+        }
+      ],
+      "domain": "Стороны 3 и 4 положительны.",
+      "check": "Прямоугольник покрывают 12 единичных квадратов.",
+      "solution": "S=ab. Для прямоугольника площадь равна произведению сторон. S=3·4=12. Подставляем длины в сантиметрах. Площадь 12 см². Единица площади квадратная. Проверка: Прямоугольник покрывают 12 единичных квадратов.",
+      "hint": "Для прямоугольника площадь равна произведению сторон.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-geometry-pair-1",
+      "relatedIds": [
+        "methods-geometry-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-02": {
+      "id": "methods-geometry-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "perimeter"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-02",
+      "family": "methods-geometry-02",
+      "prompt": "Прямоугольник имеет стороны 3 см и 4 см. Найдите периметр в см.",
+      "kind": "number",
+      "answer": 14,
+      "display": "14",
+      "methodIds": [
+        "geometry-m1"
+      ],
+      "methodChoice": "Найти длину границы, в отличие от площади соседней задачи.",
+      "rationale": "В этой задаче важно найти длину границы, в отличие от площади соседней задачи.",
+      "solutionSteps": [
+        {
+          "statement": "P=2(a+b).",
+          "reason": "У прямоугольника две пары равных сторон."
+        },
+        {
+          "statement": "P=2(3+4)=14.",
+          "reason": "Складываем длины всех сторон."
+        },
+        {
+          "statement": "Периметр 14 см.",
+          "reason": "Единица длины не возводится в квадрат."
+        }
+      ],
+      "domain": "Стороны положительны.",
+      "check": "3+4+3+4=14.",
+      "solution": "P=2(a+b). У прямоугольника две пары равных сторон. P=2(3+4)=14. Складываем длины всех сторон. Периметр 14 см. Единица длины не возводится в квадрат. Проверка: 3+4+3+4=14.",
+      "hint": "У прямоугольника две пары равных сторон.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-geometry-pair-1",
+      "relatedIds": [
+        "methods-geometry-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-03": {
+      "id": "methods-geometry-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "area",
+        "similarity"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-03",
+      "family": "methods-geometry-03",
+      "prompt": "Стороны прямоугольника 3 см и 4 см увеличили в 2 раза. Найдите новую площадь в см².",
+      "kind": "number",
+      "answer": 48,
+      "display": "48",
+      "methodIds": [
+        "geometry-m2"
+      ],
+      "methodChoice": "Применить квадрат коэффициента или явно пересчитать обе новые стороны.",
+      "rationale": "В этой задаче важно применить квадрат коэффициента или явно пересчитать обе новые стороны.",
+      "solutionSteps": [
+        {
+          "statement": "Новые стороны 6 и 8 см.",
+          "reason": "Каждую длину умножают на 2."
+        },
+        {
+          "statement": "Новая площадь 6·8=48 см².",
+          "reason": "Изменились два линейных измерения."
+        },
+        {
+          "statement": "Площадь выросла в 4 раза.",
+          "reason": "Это квадрат коэффициента 2."
+        }
+      ],
+      "domain": "Подобие с положительным коэффициентом k=2.",
+      "check": "48/(3·4)=4=2².",
+      "solution": "Новые стороны 6 и 8 см. Каждую длину умножают на 2. Новая площадь 6·8=48 см². Изменились два линейных измерения. Площадь выросла в 4 раза. Это квадрат коэффициента 2. Проверка: 48/(3·4)=4=2².",
+      "hint": "Каждую длину умножают на 2.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-geometry-pair-2",
+      "relatedIds": [
+        "methods-geometry-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-04": {
+      "id": "methods-geometry-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "perimeter",
+        "similarity"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-04",
+      "family": "methods-geometry-04",
+      "prompt": "Стороны прямоугольника 3 см и 4 см увеличили в 2 раза. Найдите новый периметр в см.",
+      "kind": "number",
+      "answer": 28,
+      "display": "28",
+      "methodIds": [
+        "geometry-m2"
+      ],
+      "methodChoice": "Использовать линейное изменение периметра, а не квадрат коэффициента площади.",
+      "rationale": "В этой задаче важно использовать линейное изменение периметра, а не квадрат коэффициента площади.",
+      "solutionSteps": [
+        {
+          "statement": "Новые стороны 6 и 8 см.",
+          "reason": "Масштаб одинаков по всем длинам."
+        },
+        {
+          "statement": "P=2(6+8)=28 см.",
+          "reason": "Периметр — сумма длин."
+        },
+        {
+          "statement": "Новый периметр вдвое больше 14.",
+          "reason": "Для суммы длин множитель остаётся 2."
+        }
+      ],
+      "domain": "k=2>0.",
+      "check": "28/14=2.",
+      "solution": "Новые стороны 6 и 8 см. Масштаб одинаков по всем длинам. P=2(6+8)=28 см. Периметр — сумма длин. Новый периметр вдвое больше 14. Для суммы длин множитель остаётся 2. Проверка: 28/14=2.",
+      "hint": "Масштаб одинаков по всем длинам.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-geometry-pair-2",
+      "relatedIds": [
+        "methods-geometry-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-05": {
+      "id": "methods-geometry-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "pythagoras"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-05",
+      "family": "methods-geometry-05",
+      "prompt": "Упорядочьте нахождение гипотенузы прямоугольного треугольника с катетами 6 и 8.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "a",
+          "text": "c²=36+64=100."
+        },
+        {
+          "id": "b",
+          "text": "c=√100=10."
+        },
+        {
+          "id": "c",
+          "text": "По теореме Пифагора c²=6²+8²."
+        }
+      ],
+      "answer": [
+        "c",
+        "a",
+        "b"
+      ],
+      "responseMode": "order",
+      "display": "c;a;b",
+      "methodIds": [
+        "geometry-m3"
+      ],
+      "methodChoice": "Сначала найти квадрат длины, затем извлечь положительный корень.",
+      "rationale": "В этой задаче важно сначала найти квадрат длины, затем извлечь положительный корень.",
+      "solutionSteps": [
+        {
+          "statement": "c²=6²+8².",
+          "reason": "Треугольник прямоугольный, c — гипотенуза."
+        },
+        {
+          "statement": "c²=100.",
+          "reason": "Складываем квадраты катетов."
+        },
+        {
+          "statement": "c=10.",
+          "reason": "Длина положительна."
+        }
+      ],
+      "domain": "Катеты положительны; треугольник прямоугольный.",
+      "check": "10²=6²+8².",
+      "solution": "c²=6²+8². Треугольник прямоугольный, c — гипотенуза. c²=100. Складываем квадраты катетов. c=10. Длина положительна. Проверка: 10²=6²+8².",
+      "hint": "Треугольник прямоугольный, c — гипотенуза.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-06": {
+      "id": "methods-geometry-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "area"
+      ],
+      "competencies": [
+        "geometry"
+      ],
+      "canonicalId": "methods-geometry-06",
+      "family": "methods-geometry-06",
+      "prompt": "У трапеции основания 4 и 10, высота 3. Дополните верное вычисление площади: S=(4+10)·3/□=21.",
+      "kind": "number",
+      "answer": 2,
+      "display": "2",
+      "methodIds": [
+        "geometry-m1"
+      ],
+      "methodChoice": "Использовать полусумму оснований, поэтому произведение делят на 2.",
+      "rationale": "В этой задаче важно использовать полусумму оснований, поэтому произведение делят на 2.",
+      "solutionSteps": [
+        {
+          "statement": "a+b=14.",
+          "reason": "Складываем основания."
+        },
+        {
+          "statement": "(a+b)h=42.",
+          "reason": "Умножаем на высоту."
+        },
+        {
+          "statement": "42/2=21.",
+          "reason": "В формуле площади нужна половина произведения."
+        }
+      ],
+      "domain": "Основания и высота положительны.",
+      "check": "Средняя линия равна 7, поэтому S=7·3=21.",
+      "solution": "a+b=14. Складываем основания. (a+b)h=42. Умножаем на высоту. 42/2=21. В формуле площади нужна половина произведения. Проверка: Средняя линия равна 7, поэтому S=7·3=21.",
+      "hint": "Складываем основания.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-07": {
+      "id": "methods-geometry-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Средний",
+      "skills": [
+        "graph-reading",
+        "operations"
+      ],
+      "competencies": [
+        "calculations",
+        "graphs"
+      ],
+      "canonicalId": "methods-geometry-07",
+      "family": "methods-geometry-07",
+      "prompt": "Точки A(−2;4) и B(6;0) заданы таблицей координат. Найдите середину AB. Введите x;y.",
+      "kind": "coordinates",
+      "answer": [
+        2,
+        2
+      ],
+      "display": "2;2",
+      "methodIds": [
+        "geometry-m3"
+      ],
+      "methodChoice": "Усреднить каждую координату отдельно и перейти от таблицы к геометрической точке.",
+      "rationale": "В этой задаче важно усреднить каждую координату отдельно и перейти от таблицы к геометрической точке.",
+      "solutionSteps": [
+        {
+          "statement": "x середины = (−2+6)/2=2.",
+          "reason": "Абсцисса середины — среднее абсцисс концов."
+        },
+        {
+          "statement": "y середины = (4+0)/2=2.",
+          "reason": "То же правило действует для ординат."
+        },
+        {
+          "statement": "Середина (2;2).",
+          "reason": "Пара координат задаёт одну точку."
+        }
+      ],
+      "domain": "Декартова система координат с одинаковым масштабом осей.",
+      "check": "Векторы AM и MB оба равны (4;−2).",
+      "solution": "x середины = (−2+6)/2=2. Абсцисса середины — среднее абсцисс концов. y середины = (4+0)/2=2. То же правило действует для ординат. Середина (2;2). Пара координат задаёт одну точку. Проверка: Векторы AM и MB оба равны (4;−2).",
+      "hint": "Абсцисса середины — среднее абсцисс концов.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "table",
+          "caption": "Концы отрезка",
+          "headers": [
+            "Точка",
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              "A",
+              -2,
+              4
+            ],
+            [
+              "B",
+              6,
+              0
+            ]
+          ]
+        },
+        {
+          "type": "graph",
+          "caption": "Отрезок AB",
+          "xLabel": "x",
+          "yLabel": "y",
+          "xMin": -3,
+          "xMax": 7,
+          "yMin": -1,
+          "yMax": 5,
+          "points": [
+            [
+              -2,
+              4
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "segments": [
+            [
+              [
+                -2,
+                4
+              ],
+              [
+                6,
+                0
+              ]
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "table",
+          "to": "graph",
+          "skill": "graph-reading"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-geometry-08": {
+      "id": "methods-geometry-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-geometry",
+      "topic": "Геометрия: что меняется при преобразовании",
+      "grade": 8,
+      "level": "basic",
+      "subject": "Геометрия",
+      "difficulty": "Повышенный",
+      "skills": [
+        "area",
+        "justification"
+      ],
+      "competencies": [
+        "geometry",
+        "reasoning"
+      ],
+      "canonicalId": "methods-geometry-08",
+      "family": "methods-geometry-08",
+      "prompt": "Приведите стороны прямоугольника с площадью 12, если обе стороны — целые от 1 до 20. Введите a;b. Не требуется выбирать единственный прямоугольник.",
+      "kind": "examples",
+      "answer": null,
+      "validator": {
+        "name": "rectangle-area",
+        "params": {
+          "area": 12,
+          "minSide": 1,
+          "maxSide": 20,
+          "requireDistinct": false
+        }
+      },
+      "display": "3;4",
+      "methodIds": [
+        "geometry-m1"
+      ],
+      "methodChoice": "Построить допустимую фигуру по произведению сторон; площадь не определяет периметр однозначно.",
+      "rationale": "В этой задаче важно построить допустимую фигуру по произведению сторон; площадь не определяет периметр однозначно.",
+      "solutionSteps": [
+        {
+          "statement": "Требуется ab=12.",
+          "reason": "Это условие площади прямоугольника."
+        },
+        {
+          "statement": "Можно взять a=3,b=4.",
+          "reason": "Оба числа целые и попадают в границы."
+        },
+        {
+          "statement": "Подойдут также 2 и 6 либо 1 и 12.",
+          "reason": "У разных допустимых прямоугольников разные периметры."
+        }
+      ],
+      "domain": "a,b∈Z, 1≤a,b≤20.",
+      "check": "3·4=12, 2·6=12, 1·12=12.",
+      "solution": "Требуется ab=12. Это условие площади прямоугольника. Можно взять a=3,b=4. Оба числа целые и попадают в границы. Подойдут также 2 и 6 либо 1 и 12. У разных допустимых прямоугольников разные периметры. Проверка: 3·4=12, 2·6=12, 1·12=12.",
+      "hint": "Это условие площади прямоугольника.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "acceptedExamples": [
+        "3;4",
+        "2;6",
+        "1;12",
+        "4;3"
+      ],
+      "answerExplanation": "Это образцы, а не полный список. Принимается любой пример, удовлетворяющий всем условиям задачи.",
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-01": {
+      "id": "methods-probability-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-01",
+      "family": "methods-probability-01",
+      "prompt": "В коробке 3 красных и 2 синих шара, каждый выбирается равновероятно. Какова вероятность красного при первом выборе?",
+      "kind": "number",
+      "answer": 0.6,
+      "display": "3/5",
+      "methodIds": [
+        "probability-m1"
+      ],
+      "methodChoice": "Подсчитать красные шары среди всех пяти до получения дополнительной информации.",
+      "rationale": "В этой задаче важно подсчитать красные шары среди всех пяти до получения дополнительной информации.",
+      "solutionSteps": [
+        {
+          "statement": "Всего 3+2=5 исходов.",
+          "reason": "Каждый шар равновероятен."
+        },
+        {
+          "statement": "Красных 3.",
+          "reason": "Это благоприятные исходы."
+        },
+        {
+          "statement": "P=3/5.",
+          "reason": "Делим благоприятные исходы на все."
+        }
+      ],
+      "domain": "Один случайный выбор из пяти различимых шаров.",
+      "check": "Вероятность синего 2/5, сумма равна 1.",
+      "solution": "Всего 3+2=5 исходов. Каждый шар равновероятен. Красных 3. Это благоприятные исходы. P=3/5. Делим благоприятные исходы на все. Проверка: Вероятность синего 2/5, сумма равна 1.",
+      "hint": "Каждый шар равновероятен.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-probability-pair-1",
+      "relatedIds": [
+        "methods-probability-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-02": {
+      "id": "methods-probability-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "conditional-probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-02",
+      "family": "methods-probability-02",
+      "prompt": "В коробке 3 красных и 2 синих шара. Первый вынутый шар оказался красным и не возвращён. Какова вероятность красного при втором выборе? При втором выборе каждый из оставшихся шаров равновероятен.",
+      "kind": "number",
+      "answer": 0.5,
+      "display": "1/2",
+      "methodIds": [
+        "probability-m2"
+      ],
+      "methodChoice": "Сузить пространство после известного первого красного шара без возвращения.",
+      "rationale": "В этой задаче важно сузить пространство после известного первого красного шара без возвращения.",
+      "solutionSteps": [
+        {
+          "statement": "Остались 2 красных и 2 синих.",
+          "reason": "Один известный красный шар удалён."
+        },
+        {
+          "statement": "Всего осталось 4 шара.",
+          "reason": "Исходное количество 5 больше не подходит."
+        },
+        {
+          "statement": "P=2/4=1/2.",
+          "reason": "Все оставшиеся шары равновероятны."
+        }
+      ],
+      "domain": "Первый шар красный; возвращения нет.",
+      "check": "Вероятности красного и синего теперь одинаковы.",
+      "solution": "Остались 2 красных и 2 синих. Один известный красный шар удалён. Всего осталось 4 шара. Исходное количество 5 больше не подходит. P=2/4=1/2. Все оставшиеся шары равновероятны. Проверка: Вероятности красного и синего теперь одинаковы.",
+      "hint": "Один известный красный шар удалён.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-probability-pair-1",
+      "relatedIds": [
+        "methods-probability-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-03": {
+      "id": "methods-probability-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-03",
+      "family": "methods-probability-03",
+      "prompt": "Дважды независимо бросают честную монету. Какова вероятность двух орлов?",
+      "kind": "number",
+      "answer": 0.25,
+      "display": "1/4",
+      "methodIds": [
+        "probability-m1"
+      ],
+      "methodChoice": "Зафиксировать всё событие «два орла», а не «хотя бы один».",
+      "rationale": "В этой задаче важно зафиксировать всё событие «два орла», а не «хотя бы один».",
+      "solutionSteps": [
+        {
+          "statement": "Равновозможные пары: ОО, ОР, РО, РР.",
+          "reason": "Независимые честные броски дают четыре пары."
+        },
+        {
+          "statement": "Подходит только ОО.",
+          "reason": "Нужно выполнение условия на обоих бросках."
+        },
+        {
+          "statement": "P=1/4.",
+          "reason": "Одна благоприятная пара из четырёх."
+        }
+      ],
+      "domain": "Броски независимы, монета честная.",
+      "check": "(1/2)·(1/2)=1/4.",
+      "solution": "Равновозможные пары: ОО, ОР, РО, РР. Независимые честные броски дают четыре пары. Подходит только ОО. Нужно выполнение условия на обоих бросках. P=1/4. Одна благоприятная пара из четырёх. Проверка: (1/2)·(1/2)=1/4.",
+      "hint": "Независимые честные броски дают четыре пары.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-probability-pair-2",
+      "relatedIds": [
+        "methods-probability-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-04": {
+      "id": "methods-probability-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-04",
+      "family": "methods-probability-04",
+      "prompt": "Дважды независимо бросают честную монету. Какова вероятность хотя бы одного орла?",
+      "kind": "number",
+      "answer": 0.75,
+      "display": "3/4",
+      "methodIds": [
+        "probability-m3"
+      ],
+      "methodChoice": "Перейти к дополнительному событию «ни одного орла», чтобы не потерять один из случаев.",
+      "rationale": "В этой задаче важно перейти к дополнительному событию «ни одного орла», чтобы не потерять один из случаев.",
+      "solutionSteps": [
+        {
+          "statement": "Противоположное событие — РР.",
+          "reason": "Оно означает отсутствие орла на обоих бросках."
+        },
+        {
+          "statement": "P(РР)=1/4.",
+          "reason": "Пара одна из четырёх равновозможных."
+        },
+        {
+          "statement": "Искомая вероятность 1−1/4=3/4.",
+          "reason": "Дополнительные события имеют сумму вероятностей 1."
+        }
+      ],
+      "domain": "Броски независимы; «хотя бы один» включает два орла.",
+      "check": "Подходят ОО, ОР и РО — три пары.",
+      "solution": "Противоположное событие — РР. Оно означает отсутствие орла на обоих бросках. P(РР)=1/4. Пара одна из четырёх равновозможных. Искомая вероятность 1−1/4=3/4. Дополнительные события имеют сумму вероятностей 1. Проверка: Подходят ОО, ОР и РО — три пары.",
+      "hint": "Оно означает отсутствие орла на обоих бросках.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-probability-pair-2",
+      "relatedIds": [
+        "methods-probability-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-05": {
+      "id": "methods-probability-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-05",
+      "family": "methods-probability-05",
+      "prompt": "Упорядочьте нахождение вероятности суммы 7 при броске двух честных независимых игральных кубиков.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "c",
+          "text": "Сумму 7 дают (1;6),(2;5),(3;4),(4;3),(5;2),(6;1): 6 пар."
+        },
+        {
+          "id": "b",
+          "text": "Всего 6·6=36 упорядоченных равновозможных пар."
+        },
+        {
+          "id": "a",
+          "text": "Вероятность равна 6/36=1/6."
+        }
+      ],
+      "answer": [
+        "b",
+        "c",
+        "a"
+      ],
+      "responseMode": "order",
+      "display": "b;c;a",
+      "methodIds": [
+        "probability-m1"
+      ],
+      "methodChoice": "Считать упорядоченные пары и использовать один и тот же тип исходов в числителе и знаменателе.",
+      "rationale": "В этой задаче важно считать упорядоченные пары и использовать один и тот же тип исходов в числителе и знаменателе.",
+      "solutionSteps": [
+        {
+          "statement": "Всего 36 пар.",
+          "reason": "Первый и второй кубики различимы."
+        },
+        {
+          "statement": "Сумму 7 дают 6 пар.",
+          "reason": "Перебираем первый результат от 1 до 6."
+        },
+        {
+          "statement": "P=6/36=1/6.",
+          "reason": "Каждая пара имеет одинаковую вероятность."
+        }
+      ],
+      "domain": "Кубики честные и независимые.",
+      "check": "Для каждого первого результата есть ровно один подходящий второй.",
+      "solution": "Всего 36 пар. Первый и второй кубики различимы. Сумму 7 дают 6 пар. Перебираем первый результат от 1 до 6. P=6/36=1/6. Каждая пара имеет одинаковую вероятность. Проверка: Для каждого первого результата есть ровно один подходящий второй.",
+      "hint": "Первый и второй кубики различимы.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-06": {
+      "id": "methods-probability-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-06",
+      "family": "methods-probability-06",
+      "prompt": "Событие A и его дополнение имеют сумму вероятностей 1. Если P(не A)=3/5, то P(A)=1−3/5=□.",
+      "kind": "number",
+      "answer": 0.4,
+      "display": "2/5",
+      "methodIds": [
+        "probability-m3"
+      ],
+      "methodChoice": "Вычесть вероятность противоположного события из единицы.",
+      "rationale": "В этой задаче важно вычесть вероятность противоположного события из единицы.",
+      "solutionSteps": [
+        {
+          "statement": "P(A)+P(не A)=1.",
+          "reason": "Эти события несовместны и исчерпывают исходы."
+        },
+        {
+          "statement": "P(A)=1−3/5.",
+          "reason": "Переносим известное слагаемое."
+        },
+        {
+          "statement": "P(A)=2/5.",
+          "reason": "Единица равна пяти пятым."
+        }
+      ],
+      "domain": "0≤P(A)≤1.",
+      "check": "2/5+3/5=1.",
+      "solution": "P(A)+P(не A)=1. Эти события несовместны и исчерпывают исходы. P(A)=1−3/5. Переносим известное слагаемое. P(A)=2/5. Единица равна пяти пятым. Проверка: 2/5+3/5=1.",
+      "hint": "Эти события несовместны и исчерпывают исходы.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-07": {
+      "id": "methods-probability-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Средний",
+      "skills": [
+        "conditional-probability"
+      ],
+      "competencies": [
+        "data"
+      ],
+      "canonicalId": "methods-probability-07",
+      "family": "methods-probability-07",
+      "prompt": "В коробке 4 красных и 6 синих шаров. Сопоставьте условия с вероятностью синего: a) первый выбор; b) после удаления одного красного; c) после удаления одного синего. Каждый раз выбирают равновероятно среди оставшихся шаров, без возвращения.",
+      "kind": "matching",
+      "matchingItems": [
+        {
+          "id": "a",
+          "text": "Первый выбор"
+        },
+        {
+          "id": "b",
+          "text": "Удалён красный"
+        },
+        {
+          "id": "c",
+          "text": "Удалён синий"
+        }
+      ],
+      "matchingOptions": [
+        {
+          "id": "1",
+          "text": "2/3"
+        },
+        {
+          "id": "2",
+          "text": "5/9"
+        },
+        {
+          "id": "3",
+          "text": "3/5"
+        }
+      ],
+      "answer": {
+        "a": "3",
+        "b": "1",
+        "c": "2"
+      },
+      "display": "a-3;b-1;c-2",
+      "methodIds": [
+        "probability-m2"
+      ],
+      "methodChoice": "Превратить таблицу остатков в новое пространство равновозможных исходов для каждой строки.",
+      "rationale": "В этой задаче важно превратить таблицу остатков в новое пространство равновозможных исходов для каждой строки.",
+      "solutionSteps": [
+        {
+          "statement": "Первый выбор: 6/10=3/5.",
+          "reason": "До удаления всего 10 шаров."
+        },
+        {
+          "statement": "После красного: 6/9=2/3.",
+          "reason": "Число синих не изменилось."
+        },
+        {
+          "statement": "После синего: 5/9.",
+          "reason": "Изменились и числитель, и знаменатель."
+        }
+      ],
+      "domain": "Каждый оставшийся шар выбирается равновероятно, возвращения нет.",
+      "check": "Во второй и третьей строках одинаковое общее число 9, но разное число синих.",
+      "solution": "Первый выбор: 6/10=3/5. До удаления всего 10 шаров. После красного: 6/9=2/3. Число синих не изменилось. После синего: 5/9. Изменились и числитель, и знаменатель. Проверка: Во второй и третьей строках одинаковое общее число 9, но разное число синих.",
+      "hint": "До удаления всего 10 шаров.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "table",
+          "caption": "Состав коробки",
+          "headers": [
+            "Состояние",
+            "Красные",
+            "Синие"
+          ],
+          "rows": [
+            [
+              "До выбора",
+              4,
+              6
+            ],
+            [
+              "После красного",
+              3,
+              6
+            ],
+            [
+              "После синего",
+              4,
+              5
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "table",
+          "to": "probability",
+          "skill": "conditional-probability"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-probability-08": {
+      "id": "methods-probability-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-probability",
+      "topic": "Вероятность: пространство выбора",
+      "grade": 9,
+      "level": "basic",
+      "subject": "Вероятность и статистика",
+      "difficulty": "Повышенный",
+      "skills": [
+        "probability",
+        "justification"
+      ],
+      "competencies": [
+        "data",
+        "reasoning"
+      ],
+      "canonicalId": "methods-probability-08",
+      "family": "methods-probability-08",
+      "prompt": "Придумайте конечный опыт с total равновозможными исходами и favorable благоприятными так, чтобы вероятность была 1/3. Оба количества целые, 3≤total≤30. Введите favorable;total.",
+      "kind": "examples",
+      "answer": null,
+      "validator": {
+        "name": "probability-fraction",
+        "params": {
+          "valueNumerator": 1,
+          "valueDenominator": 3,
+          "minTotal": 3,
+          "maxTotal": 30
+        }
+      },
+      "display": "1;3",
+      "methodIds": [
+        "probability-m1"
+      ],
+      "methodChoice": "Построить любое допустимое отношение количеств, сохраняя ограничения вероятности.",
+      "rationale": "В этой задаче важно построить любое допустимое отношение количеств, сохраняя ограничения вероятности.",
+      "solutionSteps": [
+        {
+          "statement": "Требуется favorable/total=1/3.",
+          "reason": "Это определение вероятности при равновозможных исходах."
+        },
+        {
+          "statement": "Выберем 1 благоприятный из 3.",
+          "reason": "Оба количества допустимы."
+        },
+        {
+          "statement": "Подойдут также 2 из 6 и 3 из 9.",
+          "reason": "Один числовой образец не исчерпывает ответы."
+        }
+      ],
+      "domain": "0≤favorable≤total; оба целые; 3≤total≤30.",
+      "check": "1/3=2/6=3/9.",
+      "solution": "Требуется favorable/total=1/3. Это определение вероятности при равновозможных исходах. Выберем 1 благоприятный из 3. Оба количества допустимы. Подойдут также 2 из 6 и 3 из 9. Один числовой образец не исчерпывает ответы. Проверка: 1/3=2/6=3/9.",
+      "hint": "Это определение вероятности при равновозможных исходах.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "acceptedExamples": [
+        "1;3",
+        "2;6",
+        "3;9"
+      ],
+      "answerExplanation": "Это образцы, а не полный список. Принимается любой пример, удовлетворяющий всем условиям задачи.",
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-01": {
+      "id": "methods-models-01",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value"
+      ],
+      "competencies": [
+        "graphs",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-01",
+      "family": "methods-models-01",
+      "prompt": "Учебная модель такси: посадка 150 рублей и 20 рублей за каждый километр. Сколько стоит поездка 10 км без других платежей?",
+      "kind": "number",
+      "answer": 350,
+      "display": "350",
+      "methodIds": [
+        "models-m1"
+      ],
+      "methodChoice": "Включить обе составляющие стоимости: постоянную и зависящую от расстояния.",
+      "rationale": "В этой задаче важно включить обе составляющие стоимости: постоянную и зависящую от расстояния.",
+      "solutionSteps": [
+        {
+          "statement": "C(s)=150+20s.",
+          "reason": "Модель содержит плату за посадку и расстояние."
+        },
+        {
+          "statement": "C(10)=150+200=350.",
+          "reason": "Подставляем 10 км."
+        },
+        {
+          "statement": "Стоимость 350 рублей.",
+          "reason": "Дополнительных платежей по условию нет."
+        }
+      ],
+      "domain": "s≥0; цены — условия учебной модели.",
+      "check": "350−20·10=150 — сохранён фиксированный платёж.",
+      "solution": "C(s)=150+20s. Модель содержит плату за посадку и расстояние. C(10)=150+200=350. Подставляем 10 км. Стоимость 350 рублей. Дополнительных платежей по условию нет. Проверка: 350−20·10=150 — сохранён фиксированный платёж.",
+      "hint": "Модель содержит плату за посадку и расстояние.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-models-pair-1",
+      "relatedIds": [
+        "methods-models-02"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-02": {
+      "id": "methods-models-02",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value"
+      ],
+      "competencies": [
+        "graphs",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-02",
+      "family": "methods-models-02",
+      "prompt": "Учебная модель перевозки: оплата только по 20 рублей за каждый километр, без платы за посадку. Сколько стоит 10 км?",
+      "kind": "number",
+      "answer": 200,
+      "display": "200",
+      "methodIds": [
+        "models-m1"
+      ],
+      "methodChoice": "Не переносить фиксированный платёж из соседней задачи, поскольку здесь его нет.",
+      "rationale": "В этой задаче важно не переносить фиксированный платёж из соседней задачи, поскольку здесь его нет.",
+      "solutionSteps": [
+        {
+          "statement": "C(s)=20s.",
+          "reason": "Слова «только» и «без платы за посадку» исключают постоянное слагаемое."
+        },
+        {
+          "statement": "C(10)=20·10=200.",
+          "reason": "Умножаем расстояние на цену километра."
+        },
+        {
+          "statement": "Стоимость 200 рублей.",
+          "reason": "Это другая модель, а не иное вычисление той же модели."
+        }
+      ],
+      "domain": "s≥0; других расходов нет.",
+      "check": "C(0)=0, в отличие от модели с платой за посадку.",
+      "solution": "C(s)=20s. Слова «только» и «без платы за посадку» исключают постоянное слагаемое. C(10)=20·10=200. Умножаем расстояние на цену километра. Стоимость 200 рублей. Это другая модель, а не иное вычисление той же модели. Проверка: C(0)=0, в отличие от модели с платой за посадку.",
+      "hint": "Слова «только» и «без платы за посадку» исключают постоянное слагаемое.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-models-pair-1",
+      "relatedIds": [
+        "methods-models-01"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-03": {
+      "id": "methods-models-03",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "percent"
+      ],
+      "competencies": [
+        "calculations",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-03",
+      "family": "methods-models-03",
+      "prompt": "Для заказа нужно 400 г материала. К этому количеству добавляют запас 10% от этих 400 г. Сколько граммов закупают?",
+      "kind": "number",
+      "answer": 440,
+      "display": "440",
+      "methodIds": [
+        "models-m2"
+      ],
+      "methodChoice": "Увеличить готовую потребность, потому что запас задан долей от неё.",
+      "rationale": "В этой задаче важно увеличить готовую потребность, потому что запас задан долей от неё.",
+      "solutionSteps": [
+        {
+          "statement": "База запаса 400 г.",
+          "reason": "Это явно указано в условии."
+        },
+        {
+          "statement": "Запас 400·0,1=40 г.",
+          "reason": "Вычисляем 10% этой базы."
+        },
+        {
+          "statement": "Закупают 400+40=440 г.",
+          "reason": "Складываем потребность и запас."
+        }
+      ],
+      "domain": "Все массы неотрицательны.",
+      "check": "440−400=0,1·400.",
+      "solution": "База запаса 400 г. Это явно указано в условии. Запас 400·0,1=40 г. Вычисляем 10% этой базы. Закупают 400+40=440 г. Складываем потребность и запас. Проверка: 440−400=0,1·400.",
+      "hint": "Это явно указано в условии.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-models-pair-2",
+      "relatedIds": [
+        "methods-models-04"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-04": {
+      "id": "methods-models-04",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "percent",
+        "linear-equation"
+      ],
+      "competencies": [
+        "calculations",
+        "equations",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-04",
+      "family": "methods-models-04",
+      "prompt": "Для заказа нужно получить 400 г пригодного материала. В процессе теряется 10% закупленной массы. Сколько граммов надо закупить? Ответ точный.",
+      "kind": "number",
+      "answer": 444.44444444444446,
+      "display": "4000/9",
+      "methodIds": [
+        "models-m2"
+      ],
+      "methodChoice": "Восстановить исходную массу по оставшимся 90%, а не прибавлять 10% к готовым 400 г.",
+      "rationale": "В этой задаче важно восстановить исходную массу по оставшимся 90%, а не прибавлять 10% к готовым 400 г.",
+      "solutionSteps": [
+        {
+          "statement": "Обозначим закупку m.",
+          "reason": "Потери считаются от неизвестной закупленной массы."
+        },
+        {
+          "statement": "0,9m=400.",
+          "reason": "Пригодными остаются 90% закупки."
+        },
+        {
+          "statement": "m=400/0,9=4000/9 г.",
+          "reason": "Делим на положительную долю."
+        }
+      ],
+      "domain": "m>0; доля потерь 0,1.",
+      "check": "(4000/9)·0,9=400; закупка 440 г дала бы только 396 г.",
+      "solution": "Обозначим закупку m. Потери считаются от неизвестной закупленной массы. 0,9m=400. Пригодными остаются 90% закупки. m=400/0,9=4000/9 г. Делим на положительную долю. Проверка: (4000/9)·0,9=400; закупка 440 г дала бы только 396 г.",
+      "hint": "Потери считаются от неизвестной закупленной массы.",
+      "revision": 1,
+      "category": "contrast",
+      "contrastPairId": "methods-models-pair-2",
+      "relatedIds": [
+        "methods-models-03"
+      ],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-05": {
+      "id": "methods-models-05",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-intersection",
+        "linear-equation"
+      ],
+      "competencies": [
+        "equations",
+        "graphs",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-05",
+      "family": "methods-models-05",
+      "prompt": "Две учебные модели стоимости: A(n)=100+3n и B(n)=400+n. Упорядочьте нахождение числа изделий, при котором стоимости равны.",
+      "kind": "steps",
+      "stepOptions": [
+        {
+          "id": "d",
+          "text": "n=150."
+        },
+        {
+          "id": "c",
+          "text": "100+3n=400+n."
+        },
+        {
+          "id": "b",
+          "text": "Обе стоимости при n=150 равны 550."
+        },
+        {
+          "id": "a",
+          "text": "2n=300."
+        }
+      ],
+      "answer": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "responseMode": "order",
+      "display": "c;a;d;b",
+      "methodIds": [
+        "models-m3"
+      ],
+      "methodChoice": "Сравнивать полные стоимости при одном и том же количестве изделий.",
+      "rationale": "В этой задаче важно сравнивать полные стоимости при одном и том же количестве изделий.",
+      "solutionSteps": [
+        {
+          "statement": "100+3n=400+n.",
+          "reason": "Равенство моделей задаёт точку равной стоимости."
+        },
+        {
+          "statement": "2n=300, n=150.",
+          "reason": "Переносим одинаковые типы слагаемых."
+        },
+        {
+          "statement": "A(150)=B(150)=550.",
+          "reason": "Проверяем найденное число изделий в обеих моделях."
+        }
+      ],
+      "domain": "n — неотрицательное целое; 150 допустимо.",
+      "check": "100+3·150=400+150=550.",
+      "solution": "100+3n=400+n. Равенство моделей задаёт точку равной стоимости. 2n=300, n=150. Переносим одинаковые типы слагаемых. A(150)=B(150)=550. Проверяем найденное число изделий в обеих моделях. Проверка: 100+3·150=400+150=550.",
+      "hint": "Равенство моделей задаёт точку равной стоимости.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-06": {
+      "id": "methods-models-06",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "percent",
+        "sequences",
+        "justification"
+      ],
+      "competencies": [
+        "calculations",
+        "graphs",
+        "reasoning",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-06",
+      "family": "methods-models-06",
+      "prompt": "Учебная модель: начальная сумма 10000, сказано только «увеличивается на 8% в год», но база процента не уточнена. Выберите и явно обоснуйте одно допущение: каждый год процент от первоначальной суммы либо ежегодная капитализация. Дополните модель S(t)=…, найдите S(2) и укажите, при каком уточнении условий нужно выбрать другую модель. Единственного числового ответа без допущения здесь нет.",
+      "kind": "open",
+      "answer": null,
+      "display": "При простой годовой прибавке: S(t)=10000(1+0,08t), S(2)=11600. При ежегодной капитализации: S(t)=10000·1,08^t, S(2)=11664. Выбор зависит от уточнения базы начисления.",
+      "methodIds": [
+        "models-m2"
+      ],
+      "methodChoice": "Самостоятельно выбрать и назвать недостающее допущение о базе процента, а не приписывать условию единственную формулу.",
+      "rationale": "Фраза «8% в год» без указания базы не определяет единственную двухлетнюю модель. Расчёт должен быть условным и опираться на явно выбранное допущение.",
+      "solutionSteps": [
+        {
+          "statement": "Выберем для примера простой процент от исходных 10000.",
+          "reason": "Это дополнительное допущение; в исходной фразе база не задана."
+        },
+        {
+          "statement": "Тогда S(t)=10000(1+0,08t), поэтому S(2)=11600.",
+          "reason": "Каждый год прибавляются одинаковые 800."
+        },
+        {
+          "statement": "Если по уточнённым условиям проценты ежегодно присоединяются к базе, нужна S(t)=10000·1,08^t и S(2)=11664.",
+          "reason": "Вторая прибавка тогда рассчитывается уже от 10800."
+        }
+      ],
+      "domain": "t — число полных лет, t≥0; ставки постоянны; других платежей в учебной модели нет.",
+      "check": "Простой процент: 10000+800+800=11600. Капитализация: 10000·1,08·1,08=11664.",
+      "solution": "Выберем для примера простой процент от исходных 10000. Это дополнительное допущение; в исходной фразе база не задана. Тогда S(t)=10000(1+0,08t), поэтому S(2)=11600. Каждый год прибавляются одинаковые 800. Если по уточнённым условиям проценты ежегодно присоединяются к базе, нужна S(t)=10000·1,08^t и S(2)=11664. Вторая прибавка тогда рассчитывается уже от 10800. Проверка: Простой процент: 10000+800+800=11600. Капитализация: 10000·1,08·1,08=11664.",
+      "hint": "Сначала назовите величину, от которой будут вычисляться 8% на втором году.",
+      "revision": 1,
+      "category": "steps",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "rubric": [
+        "Явно выбрано допущение о базе начисления и объяснено, почему исходных слов недостаточно.",
+        "Записана согласованная с допущением формула S(t).",
+        "Верно вычислен S(2): 11600 для простого процента либо 11664 для ежегодной капитализации.",
+        "Указано уточнение условий, при котором другая модель необходима."
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-07": {
+      "id": "methods-models-07",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Средний",
+      "skills": [
+        "function-value",
+        "sequences"
+      ],
+      "competencies": [
+        "graphs",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-07",
+      "family": "methods-models-07",
+      "prompt": "Сопоставьте таблицы значений при t=0,1,2 с моделью: a) 1000,1100,1200; b) 1000,1100,1210; c) 1000,1000,1000.",
+      "kind": "matching",
+      "matchingItems": [
+        {
+          "id": "a",
+          "text": "1000;1100;1200"
+        },
+        {
+          "id": "b",
+          "text": "1000;1100;1210"
+        },
+        {
+          "id": "c",
+          "text": "1000;1000;1000"
+        }
+      ],
+      "matchingOptions": [
+        {
+          "id": "1",
+          "text": "1000+100t"
+        },
+        {
+          "id": "2",
+          "text": "1000·1,1^t"
+        },
+        {
+          "id": "3",
+          "text": "1000"
+        }
+      ],
+      "answer": {
+        "a": "1",
+        "b": "2",
+        "c": "3"
+      },
+      "display": "a-1;b-2;c-3",
+      "methodIds": [
+        "models-m3"
+      ],
+      "methodChoice": "Различить постоянную разность, постоянный множитель и неизменность значений.",
+      "rationale": "В этой задаче важно различить постоянную разность, постоянный множитель и неизменность значений.",
+      "solutionSteps": [
+        {
+          "statement": "В a разности равны 100.",
+          "reason": "Подходит линейная модель 1000+100t."
+        },
+        {
+          "statement": "В b множитель каждого шага 1,1.",
+          "reason": "Подходит модель 1000·1,1^t."
+        },
+        {
+          "statement": "В c изменений нет.",
+          "reason": "Это постоянная модель."
+        }
+      ],
+      "domain": "t=0,1,2; модели здесь сравниваются только на указанных значениях.",
+      "check": "При t=2 модели дают 1200, 1210 и 1000.",
+      "solution": "В a разности равны 100. Подходит линейная модель 1000+100t. В b множитель каждого шага 1,1. Подходит модель 1000·1,1^t. В c изменений нет. Это постоянная модель. Проверка: При t=2 модели дают 1200, 1210 и 1000.",
+      "hint": "Подходит линейная модель 1000+100t.",
+      "revision": 1,
+      "category": "representation",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [
+        {
+          "type": "table",
+          "caption": "Три учебные зависимости",
+          "headers": [
+            "t",
+            "a",
+            "b",
+            "c"
+          ],
+          "rows": [
+            [
+              0,
+              1000,
+              1000,
+              1000
+            ],
+            [
+              1,
+              1100,
+              1100,
+              1000
+            ],
+            [
+              2,
+              1200,
+              1210,
+              1000
+            ]
+          ]
+        }
+      ],
+      "representationLinks": [
+        {
+          "from": "table",
+          "to": "formula",
+          "skill": "function-value"
+        }
+      ],
+      "difficultyBasis": "editorial_estimate"
+    },
+    "methods-models-08": {
+      "id": "methods-models-08",
+      "source": "methods",
+      "sourceLabel": "Способы и смысл",
+      "topicId": "methods-models",
+      "topic": "Выбор модели и границы вывода",
+      "grade": 11,
+      "level": "basic",
+      "subject": "Алгебра и начала математического анализа",
+      "difficulty": "Повышенный",
+      "skills": [
+        "percent",
+        "counterexample",
+        "justification"
+      ],
+      "competencies": [
+        "calculations",
+        "reasoning",
+        "modelling"
+      ],
+      "canonicalId": "methods-models-08",
+      "family": "methods-models-08",
+      "prompt": "В школе 100 учеников. Опросили 20 участников велокружка, 16 из них ездят в школу на велосипеде. Можно ли по этим данным утверждать, что 80% всей школы ездят на велосипеде? Приведите два возможных состава остальных 80 учеников с разными итоговыми долями и предложите улучшение опроса.",
+      "kind": "open",
+      "answer": null,
+      "display": "Нет. Если среди остальных никто не ездит, доля всей школы 16%; если ездят все остальные, доля 96%. Оба случая согласуются с наблюдёнными 16 из 20; нужен более представительный выбор учеников.",
+      "rubric": [
+        "Посчитаны 16/20=80% именно среди опрошенных.",
+        "Приведены два совместимых с опросом состава остальных учеников с разными школьными долями.",
+        "Предложен способ уменьшить смещение отбора, например случайный выбор из всех классов."
+      ],
+      "methodIds": [
+        "models-m3"
+      ],
+      "methodChoice": "Проверить границы вывода контрмоделями, а не объявлять долю удобной группы долей всей школы.",
+      "rationale": "В этой задаче важно проверить границы вывода контрмоделями, а не объявлять долю удобной группы долей всей школы.",
+      "solutionSteps": [
+        {
+          "statement": "В опросе доля 16/20=4/5.",
+          "reason": "Это характеристика выбранных участников."
+        },
+        {
+          "statement": "Остальные 80 могут дать от 0 до 80 велосипедистов.",
+          "reason": "О них исходных данных нет."
+        },
+        {
+          "statement": "Школьная доля может быть 16/100 либо 96/100.",
+          "reason": "Обе модели согласованы с опросом, поэтому единственный вывод 80% не обоснован."
+        },
+        {
+          "statement": "Для более обоснованного вывода можно случайно отбирать учеников из всей школы с охватом разных классов.",
+          "reason": "Так выбор не ограничивается участниками кружка, связанного с изучаемым признаком."
+        }
+      ],
+      "domain": "20 опрошенных входят в 100 учеников школы; о других данных нет.",
+      "check": "16+0=16 и 16+80=96; обе модели сохраняют опрошенную группу.",
+      "solution": "В опросе доля 16/20=4/5. Это характеристика выбранных участников. Остальные 80 могут дать от 0 до 80 велосипедистов. О них исходных данных нет. Школьная доля может быть 16/100 либо 96/100. Обе модели согласованы с опросом, поэтому единственный вывод 80% не обоснован. Для более обоснованного вывода можно случайно отбирать учеников из всей школы с охватом разных классов. Так выбор не ограничивается участниками кружка, связанного с изучаемым признаком. Проверка: 16+0=16 и 16+80=96; обе модели сохраняют опрошенную группу.",
+      "hint": "Это характеристика выбранных участников.",
+      "revision": 1,
+      "category": "boundary",
+      "contrastPairId": null,
+      "relatedIds": [],
+      "representations": [],
+      "difficultyBasis": "editorial_estimate"
+    }
+  }
+}

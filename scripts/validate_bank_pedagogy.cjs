@@ -11,7 +11,8 @@ const snapshot=JSON.stringify([classes,source]);
 const tagged=(q,id)=>p.forTask(q).includes(id),byId=id=>classes.find(q=>q.id===id);
 const model=(name,form=0)=>classes.find(q=>q.generation?.model===name&&q.generation.form===form);
 
-test(p.definitions.length>=30,'specific skills cover calculations, equations, geometry, data and reasoning');
+test(p.definitions.length===51,'all fifty legacy skills plus linear inequalities are available');
+test(p.definitions.some(d=>d.id==='linear-inequality'&&d.prerequisites.includes('linear-equation')),'inequality practice has its own concrete skill and prerequisites');
 test(new Set(p.definitions.map(d=>d.id)).size===p.definitions.length,'skill identifiers are unique');
 const known=new Set(p.definitions.map(d=>d.id));
 test(p.definitions.every(d=>d.title&&d.explanation&&d.prerequisites.every(id=>known.has(id)&&id!==d.id)),'every skill has guidance and valid prerequisite links');

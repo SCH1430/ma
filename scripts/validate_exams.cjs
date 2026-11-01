@@ -1,10 +1,11 @@
-// Check the official 2026 demo bank, its embedded source assets, answer formats,
+// Check the archived 2026 and project 2027 demo banks, its embedded source assets, answer formats,
 // and the same route boundary used by local-storage restoration.
 const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
 const root=path.resolve(__dirname,'..');
 const read=name=>JSON.parse(fs.readFileSync(path.join(root,name),'utf8'));
 const page=require('./load_page.cjs').loadPage(root),{BANK:bank,EXAM_BANK:exams}=page.dataValues();
-const manifest=read('src/exams/2026/manifest.json');
+const manifests={2026:read('src/exams/2026/manifest.json'),2027:read('src/exams/2027/manifest.json')},manifest=manifests[2026];
+const evidence2027=read('src/exams/2027/source-verification.json');
 // Transcribed from the original official answer tables, independently of the
 // extraction manifest: OGE PDF page 8, basic PDF page 15, profile PDF page 10.
 const oracle=read('checks/exam-answer-oracle.json');
@@ -13,6 +14,7 @@ const specs={
  'ege-basic':{numbers:21,openFrom:Infinity,pdf:'ma_11_2026/МА-11 ЕГЭ 2026 ДЕМО_базовый.pdf',counts:[4,2,3,3,3,3,3,2,2,3,4,4,4,3,4,4,4,3,4,4,4]},
  'ege-profile':{numbers:19,openFrom:13,pdf:'ma_11_2026/МА-11 ЕГЭ 2026 ДЕМО_профильный.pdf',counts:[4,3,4,3,4,4,3,3,3,3,3,4,2,2,2,2,2,2,2]}
 };
+const specs2027={oge:{numbers:25,openFrom:20,counts:Array(25).fill(1)},'ege-basic':{numbers:21,openFrom:Infinity,counts:[4,3,4,4,4,4,4,3,4,3,4,4,4,4,4,4,4,3,4,4,4]},'ege-profile':{numbers:20,openFrom:14,counts:[3,3,3,3,3,1,3,3,3,3,3,3,1,2,2,2,2,2,2,2]}};
 let checks=0;const errors=[],summaries=[];
 const test=(condition,label)=>{checks++;if(!condition)errors.push(label);};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
@@ -34,21 +36,24 @@ function imageAsset(value,label){
  test(bytes.length>500&&(png||jpeg),label+' contains an actual PNG/JPEG');
  if(png)test(bytes.readUInt32BE(16)>100&&bytes.readUInt32BE(20)>20,label+' has nonempty readable dimensions');
 }
-function fragmentAsset(examId,fragment,label,pageCount){
+function fragmentAsset(examId,fragment,label,pageCount,year=2026){
  test(Number.isInteger(fragment.page)&&fragment.page>0&&fragment.page<=pageCount,label+' refers to an original source page');
  const box=fragment.bbox;
  test(Array.isArray(box)&&box.length===4&&box.every(Number.isFinite)&&box[0]>=0&&box[1]>=0&&box[2]<=842.1&&box[3]<=595.4&&box[2]>box[0]&&box[3]>box[1],label+' has a complete in-page crop');
  if(!Array.isArray(box)||box.length!==4)return null;
  const key=examId+'-'+fragment.page+'-'+box.map(value=>Number(value).toFixed(3)).join('-');
- const file=path.join(root,'src/exams/2026/images',examId,hash(Buffer.from(key)).slice(0,20)+'.png');
+ const file=path.join(root,'src/exams',String(year),'images',examId,hash(Buffer.from(key)).slice(0,20)+'.png');
  test(fs.existsSync(file),label+' has a retained source crop');
  return fs.existsSync(file)?'data:image/png;base64,'+fs.readFileSync(file).toString('base64'):null;
 }
 function attempt(label,callback){try{callback();}catch(error){test(false,label+': '+error.stack);}}
 
-test(Array.isArray(exams)&&exams.length===3,'three separately named official demo banks exist');
+test(Array.isArray(exams)&&exams.length===6,'three archived and three project demo banks exist');
+test(exams.filter(e=>e.year===2026).flatMap(e=>e.tasks.flatMap(examples)).length===150,'all 150 legacy official examples remain');
+test(exams.filter(e=>e.year===2027).flatMap(e=>e.tasks.flatMap(examples)).length===154,'all 154 project 2027 official examples are included');
+test(manifests[2027].year===2027&&manifests[2027].status==='project'&&manifests[2027].exams.length===3,'new source manifest identifies three project demos');
 test(manifest.year===2026&&manifest.exams?.length===3,'the extraction manifest is confined to the three 2026 demos');
-test(same(exams.map(e=>e.id).sort(),Object.keys(specs).sort()),'OGE, EGE basic and EGE profile are the only exam banks');
+test(same(exams.map(e=>e.id).sort(),[...Object.keys(specs),...Object.keys(specs2027).map(id=>id+'-2027')].sort()),'every season owns one OGE, EGE basic and EGE profile bank with distinct IDs');
 const seenIds=new Set(),classIds=new Set(bank.flatMap(topic=>topic.tasks.map(q=>q.id)));
 const context={BANK:bank,EXAM_BANK:exams};vm.createContext(context);
 vm.runInContext(page.sourceFor('src/exam-support.js'),context);
@@ -57,16 +62,16 @@ const check=(raw,q)=>context.MathExam.checkAnswer(raw,q,context.parseAnswer);
 test(typeof context.safeRoute==='function'&&typeof context.MathExam?.checkAnswer==='function','application route and exam-answer boundaries load');
 
 for(const exam of exams)attempt(exam.id,()=>{
- const spec=specs[exam.id];test(!!spec,exam.id+' has a known official source');if(!spec)return;
- const source=manifest.exams.find(e=>e.id===exam.id);
+ const year=exam.year,baseId=exam.baseExamId||exam.id.replace(/-2027$/,''),spec=(year===2027?specs2027:specs)[baseId];test(!!spec,exam.id+' has a known official source');if(!spec)return;
+ const source=manifests[year].exams.find(e=>e.id===baseId),evidence=year===2027?evidence2027.exams.find(e=>e.exam===baseId):null,pageCount=source.pageCount||evidence?.pages;
  test(!!source&&source.tasks.length===spec.numbers,exam.id+' has a complete original-source manifest');
- test(exam.year===2026,exam.id+' is explicitly the 2026 demo');
- test(/2026/.test(exam.title+' '+exam.subtitle+' '+exam.sourceTitle),exam.id+' identifies the year in visible source information');
+ test([2026,2027].includes(year)&&exam.status===(year===2027?'project':'archive'),exam.id+' identifies its actual season and publication status');
+ test(new RegExp(String(year)).test(exam.title+' '+exam.subtitle+' '+exam.sourceTitle),exam.id+' identifies the year in visible source information');
  const sourceUrl=new URL(exam.sourceUrl);
  test(sourceUrl.protocol==='https:'&&/(^|\.)fipi\.ru$/i.test(sourceUrl.hostname),exam.id+' links directly to an official FIPI domain');
- test(sourceUrl.pathname.includes('/2026/')&&exam.sourceUrl===source.archiveUrl,exam.id+' points to the exact 2026 archive');
+ test(sourceUrl.pathname.includes('/'+year+'/')&&exam.sourceUrl===source.archiveUrl,exam.id+' points to the exact official season archive');
  const pdf=dataBytes(exam.pdfData,'application/pdf',exam.id+' original PDF');
- const original=fs.readFileSync(path.join(root,'src/exams/2026/sources',spec.pdf));
+ const original=fs.readFileSync(path.join(root,'src/exams',String(year),year===2026?'sources/'+spec.pdf:source.pdfPath));
  if(pdf){test(pdf.subarray(0,5).toString()==='%PDF-',exam.id+' has an actual PDF');test(hash(pdf)===hash(original),exam.id+' downloadable PDF exactly matches the retained official source');}
  test(source.sha256===hash(original)&&exam.sha256===hash(original),exam.id+' source checksums cover the exact embedded original');
  test(exam.tasks.length===spec.numbers,exam.id+' has all '+spec.numbers+' task numbers');
@@ -88,24 +93,24 @@ for(const exam of exams)attempt(exam.id,()=>{
    const qlabel=label+' example '+(variantIndex+1);count++;
    const sourceExample=source.tasks[index].examples[variantIndex];
    test(!!sourceExample,qlabel+' exists in the original extraction manifest');
-   test(typeof q.id==='string'&&q.id.startsWith('exam-2026-'+exam.id+'-'),qlabel+' has a distinct namespaced ID');
+   test(typeof q.id==='string'&&q.id.startsWith('exam-'+year+'-'+baseId+'-'),qlabel+' has a distinct namespaced ID');
    test(!seenIds.has(q.id)&&!classIds.has(q.id),qlabel+' does not collide with other exams or class tasks');seenIds.add(q.id);
    test(typeof q.text==='string'&&q.text.trim().length>15,qlabel+' retains accessible original text');
    test(Array.isArray(q.images)&&q.images.length>0,qlabel+' retains original task images');
    for(const [i,img] of (q.images||[]).entries())imageAsset(img,qlabel+' task image '+i);
    test(Array.isArray(q.contextImages),qlabel+' explicitly tracks shared context');
    for(const [i,img] of (q.contextImages||[]).entries())imageAsset(img,qlabel+' context image '+i);
-   if(exam.id==='oge'&&task.number<=5)test(q.contextImages.length>0,qlabel+' retains the common condition and plan');
+   if(baseId==='oge'&&task.number<=5)test(q.contextImages.length>0,qlabel+' retains the common condition and plan');
    if(sourceExample){
     test(q.text===sourceExample.text,qlabel+' retains the exact accessible text from the source manifest');
     for(const [field,fragmentField] of [['images','fragments'],['contextImages','contextFragments']]){
      const fragments=sourceExample[fragmentField]||[];
-     const assets=fragments.map((fragment,i)=>fragmentAsset(exam.id,fragment,qlabel+' '+fragmentField+' '+i,source.pageCount));
+     const assets=fragments.map((fragment,i)=>fragmentAsset(baseId,fragment,qlabel+' '+fragmentField+' '+i,pageCount,year));
      test(same(q[field],assets),qlabel+' '+field+' contains every original source fragment in order');
     }
     const solutionFragments=sourceExample.solutionFragments||[];
     if(solutionFragments.length){
-     const assets=solutionFragments.map((fragment,i)=>fragmentAsset(exam.id,fragment,qlabel+' solution '+i,source.pageCount));
+     const assets=solutionFragments.map((fragment,i)=>fragmentAsset(baseId,fragment,qlabel+' solution '+i,pageCount,year));
      test(same((q.solutionPages||[]).map(page=>page.image),assets),qlabel+' retains every page of its official solution and criteria');
     }
    }
@@ -122,9 +127,11 @@ for(const exam of exams)attempt(exam.id,()=>{
    }else{
     test(q.answerKind!=='open',qlabel+' supports its official short answer');
     const isSequence=exam.id==='oge'?[11,19].includes(task.number):exam.id==='ege-basic'&&([2,7,8,18].includes(task.number)||task.number===6&&variantIndex<2);
-    if(isSequence)test(q.answerKind==='sequence',qlabel+' preserves the official digit-sequence format');
-    const expected=oracle[exam.id]?.[index]?.[variantIndex];
-    test(!!expected&&same(normalized(q.answers||[]),normalized(expected||[])),qlabel+' answer list matches the independently read official table');
+    if(year===2026&&isSequence)test(q.answerKind==='sequence',qlabel+' preserves the official digit-sequence format');
+    const tableCell=evidence?.answerTable?.[task.number]?.[variantIndex];
+    const expected=year===2026?oracle[baseId]?.[index]?.[variantIndex]:typeof tableCell==='string'?tableCell.split(/<\s*или\s*>/i).map(value=>value.replace(/,/g,'.').replace(/−|–/g,'-').replace(/\s+/g,'')):null;
+    test(q.answerKind===sourceExample.answerKind,qlabel+' preserves the explicitly sourced response format');
+    test(!!expected&&same(normalized(q.answers||[]),normalized(expected||[])),qlabel+' answer list matches the independently retained official table');
     for(const answer of expected||[])test(check(answer,q).correct,qlabel+' accepts official answer '+answer);
     test(!check('987654321987654321',q).correct,qlabel+' rejects an incorrect answer');
     test(!check('',q).valid&&!check('Ответ: 42',q).valid,qlabel+' rejects empty or explanatory text');
@@ -143,7 +150,7 @@ for(const exam of exams)attempt(exam.id,()=>{
    }
   }
  }
- summaries.push({id:exam.id,numbers:exam.tasks.length,examples:count,openExamples:open,sourceSha256:hash(original)});
+ summaries.push({id:exam.id,year,numbers:exam.tasks.length,examples:count,openExamples:open,sourceSha256:hash(original)});
 });
 
 attempt('restored exam navigation',()=>{
@@ -167,7 +174,7 @@ attempt('restored exam navigation',()=>{
    }
   }
   test(context.safeRoute({...common,view:'exam',examId:'missing'},bank,exams).view==='classes','unknown exam returns to catalogue for '+role);
-  test(context.safeRoute({...common,view:'exam',examId:'oge'},bank,[{...exams.find(e=>e.id==='oge'),year:2025}]).view==='classes','a former-year bank cannot restore as the 2026 demo');
+  test(context.safeRoute({...common,view:'exam',examId:'oge'},bank,exams.filter(e=>e.year===2027)).view==='classes','an unavailable archive ID cannot silently restore as the latest season');
  }
  test(context.safeRoute({view:'exam',role:'administrator',examId:'oge'},bank,exams).view==='home','invalid role cannot restore an exam workspace');
  const sequence={answerKind:'sequence',answers:['0123']};

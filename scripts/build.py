@@ -13,6 +13,7 @@ from exam_difficulty_assets import build_exam_difficulty_data
 from sdamgia_assets import build_sdamgia_bank
 from enrichment_assets import build_enrichment_bank
 from quality_assets import build_quality_bank
+from method_bank_assets import build_method_bank
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -71,6 +72,7 @@ exam_difficulty = build_exam_difficulty_data(exams)
 sdamgia = build_sdamgia_bank()
 enrichment = build_enrichment_bank(bank)
 quality = build_quality_bank(bank)
+methods = build_method_bank()
 write_utf8((ROOT / 'checks' / 'exam-difficulty.json'), json.dumps(exam_difficulty, ensure_ascii=False, indent=2))
 
 for directory in [DATA, DATA / 'tasks', DATA / 'exams']:
@@ -78,7 +80,11 @@ for directory in [DATA, DATA / 'tasks', DATA / 'exams']:
 
 # Classic scripts work when index.html is opened directly with file://. Each
 # grade is a separate runtime file, so the HTML never contains the task bank.
-write_utf8((DATA / 'bank.js'), 'const BANK = [];\nconst EXAM_BANK = [];\n')
+write_utf8((DATA / 'bank.js'), 'const BANK = [];\nconst EXAM_BANK = [];\n'
+           'const SDAMGIA_BANK = {...ASSET_MANIFEST.sourceBank,tasks:[]};\n'
+           'const THINKING_BANK = {tasks:[]};\n'
+           'const QUALITY_BANK = {tasks:[],legacySkills:ASSET_MANIFEST.legacySkills};\n'
+           'const METHOD_BANK = {tasks:[],topics:[],methods:[]};\n')
 grade_scripts = []
 for grade in range(5, 12):
     filename = f'grade_{grade:02d}.js'
@@ -95,12 +101,52 @@ for exam in exams:
 write_constant('bank-stats.js', 'BANK_STATS', semantic)
 write_constant('competencies.js', 'COMPETENCY_DATA', competencies)
 write_constant('exam-difficulty.js', 'EXAM_DIFFICULTY_DATA', exam_difficulty)
-write_constant('sdamgia.js', 'SDAMGIA_BANK', sdamgia)
-write_constant('enrichment.js', 'THINKING_BANK', enrichment)
-write_constant('quality-bank.js', 'QUALITY_BANK', quality)
+# Content is delivered in classic scripts, so lazy loading also works on file://.
+# The source-backed bank is partitioned by subtype: one eight-task practice does
+# not download all of the source images, solutions and PDF tiles.
+source_scripts = []
+(DATA / 'sdamgia').mkdir(parents=True, exist_ok=True)
+for subtype in sdamgia['subtypes']:
+    filename = re.sub(r'[^a-zA-Z0-9_-]', '_', subtype['id']) + '.js'
+    reference = 'data/sdamgia/' + filename
+    tasks = [task for task in sdamgia['tasks'] if task['subtypeId'] == subtype['id']]
+    write_utf8(ROOT / reference, f'SDAMGIA_BANK.tasks.push(...{encode(tasks)});\n')
+    source_scripts.append((subtype, reference, tasks))
+write_utf8(DATA / 'enrichment.js', f'Object.assign(THINKING_BANK,{encode(enrichment)});\n')
+write_utf8(DATA / 'quality-bank.js', f'Object.assign(QUALITY_BANK,{encode(quality)});\n')
+write_utf8(DATA / 'method-bank.js', f'Object.assign(METHOD_BANK,{encode(methods)});\n')
 vendor = SRC / 'vendor'
 font = base64.b64encode((vendor / 'DejaVuSans.ttf').read_bytes()).decode()
 write_constant('font.js', 'FONT_BASE64', font)
+
+assets = {}
+for grade, reference in zip(range(5, 12), grade_scripts):
+    assets[f'class:{grade}'] = {'file': reference, 'ids': [q['id'] for t in bank if t['grade'] == grade for q in t['tasks']]}
+for exam, reference in zip(exams, exam_scripts):
+    assets[f"exam:{exam['id']}"] = {'file': reference, 'ids': [q['id'] for t in exam['tasks'] for q in t.get('examples', [t])]}
+for subtype, reference, tasks in source_scripts:
+    assets['subtype:' + subtype['id']] = {'file': reference, 'exam': subtype['exam'], 'ids': [q['id'] for q in tasks]}
+assets['enrichment'] = {'file': 'data/enrichment.js', 'ids': [q['id'] for q in enrichment['tasks']]}
+assets['quality'] = {'file': 'data/quality-bank.js', 'ids': [q['id'] for q in quality['tasks']]}
+assets['methods'] = {'file': 'data/method-bank.js', 'ids': [q['id'] for q in methods['tasks']]}
+assets['pdf-lib'] = {'file': 'src/vendor/pdf-lib.min.js', 'vendor': True}
+assets['fontkit'] = {'file': 'src/vendor/fontkit.umd.min.js', 'vendor': True}
+assets['pdf-font'] = {'file': 'data/font.js', 'pdf': True}
+for asset in assets.values():
+    asset['bytes'] = (ROOT / asset['file']).stat().st_size
+exam_summaries = [{**{key: value for key, value in exam.items() if key not in ['tasks', 'pdfData', 'answerPages', 'solutionPages']},
+                   'tasks': [{'number': task['number']} for task in exam['tasks']]} for exam in exams]
+counts = {'classes': sum(len(topic['tasks']) for topic in bank),
+          'exams': sum(len(task.get('examples', [task])) for exam in exams for task in exam['tasks']),
+          'source': len(sdamgia['tasks']), 'thinking': len(enrichment['tasks']),
+          'quality': len(quality['tasks']), 'methods': len(methods['tasks'])}
+counts['totalWithoutLearning'] = sum(counts.values())
+manifest = {'version': 1, 'assets': assets, 'exams': exam_summaries, 'counts': counts,
+            'topics': [{key: value for key, value in topic.items() if key != 'tasks'} for topic in bank],
+            'sourceBank': {**{key: value for key, value in sdamgia.items() if key != 'tasks'},
+                           'taskCount': len(sdamgia['tasks'])},
+            'legacySkills': quality.get('legacySkills', {})}
+write_constant('asset-manifest.js', 'ASSET_MANIFEST', manifest)
 
 license_text = (
     'pdf-lib (MIT)\n' + (vendor / 'pdf-lib-LICENSE.txt').read_text()
@@ -124,7 +170,10 @@ shell = shell[:style.start()] + (
     '  <link rel="stylesheet" href="data/shell.css">\n'
     '  <link rel="stylesheet" href="src/app.css">\n'
     '  <link rel="stylesheet" href="src/figure-viewer.css">\n'
-    '  <link rel="stylesheet" href="src/work-runner.css">'
+    '  <link rel="stylesheet" href="src/work-runner.css">\n'
+    '  <link rel="stylesheet" href="src/workspace-tools.css">\n'
+    '  <link rel="stylesheet" href="src/learning-path.css">\n'
+    '  <link rel="stylesheet" href="src/method-bank.css">'
 ) + shell[style.end():]
 shell = re.sub(
     r'      <section class="role-view".*?</section>',
@@ -135,21 +184,18 @@ shell = shell.replace(
     '<noscript>', '<div class="toast" id="notice" role="status" hidden></div>\n  <noscript>',
 )
 
-scripts = [
-    '  <!-- Third-party licenses: data/NOTICE.txt -->',
-    script_tag('src/vendor/pdf-lib.min.js', 'vendor-pdf-lib'),
-    script_tag('src/vendor/fontkit.umd.min.js', 'vendor-fontkit'),
-]
+scripts = ['  <!-- Third-party licenses: data/NOTICE.txt -->']
 data_scripts = [
-    'data/bank-stats.js', 'data/bank.js', *grade_scripts, *exam_scripts,
-    'data/competencies.js', 'data/exam-difficulty.js', 'data/sdamgia.js', 'data/enrichment.js', 'data/quality-bank.js', 'data/font.js',
+    'data/asset-manifest.js', 'data/bank-stats.js', 'data/bank.js',
+    'data/competencies.js', 'data/exam-difficulty.js',
 ]
 scripts.extend(script_tag(path) for path in data_scripts)
 application_scripts = [
+    'data-loader.js',
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
-    'lesson-support.js', 'figure-viewer.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-workspace.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'app.js',
+    'lesson-support.js', 'figure-viewer.js', 'exam-seasons.js', 'exam-support.js',
+    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-methods.js', 'bank-workspace.js', 'answer-formats.js', 'bank-evidence.js', 'bank-editorial.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'workspace-transfer.js', 'teacher-report.js', 'learning-content.js', 'learning-path.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)

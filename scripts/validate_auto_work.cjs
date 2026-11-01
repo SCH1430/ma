@@ -26,24 +26,27 @@ const cardIds=h=>h.document.querySelectorAll('.bank-task').map(card=>card.queryS
  const tagged=[...classes,...exams].map(q=>({...q,competencies:Array.from(skills.forTask(q))}));
  const byId=new Map(tagged.map(q=>[q.id,q]));
  const select=(tasks,options)=>clone(helper.select(tasks,options));
- await scenario('official 2026 exam difficulty coverage',async()=>{
+ await scenario('official 2026 archive and 2027 project difficulty coverage',async()=>{
   const data=JSON.parse(fs.readFileSync(path.join(root,'checks/exam-difficulty.json'),'utf8')),difficulty=initial.context.MathExamDifficulty;
   const specifications={
    oge:{count:25,byCode:{Б:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],П:[20,21,23,24],В:[22,25]}},
    'ege-basic':{count:21,byCode:{Б:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]}},
-   'ege-profile':{count:19,byCode:{Б:[1,2,3,4,6,7,8],П:[5,9,10,11,12,13,14,15,16,17],В:[18,19]}}
+   'ege-profile':{count:19,byCode:{Б:[1,2,3,4,6,7,8],П:[5,9,10,11,12,13,14,15,16,17],В:[18,19]}},
+   'oge-2027':{count:25,byCode:{Б:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],П:[20,21,23,24],В:[22,25]}},
+   'ege-basic-2027':{count:21,byCode:{Б:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]}},
+   'ege-profile-2027':{count:20,byCode:{Б:[1,2,3,4,7,8,9],П:[5,6,10,11,12,13,14,15,16,17,18],В:[19,20]}}
   };
-  test(data.year===2026&&same(data.levels,{Б:'Базовый',П:'Повышенный',В:'Высокий'}),'exam difficulty labels identify the official 2026 specification levels');
+  test(data.year===2026&&same(data.years,[2026,2027])&&same(data.levels,{Б:'Базовый',П:'Повышенный',В:'Высокий'}),'exam difficulty labels identify both official specification seasons and unchanged level labels');
   for(const [id,spec] of Object.entries(specifications)){
    const authored=data.exams[id],bank=EXAM_BANK.find(exam=>exam.id===id);
    test(bank.tasks.length===spec.count&&Object.keys(authored.byNumber).length===spec.count,id+' has one sourced difficulty for each official numbered position');
-   const pdf=fs.readFileSync(path.join(root,'src/exams/2026',authored.pdfPath));
+   const pdf=fs.readFileSync(path.join(root,'src/exams',String(authored.year||2026),authored.pdfPath));
    test(crypto.createHash('sha256').update(pdf).digest('hex')===authored.sha256&&authored.sourceUrl.includes('doc.fipi.ru/'),id+' difficulty mapping records the checksum of its local official specification PDF');
    for(const [code,numbers] of Object.entries(spec.byCode))
     test(numbers.every(number=>authored.byNumber[number]===code&&difficulty.forTask({examId:id,number})===data.levels[code]),id+' positions agree with the independently transcribed specification level '+code);
    test(exams.filter(q=>q.examId===id).every(q=>difficulty.forTask(q)===data.levels[authored.byNumber[q.number]]),id+' alternative examples retain the official level of their original numbered position');
   }
-  test(exams.length===150&&exams.every(q=>difficulty.forTask(q)),'all 150 original exam examples have an explicit official difficulty');
+  test(exams.filter(q=>!q.examId.endsWith('-2027')).length===150&&exams.filter(q=>q.examId.endsWith('-2027')).length===154&&exams.every(q=>difficulty.forTask(q)),'all 150 archived and 154 current exam examples have explicit official difficulty');
   test(difficulty.forTask({examId:'unknown',number:1})===null&&difficulty.forTask({examId:'oge',number:26})===null,'unknown exams and positions cannot inherit a fabricated difficulty');
  });
  await scenario('deterministic pure selection and safe inputs',async()=>{

@@ -19,16 +19,20 @@ commands = [
     [sys.executable, '-B', 'scripts/validate_expansion.py'],
     [sys.executable, '-B', 'scripts/validate_enrichment.py'],
     [sys.executable, '-B', 'scripts/validate_quality_bank.py'],
+    [sys.executable, '-B', 'scripts/validate_exam_seasons.py'],
+    [sys.executable, '-B', 'scripts/method_bank_assets.py'],
     *[[node, f'scripts/{name}.cjs'] for name in [
-        'validate_build', 'validate_runtime', 'validate_geometry', 'validate_lessons',
+        'validate_build', 'validate_lazy_loading', 'validate_runtime', 'validate_geometry', 'validate_lessons',
         'validate_figure_viewer', 'validate_training', 'validate_training_monitor', 'validate_font', 'validate_features',
         'validate_ui_state', 'validate_regressions', 'validate_exams',
         'validate_unified_work', 'validate_competencies', 'validate_auto_work',
-        'validate_work_runner', 'validate_sdamgia_ui',
+        'validate_work_runner', 'validate_answer_formats', 'validate_bank_evidence', 'validate_method_formats', 'validate_method_bank_ui', 'validate_sdamgia_ui',
+        'validate_learning_path', 'validate_workspace_tools', 'validate_workspace_integration',
         'validate_bank_pedagogy', 'validate_bank_selection', 'validate_bank_tools',
         'validate_recovery_flow', 'validate_enrichment_ui', 'validate_quality_ui',
         'export_unified_sample', 'export_expansion_sample', 'export_sdamgia_sample',
     ]],
+    [node, 'scripts/update_readme.cjs', '--check'],
     [sys.executable, '-B', 'scripts/prepare_pages.py'],
     [node, 'scripts/validate_pages.cjs'],
 ]
@@ -38,7 +42,7 @@ for command in commands:
 reports = {name: json.loads((ROOT/'checks'/f'{name}-results.json').read_text())
            for name in ['build','math','expansion','runtime','geometry','lessons','figure-viewer','training','training-monitor','font','features','ui-state',
                         'regression','exam','unified-work','competency','auto-work',
-                        'unified-pdf','expansion-pdf','sdamgia-ui','sdamgia-pdf','enrichment-ui','quality-bank','quality-ui']}
+                        'unified-pdf','expansion-pdf','sdamgia-ui','sdamgia-pdf','enrichment-ui','quality-bank','quality-ui','learning-path','workspace-integration','method-bank','method-bank-ui']}
 summary = {'verified_at':datetime.now(timezone.utc).isoformat(),
            'automated_status':'passed','reports':reports,
            'checks_executed':[command[-1] for command in commands],

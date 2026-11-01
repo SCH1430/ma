@@ -7,11 +7,41 @@ globalThis.MathWorkRunner = (() => {
   const text=(value,max=4000)=>typeof value==='string'?value.slice(0,max):'';
   const date=value=>typeof value==='string'&&/^\d{4}-\d\d-\d\dT/.test(value)&&Number.isFinite(Date.parse(value))?value.slice(0,30):'';
   const now=()=>new Date().toISOString();
-  const freshRecord=()=>({draft:'',submitted:false,correct:false,feedback:'',revealed:false,hintUsed:false,hintBeforeAnswer:false,solutionBeforeAnswer:false,checks:[],reviewed:false,tries:0,previousAttempt:null});
+  const MAX_ACTIVE_MS=8*60*60*1000,activity=new WeakMap();
+  const freshRecord=()=>({draft:'',submitted:false,correct:false,feedback:'',revealed:false,hintUsed:false,hintBeforeAnswer:false,solutionBeforeAnswer:false,checks:[],reviewed:false,tries:0,previousAttempt:null,firstAttempt:null,firstValidAttempt:null,firstAttemptEligible:true,activeMs:0,timingRecorded:false});
   const current=session=>session?.ids?.[session.index];
   const record=(session,id=current(session))=>session?.records?.[id];
+  const atTime=value=>Number.isFinite(typeof value==='object'?value?.now:value)?Number(typeof value==='object'?value.now:value):Date.now();
+  const duration=value=>Number.isFinite(value)?Math.max(0,Math.min(MAX_ACTIVE_MS,Math.floor(value))):0;
+  function running(session,state){const r=record(session);return state.active&&state.visible&&state.focused&&session.phase==='solving'&&r&&!r.revealed&&!r.correct;}
+  function refreshActivity(session,at){const state=activity.get(session);if(!state)return;state.id=current(session);state.started=running(session,state)?at:null;if(state.started!==null)record(session).timingRecorded=true;}
+  function flushActivity(session,when){
+    const state=activity.get(session);if(!state)return record(session)?.activeMs||0;
+    const at=atTime(when),r=record(session,state.id);
+    if(r&&state.started!==null)r.activeMs=duration(r.activeMs+Math.max(0,at-state.started));
+    refreshActivity(session,at);return record(session)?.activeMs||0;
+  }
+  function setActivity(session,options={}){
+    if(!session)return false;const at=atTime(options);flushActivity(session,at);
+    const previous=activity.get(session)||{};
+    activity.set(session,{id:current(session),started:null,visible:typeof options.visible==='boolean'?options.visible:previous.visible!==false,focused:typeof options.focused==='boolean'?options.focused:previous.focused!==false,active:typeof options.active==='boolean'?options.active:previous.active!==false});
+    refreshActivity(session,at);return true;
+  }
+  function pauseActivity(session,when){if(!session)return false;flushActivity(session,when);const state=activity.get(session);if(state){state.active=false;state.started=null;}return true;}
+  const taskVersion=q=>globalThis.MathBankEvidence?.version(q)||{revision:q.revision||null,contentHash:q.contentHash||''};
+  function attemptSnapshot(r,result,at,q){const version=taskVersion(q);return {answer:r.draft,valid:result.valid===true,correct:result.valid===true&&result.correct===true,at:new Date(at).toISOString(),revision:version.revision,contentHash:version.contentHash,hintBeforeAnswer:r.hintUsed===true,solutionBeforeAnswer:r.revealed===true,timingRecorded:r.timingRecorded===true,...(r.timingRecorded?{activeMs:r.activeMs}:{})};}
+  function rememberAttempt(r,result,at,q){if(r.firstAttemptEligible===false)return;if(!r.firstValidAttempt&&r.firstAttempt?.valid)r.firstValidAttempt={...r.firstAttempt};const attempt=attemptSnapshot(r,result,at,q);if(!r.firstAttempt)r.firstAttempt=attempt;if(result.valid===true&&!r.firstValidAttempt)r.firstValidAttempt={...attempt};}
+  function sanitizeAttempt(value,q,checker){
+    if(!value||typeof value.answer!=='string'||typeof value.valid!=='boolean'||typeof value.correct!=='boolean'||typeof value.hintBeforeAnswer!=='boolean'||typeof value.solutionBeforeAnswer!=='boolean')return null;
+    const version=taskVersion(q);if(value.contentHash&&version.contentHash&&value.contentHash!==version.contentHash)return null;
+    const answer=text(value.answer),canCheck=typeof checker==='function'||kind(q)==='sequence'||globalThis.MathAnswerFormats?.supports(kind(q));
+    const result=canCheck?evaluate(answer,q,checker):{valid:value.valid,correct:value.correct};
+    const timingRecorded=value.timingRecorded===true&&Number.isFinite(value.activeMs)&&value.activeMs>=0;
+    return {answer,valid:result.valid===true,correct:result.valid===true&&result.correct===true,at:date(value.at),revision:Number.isSafeInteger(value.revision)?value.revision:null,contentHash:text(value.contentHash,64),hintBeforeAnswer:value.hintBeforeAnswer,solutionBeforeAnswer:value.solutionBeforeAnswer,timingRecorded,...(timingRecorded?{activeMs:duration(value.activeMs)}:{})};
+  }
   function evaluate(raw,q,checker){
     if(kind(q)==='open')return {valid:false,correct:false,requiresReview:true};
+    if(globalThis.MathAnswerFormats?.supports(kind(q)))return MathAnswerFormats.evaluate(raw,q);
     if(kind(q)==='sequence'){
       const value=String(raw??'').replace(/\s+/g,'');
       const answers=Array.isArray(q.answers)?q.answers:[q.answer??q.display];
@@ -36,17 +66,26 @@ globalThis.MathWorkRunner = (() => {
     const records={};
     for(const id of ids){
       const q=byId.get(id),value=raw.records&&typeof raw.records==='object'?raw.records[id]:null,r=freshRecord();
-      r.contentHash=q.contentHash||'';r.revision=q.revision||null;
-      const previous=value&&q.contentHash&&value.contentHash!==q.contentHash?value:value?.previousAttempt;
+      const version=taskVersion(q),changed=value?.contentHash&&version.contentHash&&value.contentHash!==version.contentHash;
+      r.contentHash=version.contentHash;r.revision=version.revision;
+      const previous=changed?value:value?.previousAttempt;
       if(previous&&typeof previous==='object'&&typeof previous.draft==='string'&&previous.draft.trim())r.previousAttempt={draft:text(previous.draft),revision:Number.isSafeInteger(previous.revision)?previous.revision:null,contentHash:text(previous.contentHash,64)};
-      if(value&&typeof value==='object'&&(!q.contentHash||value.contentHash===q.contentHash)){
+      if(value&&typeof value==='object'&&!changed){
         r.draft=text(value.draft);r.hintUsed=value.hintUsed===true;r.hintBeforeAnswer=r.hintUsed&&value.hintBeforeAnswer===true;r.revealed=value.revealed===true;r.solutionBeforeAnswer=r.revealed&&value.solutionBeforeAnswer===true;
         r.tries=Number.isSafeInteger(value.tries)?Math.max(0,Math.min(10000,value.tries)):0;
+        r.activeMs=duration(value.activeMs);r.timingRecorded=value.timingRecorded===true;
+        r.firstAttempt=sanitizeAttempt(value.firstAttempt,q,checker);
+        r.firstValidAttempt=sanitizeAttempt(value.firstValidAttempt,q,checker);
+        if(r.firstValidAttempt&&!r.firstValidAttempt.valid)r.firstValidAttempt=null;
+        if(!r.firstValidAttempt&&r.firstAttempt?.valid)r.firstValidAttempt={...r.firstAttempt};
+        const previouslyAttempted=value.submitted===true||value.correct===true||r.tries>0;
+        r.firstAttemptEligible=value.firstAttemptEligible!==false&&(!previouslyAttempted||!!r.firstAttempt);
+        if(!r.firstAttemptEligible){r.firstAttempt=null;r.firstValidAttempt=null;}
         r.checks=(Array.isArray(value.checks)?value.checks:[]).slice(0,Array.isArray(q.rubric)?Math.min(20,q.rubric.length):0).map(x=>x===true);
         r.submitted=kind(q)!=='open'&&value.submitted===true&&!!r.draft.trim();
         r.reviewed=kind(q)==='open'&&value.reviewed===true&&r.revealed&&!!r.draft.trim()&&(q.rubric||[]).every((_,i)=>r.checks[i]);
         if(r.submitted){
-          if(typeof checker==='function'||kind(q)==='sequence'){
+          if(typeof checker==='function'||kind(q)==='sequence'||globalThis.MathAnswerFormats?.supports(kind(q))){
             const result=evaluate(r.draft,q,checker);r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';
           }else{r.correct=value.correct===true;r.feedback=r.correct?'correct':['wrong','format'].includes(value.feedback)?value.feedback:'';}
         }
@@ -54,27 +93,27 @@ globalThis.MathWorkRunner = (() => {
       records[id]=r;
     }
     const retainedIndex=Number.isInteger(raw.index)?ids.indexOf(raw.ids[raw.index]):-1;
-    return {version:VERSION,id:text(raw.id,80)||'work-run',title:text(raw.title,70).trim()||'Самостоятельная работа',variant:text(raw.variant,20).trim()||'1',ids,index:retainedIndex>=0?retainedIndex:Number.isInteger(raw.index)?Math.max(0,Math.min(ids.length-1,raw.index)):0,phase:raw.phase==='results'?'results':'solving',startedAt:date(raw.startedAt)||now(),finishedAt:raw.phase==='results'?date(raw.finishedAt):'',records};
+    return {version:VERSION,id:text(raw.id,80)||'work-run',title:text(raw.title,70).trim()||'Самостоятельная работа',variant:text(raw.variant,20).trim()||'1',ids,index:retainedIndex>=0?retainedIndex:Number.isInteger(raw.index)?Math.max(0,Math.min(ids.length-1,raw.index)):0,phase:raw.phase==='results'?'results':'solving',startedAt:date(raw.startedAt)||now(),finishedAt:raw.phase==='results'?date(raw.finishedAt):'',participantRole:['student','teacher'].includes(raw.participantRole)?raw.participantRole:'unknown',records};
   }
   function createSession(work,catalog,options={}){
-    return sanitizeSession({version:VERSION,id:options.id||globalThis.crypto?.randomUUID?.()||'run-'+Date.now().toString(36),title:work?.title,variant:work?.variant,ids:Array.isArray(work?.ids)?[...work.ids]:[],index:0,phase:'solving',startedAt:options.now||now(),records:{}},catalog);
+    return sanitizeSession({version:VERSION,id:options.id||globalThis.crypto?.randomUUID?.()||'run-'+Date.now().toString(36),title:work?.title,variant:work?.variant,ids:Array.isArray(work?.ids)?[...work.ids]:[],index:0,phase:'solving',startedAt:options.now||now(),participantRole:options.participantRole,records:{}},catalog);
   }
-  function setDraft(session,value){
+  function setDraft(session,value,options){
     if(!session||session.phase!=='solving')return false;
     const r=record(session),next=text(value);if(!r||r.draft===next)return false;
-    r.draft=next;r.submitted=false;r.correct=false;r.feedback='';r.reviewed=false;r.checks=[];r.solutionBeforeAnswer=false;r.hintBeforeAnswer=false;return true;
+    const at=atTime(options);flushActivity(session,at);r.draft=next;r.submitted=false;r.correct=false;r.feedback='';r.reviewed=false;r.checks=[];r.solutionBeforeAnswer=false;r.hintBeforeAnswer=false;refreshActivity(session,at);return true;
   }
-  function go(session,index){
+  function go(session,index,options){
     if(!session||!Number.isInteger(Number(index)))return false;
-    session.index=Math.max(0,Math.min(session.ids.length-1,Number(index)));return true;
+    const at=atTime(options);flushActivity(session,at);session.index=Math.max(0,Math.min(session.ids.length-1,Number(index)));refreshActivity(session,at);return true;
   }
-  function submit(session,catalog,checker){
+  function submit(session,catalog,checker,options){
     if(!session||session.phase!=='solving')return null;
     const q=catalogMap(catalog).get(current(session)),r=record(session);if(!q||!r||kind(q)==='open')return null;
-    const result=evaluate(r.draft,q,checker);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';r.tries=Math.min(10000,r.tries+1);return result;
+    const at=atTime(options);flushActivity(session,at);const result=evaluate(r.draft,q,checker);rememberAttempt(r,result,at,q);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';r.tries=Math.min(10000,r.tries+1);refreshActivity(session,at);return result;
   }
   function showHint(session,catalog){const q=catalogMap(catalog).get(current(session)),r=record(session);if(!r||!q?.hint||session.phase!=='solving')return false;r.hintUsed=true;return true;}
-  function reveal(session){const r=record(session);if(!r)return false;r.revealed=true;return true;}
+  function reveal(session,options){const r=record(session);if(!r)return false;const at=atTime(options);flushActivity(session,at);r.revealed=true;refreshActivity(session,at);return true;}
   function setCriterion(session,catalog,index,checked){
     if(!session)return false;
     const q=catalogMap(catalog).get(current(session)),r=record(session),i=Number(index);
@@ -87,16 +126,16 @@ globalThis.MathWorkRunner = (() => {
     if(kind(q)!=='open'||!r?.revealed||!r.draft.trim()||!(q.rubric||[]).every((_,i)=>r.checks[i]))return false;
     r.reviewed=true;return true;
   }
-  function finish(session,catalog,checker){
+  function finish(session,catalog,checker,options){
     if(!session)return null;
-    const byId=catalogMap(catalog);
+    const at=atTime(options);flushActivity(session,at);const byId=catalogMap(catalog);
     for(const id of session.ids){
       const q=byId.get(id),r=record(session,id);if(!q||kind(q)==='open'||!r.draft.trim())continue;
-      const result=evaluate(r.draft,q,checker);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';
+      const result=evaluate(r.draft,q,checker);rememberAttempt(r,result,at,q);if(!r.correct){r.solutionBeforeAnswer=r.revealed;r.hintBeforeAnswer=r.hintUsed;}r.submitted=true;r.correct=result.correct;r.feedback=result.valid?result.correct?'correct':'wrong':'format';
     }
-    session.phase='results';session.finishedAt=now();return summary(session,byId);
+    session.phase='results';session.finishedAt=new Date(at).toISOString();refreshActivity(session,at);return summary(session,byId);
   }
-  function reopen(session){if(!session)return false;session.phase='solving';session.finishedAt='';return true;}
+  function reopen(session,options){if(!session)return false;session.phase='solving';session.finishedAt='';refreshActivity(session,atTime(options));return true;}
   function status(q,r){
     if(kind(q)==='open')return r.reviewed?'reviewed':r.draft.trim()?'awaiting-review':'unanswered';
     if(!r.draft.trim())return 'unanswered';
@@ -116,11 +155,13 @@ globalThis.MathWorkRunner = (() => {
   }
   function exportResults(session,catalog){
     if(!session)return null;
+    flushActivity(session);
     const byId=catalogMap(catalog);
-    return {format:'baza-work-results',version:VERSION,sessionId:session.id,title:session.title,variant:session.variant,startedAt:session.startedAt,finishedAt:session.finishedAt,finished:session.phase==='results',summary:summary(session,byId),tasks:session.ids.map((id,index)=>{
+    return {format:'baza-work-results',version:VERSION,sessionId:session.id,title:session.title,variant:session.variant,startedAt:session.startedAt,finishedAt:session.finishedAt,finished:session.phase==='results',participantRole:session.participantRole||'unknown',summary:summary(session,byId),tasks:session.ids.map((id,index)=>{
       const q=byId.get(id),r=record(session,id);
       const state=status(q,r);
-      return {number:index+1,id,source:q.sourceLabel||q.source||'',...(q.sourceUrl?{sourceUrl:q.sourceUrl}:{}),...(q.subtypeId?{subtypeId:q.subtypeId}:{}),kind:kind(q),answer:r.draft,status:state,correct:state==='correct'?true:state==='incorrect'?false:null,revision:q.revision||null,contentHash:q.contentHash||'',hintUsed:r.hintUsed,hintBeforeAnswer:r.hintBeforeAnswer,previousAttempt:r.previousAttempt,reviewed:r.reviewed,revealed:r.revealed,solutionBeforeAnswer:r.solutionBeforeAnswer,checks:[...r.checks],tries:r.tries};
+      const version=taskVersion(q);
+      return {number:index+1,id,source:q.sourceLabel||q.source||'',...(q.sourceUrl?{sourceUrl:q.sourceUrl}:{}),...(q.subtypeId?{subtypeId:q.subtypeId}:{}),kind:kind(q),answer:r.draft,status:state,correct:state==='correct'?true:state==='incorrect'?false:null,revision:version.revision,contentHash:version.contentHash,hintUsed:r.hintUsed,hintBeforeAnswer:r.hintBeforeAnswer,previousAttempt:r.previousAttempt,firstAttempt:r.firstAttempt?{...r.firstAttempt}:null,firstValidAttempt:r.firstValidAttempt?{...r.firstValidAttempt}:null,firstAttemptEligible:r.firstAttemptEligible,activeMs:r.activeMs,timingRecorded:r.timingRecorded,reviewed:r.reviewed,revealed:r.revealed,solutionBeforeAnswer:r.solutionBeforeAnswer,checks:[...r.checks],tries:r.tries};
     })};
   }
   function render(session,catalog,options={}){
@@ -134,13 +175,15 @@ globalThis.MathWorkRunner = (() => {
     const taskBody=()=>{
       const context=(q.contextImages||[]).length?`<details class="exam-context" open><summary>Общее условие</summary>${imageMarkup(q.contextImages,'Общее условие к заданию')}</details>`:q.context?`<div class="exam-context">${math(q.context)}</div>`:'';
       const prompt=typeof options.taskMarkup==='function'?options.taskMarkup(q):q.promptHtml?`<div class="work-run-source-html">${q.promptHtml}</div>`:(q.source==='exam'&&(q.images||[]).length?imageMarkup(q.images,'Оригинальное условие задания')+`<p class="sr-only">${esc(q.prompt||q.text||'')}</p>`:`<p class="task-prompt">${math(q.prompt||q.text||'')}</p>${imageMarkup(q.images,'Рисунок к заданию')}${options.figureSVG?options.figureSVG(q.id):''}`);
-      return context+prompt;
+      const choices=globalThis.MathAnswerFormats?.supports(kind(q))?MathAnswerFormats.renderPrompt(q,{mathHTML:math,esc}):'';
+      const representations=globalThis.MathBankMethods?.representations?MathBankMethods.representations(q,{mathHTML:math,esc}):'';
+      return context+prompt+choices+representations;
     };
     const references=()=>{
       const pages=[...(q.solutionPages||[]),...(q.answerPages||[])];
-      return `<section class="work-run-solution" aria-labelledby="work-run-solution-heading"><h3 id="work-run-solution-heading">Разбор и самопроверка</h3>${q.answerHtml?`<div class="work-run-source-html">${q.answerHtml}</div>`:q.display||q.answerText?`<p><strong>Ответ:</strong> ${math(q.display||q.answerText)}</p>`:''}${q.solutionHtml?`<div class="work-run-source-html">${q.solutionHtml}</div>`:q.solution?`<p>${math(q.solution)}</p>`:''}${pages.map(page=>`<div class="exam-reference-page"><p class="exam-page-label">Страница ${esc(page.page)} оригинала</p>${imageMarkup([page.image],'Решение и критерии')}</div>`).join('')}${kind(q)==='open'?`<p class="muted">Сверьте своё рассуждение с образцом и критериями. Развёрнутый ответ проверяется самостоятельно; автоматический балл не выставляется.</p><div class="rubric-list">${(q.rubric||[]).map((criterion,index)=>`<label class="check"><input id="work-run-criterion-${index}" type="checkbox" data-run-rubric="${index}" ${r.checks[index]?'checked':''}>${esc(criterion)}</label>`).join('')}</div>${button('review',r.reviewed?'Сверка отмечена ✓':'Я сверил(а) решение с критериями','secondary',!r.draft.trim()||r.reviewed||!(q.rubric||[]).every((_,i)=>r.checks[i])?'disabled':'')}`:''}</section>`;
+      return `<section class="work-run-solution" aria-labelledby="work-run-solution-heading"><h3 id="work-run-solution-heading">Разбор и самопроверка</h3>${q.answerHtml?`<div class="work-run-source-html">${q.answerHtml}</div>`:q.display||q.answerText?`<p><strong>Ответ:</strong> ${math(q.display||q.answerText)}</p>`:''}${q.solutionHtml?`<div class="work-run-source-html">${q.solutionHtml}</div>`:q.solution?`<p>${math(q.solution)}</p>`:''}${q.answerExplanation?`<p>${math(q.answerExplanation)}</p>`:''}${q.acceptedExamples?.length?`<p><strong>Допустимые образцы:</strong> ${q.acceptedExamples.map(math).join(' · ')}</p>`:''}${globalThis.MathBankMethods?.passport?MathBankMethods.passport(q,{mathHTML:math,esc}):''}${pages.map(page=>`<div class="exam-reference-page"><p class="exam-page-label">Страница ${esc(page.page)} оригинала</p>${imageMarkup([page.image],'Решение и критерии')}</div>`).join('')}${kind(q)==='open'?`<p class="muted">Сверьте своё рассуждение с образцом и критериями. Развёрнутый ответ проверяется самостоятельно; автоматический балл не выставляется.</p><div class="rubric-list">${(q.rubric||[]).map((criterion,index)=>`<label class="check"><input id="work-run-criterion-${index}" type="checkbox" data-run-rubric="${index}" ${r.checks[index]?'checked':''}>${esc(criterion)}</label>`).join('')}</div>${button('review',r.reviewed?'Сверка отмечена ✓':'Я сверил(а) решение с критериями','secondary',!r.draft.trim()||r.reviewed||!(q.rubric||[]).every((_,i)=>r.checks[i])?'disabled':'')}`:''}</section>`;
     };
-    const hint=kind(q)==='sequence'?'Последовательность цифр в порядке из условия. Сохраняйте ведущие нули; пробелы допустимы.':kind(q)==='set'?'Все корни через точку с запятой; порядок не важен. Если решений нет, введите ∅.':kind(q)==='open'?'Запишите рассуждение. Чертёж и вычисления можно выполнить в тетради.':'Введите число без единиц. Допустимы точка, запятая, дроби, π и квадратный корень.';
+    const hint=globalThis.MathAnswerFormats?.supports(kind(q))?MathAnswerFormats.hint(q):kind(q)==='sequence'?'Последовательность цифр в порядке из условия. Сохраняйте ведущие нули; пробелы допустимы.':kind(q)==='set'?'Все корни через точку с запятой; порядок не важен. Если решений нет, введите ∅.':kind(q)==='open'?'Запишите рассуждение. Чертёж и вычисления можно выполнить в тетради.':'Введите число без единиц. Допустимы точка, запятая, дроби, π и квадратный корень.';
     const navigation=`<nav class="work-run-numbers" aria-label="Задания работы">${session.ids.map((id,index)=>{const state=status(byId.get(id),record(session,id));return button('task',String(index+1),'task-dot run-state-'+state,`data-index="${index}" ${session.index===index?'aria-current="step"':''} aria-label="Задание ${index+1}: ${esc(label[state])}"`);}).join('')}</nav>`;
     const overview=`<div class="work-run-top"><div><span class="badge">Вариант ${esc(session.variant)} · ${session.ids.length} заданий</span><p class="muted">Ответы этой работы сохраняются отдельно от тренажёра на этом устройстве.</p></div>${button('exit','К подборкам','secondary')}</div>`;
     const source=safeUrl(q.sourceUrl)?`<a href="${esc(q.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(q.sourceLabel||'Источник')} ${q.sourceId?'№ '+esc(q.sourceId):''} ↗</a>`:esc(q.sourceLabel||q.topic||'');
@@ -148,5 +191,5 @@ globalThis.MathWorkRunner = (() => {
     const results=session.phase==='results'?`<section class="work-run-results glass" aria-labelledby="work-run-results-heading"><h2 id="work-run-results-heading">Результаты работы</h2><dl class="work-run-counts"><div><dt>Краткие ответы</dt><dd>${totals.correct} из ${totals.short} верно</dd></div><div><dt>Неверно</dt><dd>${totals.incorrect}</dd></div><div><dt>Без ответа</dt><dd>${totals.unanswered}</dd></div>${totals.open?`<div><dt>Развёрнутые ответы</dt><dd>${totals.reviewed} из ${totals.open} сверено</dd></div><div><dt>Ожидают сверки</dt><dd>${totals.awaitingReview}</dd></div><div><dt>Рассуждение не записано</dt><dd>${totals.openUnanswered}</dd></div>`:''}</dl><p class="muted">Самостоятельно верно: ${totals.independent} · с подсказкой: ${totals.afterHint} · после просмотра разбора: ${totals.afterReveal}. Сверка развёрнутых ответов учитывается отдельно.</p><div class="builder-actions">${button('export','Скачать результаты JSON ↓','primary')}${button('reopen','Продолжить решать','secondary')}</div><div class="work-run-table-wrap"><table class="work-run-table"><caption class="sr-only">Ответы и результаты по заданиям</caption><thead><tr><th scope="col">Задание</th><th scope="col">Ваш ответ</th><th scope="col">Результат</th></tr></thead><tbody>${session.ids.map((id,index)=>{const task=byId.get(id),answer=record(session,id);return `<tr><th scope="row">${button('task','№ '+(index+1),'text-button',`data-index="${index}"`)}</th><td>${answer.draft.trim()?esc(answer.draft):'—'}</td><td>${esc(label[status(task,answer)])}${answer.revealed?' · разбор открыт':''}</td></tr>`;}).join('')}</tbody></table></div></section>`:'';
     return `<div class="work-runner">${overview}${results}${navigation}<article class="glass task-card work-run-card"><div class="task-meta"><span>Задание ${session.index+1} из ${session.ids.length}</span><span>${esc(q.difficulty||'')}</span></div><p class="work-run-source">${source}${q.topic||q.subtypeTitle?` · ${esc(q.subtypeTitle||q.topic)}`:''}</p>${taskBody()}${r.previousAttempt?`<details class="teacher-note"><summary>Задание обновлено. Ответ к прежней версии сохранён отдельно</summary><p>Версия ${esc(r.previousAttempt.revision||'—')}: ${esc(r.previousAttempt.draft)}</p><p class="muted">Прежний результат не оценивает выполнение новой версии задания.</p></details>`:''}${response}<div class="work-run-help">${q.hint&&!r.hintUsed&&!r.revealed&&session.phase==='solving'?button('hint','Подсказка следующего шага','secondary'):''}${r.hintUsed?`<p class="hint-panel"><strong>Следующий шаг:</strong> ${math(q.hint)}</p>`:''}${r.revealed||session.phase==='results'?'':button('reveal','Открыть разбор','text-button')}<span class="muted">Просмотр разбора учитывается в результатах.</span></div>${r.revealed?references():session.phase==='results'?button('reveal','Посмотреть ответ и разбор','secondary'):''}</article><div class="task-nav">${button('prev','← Предыдущее','secondary',session.index?'':'disabled')}${session.index<session.ids.length-1?button('next','Следующее →','primary'):session.phase==='solving'?button('finish','Завершить работу','primary'):button('exit','К подборкам','primary')}</div>${session.phase==='solving'?`<div class="work-run-finish">${button('finish','Завершить и показать результаты','secondary')}<p class="muted">Записанные краткие ответы будут проверены, пропуски сохранятся в итогах.</p></div>`:''}</div>`;
   }
-  return {createSession,sanitizeSession,setDraft,go,submit,reveal,showHint,setCriterion,review,finish,reopen,summary,exportResults,render,evaluate};
+  return {createSession,sanitizeSession,setDraft,go,submit,reveal,showHint,setCriterion,review,finish,reopen,summary,exportResults,render,evaluate,setActivity,pauseActivity,flushActivity};
 })();

@@ -1,6 +1,6 @@
 // Source coverage plus real application event checks for competency-based selection.
 const fs=require('fs'),path=require('path'),crypto=require('crypto');
-const {createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK}=require('./validate_ui_state.cjs');
+const {createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,METHOD_BANK}=require('./validate_ui_state.cjs');
 const root=path.resolve(__dirname,'..');
 const config=JSON.parse(fs.readFileSync(path.join(root,'checks/competencies.json'),'utf8'));
 const expectedDefinitions=['calculations','equations','graphs','modelling','geometry','data','reasoning'];
@@ -9,12 +9,14 @@ const sameSet=(a,b)=>same([...a].sort(),[...b].sort());
 let checks=0;const errors=[];
 const test=(condition,label)=>{checks++;if(!condition)errors.push(label);};
 async function scenario(label,fn){try{await fn();}catch(error){test(false,label+': '+error.stack);}}
-const digest=()=>crypto.createHash('sha256').update(JSON.stringify([BANK,EXAM_BANK,SDAMGIA_BANK,config])).digest('hex');
+const digest=()=>crypto.createHash('sha256').update(JSON.stringify([BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,METHOD_BANK,config])).digest('hex');
 const originalDigest=digest();
 const classes=BANK.flatMap(topic=>topic.tasks.map(q=>({...q,topicId:topic.id,grade:topic.grade,level:topic.level,subject:topic.subject,source:'class'})));
 const exams=EXAM_BANK.flatMap(exam=>exam.tasks.flatMap(task=>(task.examples?.length?task.examples:[task]).map(q=>({...q,examId:exam.id,source:'exam'}))));
 const sourced=SDAMGIA_BANK?.tasks||[];
-const all=[...classes,...exams,...sourced,...THINKING_BANK.tasks,...QUALITY_BANK.tasks],byId=new Map(all.map(q=>[q.id,q]));
+const contentContext={};require('node:vm').runInNewContext(fs.readFileSync(path.join(root,'src/learning-content.js'),'utf8'),contentContext);
+const learning=contentContext.MathLearningContent.tasks;
+const all=[...classes,...exams,...sourced,...THINKING_BANK.tasks,...QUALITY_BANK.tasks,...METHOD_BANK.tasks,...learning],byId=new Map(all.map(q=>[q.id,q]));
 const selectedWork=h=>h.state().works?.find(([key])=>key==='unified')?.[1];
 const cardIds=h=>h.document.querySelectorAll('.bank-task').map(card=>card.querySelector('[data-action="add"],[data-action="remove"]').dataset.id);
 const checked=h=>h.document.querySelectorAll('[data-competency]').filter(input=>input.checked).map(input=>input.dataset.competency);
@@ -39,9 +41,11 @@ async function everyPage(h){
   test(sameSet(config.competencies.map(x=>x.id),expectedDefinitions)&&config.competencies.every(x=>typeof x.title==='string'&&x.title.trim()&&typeof x.description==='string'&&x.description.trim()),'seven mathematical competencies have unique stable identifiers and useful labels');
   test(sameSet(Array.from(helper.definitions,x=>x.id),expectedDefinitions),'helper and authored competency definitions agree');
   const invalid=all.filter(q=>{const ids=tags(q);return !ids.length||ids.length!==new Set(ids).size||ids.some(id=>!expectedDefinitions.includes(id));});
-  test(classes.length===7488&&exams.length===150&&byId.size===all.length&&invalid.length===0,'all existing 7,638 class/demo tasks and the source-backed bank have nonempty, unique, valid competency sets');
+  test(classes.length===7488&&exams.filter(q=>q.examId.endsWith('-2027')).length===154&&exams.filter(q=>!q.examId.endsWith('-2027')).length===150&&byId.size===all.length&&invalid.length===0,'all 7,488 class tasks, 150 archived and 154 new exam examples and the source-backed bank have nonempty, unique, valid competency sets');
   test(BANK.every(topic=>Array.isArray(config.topics[topic.id])&&config.topics[topic.id].length>0),'every class topic has an authored competency baseline');
-  test(sameSet(Object.keys(config.tasks),exams.map(q=>q.id)),'all 150 official alternative examples have their own mapping and no orphan exam IDs');
+  test(sameSet(Object.keys(config.tasks),exams.map(q=>q.id)),'all 304 official alternative examples have their own mapping and no orphan exam IDs');
+  test(learning.length===27&&learning.every(q=>tags(q).length),'all authored lesson and project tasks have explicit major competency tags');
+  test(METHOD_BANK.tasks.length===80&&METHOD_BANK.tasks.every(q=>q.source==='methods'&&Array.isArray(q.competencies)&&q.competencies.length>0&&new Set(q.competencies).size===q.competencies.length&&q.competencies.every(id=>expectedDefinitions.includes(id))&&sameSet(tags(q),q.competencies)),'all 80 method tasks have explicit nonempty unique validated competency labels, preserved by runtime lookup');
   test(Object.keys(config.overrides).every(id=>byId.has(id)&&byId.get(id).source==='class'),'task overrides refer only to real class tasks');
   test(same(tags({id:'normalised-task',competencies:['geometry']}),['geometry']),'normalized task metadata takes precedence over lookup');
   test(helper.matches(byId.get('5-01-1'),[])===true&&helper.matches(byId.get('5-01-1'),['calculations'])===true&&helper.matches(byId.get('5-01-1'),['geometry'])===false,'matching supports no restriction and rejects an unrelated skill');
@@ -126,7 +130,7 @@ async function everyPage(h){
   test(results.some(id=>id!==original.id),'a competency-preserving alternative can still replace the original task');
  });
  test(digest()===originalDigest,'competency lookup, filtering, favorites and presets never mutate class tasks, official exam conditions, answers or source metadata');
- const report={checks,errors,scope:'Full class/demo/source-bank metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length,sourcedTasks:sourced.length};
+ const report={checks,errors,scope:'Full class/demo/source/method-bank metadata coverage and representative mathematical classifications; actual application checkbox, filter, pagination, preset and reset events',classTasks:classes.length,examExamples:exams.length,sourcedTasks:sourced.length,methodTasks:METHOD_BANK.tasks.length};
  fs.writeFileSync(path.join(root,'checks/competency-results.json'),JSON.stringify(report,null,2));
  console.log(JSON.stringify(report,null,2));if(errors.length)process.exitCode=1;
 })().catch(error=>{console.error(error);process.exitCode=1;});

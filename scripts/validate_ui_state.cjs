@@ -3,7 +3,7 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
 const root=path.resolve(__dirname,'..');
 const page=require('./load_page.cjs').loadPage(root);
-const {BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK}=page.dataValues();
+const {BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,METHOD_BANK}=page.dataValues();
 // The UI scenarios can substitute PDF capture while still using deployed app scripts.
 const source=page.runtimeCode({exclude:['src/pdf.js']});
 const KEY='mat1430.workspace.v2';
@@ -77,10 +77,21 @@ function createHarness(store=new Map(),options={}){
  options.setupDOM?.(document,window);
  const history={entries:[],index:-1,pushState(state,title,url){this.entries=this.entries.slice(0,this.index+1);this.entries.push({state,url});this.index++;},replaceState(state,title,url){if(this.index<0){this.entries.push({state,url});this.index=0;}else this.entries[this.index]={state,url};},back(){if(this.index>0){const entry=this.entries[--this.index];for(const handler of windowListeners.popstate||[])handler({state:entry.state});}}};
  const localStorage={getItem(key){if(options.failStorage)throw Error('storage disabled');return store.get(key)??null;},setItem(key,value){if(options.failStorage)throw Error('storage disabled');store.set(key,value);},removeItem(key){store.delete(key);}};
- const context={BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,document,window,history,localStorage,console,Blob,atob:value=>Buffer.from(value,'base64').toString('binary'),URL:{createObjectURL(blob){const url='blob:integration-'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},crypto:{randomUUID:()=>`integration-${++generatedIdentity}`},setTimeout(callback){const id=++timerId;timers.set(id,callback);return id;},clearTimeout(id){timers.delete(id);},fetch(){networkCalls++;throw Error('network forbidden in integration checks');},...(options.createMathPDF?{createMathPDF:options.createMathPDF}:{})};
- vm.createContext(context);if(options.builtPage)(options.pageRoot?require('./load_page.cjs').loadPage(options.pageRoot):page).execute(context);else vm.runInContext(source,context,{filename:'baza-app.integration.js'});
+ const context={BANK,EXAM_BANK,COMPETENCY_DATA,EXAM_DIFFICULTY_DATA,BANK_STATS,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,METHOD_BANK,document,window,history,localStorage,console,Blob,atob:value=>Buffer.from(value,'base64').toString('binary'),URL:{createObjectURL(blob){const url='blob:integration-'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},crypto:{randomUUID:()=>`integration-${++generatedIdentity}`},setTimeout(callback){const id=++timerId;timers.set(id,callback);return id;},clearTimeout(id){timers.delete(id);},fetch(){networkCalls++;throw Error('network forbidden in integration checks');},...(options.createMathPDF?{createMathPDF:options.createMathPDF}:{})};
+ const activePage=options.pageRoot?require('./load_page.cjs').loadPage(options.pageRoot):page,scriptLoads=[],scriptJobs=new Set(),failedScripts=options.failedScripts||new Set();
+ vm.createContext(context);
+ if(options.initialPage){
+  document.head=new Element('head',document);document.documentElement.append(document.head);
+  document.head.append=(script)=>{
+   scriptLoads.push(script.src);
+   const job=Promise.resolve().then(()=>{if(failedScripts.has(script.src)){script.onerror?.();return;}try{vm.runInContext(activePage.sourceFor(script.src),context,{filename:script.src});script.onload?.();}catch(error){script.onerror?.(error);}});
+   scriptJobs.add(job);job.finally(()=>scriptJobs.delete(job));
+  };
+  activePage.executeInitial(context);
+ }else if(options.builtPage)activePage.execute(context);else vm.runInContext(source,context,{filename:'baza-app.integration.js'});
  const get=selector=>{const element=document.querySelector(selector);if(!element)throw Error('missing element: '+selector);return element;};
- return {store,document,context,window,history,get,blobs,
+ return {store,document,context,window,history,get,blobs,scriptLoads,
+  async settleAssets(){while(scriptJobs.size){await Promise.all([...scriptJobs]);await Promise.resolve();}await Promise.resolve();await Promise.resolve();},
   state:()=>JSON.parse(store.get(KEY)||'{}'),
   html:()=>get('#app').innerHTML,
   text:()=>get('#app').textContent,
@@ -115,7 +126,7 @@ async function scenario(label,callback){try{await callback();}catch(error){test(
 async function verifyExamDownload(h,exam,label){
  await h.click('[data-action="exam-download"]');
  const download=h.document.downloads.at(-1),blob=download&&h.blobs.get(download.url);
- test(download?.name===`fipi-math-${exam.id}-2026.pdf`&&blob?.type==='application/pdf',label+' original demo downloads as a PDF');
+ test(download?.name===`fipi-math-${exam.id}-${exam.year}.pdf`&&blob?.type==='application/pdf',label+' original demo downloads as a PDF');
  if(blob){
   const bytes=Buffer.from(await blob.arrayBuffer());
   test(bytes.equals(Buffer.from(exam.pdfData.split(',')[1],'base64')),label+' downloaded PDF preserves all embedded source bytes');
@@ -123,7 +134,7 @@ async function verifyExamDownload(h,exam,label){
  }
 }
 
-module.exports={createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,KEY};
+module.exports={createHarness,BANK,EXAM_BANK,SDAMGIA_BANK,THINKING_BANK,QUALITY_BANK,METHOD_BANK,KEY};
 if(require.main===module)(async()=>{
  const store=new Map();let h=createHarness(store),originalStudent;
  await scenario('student autosave, assistance and reload',async()=>{
@@ -217,7 +228,7 @@ if(require.main===module)(async()=>{
   const denied=createHarness(new Map(),{failStorage:true});await chooseRole(denied,'teacher');
   test(denied.text().includes('Автосохранение недоступно'),'storage failure leaves a usable application with a clear status');
   const malformed=createHarness(new Map([[KEY,'{broken json']]));await chooseRole(malformed,'teacher');
-  test(malformed.state().version===2&&malformed.state().student.id==='','malformed storage starts with clean state and can recover');
+  test(malformed.store.get(KEY)==='{broken json'&&malformed.text().includes('защищено от перезаписи'),'malformed storage stays untouched and the recovery state is visible');
  });
  await scenario('editing the student profile starts a clean session',async()=>{
   const renamed=createHarness(store);await chooseRole(renamed,'student');const previous=renamed.state().student.id;
@@ -242,7 +253,7 @@ if(require.main===module)(async()=>{
  for(const role of ['student','teacher']){
   await scenario(role+' official OGE guest visit, assets and restoration',async()=>{
    const examStore=new Map();let visitor=createHarness(examStore);
-   await visitor.click(`[data-role="${role}"]`);
+   await visitor.click(`[data-role="${role}"]`);await visitor.change('#exam-year','2026');
    test(visitor.document.querySelectorAll('.class-section .class-card').length===7,role+' catalogue retains all seven classes');
    test(visitor.document.querySelectorAll('.exam-section .exam-entry-card').length===2,role+' catalogue offers OGE and EGE in their own section');
    test(!visitor.document.querySelector('.class-section .exam-entry-card')&&!visitor.document.querySelector('.exam-section .class-card'),role+' exams and class cards remain separate');
@@ -280,7 +291,7 @@ if(require.main===module)(async()=>{
   });
   await scenario(role+' EGE levels, independent examples and open solutions',async()=>{
    const examStore=new Map();let visitor=createHarness(examStore);
-   await visitor.click(`[data-role="${role}"]`);await visitor.click('[data-action="exam-levels"]');
+   await visitor.click(`[data-role="${role}"]`);await visitor.change('#exam-year','2026');await visitor.click('[data-action="exam-levels"]');
    test(visitor.state().resumeRoute.view==='exam-levels'&&visitor.document.querySelectorAll('.exam-level-card').length===2&&!visitor.document.querySelector('#profile-form'),role+' EGE offers basic and profile without a school class');
    await visitor.click('[data-action="exam-start"][data-exam="ege-basic"]');
    const basic=EXAM_BANK.find(e=>e.id==='ege-basic'),matching=basic.tasks.find(q=>q.number===2),[a,b]=examExamples(matching);
@@ -300,7 +311,7 @@ if(require.main===module)(async()=>{
    await visitor.input('#exam-answer',b.answers[0]);await visitor.submit('#exam-answer-form');
    await visitor.click('[data-action="exam-example"][data-example="0"]');
    test(visitor.get('#exam-answer').value===a.answers[0]&&examRecord(visitor,a.id).correct&&examRecord(visitor,b.id).correct,role+' both example answers survive independently after reload');
-   const navigation=createHarness();await navigation.click(`[data-role="${role}"]`);await navigation.click('[data-action="exam-levels"]');await navigation.click('[data-action="exam-start"][data-exam="ege-profile"]');
+   const navigation=createHarness();await navigation.click(`[data-role="${role}"]`);await navigation.change('#exam-year','2026');await navigation.click('[data-action="exam-levels"]');await navigation.click('[data-action="exam-start"][data-exam="ege-profile"]');
    test(navigation.document.querySelectorAll('.exam-numbers [data-action="exam-task"]').length===19,role+' profile navigation exposes all 19 official numbers');
    await navigation.click('[data-action="exam-task"][data-index="12"]');
    const profileExam=EXAM_BANK.find(e=>e.id==='ege-profile'),open=examExamples(profileExam.tasks[12])[0];

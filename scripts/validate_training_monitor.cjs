@@ -84,10 +84,16 @@ async function start(h,role='student'){
  test(late.document.fullscreenElement===null&&count(late,'closed')===1&&count(late,'fullscreen_enter')===0,'late fullscreen resolution after closure cannot trap another screen');
  const ended=browser();await start(ended);await ended.click('[data-action="end-session"]');
  test(count(ended,'closed')===1&&!ended.state().student.id&&ended.document.fullscreenElement===null,'changing pupil retains anonymous closure evidence and clears identity');
- const exam=browser();await exam.click('[data-role="student"]');await exam.click('[data-action="exam-start"][data-exam="oge"]');
+ const exam=browser();await exam.click('[data-role="student"]');await exam.change('#exam-year','2026');await exam.click('[data-action="exam-start"][data-exam="oge"]');
  test(exam.api.requests===1&&sessions(exam)[0].kind==='exam','guest student exam also starts fullscreen monitoring');
  await exam.click('[data-action="exam-next"]');
  test(exam.api.requests===1&&sessions(exam).length===1,'exam task navigation stays in the same fullscreen session');
+ const projectExam=browser();await projectExam.click('[data-role="student"]');
+ test(projectExam.get('#exam-year').value==='2027','latest project season is selected by default');
+ await projectExam.click('[data-action="exam-start"][data-exam="oge-2027"]');
+ test(projectExam.api.requests===1&&sessions(projectExam)[0].kind==='exam'&&projectExam.state().resumeRoute.examId==='oge-2027','new season starts its own correctly namespaced fullscreen exam');
+ await projectExam.click('[data-action="exam-next"]');
+ test(projectExam.api.requests===1&&sessions(projectExam).length===1,'new-season navigation preserves one fullscreen monitoring session');
  const work=browser();await work.click('[data-role="teacher"]');await work.click('[data-action="builder-home"]');await work.input('#bank-search',topic.tasks[0].id);await work.click(`[data-action="add"][data-id="${topic.tasks[0].id}"]`);await work.click('[data-action="home"]');await work.click('[data-role="student"]');await work.click('[data-action="works-home"]');await work.click('[data-action="run-work"]');
  test(work.api.requests===1&&sessions(work)[0].kind==='work','student collection solving starts fullscreen monitoring');
  await work.click('[data-action="run-finish"]');
@@ -98,6 +104,6 @@ async function start(h,role='student'){
  test(!dirty.document.querySelector('#training-monitor img')&&dirty.html().includes('&lt;img'),'stored journal titles are escaped before rendering');
  const noStorage=browser(new Map(),{failStorage:true});await start(noStorage);
  test(noStorage.api.requests===1&&noStorage.text().includes('Автосохранение недоступно'),'storage failure does not prevent fullscreen practice and is disclosed');
- test([h,exam,work,denied].every(x=>x.networkCalls()===0),'monitoring remains entirely offline');
+ test([h,exam,projectExam,work,denied].every(x=>x.networkCalls()===0),'monitoring remains entirely offline');
  const report={checks,errors};fs.writeFileSync(path.join(__dirname,'../checks/training-monitor-results.json'),JSON.stringify(report,null,2)+'\n');console.log(report);assert.equal(errors.length,0);
 })().catch(error=>{console.error(error);process.exitCode=1;});

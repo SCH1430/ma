@@ -17,7 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
@@ -31,6 +31,14 @@ jobs:
           node-version: '22'
       - name: Build and check the application
         run: python -B scripts/check.py
+      - name: Install browser QA dependencies
+        run: npm install --no-save --package-lock=false playwright@1.62.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Check the offline application in a real browser
+        run: node scripts/browser_qa.cjs
+      - name: Check new response formats, teacher reviews and PDF
+        run: node scripts/method_browser_qa.cjs
       - name: Configure GitHub Pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5

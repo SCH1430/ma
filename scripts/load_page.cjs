@@ -1,7 +1,7 @@
 // Read the deployed page in browser order. Never fetch remote code during checks.
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const DEFAULT_ROOT=path.resolve(__dirname,'..');
-const DATA_NAMES=['BANK','EXAM_BANK','BANK_STATS','COMPETENCY_DATA','EXAM_DIFFICULTY_DATA','SDAMGIA_BANK','THINKING_BANK','QUALITY_BANK','FONT_BASE64'];
+const DATA_NAMES=['BANK','EXAM_BANK','BANK_STATS','COMPETENCY_DATA','EXAM_DIFFICULTY_DATA','SDAMGIA_BANK','THINKING_BANK','QUALITY_BANK','METHOD_BANK','FONT_BASE64','ASSET_MANIFEST'];
 const cache=new Map();
 function attributes(text){
  const result={};
@@ -24,18 +24,27 @@ function loadPage(root=DEFAULT_ROOT){
   return {attrs,file,reference:attrs.src||null,inline:match[2],code:file?fs.readFileSync(file,'utf8'):match[2],vendor:attrs.id?.startsWith('vendor-')||false};
  });
  const styles=[...html.matchAll(/<link\b([^>]*)>/gi)].map(match=>attributes(match[1])).filter(attrs=>attrs.rel==='stylesheet').map(attrs=>({attrs,file:localFile(attrs.href)}));
+ const manifestScript=scripts.find(script=>script.reference==='data/asset-manifest.js');
+ let manifest=null;
+ if(manifestScript){const context=vm.createContext({});vm.runInContext(manifestScript.code,context);manifest=JSON.parse(vm.runInContext('JSON.stringify(ASSET_MANIFEST)',context));}
+ const lazyScripts=manifest?Object.entries(manifest.assets).map(([key,asset])=>{const file=localFile(asset.file),attrs={src:asset.file,defer:'',...(asset.vendor?{id:'vendor-'+key}:{})};return {key,attrs,file,reference:asset.file,inline:'',code:fs.readFileSync(file,'utf8'),vendor:asset.vendor===true};}):[];
+ const allScripts=[...scripts.filter(script=>script.reference?.startsWith('data/')),...lazyScripts,...scripts.filter(script=>!script.reference?.startsWith('data/'))];
  const runtime=scripts.filter(script=>!script.vendor&&!script.reference?.startsWith('data/'));
- function sourceFor(reference){const script=scripts.find(script=>script.reference===reference);if(!script)throw Error('Deployed script is not referenced: '+reference);return script.code;}
+ function sourceFor(reference){const script=[...scripts,...lazyScripts].find(script=>script.reference===reference);if(!script)throw Error('Deployed script is not referenced: '+reference);return script.code;}
  let data;
- const page={root,html,scripts,styles,localFile,sourceFor,
+ const page={root,html,scripts,lazyScripts,allScripts,manifest,styles,localFile,sourceFor,
   figuresCode(){return ['geometry-core','geometry-planar','geometry-spatial','figure-guidance','math-figures'].map(name=>sourceFor(`src/${name}.js`)).join('\n');},
   runtimeCode({exclude=[]}={}){return runtime.filter(script=>!exclude.includes(script.reference)).map(script=>script.code).join('\n');},
-  vendor(name){const script=scripts.find(script=>script.attrs.id==='vendor-'+name);if(!script?.file)throw Error('Missing deployed vendor: '+name);return require(script.file);},
+  vendor(name){const script=[...scripts,...lazyScripts].find(script=>script.attrs.id==='vendor-'+name);if(!script?.file)throw Error('Missing deployed vendor: '+name);return require(script.file);},
   dataValues(){
-   if(!data){const context=vm.createContext({});for(const script of scripts.filter(script=>script.reference?.startsWith('data/')))vm.runInContext(script.code,context,{filename:script.file});data=JSON.parse(vm.runInContext('JSON.stringify({'+DATA_NAMES.join(',')+'})',context));}
+   if(!data){const context=vm.createContext({});for(const script of allScripts.filter(script=>script.reference?.startsWith('data/')))vm.runInContext(script.code,context,{filename:script.file});data=JSON.parse(vm.runInContext('JSON.stringify({'+DATA_NAMES.join(',')+'})',context));}
    return data;
   },
-  execute(context){for(const script of scripts)vm.runInContext(script.code,context,{filename:script.file||'index.html:inline'});}
+  // Existing full-bank correctness checks deliberately hydrate local assets.
+  // validate_lazy_loading.cjs separately executes the exact initial page and
+  // exercises its script loader, including file:// failures and retries.
+  execute(context){for(const script of allScripts)vm.runInContext(script.code,context,{filename:script.file||'index.html:inline'});},
+  executeInitial(context){for(const script of scripts)vm.runInContext(script.code,context,{filename:script.file||'index.html:inline'});}
  };
  cache.set(root,page);return page;
 }

@@ -1,0 +1,1046 @@
+{
+  "version": 1,
+  "batch": "2026-11-methods",
+  "records": [
+    {
+      "id": "methods-fractions-01",
+      "revision": 1,
+      "contentHash": "305871a3bbff07c369c00f818b20cf036220604c4332146bff081419145493af",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-02",
+      "revision": 1,
+      "contentHash": "cdcbd19fff88d3dbcafe1af6546f054f685775629f706ff33b6ff7f1c1d800b9",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-03",
+      "revision": 1,
+      "contentHash": "d1725f175f8667209e15638bbf37b22f053979f3cd69bd32e658dd973af12917",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-04",
+      "revision": 1,
+      "contentHash": "3fdaa1cd82f4c1a989b9ad917d1dbd8bbc06e9d47c3d59ae9afe649e7e2f5e4a",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-05",
+      "revision": 1,
+      "contentHash": "e81add2d67a32121e6ef907869edb299eadf105983c7cb3806c9406c0a4252fc",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-06",
+      "revision": 1,
+      "contentHash": "f492e1e85d20f0f1d795f4141800afe67d1566dde69e8b782ba2861272a8c81b",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-07",
+      "revision": 1,
+      "contentHash": "7f43f41d6d666a1c59801dbfd17bed7c315077e155cb8cf16fa5ea4f03b2ac7a",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-fractions-08",
+      "revision": 1,
+      "contentHash": "52286e3146be8ad9d546b08e18037fc6bb4e98612e036d9a80c4448d03d945e6",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-01",
+      "revision": 1,
+      "contentHash": "704f5cbfedc40a6cbf150446243b6b50d71648405885dbc55d222af233a9845a",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-02",
+      "revision": 1,
+      "contentHash": "a5055493b34723e28409926d580b660fb7b2b298e373e102c51451f35cb16584",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-03",
+      "revision": 1,
+      "contentHash": "dfb73b869dcec83dc40fbc7cfaab179b99a409950f8c763307324212e9afa094",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-04",
+      "revision": 1,
+      "contentHash": "b480e1cdb44ed7f8eed8fe4aa13bbf72d833af2cc25fb3c684eee5fdce732fd8",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-05",
+      "revision": 1,
+      "contentHash": "c751a23241506ba88775e84fa3af60f8d095f337df48f5a9fea79e95432cc526",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-06",
+      "revision": 1,
+      "contentHash": "431ce1253eb40ad6cb26f519dd602c75c74a04009687d712bb41d1353391db17",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-07",
+      "revision": 1,
+      "contentHash": "40b927b802a868bd457c3884ee1a907a54d6626d2c65f16d47cdf1684b2a767d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-percent-08",
+      "revision": 1,
+      "contentHash": "5f13fdbc37c85ecde43550ee8ab3fff74f72bb9c7652991d419bde2abb4ce067",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-01",
+      "revision": 1,
+      "contentHash": "6602d9ae5d1db26b35b5be93d88ab7c859b98fcbd13f4b7078fa038a1b138cca",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-02",
+      "revision": 1,
+      "contentHash": "14d180b6eed3aa46601a9b1cab53a1728da2442eb80f6f145efa4f4a70df5524",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-03",
+      "revision": 1,
+      "contentHash": "342d9ada4dc98b02782d130186678771eb38daa6a5c9cd87e9002d038784c92d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-04",
+      "revision": 1,
+      "contentHash": "5bac5fd930368b542c677a541b259c3209884492976f2cf90d76ce521b396427",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-05",
+      "revision": 1,
+      "contentHash": "109c1986a48767ee6f6f6f6170c6fd8aea3510026a140f745a4b36562860a08d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-06",
+      "revision": 1,
+      "contentHash": "399dbf155e073b12a329f206a79f59efff17e93b30142d3f1ff01797388d5f89",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-07",
+      "revision": 1,
+      "contentHash": "e0b7391b3db75b3483beefc33eb502835b9660718b9ecc1c7e3231a43b503f77",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-linear-08",
+      "revision": 1,
+      "contentHash": "ebf92e60337e9eb1bc3c6de500dd46a724a9f7b6953756eeeb51222c1b6ce608",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-01",
+      "revision": 1,
+      "contentHash": "abbc54f1f311938acf0e2c04a1ff33f2a436bcedd5f35a6343cd8ec6c894a5e8",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-02",
+      "revision": 1,
+      "contentHash": "12f2c8822b16c3be55f1c5eaa7823a3e29a312119eed839819b43738b4feb7d5",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-03",
+      "revision": 1,
+      "contentHash": "1ba5f5c57851ae4caa0030940389de43a856abac8e99d60e600b912de4735367",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-04",
+      "revision": 1,
+      "contentHash": "9fe0d3c17da683dd950f370ec8e579f8dabda29042341ee633b99452b0acb160",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-05",
+      "revision": 1,
+      "contentHash": "bda44838235f4310c78d96b85118e1c744336cb63740f4c4c7db3548b4c86917",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-06",
+      "revision": 1,
+      "contentHash": "f32fd86927fba92f350d7d159d0491b403b64d8dfec59450371f83a39dc853c6",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-07",
+      "revision": 1,
+      "contentHash": "d271956d62d8d9f0541f52fc7eb00328b504d1d5109845e5790436e422731921",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-inequalities-08",
+      "revision": 1,
+      "contentHash": "d29c46111e9e54d84482168959da7c688afbea9d10bee3e1cbf571320c10f08b",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-01",
+      "revision": 1,
+      "contentHash": "dc640aee3f3eddd3a003385fd658b5c31ff2f4e4623394c9c11632ff903fac20",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-02",
+      "revision": 1,
+      "contentHash": "d2264edf6daca45bc2f3143673b1b1ba6fded7efc77e0cc9674a8147bbc1fba0",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-03",
+      "revision": 1,
+      "contentHash": "37f5108ce6fc1b94e8ccb7898a3aac12fe501beff6e28947fe7a7177acc3548c",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-04",
+      "revision": 1,
+      "contentHash": "a0bb5086b461a1c3d75c884502f1f93a343e323f1761f03c04ce6b9640614f26",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-05",
+      "revision": 1,
+      "contentHash": "f1ca405b3debd2fffa15cba9b517e1595271ffc76ecf09c39ea26ecc71fb7b58",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-06",
+      "revision": 1,
+      "contentHash": "598f680ada6277a36f4d3272854bc3bb47fe8b486f160176fa31fa67142a2020",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-07",
+      "revision": 1,
+      "contentHash": "50dba83c53b7eea7695fceb7cb2f0660ae718b78feccaead0afd89d752623cd5",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-quadratic-08",
+      "revision": 1,
+      "contentHash": "497ffedd4ce2090e83b431b23e685b3c8d0a4c3b40a087aa13cb9bfe4f3016c3",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-01",
+      "revision": 1,
+      "contentHash": "b4df0da14906f63fc344fe697477db744921312fcfe590b2b782c44f27aa9872",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-02",
+      "revision": 1,
+      "contentHash": "54b757c927f587558a38caf9ccd345df8eaf99f2355f09a8891be5155f2cb639",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-03",
+      "revision": 1,
+      "contentHash": "8eff6ec6e197dd78d56560dab6496a477228995aa8732c08f9ff9aca76c5150b",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-04",
+      "revision": 1,
+      "contentHash": "1ef1b93375bda01eaa1e3804ff37bca099f15131524c2a233069eb135d437c69",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-05",
+      "revision": 1,
+      "contentHash": "22ea980636b87f00d10f42da197ff8b6641f744664920c3937ced6e6b95ccea0",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-06",
+      "revision": 1,
+      "contentHash": "1ac8723bda96536f197b1818853b5526afacbcbc4e73ce3f7d49ecd0e1dc9828",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-07",
+      "revision": 1,
+      "contentHash": "12fad351bbc77884ae349cf6e51cf6450f80e09fc7bd183d8cd7c41dc626fae8",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-domain-08",
+      "revision": 1,
+      "contentHash": "10fd7a7507b8dd92254781b5d5b3e818a3d8e189861b0a310c0d1df9f950c0fb",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-01",
+      "revision": 1,
+      "contentHash": "3b31a2f1bf2183d96742bd471b4be6f584a6ec2583994626191436cec602bf31",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-02",
+      "revision": 1,
+      "contentHash": "0761faf3251109cc15c8dd36018b2dbbf4f23e3b3ea4442646d92adfc9e63300",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-03",
+      "revision": 1,
+      "contentHash": "9b4ceb2637e851813ccbf8a5bfe0e87fa6e4eed3b373e3d72daa940aae9c3df9",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-04",
+      "revision": 1,
+      "contentHash": "9e86ab252a0c90d7ad3cd33d2828c5515b01b5d1de7631a799f08843f1d41aef",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-05",
+      "revision": 1,
+      "contentHash": "a5e1c33a848522e20f892d6d9bdb131b928e0109073a83eaf7d2d2e3636455f5",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-06",
+      "revision": 1,
+      "contentHash": "7a11c27f3a770a21930b756e2068f2f54632edb5cbb7387d462a8d1962f92011",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-07",
+      "revision": 1,
+      "contentHash": "3d2a8a992cd78a4df83c4505c56abe405cf8ca81978c5f1d8ecdcd07b554de55",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-functions-08",
+      "revision": 1,
+      "contentHash": "c3dc0bb199a1c741ffafccc917f35a7c207c7f3271c28179a15f909411f46487",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-01",
+      "revision": 1,
+      "contentHash": "268820bac4bee40cba3d62b1503e66a41ad6f5313af231340ce76909158dc960",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-02",
+      "revision": 1,
+      "contentHash": "f9d461970e60dfcb1017af4a2781cdf6927f69ac84cbb9aceb4c4f0042f6ac0d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-03",
+      "revision": 1,
+      "contentHash": "91b5d205c0ce1e98f663183b7e150054d43f415d5cd7c63da84f3fb1bfb22566",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-04",
+      "revision": 1,
+      "contentHash": "7b45c1defb5b5af518a4e9600b900b14c2678a13fcbdefa5bce259730f3e575d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-05",
+      "revision": 1,
+      "contentHash": "9939bb906944746c39688d4931062377bf2dd8fce5d8ec298ee9a666865454a8",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-06",
+      "revision": 1,
+      "contentHash": "7ba8192fb3924b3323a0f0c6317a70a477c3bac927a1a5f73326f9bbea45b5ce",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-07",
+      "revision": 1,
+      "contentHash": "75296a0d00526d4bc81ba56670cd822dd55c3a23a0d9bd7918fa1f16d0e63390",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-geometry-08",
+      "revision": 1,
+      "contentHash": "13463fc1cf75cca5e68f6fae9a815fac993e13cd742b40c6c0b6c8cf55b46484",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-01",
+      "revision": 1,
+      "contentHash": "900347877265262fac8a12c29ed0962231f007d5cf849e0542456d6b429a11fd",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-02",
+      "revision": 1,
+      "contentHash": "ea33fc34b2208aee272ddda7d9a84e997c08fea541eaf8e93a743334593be8cc",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-03",
+      "revision": 1,
+      "contentHash": "ea246bf278168fece74ed93fbbd8bc5d7b4dee6dc113dabce20ffb26e2be9856",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-04",
+      "revision": 1,
+      "contentHash": "22fb55ff9ec1502ce5d893c762631d9ddf100fb59809134e2bd744c42124735a",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-05",
+      "revision": 1,
+      "contentHash": "aa51b3b97dbe0042e805357057d21f4804a5f6753f9ab6ee461ade6b79d9ed20",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-06",
+      "revision": 1,
+      "contentHash": "90c77b0e84e9e4b9f7a39b37364e33b945de1cd7e5ccda3385ac4aa00e3f4656",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-07",
+      "revision": 1,
+      "contentHash": "9d37658feb2849f9d34167b8761d8ffe5b18cb264a85be9eebfaf42dc121afcb",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-probability-08",
+      "revision": 1,
+      "contentHash": "ebef75bea3413ba4be8a781755ca2b54713292c4f644a16fff2791bd7aa50233",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-01",
+      "revision": 1,
+      "contentHash": "db32ec57232254b425956c96cdaeaebf92750ce45a3a77a635ef336fd4b426ad",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-02",
+      "revision": 1,
+      "contentHash": "b2da93fc6b1abd06da13cbb59f79a46ab366d0bb45afcdeaf75be217a628847d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-03",
+      "revision": 1,
+      "contentHash": "bf57805d9d50dd5303b92028b459cae6769a48a4530464466e64c59cae9cc833",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-04",
+      "revision": 1,
+      "contentHash": "25993ed499896e12a04af7d4d20ad3158b512329a28810ec19f1f069d068386d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-05",
+      "revision": 1,
+      "contentHash": "bb28c3bedd6576adc76c516be9782a58b36879891051d53f513491e867b55121",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-06",
+      "revision": 1,
+      "contentHash": "775f79cbded60676f009c4b01aa8aba1953a479ab7ed792c39ab842b91a18c17",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-07",
+      "revision": 1,
+      "contentHash": "0a496d3585922c961177e10d2545d64fd9a27133cad7fe96bf9cafbf5f56572d",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    },
+    {
+      "id": "methods-models-08",
+      "revision": 1,
+      "contentHash": "de6760599876e31455eb9fc20c14e6e8062b2d976e276f13bd06bc8ba68d52e0",
+      "snapshot": "revisions/2026-11-methods-r1.json",
+      "recordedOn": "2026-11-01",
+      "assistant": {
+        "status": "assistant_checked",
+        "checkedBy": "assistant",
+        "note": "Проверены формулировка, ограничения, выбор метода, шаги, подсказка и критерии. Независимой учительской рецензии нет."
+      },
+      "teacherStatus": "teacher_pending"
+    }
+  ]
+}

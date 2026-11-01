@@ -1,0 +1,16 @@
+{
+  "year": 2027,
+  "verifiedOn": "2026-11-01",
+  "archives": [
+    {
+      "url": "https://doc.fipi.ru/oge/demoversii-specifikacii-kodifikatory/2027/ma_9_2027.zip",
+      "path": "ma_9_2027.zip",
+      "sha256": "9ae4b400e5c6858b7988be583849499b3cd392c789e1e8599698f08c1795c238"
+    },
+    {
+      "url": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/ma_11_2027.zip",
+      "path": "ma_11_2027.zip",
+      "sha256": "6864e19e4004895b825faff81da3e1a2938b4faf1682ec67cdb9b70b8d4e0832"
+    }
+  ]
+}

@@ -10,6 +10,12 @@ def build_competency_data(bank,exams):
     definitions=read('definitions.json')
     classes=read('classes.json')
     exam_map=read('exams.json')['tasks']
+    for year in sorted({e['year'] for e in exams if e['year']!=2026}):
+        season_path=DIRECTORY.parent/'exams'/str(year)/'competencies.json'
+        reviewed=json.loads(season_path.read_text(encoding='utf-8'))
+        if reviewed.get('year')!=year:
+            raise ValueError('Competency season differs')
+        exam_map.update(reviewed['tasks'])
     known={item['id'] for item in definitions}
     if len(known)!=len(definitions) or not known:
         raise ValueError('Invalid competency definitions')
