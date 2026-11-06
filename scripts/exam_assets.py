@@ -41,12 +41,41 @@ def read_manifest(year=2026):
     return manifest
 
 
+def read_context_texts():
+    """Reviewed alternatives are tied to exact original PDFs and crop bounds."""
+    document = json.loads((ROOT / 'src' / 'exams' / 'context-texts.json').read_text(encoding='utf-8'))
+    if document.get('version') != 1:
+        raise ValueError('Unsupported accessible exam context version')
+    records = {}
+    for item in document['contexts']:
+        if not item.get('text', '').strip() or not item.get('description', '').strip():
+            raise ValueError('Accessible exam context needs text and a figure description')
+        for source in item['sources']:
+            key = (source['year'], source['examId'],
+                   tuple(fragment_key(source['examId'], f) for f in source['fragments']))
+            if key in records:
+                raise ValueError('Duplicate accessible exam context')
+            records[key] = {**item, 'sha256': source['sha256']}
+    return records
+
+
+def context_alternative(year, source, fragments, records):
+    if not fragments:
+        return {'contextText': '', 'contextDescription': ''}
+    key = (year, source['id'], tuple(fragment_key(source['id'], f) for f in fragments))
+    item = records.get(key)
+    if not item or item['sha256'] != source['sha256']:
+        raise ValueError(f"Review a text alternative for the original context: {year} {source['id']}")
+    return {'contextText': item['text'], 'contextDescription': item['description']}
+
+
 def build_exam_bank(years=YEARS):
     return [exam for year in years for exam in build_exam_season(year)]
 
 
 def build_exam_season(year):
     manifest = read_manifest(year)
+    context_texts = read_context_texts()
     directory = ROOT / 'src' / 'exams' / str(year)
     assets = {}
 
@@ -74,6 +103,7 @@ def build_exam_season(year):
                     'text': example['text'],
                     'images': [original_image(exam_id, f) for f in fragments],
                     'contextImages': [original_image(exam_id, f) for f in context],
+                    **context_alternative(year, source, context, context_texts),
                     'answerKind': example['answerKind'],
                     'answers': example['answers'],
                     'answerText': example['answerText'],

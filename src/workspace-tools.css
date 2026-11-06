@@ -1,1 +1,22 @@
 .workspace-tools,.report-import,.report-summary{padding:clamp(18px,3vw,30px);margin:20px 0}.workspace-tools h2,.report-summary h2,.report-import h2{margin-top:0}.workspace-counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:20px 0}.workspace-counts div{padding:12px;border:1px solid var(--line,#cad7c8);border-radius:12px}.workspace-counts strong,.workspace-counts span{display:block}.workspace-counts strong{font-size:1.5rem}.workspace-warning{padding:16px;border:1px solid #a9763c;border-radius:12px;background:#fff5df;color:#50391d}.report-scroll{max-width:100%;overflow:auto;margin-top:20px}.report-scroll table{width:100%;border-collapse:collapse;font-size:.9rem}.report-scroll caption{text-align:left;font-weight:650;margin-bottom:12px}.report-scroll th,.report-scroll td{padding:12px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line,#cad7c8)}.report-scroll thead th{white-space:nowrap}.report-scroll small{display:block;max-width:330px;font-weight:400;margin-top:5px}.workspace-tools input[type=file],.report-import input[type=file]{max-width:100%}
+.report-skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-block: 12px;
+}
+.report-skill-row > div { flex: 1 1 260px; }
+.practice-example {
+  padding: 16px;
+  margin-block: 10px 16px;
+  border: 1px solid var(--line,#cad7c8);
+  border-radius: 12px;
+  background: var(--surface,#f5f8f1);
+}
+.practice-example h3 { margin-top: 0; }
+.practice-example > summary { cursor: pointer; font-weight: 650; }
+.practice-example[open] > summary { margin-bottom: 12px; }
+@media print {
+  .practice-example { background: transparent; break-inside: avoid; }
+}

@@ -1,7 +1,7 @@
 // Exact identity/domain counterexamples and lifecycle checks; no random sampling.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),context=vm.createContext({console});
-for(const file of ['src/answer-formats.js','src/bank-evidence.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
+for(const file of ['src/answer-formats.js','src/bank-evidence.js','src/task-view.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
 vm.runInContext(fs.readFileSync(path.join(root,'src/app.js'),'utf8').split('/* UI */')[0],context);
 vm.runInContext(fs.readFileSync(path.join(root,'src/work-runner.js'),'utf8'),context);
 const F=context.MathAnswerFormats,R=context.MathWorkRunner,checker=context.checkAnswer,plain=value=>JSON.parse(JSON.stringify(value));

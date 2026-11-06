@@ -41,6 +41,8 @@ jobs:
         run: node scripts/pwa_browser_qa.cjs
       - name: Check new response formats, teacher reviews and PDF
         run: node scripts/method_browser_qa.cjs
+      - name: Check shared task presentation and keyboard focus
+        run: node scripts/unified_browser_qa.cjs
       - name: Configure GitHub Pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5

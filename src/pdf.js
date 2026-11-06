@@ -1,7 +1,8 @@
 // Offline PDF creation: all layout, fonts and tasks remain in the current tab.
-async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) {
+async function createMathPDF({tasks,example,title,variant,grade,level='basic',answers}) {
   if(globalThis.MathDataLoader)await MathDataLoader.ensurePDF();
-  const unified=grade==null||tasks.some(q=>q.source==='exam'||q.examId||q.source==='sdamgia')||new Set(tasks.map(q=>q.grade).filter(Boolean)).size>1;
+  const worked=example&&MathTaskView.hasWorkedSolution(example)&&!tasks.some(q=>q.id===example.id)?example:null;
+  const unified=worked||grade==null||tasks.some(q=>q.source==='exam'||q.examId||q.source==='sdamgia')||new Set(tasks.map(q=>q.grade).filter(Boolean)).size>1;
   const hasExams=tasks.some(q=>q.source==='exam'||q.examId),hasSourced=tasks.some(q=>q.source==='sdamgia');
   const {PDFDocument,rgb}=PDFLib;
   const doc=await PDFDocument.create();
@@ -9,7 +10,8 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
   const fontBytes=Uint8Array.from(atob(FONT_BASE64),c=>c.charCodeAt(0));
   const font=await doc.embedFont(fontBytes,{subset:true});
   const ink=rgb(.13,.2,.15),muted=rgb(.32,.39,.31),line=rgb(.79,.83,.77),shade=rgb(227/255,237/255,218/255);
-  doc.setTitle(title||'Самостоятельная работа');doc.setAuthor('Математическое пространство 1430');
+  const brand='БАЗА · Математика школы 1430';
+  doc.setTitle(title||'Самостоятельная работа');doc.setAuthor(brand);
   doc.setSubject(hasSourced?'Сборная работа по математике. Источники указаны у каждого задания; банк Решу ЕГЭ и ОГЭ.':unified?(hasExams?'Сборная работа по математике. Материалы ФИПИ соответствующих лет и задания по темам ФРП.':'Сборная работа по математике. Задания по темам ФРП.'):`Математика, ${grade} класс. Авторские задания по темам ФРП.`);
   const pages=[];
   const wrap=(text,size,width)=>{
@@ -100,7 +102,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
   }
   function base(isKey){
     const page=doc.addPage([595.28,841.89]);pages.push(page);
-    text(page,'1430  ×  МАТЕМАТИКА',45,797,10,muted);
+    text(page,brand,45,797,10,muted);
     let titleSize=18;while(wrap(title||'Самостоятельная работа',titleSize,505).length>2&&titleSize>12)titleSize--;
     const titleLines=wrap(title||'Самостоятельная работа',titleSize,505);
     titleLines.forEach((l,i)=>text(page,l,45,765-i*23,titleSize));
@@ -118,7 +120,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     const isExam=q=>q.source==='exam'||!!q.examId;
     const sourceLabel=q=>q.sourceLabel||(isExam(q)?`${String(q.examId).startsWith('oge')?'ОГЭ':String(q.examId).startsWith('ege-basic')?'ЕГЭ, базовый уровень':'ЕГЭ, профильный уровень'} · ${q.examStatus==='project'?'проект демоверсии':'демоверсия'} ${q.year||String(q.id).match(/exam-(20\d\d)/)?.[1]||2026}`:`${q.grade||String(q.id).split('-')[0]} класс${q.grade>=10?` · ${q.level==='advanced'?'углублённый':'базовый'} уровень`:''}`);
     const taskLabel=(q,index)=>`${sourceLabel(q)}${q.source==='sdamgia'?` · № ${q.sourceId} · ${q.topic}`:isExam(q)?` · № ${q.number}${q.exampleNumber?` · пример ${q.exampleNumber}`:''}`:''}`;
-    const sources=[...new Set(tasks.map(sourceLabel))];
+    const sources=[...new Set((worked?[worked,...tasks]:tasks).map(sourceLabel))];
     const sourceSummary=sources.length>3?'Задания из разных классов и экзаменов':sources.join(' · ');
     const imageCache=new Map();
     const original=async value=>{
@@ -130,7 +132,7 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     let page,y,pageTop,key=false,sectionPages=0;
     function nextPage(){
       page=doc.addPage([595.28,841.89]);pages.push(page);sectionPages++;
-      text(page,'1430  ×  МАТЕМАТИКА',left,797,10,muted);
+      text(page,brand,left,797,10,muted);
       let headingSize=sectionPages===1?18:13;
       let headingLines=wrap(title||'Самостоятельная работа',headingSize,width);
       while(headingLines.length>3&&headingSize>10){headingSize--;headingLines=wrap(title||'Самостоятельная работа',headingSize,width);}
@@ -221,6 +223,16 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
     });
     const drawnContexts=new Set();
     nextPage();
+    if(worked){
+      flow('Пример с разбором',13,ink,18);
+      flow(taskLabel(worked),8.5,muted,15);
+      flow(worked.prompt,11,ink,20);methodCondition(worked);
+      const figure=geometryFigure(worked.id);
+      if(figure){ensure(figure.height+48);y-=diagram(page,worked.id,y)+20;}
+      for(const paragraph of worked.solution.split(/\n\s*\n/).filter(Boolean))flow(paragraph,10,ink,18);
+      if(worked.display)flow(`Ответ: ${worked.display}`,11,ink,24);
+      y-=8;
+    }
     for(let index=0;index<tasks.length;index++){
       const q=tasks[index],exam=isExam(q);
       if(exam&&q.contextImages?.length){
@@ -268,8 +280,13 @@ async function createMathPDF({tasks,title,variant,grade,level='basic',answers}) 
           ensure(95);label(q,index);flow(q.sourceUrl,7,muted,15);
           if(q.answerImages?.length){for(const image of q.answerImages)await drawOriginal(image,()=>label(q,index,true));}
           else if(q.display&&q.kind!=='open')flow(`Ответ: ${q.display}`,11,ink,20);
-          if(!q.solutionImages?.length)throw new Error(`Нет изображения разбора: ${taskLabel(q,index)}.`);
-          for(const image of q.solutionImages)await drawOriginal(image,()=>label(q,index,true));
+          if(q.solutionEditorialNote&&q.solution){
+            flow(q.solutionEditorialNote,9,muted,16);
+            for(const paragraph of q.solution.split(/\n\s*\n/).filter(Boolean))flow(paragraph,10,ink,18);
+          }else{
+            if(!q.solutionImages?.length)throw new Error(`Нет изображения разбора: ${taskLabel(q,index)}.`);
+            for(const image of q.solutionImages)await drawOriginal(image,()=>label(q,index,true));
+          }
           if(q.kind==='open'&&q.rubric?.length){flow('Критерии самопроверки:',10,ink,14);q.rubric.forEach((criterion,i)=>flow(`${i+1}) ${criterion}`,10,muted,14));}
         }else if(exam&&q.kind==='open'){
           if(!q.solutionPages?.length)throw new Error(`Нет оригинальных решения и критериев ФИПИ: ${taskLabel(q,index)}.`);

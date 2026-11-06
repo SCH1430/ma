@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..'),context=vm.createContext({Date,Intl});
 const source=name=>fs.readFileSync(path.join(root,name),'utf8');
 vm.runInContext(source('src/app.js').split('/* UI */')[0],context);
-for(const file of ['src/bank-pedagogy.js','src/bank-evidence.js','src/learning-content.js','src/learning-path.js','src/work-runner.js'])vm.runInContext(source(file),context,{filename:file});
+for(const file of ['src/answer-formats.js','src/bank-pedagogy.js','src/bank-evidence.js','src/learning-content.js','src/learning-path.js','src/work-runner.js'])vm.runInContext(source(file),context,{filename:file});
 const L=context.MathLearningPath,C=context.MathLearningContent,R=context.MathWorkRunner,checker=context.checkAnswer;
 const json=value=>JSON.parse(JSON.stringify(value));
 const time='2026-11-01T09:00:00.000Z',at=days=>new Date(Date.parse(time)+days*86400000).toISOString();
@@ -67,6 +67,27 @@ test(L.sanitizeState(legacyEvent,changed,opts).events[0].results[0].status==='up
 
 equal(L.sanitizeState({version:1,events:[{...activity('future',41,'fixture-0',0),at:at(41)}]},fixture,opts).events,[],'future-dated events are rejected');
 const exhausted=L.createReview(fixture.slice(0,2),L.recordActivity(L.emptyState(),activity('only',0,'fixture-0',0),fixture.slice(0,2),opts),opts);test(!exhausted.work.ids.length&&exhausted.message.includes('закончились'),'family exhaustion is reported without silently repeating a family');
+const transition=JSON.parse(source('src/method-bank/bank.json')).tasks.find(q=>q.id==='methods-percent-07');
+const priorPercent={...fixture[0],id:'prior-percent',grade:6,skills:['percent']};
+const nextPercent={...priorPercent,id:'next-percent',family:'new-percent',skills:['percent','fractions']};
+const percentCatalog=[priorPercent,nextPercent,transition],percentOptions={...opts,grade:6,now:at(1),count:1};
+const percentHistory=L.recordActivity(L.emptyState(),{...activity('percent-start',0,priorPercent.id,0),grade:6},percentCatalog,percentOptions);
+const percentReview=L.createReview(percentCatalog,percentHistory,percentOptions);
+equal(percentReview.work.ids,[transition.id],'due review prefers a transition for the due skill over an incidental new skill');
+equal(percentReview.representationCount,1,'review identifies the selected transition');
+test(L.render(percentHistory,percentCatalog,percentOptions).includes('В сегодняшней подборке есть задания на переход'), 'route previews the transition when the methods bank is available');
+equal(L.createReview(percentCatalog,percentHistory,{...percentOptions,now:at(.5)}).work.ids,[],'transition does not bypass the due date');
+equal(L.createSkillWork(percentCatalog,percentHistory,{...percentOptions,skillIds:['percent']}).work.ids,[nextPercent.id],'regular practice does not prefer representation transitions');
+const sameFamily=[priorPercent,nextPercent,{...transition,family:priorPercent.family}];
+equal(L.createReview(sameFamily,percentHistory,percentOptions).work.ids,[nextPercent.id],'transition cannot bypass the used-family exclusion');
+const unloaded=L.createReview([priorPercent],percentHistory,percentOptions);
+test(unloaded.representationCount===0&&!unloaded.work.ids.length&&unloaded.skillIds.includes('percent'),'a due skill remains discoverable while a new family is unavailable');
+const transitionRun=R.createSession(percentReview.work,percentCatalog,{id:'transition-run',now:at(1)});
+R.setDraft(transitionRun,'a-3;b-1;c-2');R.finish(transitionRun,percentCatalog,checker,{now:at(1)});
+const reviewedPercent=L.recordSession(percentHistory,transitionRun,percentCatalog,{...percentOptions,kind:'review'});
+const percentProgress=L.profile(reviewedPercent,percentCatalog,percentOptions).find(row=>row.id==='percent');
+test(percentProgress.streak===2&&percentProgress.dueAt===at(4),'real transition answer uses the same independent evidence and interval');
+equal(L.createReview(percentCatalog,reviewedPercent,{...percentOptions,now:at(4)}).work.ids,[nextPercent.id],'completed transition is not repeated when a regular new family remains');
 let session=R.createSession({title:'Transfer',ids:['fixture-0','fixture-2']},fixture,{id:'runner-test',now:time});
 R.setDraft(session,'0');R.submit(session,fixture,checker);R.go(session,1);R.setDraft(session,'2');R.finish(session,fixture,checker);
 state=L.recordSession(L.emptyState(),session,fixture,{...opts,now:time,kind:'diagnostic'});test(state.events.length===1&&state.events[0].results.every(r=>r.independent),'real work runner completion enters learning history');

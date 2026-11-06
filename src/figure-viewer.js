@@ -1,25 +1,27 @@
-// Offline, keyboard-accessible enlargement shared by every geometry task surface.
+// Offline, keyboard-accessible enlargement shared by diagrams and task images.
 globalThis.MathFigureViewer=(()=>{
   const doc=typeof document==='object'?document:null;
-  const state={open:false,id:null,view:'original',zoom:100,trigger:null,stage:null};
+  const state={open:false,id:null,view:'original',zoom:100,trigger:null,stage:null,image:null};
   let overlay,dialog,canvas,viewport,title,viewGroup,originalButton,sectionButton,zoomOut,zoomIn,zoomStatus,closeButton;
   let background=[],addedScrollLock=false;
   const actionOf=target=>target?.closest?.('[data-figure-viewer-action]');
   const focus=element=>{if(typeof element?.focus==='function')element.focus();};
   const focusables=()=>dialog?Array.from(dialog.querySelectorAll('button,[href],input,select,textarea,[tabindex]')).filter(el=>!el.disabled&&!el.hidden&&el.getAttribute('tabindex')!=='-1'&&!el.closest?.('[hidden]')):[];
   const hasSection=figure=>!!(figure?.views?.section||figure?.section);
+  const localRaster=src=>typeof src==='string'&&/^data:image\/(?:png|jpeg|webp|gif);base64,[a-z0-9+/]+={0,2}$/i.test(src);
+  const imageFor=trigger=>trigger?.closest?.('.task-image-frame')?.querySelector?.('img');
   function ensureDialog(){
     if(overlay)return true;
     if(!doc?.body||typeof doc.createElement!=='function'||(typeof doc.body.append!=='function'&&typeof doc.body.appendChild!=='function'))return false;
     overlay=doc.createElement('div');overlay.className='figure-viewer-backdrop';overlay.setAttribute('class','figure-viewer-backdrop');overlay.hidden=true;
     overlay.innerHTML=`<section class="figure-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="figure-viewer-title" aria-describedby="figure-viewer-help" tabindex="-1">
-      <header class="figure-viewer-heading"><h2 id="figure-viewer-title">Чертёж</h2><button type="button" class="figure-viewer-close" data-figure-viewer-action="close" aria-label="Закрыть чертёж">×</button></header>
+      <header class="figure-viewer-heading"><h2 id="figure-viewer-title">Изображение</h2><button type="button" class="figure-viewer-close" data-figure-viewer-action="close" aria-label="Закрыть изображение">×</button></header>
       <div class="figure-viewer-toolbar">
         <div class="figure-viewer-views" role="group" aria-label="Вид чертежа" hidden><button type="button" data-figure-viewer-action="original" aria-pressed="true">Чертёж</button><button type="button" data-figure-viewer-action="section" aria-pressed="false">Сечение</button></div>
-        <div class="figure-viewer-zoom" role="group" aria-label="Масштаб чертежа"><button type="button" data-figure-viewer-action="zoom-out" aria-label="Уменьшить чертёж">−</button><output class="figure-viewer-scale" aria-live="polite" aria-atomic="true">100%</output><button type="button" data-figure-viewer-action="zoom-in" aria-label="Увеличить чертёж">+</button><button type="button" data-figure-viewer-action="reset" aria-label="Сбросить масштаб чертежа до 100 процентов">Сброс</button></div>
+        <div class="figure-viewer-zoom" role="group" aria-label="Масштаб изображения"><button type="button" data-figure-viewer-action="zoom-out" aria-label="Уменьшить изображение">−</button><output class="figure-viewer-scale" aria-live="polite" aria-atomic="true">100%</output><button type="button" data-figure-viewer-action="zoom-in" aria-label="Увеличить изображение">+</button><button type="button" data-figure-viewer-action="reset" aria-label="Сбросить масштаб изображения до 100 процентов">Сброс</button></div>
       </div>
-      <p id="figure-viewer-help" class="figure-viewer-help">Масштаб от 100 до 300%. Перемещайте увеличенный чертёж прокруткой или пальцем. В области чертежа работают стрелки. Escape — закрыть.</p>
-      <div class="figure-viewer-viewport" role="region" aria-label="Увеличенный чертёж. Используйте стрелки для перемещения" tabindex="0"><div class="figure-viewer-canvas"></div></div>
+      <p id="figure-viewer-help" class="figure-viewer-help">Масштаб от 100 до 300%. Перемещайте увеличенное изображение прокруткой или пальцем. В области изображения работают стрелки. Escape — закрыть.</p>
+      <div class="figure-viewer-viewport" role="region" aria-label="Увеличенное изображение. Используйте стрелки для перемещения" tabindex="0"><div class="figure-viewer-canvas"></div></div>
     </section>`;
     if(typeof doc.body.append==='function')doc.body.append(overlay);else doc.body.appendChild(overlay);
     dialog=overlay.querySelector('.figure-viewer-dialog');canvas=overlay.querySelector('.figure-viewer-canvas');viewport=overlay.querySelector('.figure-viewer-viewport');title=overlay.querySelector('#figure-viewer-title');viewGroup=overlay.querySelector('.figure-viewer-views');
@@ -48,6 +50,12 @@ globalThis.MathFigureViewer=(()=>{
     return true;
   }
   function render(){
+    if(state.image){
+      viewGroup.hidden=true;state.view='original';title.textContent=state.image.alt||'Условие задания';
+      originalButton.setAttribute('aria-pressed','true');sectionButton.setAttribute('aria-pressed','false');
+      const image=doc.createElement('img');image.setAttribute('class','figure-viewer-raster');image.setAttribute('src',state.image.src);image.setAttribute('alt',state.image.alt||'Условие задания');image.setAttribute('decoding','async');
+      canvas.innerHTML='';canvas.append(image);updateZoom(state.zoom,false);return true;
+    }
     const figure=typeof geometryFigure==='function'?geometryFigure(state.id):null;
     if(!figure||typeof figureSVG!=='function')return false;
     const section=hasSection(figure);viewGroup.hidden=!section;if(!section)state.view='original';
@@ -62,24 +70,35 @@ globalThis.MathFigureViewer=(()=>{
     const wasOpen=state.open,provided=typeof options==='object'?options.trigger:null;
     if(provided&&!overlay.contains(provided))state.trigger=provided;else if(!wasOpen)state.trigger=doc.activeElement;
     const rawStage=typeof options==='object'?(options.stage??provided?.getAttribute?.('data-figure-stage')):null;state.stage=rawStage!=null&&Number.isInteger(Number(rawStage))?Number(rawStage):null;
-    state.open=true;state.id=id;state.view='original';state.zoom=100;overlay.hidden=false;if(!wasOpen)lockBackground();
+    state.open=true;state.id=id;state.image=null;state.view='original';state.zoom=100;overlay.hidden=false;if(!wasOpen)lockBackground();
+    if(!render()){close();return false;}focus(closeButton);return true;
+  }
+  function openImage(options={}){
+    if(!options||!localRaster(options.src)||!ensureDialog())return false;
+    const wasOpen=state.open,provided=options.trigger;
+    if(provided&&!overlay.contains(provided))state.trigger=provided;else if(!wasOpen)state.trigger=doc.activeElement;
+    state.open=true;state.id=null;state.stage=null;state.view='original';state.zoom=100;state.image={src:options.src,alt:typeof options.alt==='string'?options.alt.slice(0,500):'Условие задания'};
+    overlay.hidden=false;if(!wasOpen)lockBackground();
     if(!render()){close();return false;}focus(closeButton);return true;
   }
   function close(){
     if(!state.open)return false;
-    const trigger=state.trigger,id=state.id;state.open=false;state.id=null;state.view='original';state.zoom=100;state.trigger=null;overlay.hidden=true;unlockBackground();
+    const trigger=state.trigger,id=state.id,image=state.image;state.open=false;state.id=null;state.image=null;state.view='original';state.zoom=100;state.trigger=null;overlay.hidden=true;canvas.innerHTML='';unlockBackground();
     if(trigger&&doc.body.contains?.(trigger))focus(trigger);
-    else{const replacement=Array.from(doc.querySelectorAll?.('[data-action="figure-enlarge"]')||[]).find(el=>el.getAttribute('data-figure-id')===id&&!el.hidden);focus(replacement||doc.querySelector?.('main'));}
+    else{const replacement=image?Array.from(doc.querySelectorAll?.('[data-task-image-open]')||[]).find(el=>imageFor(el)?.getAttribute('src')===image.src&&!el.hidden&&!el.closest?.('[hidden]')):Array.from(doc.querySelectorAll?.('[data-action="figure-enlarge"]')||[]).find(el=>el.getAttribute('data-figure-id')===id&&!el.hidden);focus(replacement||doc.querySelector?.('main'));}
     return true;
   }
   function refresh(){if(!state.open)return false;if(!render()){close();return false;}return true;}
   function chooseView(view){
+    if(state.image)return false;
     if(view!=='original'&&view!=='section')return false;
     const f=typeof geometryFigure==='function'?geometryFigure(state.id):null;if(view==='section'&&!hasSection(f))return false;
     state.view=view;state.zoom=100;return render();
   }
   if(typeof doc?.addEventListener==='function'){
     doc.addEventListener('click',event=>{
+      const imageButton=event.target?.closest?.('[data-task-image-open]');
+      if(imageButton){event.preventDefault?.();if(imageButton.disabled)return;const image=imageFor(imageButton);if(image&&(!state.open||!overlay?.contains(imageButton)))openImage({src:image.getAttribute('src'),alt:image.getAttribute('alt'),trigger:imageButton});return;}
       const enlarge=event.target?.closest?.('[data-action="figure-enlarge"]');
       if(enlarge){event.preventDefault?.();if(!state.open||!overlay?.contains(enlarge))open({id:enlarge.getAttribute('data-figure-id'),trigger:enlarge});return;}
       if(!state.open)return;const button=actionOf(event.target);if(!button||!dialog.contains(button)||button.disabled)return;
@@ -98,5 +117,5 @@ globalThis.MathFigureViewer=(()=>{
     },true);
     doc.addEventListener('focusin',event=>{if(state.open&&!dialog.contains(event.target))focus(closeButton);});
   }
-  return Object.freeze({open,close,refresh,getState:()=>({open:state.open,id:state.id,view:state.view,zoom:state.zoom})});
+  return Object.freeze({open,openImage,close,refresh,getState:()=>({open:state.open,id:state.id,view:state.view,zoom:state.zoom})});
 })();

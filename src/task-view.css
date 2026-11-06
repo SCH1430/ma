@@ -1,0 +1,45 @@
+/* Shared task typography and structure across the bank, work and practice. */
+.task-content { min-width:0; color:var(--ink,#243f35); font-size:16px; line-height:1.7; overflow-wrap:anywhere; }
+.task-statement { margin:16px 0; }
+.task-content .task-prompt { margin:0; font-size:inherit; font-weight:450; line-height:inherit; }
+.task-prose p { margin:0 0 12px; font-size:inherit; line-height:inherit; }
+.task-prose p:last-child { margin-bottom:0; }
+.task-prose img { max-width:100%; }
+.task-prose .source-formula { display:inline; vertical-align:middle; }
+.task-prose table { border-collapse:collapse; max-width:100%; font-size:inherit; }
+.task-prose th,.task-prose td { padding:8px; border:1px solid var(--line,#cbd9c7); }
+.task-images { display:grid; gap:14px; min-width:0; }
+.task-images img { display:block; width:auto; max-width:100%; height:auto; margin:0 auto; background:white; border-radius:6px; }
+.task-context { margin:0 0 18px; padding:14px 16px; border:1px solid var(--line,#cbd9c7); border-radius:12px; background:#f5f8f0; }
+.task-context>summary,.task-context-original>summary { cursor:pointer; min-height:32px; font-size:14px; font-weight:600; }
+.task-context[open]>summary { margin-bottom:10px; }
+.task-context-text { font-size:15px; white-space:pre-line; }
+.task-figure-description { color:var(--muted,#48594d); }
+.task-context-original { margin-top:12px; }
+.task-context-original[open]>summary { margin-bottom:12px; }
+.bank-task .task-heading { display:flex; gap:12px; align-items:flex-start; justify-content:space-between; margin-bottom:12px; }
+.bank-task .task-heading h3 { margin:0; font-size:13px; line-height:1.6; font-weight:550; }
+.task-format { flex-shrink:0; font-size:12px; color:#36523f; background:#edf3e6; border-radius:8px; padding:4px 8px; }
+.task-answer { margin:18px 0 0; border-top:1px solid var(--line,#cbd9c7); padding-top:12px; }
+.task-answer>summary { cursor:pointer; min-height:44px; padding:10px 0; font-size:14px; font-weight:550; }
+.task-answer-content { line-height:1.7; font-size:15px; overflow-wrap:anywhere; }
+.task-answer-content p { margin:8px 0; font-size:inherit; line-height:inherit; }
+.task-answer .exam-reference-page { margin:14px 0; }
+.task-answer .exam-reference-page figcaption { font-size:12px; color:var(--muted,#48594d); margin-bottom:8px; }
+.task-preview { max-height:220px; overflow:auto; padding:4px; border-radius:6px; }
+.task-preview:focus-visible { outline:2px solid #467044; outline-offset:2px; }
+.task-preview .task-content { font-size:13px; }
+.task-preview .task-statement { margin:6px 0; }
+.task-preview .task-context { padding:8px; }
+.task-preview .task-context-text { font-size:12px; }
+.task-preview .method-graph,.task-preview .math-figure { max-width:100%; }
+.work-run-card .task-content,.trainer .task-content { font-size:18px; }
+.bank-task .builder-actions { margin-top:18px; }
+.bank-task>.source-original { color:#355d48; font-size:13px; line-height:1.5; text-underline-offset:3px; }
+@media(max-width:650px) {
+ .bank-task .task-heading { flex-wrap:wrap; gap:6px; }
+ .task-content,.work-run-card .task-content,.trainer .task-content { font-size:16px; }
+ .task-context { padding:12px; }
+ .task-prose table { font-size:13px; }
+}
+@media print { .task-preview { max-height:none; overflow:visible; } }

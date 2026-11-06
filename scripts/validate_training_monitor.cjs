@@ -94,7 +94,7 @@ async function start(h,role='student'){
  test(projectExam.api.requests===1&&sessions(projectExam)[0].kind==='exam'&&projectExam.state().resumeRoute.examId==='oge-2027','new season starts its own correctly namespaced fullscreen exam');
  await projectExam.click('[data-action="exam-next"]');
  test(projectExam.api.requests===1&&sessions(projectExam).length===1,'new-season navigation preserves one fullscreen monitoring session');
- const work=browser();await work.click('[data-role="teacher"]');await work.click('[data-action="builder-home"]');await work.input('#bank-search',topic.tasks[0].id);await work.click(`[data-action="add"][data-id="${topic.tasks[0].id}"]`);await work.click('[data-action="home"]');await work.click('[data-role="student"]');await work.click('[data-action="works-home"]');await work.click('[data-action="run-work"]');
+ const work=browser();await work.click('[data-role="teacher"]');await work.click('[data-action="builder-home"]');await work.change('#source-filter','class:6:basic');await work.input('#bank-search',topic.tasks[0].id);await work.click(`[data-action="add"][data-id="${topic.tasks[0].id}"]`);await work.click('[data-action="home"]');await work.click('[data-role="student"]');await work.click('[data-action="works-home"]');await work.click('[data-action="run-work"]');
  test(work.api.requests===1&&sessions(work)[0].kind==='work','student collection solving starts fullscreen monitoring');
  await work.click('[data-action="run-finish"]');
  test(count(work,'completed')===1&&work.document.fullscreenElement===null,'collection results stop monitoring and release fullscreen');

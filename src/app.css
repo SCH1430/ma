@@ -371,6 +371,7 @@ sup { top:-.55em; } sub { top:.25em; }
 .library-row strong { display:block; font-size:14px; line-height:1.5; overflow-wrap:anywhere; }
 .library-row p,.library-row small { display:block; margin:4px 0 0; font-size:12px; line-height:1.6; color:var(--muted); }
 .builder-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:16px 0; }
+.session-bar .builder-actions { margin:0; }
 .builder-actions>.field { flex:1 1 170px; min-width:0; }
 .builder-actions .primary,.builder-actions .secondary { min-height:44px; font-size:13px; padding:10px 14px; }
 .work-panel .builder-actions { align-items:stretch; }
@@ -565,17 +566,17 @@ sup { top:-.55em; } sub { top:.25em; }
  .paper-task { display:grid; grid-template-columns:18px minmax(0,1fr); gap:5px; }
  .paper-task-number { padding-top:1px; font:15px/1.4 Georgia,"Times New Roman",serif; color:#40533b; }
  .work-paper .work-list p { margin:0; font-size:11px; line-height:1.65; }
- .work-paper .work-source { margin:0 0 4px; font-size:9px; color:#7a8573; }
+ .work-paper .work-source { margin:0 0 6px; font-size:11px; color:#48594d; }
  .work-paper .math-figure { padding:5px; margin:9px 0; border-radius:3px; max-width:200px; background:transparent; }
  .work-paper .math-figure figcaption { font-size:8px; }
  .paper-exam-image .exam-original { margin:7px 0 0; border-radius:0; }
  .paper-exam-image img { max-height:140px; object-fit:contain; object-position:left top; }
  .work-paper .mini-actions { justify-content:flex-end; gap:4px; margin-top:7px; }
  .work-paper .mini-actions button { min-width:30px; min-height:30px; padding:5px 8px; border-color:#dce4d5; border-radius:6px; background:#fafcf6; font-size:10px; }
- .paper-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100%; padding:14px 0; color:#718768; text-align:center; }
+ .paper-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100%; padding:14px 0; color:#48594d; text-align:center; }
  .paper-empty svg { width:100px; height:84px; margin:0 0 15px; }
  .paper-empty strong { color:#51654a; font-size:13px; font-weight:550; }
- .paper-empty p { margin:8px 0 0; font-size:11px; line-height:1.7; color:#7b8774; }
+ .paper-empty p { margin:8px 0 0; font-size:12px; line-height:1.7; color:#48594d; }
  .paper-footer { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:14px; padding-top:10px; border-top:1px solid #e1e6da; color:#7c8873; font-size:7px; letter-spacing:.08em; }
  .paper-actions { margin-top:19px; }
  .paper-actions .check { margin:0 0 12px; font-size:12px; line-height:1.5; }
@@ -755,9 +756,10 @@ sup { top:-.55em; } sub { top:.25em; }
 .home-hero .builder-actions { margin-bottom:0; }
 .home-hero-mark { text-align:center; color:#5a775c; }
 .home-hero-mark svg { width:100%; max-width:180px; stroke:currentColor; stroke-width:1; }
-.home-hero-mark svg circle:last-child { fill:#a2ad71; stroke:#f7faed; stroke-width:3; }
-.home-hero-mark span { display:block; font:italic 13px Georgia,serif; margin-top:4px; }
+.home-hero-mark svg circle { fill:#a2ad71; stroke:#f7faed; stroke-width:2; }
+.home-hero-mark .atlas-thumbnail-grid { opacity:.22; }
 .home-action-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.home-action-grid--student { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .home-action-card { display:flex; flex-direction:column; align-items:flex-start; padding:24px; }
 .home-action-card h2 { margin:13px 0 10px; font-size:21px; letter-spacing:-.025em; font-weight:550; line-height:1.2; }
 .home-action-card p { margin:0 0 12px; color:var(--muted); line-height:1.65; font-size:13px; }
@@ -841,3 +843,28 @@ sup { top:-.55em; } sub { top:.25em; }
  .session-bar .text-button { font-size:12px; }
 }
 @media print { .app-navigation,.home-dashboard,.device-content { display:none !important; } .application-layout { display:block; } }
+
+/* Focused practice and the handoff from results to the next session. */
+.home-action-grid--student .home-device-card { grid-column:auto; }
+.is-solving .task-card { background:#fff; box-shadow:none; backdrop-filter:none; }
+.task-context-note { width:fit-content; margin:0 0 12px; padding:4px 9px; border:1px solid #bbcebd; border-radius:7px; color:#365845; background:#f2f6ed; font-size:12px; }
+.next-step { margin:20px 0; padding:18px 20px; border:1px solid #c7d9c5; border-inline-start:3px solid #4d7658; border-radius:12px; text-align:start; background:#f4f8ef; }
+.result .next-step h2,.work-run-results .next-step h2 { margin:0 0 7px; color:#365845; font-size:14px; }
+.next-step h3 { margin:0 0 7px; font-size:18px; line-height:1.35; }
+.next-step p { margin:0 0 12px; color:var(--muted); line-height:1.55; }
+.next-step .builder-actions { margin:0; }
+@media(max-width:650px) {
+ .home-hero { position:relative; }
+ .home-hero-mark { display:block; position:absolute; inset-block-start:13px; inset-inline-end:13px; width:72px; }
+ .home-hero .home-eyebrow,.home-hero h2 { padding-inline-end:67px; }
+ .home-action-grid--student { grid-template-columns:minmax(0,1fr); }
+ .is-solving .screen-head { margin-bottom:10px; }
+ .is-solving .screen-head h1 { font-size:24px; margin:4px 0 5px; }
+ .is-solving .screen-head p { font-size:13px; line-height:1.45; }
+ .is-solving .session-bar { margin-bottom:12px; padding:5px 10px; }
+ .is-solving .session-bar .text-button { padding-block:0; }
+ .is-solving .training-journal { margin-bottom:8px; }
+ .is-solving .task-card { padding:16px; }
+ .lesson-example-heading>button { width:auto; }
+ .next-step { padding:14px; }
+}

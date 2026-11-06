@@ -12,7 +12,9 @@ async function train(id){
 }
 (async()=>{
  const h=await train('8-05'),t=topic('8-05'),q=t.tasks[0],example=h.context.MathLessons.example(t,q);
- test(!h.get('#lesson-example-body').hidden,'worked example is open before the first practice question');
+ test(h.get('#lesson-example-body').hidden,'the exercise starts with the response available and the example collapsed');
+ test(h.get('#app').innerHTML.indexOf('id="answer"')<h.get('#app').innerHTML.indexOf('id="lesson-example-body"'),'the response precedes the example in reading order');
+ await h.click('[data-action="lesson-toggle"]');
  test(h.get('.lesson-example-prompt').textContent.includes(example.prompt),'the example is an actual problem from this topic');
  test(example.id!==q.id&&example.practiceId===q.id,'example and independent practice are different tasks');
  test(h.get('.task-prompt').textContent.includes(q.prompt),'independent problem keeps its own givens');
@@ -43,7 +45,7 @@ async function train(id){
  test(tr.document.activeElement===tr.get('.task-card [data-action="figure-enlarge"]'),'closing enlargement restores task launcher focus');
  await tr.click('.task-card [data-action="figure-enlarge"]');await tr.history.back();
  test(!tr.context.MathFigureViewer.getState().open&&!tr.document.body.classList.contains('figure-viewer-open'),'browser back closes the enlarged view and releases the page');
- const space=await train('11-108');await space.click('[data-action="lesson-practice"]');await space.click('.task-card [data-action="figure-enlarge"]');
+ const space=await train('11-108');await space.click('.task-card [data-action="figure-enlarge"]');
  test(!space.get('.figure-viewer-views').hidden,'rotational solid has an alternate axial section');
  const before=space.get('.figure-viewer-canvas').innerHTML;await space.click('[data-figure-viewer-action="section"]');
  test(space.context.MathFigureViewer.getState().view==='section'&&space.get('.figure-viewer-canvas').innerHTML!==before,'section control renders a separate flat construction');

@@ -73,14 +73,14 @@ def audit(bank,write=True):
         for id in group[1:]:union(group[0],id)
     manual_groups=[];group_errors=[]
     for path in sorted((ROOT/'checks').glob('semantic-groups-*.json')):
-        for group in json.loads(path.read_text())['groups']:
+        for group in json.loads(path.read_text(encoding='utf-8'))['groups']:
             members=group['ids']
             if not group.get('reason') or len(members)<2 or any(id not in canonical_by_id for id in members):
                 group_errors.append({'file':path.name,'group':group});continue
             for id in members[1:]:union(members[0],id)
             manual_groups.append(group)
     review_path=ROOT/'checks/semantic-reviews.json'
-    reviews=json.loads(review_path.read_text()) if review_path.exists() else {}
+    reviews=json.loads(review_path.read_text(encoding='utf-8')) if review_path.exists() else {}
     def decision(a,b):
         decision=reviews.get('|'.join(sorted([a,b])))
         return decision if decision and decision['hashA']==hashlib.sha256(tasks[a]['prompt'].encode()).hexdigest() and decision['hashB']==hashlib.sha256(tasks[b]['prompt'].encode()).hexdigest() else None
@@ -110,6 +110,6 @@ def audit(bank,write=True):
     variants=sum(len(v)-1 for v in groups.values())
     stats={'catalog_entries':sum(len(t['tasks']) for t in bank),'canonical_conditions':len(tasks),'independent_groups':len(groups),'numeric_or_template_variants':variants,'cross_catalog_reuses':sum(len(t['tasks']) for t in bank)-len(tasks),'new_parameter_families':len(family),'materialized_family_members':sum(bool(q.get('family')) for q in tasks.values()),'manual_family_groups':len(manual_groups),'near_duplicate_pairs_for_review':len(near),'group_errors':len(group_errors),'target_independent':3100,'target_reached':len(groups)>=3100 and not near and not group_errors}
     if write:
-        (ROOT/'checks/semantic-results.json').write_text(json.dumps({'stats':stats,'groups':list(groups.values()),'near':near,'manual_family_groups':manual_groups,'errors':group_errors},ensure_ascii=False,indent=2))
+        (ROOT/'checks/semantic-results.json').write_text(json.dumps({'stats':stats,'groups':list(groups.values()),'near':near,'manual_family_groups':manual_groups,'errors':group_errors},ensure_ascii=False,indent=2),encoding='utf-8')
     return stats
-if __name__=='__main__':print(json.dumps(audit(json.loads((ROOT/'checks/bank.json').read_text())),ensure_ascii=False,indent=2))
+if __name__=='__main__':print(json.dumps(audit(json.loads((ROOT/'checks/bank.json').read_text(encoding='utf-8'))),ensure_ascii=False,indent=2))

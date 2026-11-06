@@ -77,6 +77,39 @@ const base=()=>({version:2,student:{id:'',first:'',last:'',letter:'',grade:0},at
   const restored=createHarness(h.store);await restored.click('[data-action="resume"]');test(restored.state().teacherReports.length===2&&restored.text().includes('верно 0 из 2'),'report survives reload');
   await restored.click('[data-action="report-clear"]');test(restored.state().teacherReports.length===0&&!restored.document.querySelectorAll('caption').some(c=>c.textContent==='Прохождения учеников'),'clear removes all imported sessions and their table while keeping empty evidence/editorial guidance');
  });
+ await scenario('teacher report creates and shares a separate worked example and practice',async()=>{
+  let pdf;
+  const store=new Map([[KEY,JSON.stringify(base())]]);
+  const h=createHarness(store,{mobile:true,createMathPDF:async value=>{pdf=value;return new Uint8Array(Buffer.from('%PDF-capture'));}});
+  await teacher(h);await h.click('[data-action="report-home"]');
+  await files(h,'#report-files',[{value:{format:'baza-work-results',version:1,sessionId:'practice-source',tasks:[{id:'6-03-1',kind:'number',status:'incorrect'}]}}]);
+  await h.click('[data-action="report-practice"][data-id="percent"]');
+  const practice=work(h),catalog=new Map([...all,...QUALITY_BANK.tasks,...METHOD_BANK.tasks,...h.context.MathLearningContent.tasks].map(q=>[q.id,q]));
+  test(h.state().resumeRoute.view==='builder'&&h.get('#work-panel').classList.contains('is-open'),'report opens the editable draft on a mobile screen');
+  test(practice.ids.length>=2&&practice.ids.length<=3&&new Set(practice.ids.map(id=>catalog.get(id).family)).size===practice.ids.length,'practice contains two to three distinct families');
+  test(practice.exampleId&&!practice.ids.includes(practice.exampleId)&&h.get('#work-panel').textContent.includes('Пример с разбором'),'worked example is separate from independent exercises');
+  test(h.state().library.some(entry=>entry.title==='Моя исходная работа'&&entry.ids[0]===first.id),'earlier draft survives in the library');
+  const references=h.context.MathWorkspaceTransfer.references(h.state());
+  test(references.includes(practice.exampleId),'backup validates and loads the worked example');
+  await h.click('[data-action="export-work"]');const exported=JSON.parse((await download(h)).text);
+  test(exported.work.exampleId===practice.exampleId,'exported work includes the worked example');
+  await h.click('[data-action="print-preview"]');
+  test(h.get('.print-root').textContent.includes('Пример с разбором'),'browser print includes the worked example even without the key');
+  await h.click('[data-action="download"]');
+  test(pdf.example.id===practice.exampleId&&pdf.tasks.length===practice.ids.length&&!pdf.answers,'PDF receives the worked example separately from the teacher key');
+  const student=createHarness();await student.click('[data-role="student"]');await student.click('[data-action="works-home"]');
+  await files(student,'#import-file',[{value:exported}]);
+  test(work(student).exampleId===practice.exampleId,'pupil can import the shared practice and worked example');
+  await student.click('[data-action="run-work"]');
+  test(student.get('.work-runner').textContent.includes('Пример с разбором'),'pupil can refer to the worked example during the practice');
+  const run=student.state().activeRun;
+  test(run.exampleId===practice.exampleId&&!Object.hasOwn(run.records,run.exampleId),'worked example has no answer record');
+  const restored=createHarness(student.store);await restored.click('[data-action="resume-run"]');
+  test(restored.state().activeRun.exampleId===practice.exampleId,'worked example survives a resumed work session');
+  await restored.click('[data-action="run-finish"]');
+  await restored.click('[data-action="run-export"]');
+  equal(JSON.parse((await download(restored)).text).tasks.map(q=>q.id),practice.ids,'results only contain independent exercises');
+ });
  await scenario('learning UI records completed practice and preserves state on reload',async()=>{
   const h=createHarness();await h.click('[data-role="student"]');await h.click('[data-action="learning-home"]');await h.change('#learning-grade','8');
   test(h.state().resumeRoute.view==='learning'&&h.state().resumeRoute.grade===8,'learning grade selection is persisted');
@@ -107,9 +140,9 @@ const base=()=>({version:2,student:{id:'',first:'',last:'',letter:'',grade:0},at
   test(!!original,'real bank has transfer families for delayed review');
   const now=new Date().toISOString(),previous=new Date(Date.now()-8*86400000).toISOString(),saved=h.state();
   saved.learningState=h.context.MathLearningPath.recordActivity(h.context.MathLearningPath.emptyState(),{id:'integration-delayed-review',completed:true,kind:'practice',grade:8,level:'basic',at:previous,results:[{id:original.id,answer:original.display,submitted:true}]},catalog,{now,checker:h.context.checkAnswer});
-  h.store.set(KEY,JSON.stringify(saved));h=createHarness(h.store);await h.click('[data-action="resume"]');
-  test(!h.get('[data-action="learning-review"]').disabled,'due review is available after actual persisted history');
-  await h.click('[data-action="learning-review"]');
+  h.store.set(KEY,JSON.stringify(saved));h=createHarness(h.store);
+  test(!h.get('.home-hero [data-action="learning-review"]').disabled,'Today offers due review directly after restoring real history');
+  await h.click('.home-hero [data-action="learning-review"]');
   test(h.state().learningRun.kind==='review'&&h.state().activeRun.ids.length>0,'review action starts real work with review ownership');
   const selected=h.state().activeRun.ids.map(id=>catalog.find(q=>q.id===id));
   test(selected.every(q=>q&&q.family&&q.family!==original.family),'review handler selects new marked families rather than a used original family');
@@ -139,6 +172,6 @@ const base=()=>({version:2,student:{id:'',first:'',last:'',letter:'',grade:0},at
   test(profile.some(row=>row.foundationIndependent>0)&&profile.every(row=>!row.mastered),'earlier-grade success does not establish upper-grade mastery');
  });
  if(failures.length){console.error(failures.join('\n\n'));process.exitCode=1;return;}
- const report={status:'passed',checks,scenarios:8,scope:'Actual UI handlers for malformed and large saves, exam answer provenance, full backup preview and confirmation, teacher report files, learner route persistence, diagnostics, delayed new-family review, and explicit foundational practice in upper grades.'};
+ const report={status:'passed',checks,scenarios:9,scope:'Actual UI handlers for malformed and large saves, exam answer provenance, full backup preview and confirmation, teacher reports and shared follow-up practice, learner route persistence, diagnostics, delayed new-family review, and explicit foundational practice in upper grades.'};
  fs.writeFileSync(path.join(root,'checks/workspace-integration-results.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 })();

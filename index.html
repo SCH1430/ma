@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-title" content="БАЗА">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
-  <meta name="description" content="Математическое пространство школы 1430. Всё начинается с любопытства.">
-  <title>1430 — пространство математики</title>
+  <meta name="description" content="БАЗА · Математика школы 1430. Практика, учебный маршрут и подготовка к экзаменам.">
+  <title>БАЗА · Математика школы 1430</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23243f35'/%3E%3Cpath d='M17 40V24h16M47 24v16H31M23 45l18-26' stroke='%23e8f6c8' fill='none' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="data/shell.css">
   <link rel="stylesheet" href="src/app.css">
@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="src/workspace-tools.css">
   <link rel="stylesheet" href="src/learning-path.css">
   <link rel="stylesheet" href="src/method-bank.css">
+  <link rel="stylesheet" href="src/task-view.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к выбору роли</a>
@@ -130,9 +131,9 @@
       </svg>
     </div>
     <header class="site-header">
-      <div class="brand" aria-label="Школа 1430">
+      <div class="brand">
         <div class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 26V13h13M33 14v13H20M13 31l14-22"/></svg></div>
-        <div class="brand-name" aria-hidden="true"><small>ШКОЛА</small><strong>1430</strong></div>
+        <div class="brand-name"><strong>БАЗА</strong><small>Математика школы 1430</small></div>
       </div>
       <div class="header-note">У каждого свой путь</div>
     </header>
@@ -146,11 +147,11 @@
         <div class="choices reveal" role="group" aria-label="Выберите свою роль">
           <button class="role-card student" type="button" data-role="student" aria-labelledby="student-title" aria-describedby="student-description">
             <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 13 14-7 14 7-14 7-14-7Z"/><path d="M10 16v9c4 4 12 4 16 0v-9M32 14v10"/><circle cx="32" cy="26" r="1" fill="currentColor" stroke="none"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
-            <span class="card-copy"><span class="role-title" id="student-title">Ученик</span><span class="role-description" id="student-description">Исследовать и открывать</span></span>
+            <span class="card-copy"><span class="role-title" id="student-title">Ученик</span><span class="role-description" id="student-description">Решать задачи и повторять темы</span></span>
           </button>
           <button class="role-card teacher" type="button" data-role="teacher" aria-labelledby="teacher-title" aria-describedby="teacher-description">
             <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h26v19H5zM12 31l6-6 6 6M18 25v7M11 19l5-6 5 3 5-5"/><path d="M22 11h4v4"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
-            <span class="card-copy"><span class="role-title" id="teacher-title">Учитель</span><span class="role-description" id="teacher-description">Объяснять и вдохновлять</span></span>
+            <span class="card-copy"><span class="role-title" id="teacher-title">Учитель</span><span class="role-description" id="teacher-description">Собирать работы и смотреть результаты</span></span>
           </button>
         </div>
         <p class="choice-hint">Выберите свою роль <span aria-hidden="true">↗</span> и начнём</p>
@@ -158,7 +159,7 @@
       <section id="app" class="app-shell" hidden aria-label="Математическое пространство"></section>
     </main>
     <footer class="site-footer">
-      <div class="footer-signature">1430 <span aria-hidden="true">×</span> МАТЕМАТИКА</div>
+      <div class="footer-signature">БАЗА <span aria-hidden="true">·</span> Математика школы 1430</div>
       <div class="footer-end"><span>От вопроса к открытию</span><span class="coordinate" aria-hidden="true">01 / ∞</span></div>
     </footer>
   </div>
@@ -190,6 +191,7 @@
   <script defer src="src/bank-evidence.js"></script>
   <script defer src="src/bank-editorial.js"></script>
   <script defer src="src/auto-work.js"></script>
+  <script defer src="src/task-view.js"></script>
   <script defer src="src/work-runner.js"></script>
   <script defer src="src/training-monitor.js"></script>
   <script defer src="src/pdf.js"></script>

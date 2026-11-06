@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-title" content="БАЗА">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
-  <meta name="description" content="Математическое пространство школы 1430. Всё начинается с любопытства.">
-  <title>1430 — пространство математики</title>
+  <meta name="description" content="БАЗА · Математика школы 1430. Практика, учебный маршрут и подготовка к экзаменам.">
+  <title>БАЗА · Математика школы 1430</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23243f35'/%3E%3Cpath d='M17 40V24h16M47 24v16H31M23 45l18-26' stroke='%23e8f6c8' fill='none' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -32,6 +32,8 @@
     .landscape { position: fixed; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 49% 40%, #fbfcf7 0, #fbfcf700 57%), radial-gradient(ellipse at 4% 77%, #cfdfbb 0, #cfdfbb00 43%), radial-gradient(ellipse at 99% 27%, #c9ddd5 0, #c9ddd500 43%), radial-gradient(ellipse at 83% 100%, #ece4c9 0, #ece4c900 38%), #eef2e9; }
     .landscape::before { content: ""; position: absolute; inset: 0; opacity: .2; background-image: radial-gradient(#46674e38 .55px, transparent .7px); background-size: 5px 5px; mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); }
     .landscape::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 43%, #fbfcf76b, #fbfcf700 62%); }
+    .is-solving .landscape { background: #f3f6f1; }
+    .is-solving .math-atlas, .is-solving .landscape::before, .is-solving .landscape::after { display: none; }
     .math-atlas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .6s ease; }
     .atlas-line { fill: none; stroke: #50735d; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
     .atlas-label { fill: #53725c; font: italic 18px Georgia, "Times New Roman", serif; letter-spacing: .025em; }
@@ -44,9 +46,9 @@
     .brand { display: flex; align-items: center; gap: 13px; user-select: none; }
     .brand-symbol { width: 47px; height: 47px; flex: 0 0 auto; border-radius: 15px; display: grid; place-items: center; background: #274437; color: #e4efcc; box-shadow: inset 0 1px 1px #ffffff20; }
     .brand-symbol svg { width: 31px; height: 31px; }
-    .brand-name { display: flex; flex-direction: column; }
-    .brand-name small { font-size: 9px; letter-spacing: .26em; font-weight: 650; line-height: 1.3; padding-left: 2px; }
-    .brand-name strong { font-size: 31px; line-height: 1.05; letter-spacing: -.065em; font-weight: 650; }
+    .brand-name { display: flex; flex-direction: column; gap: 2px; }
+    .brand-name strong { font-size: 30px; line-height: 1; letter-spacing: -.045em; font-weight: 700; }
+    .brand-name small { font-size: 11px; font-weight: 550; line-height: 1.3; color: var(--muted); }
     .header-note { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .025em; color: #506356; }
     .header-note::before { content: ""; width: 6px; height: 6px; background: #78926b; border-radius: 50%; box-shadow: 0 0 0 4px #78926b0e; }
     main { flex: 1; display: grid; place-items: center; padding: 35px 24px 61px; }
@@ -118,7 +120,7 @@
       .brand { gap: 10px; }
       .brand-symbol { width: 40px; height: 40px; border-radius: 13px; }
       .brand-symbol svg { width: 27px; height: 27px; }
-      .brand-name small { font-size: 8px; }
+      .brand-name small { font-size: 10px; }
       .brand-name strong { font-size: 27px; }
       .header-note { font-size: 0; gap: 0; padding-right: 5px; }
       .header-note::before { width: 7px; height: 7px; box-shadow: 0 0 0 5px #78926b10; }
@@ -301,9 +303,9 @@
       </svg>
     </div>
     <header class="site-header">
-      <div class="brand" aria-label="Школа 1430">
+      <div class="brand">
         <div class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 26V13h13M33 14v13H20M13 31l14-22"/></svg></div>
-        <div class="brand-name" aria-hidden="true"><small>ШКОЛА</small><strong>1430</strong></div>
+        <div class="brand-name"><strong>БАЗА</strong><small>Математика школы 1430</small></div>
       </div>
       <div class="header-note">У каждого свой путь</div>
     </header>
@@ -317,11 +319,11 @@
         <div class="choices reveal" role="group" aria-label="Выберите свою роль">
           <button class="role-card student" type="button" data-role="student" aria-labelledby="student-title" aria-describedby="student-description">
             <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 13 14-7 14 7-14 7-14-7Z"/><path d="M10 16v9c4 4 12 4 16 0v-9M32 14v10"/><circle cx="32" cy="26" r="1" fill="currentColor" stroke="none"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
-            <span class="card-copy"><span class="role-title" id="student-title">Ученик</span><span class="role-description" id="student-description">Исследовать и открывать</span></span>
+            <span class="card-copy"><span class="role-title" id="student-title">Ученик</span><span class="role-description" id="student-description">Решать задачи и повторять темы</span></span>
           </button>
           <button class="role-card teacher" type="button" data-role="teacher" aria-labelledby="teacher-title" aria-describedby="teacher-description">
             <span class="card-top"><span class="role-icon"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h26v19H5zM12 31l6-6 6 6M18 25v7M11 19l5-6 5 3 5-5"/><path d="M22 11h4v4"/></svg></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M10 5l5 5-5 5"/></svg></span></span>
-            <span class="card-copy"><span class="role-title" id="teacher-title">Учитель</span><span class="role-description" id="teacher-description">Объяснять и вдохновлять</span></span>
+            <span class="card-copy"><span class="role-title" id="teacher-title">Учитель</span><span class="role-description" id="teacher-description">Собирать работы и смотреть результаты</span></span>
           </button>
         </div>
         <p class="choice-hint">Выберите свою роль <span aria-hidden="true">↗</span> и начнём</p>
@@ -338,7 +340,7 @@
       </section>
     </main>
     <footer class="site-footer">
-      <div class="footer-signature">1430 <span aria-hidden="true">×</span> МАТЕМАТИКА</div>
+      <div class="footer-signature">БАЗА <span aria-hidden="true">·</span> Математика школы 1430</div>
       <div class="footer-end"><span>От вопроса к открытию</span><span class="coordinate" aria-hidden="true">01 / ∞</span></div>
     </footer>
   </div>
@@ -376,7 +378,7 @@
         roleView.hidden = false;
         roleView.classList.add('reveal');
         skipLink.textContent = 'Перейти к приветствию';
-        document.title = `1430 — ${role.label.toLowerCase()}`;
+        document.title = `БАЗА · Математика школы 1430 — ${role.label.toLowerCase()}`;
         heading.focus({ preventScroll: true });
       }
 
@@ -386,7 +388,7 @@
         roleView.classList.remove('reveal');
         welcome.hidden = false;
         skipLink.textContent = 'Перейти к выбору роли';
-        document.title = '1430 — пространство математики';
+        document.title = 'БАЗА · Математика школы 1430';
         selectedButton?.focus({ preventScroll: true });
       }
 

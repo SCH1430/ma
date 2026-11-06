@@ -20,6 +20,8 @@
     .landscape { position: fixed; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse at 49% 40%, #fbfcf7 0, #fbfcf700 57%), radial-gradient(ellipse at 4% 77%, #cfdfbb 0, #cfdfbb00 43%), radial-gradient(ellipse at 99% 27%, #c9ddd5 0, #c9ddd500 43%), radial-gradient(ellipse at 83% 100%, #ece4c9 0, #ece4c900 38%), #eef2e9; }
     .landscape::before { content: ""; position: absolute; inset: 0; opacity: .2; background-image: radial-gradient(#46674e38 .55px, transparent .7px); background-size: 5px 5px; mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); -webkit-mask-image: linear-gradient(90deg, #000, transparent 36%, transparent 64%, #000); }
     .landscape::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 43%, #fbfcf76b, #fbfcf700 62%); }
+    .is-solving .landscape { background: #f3f6f1; }
+    .is-solving .math-atlas, .is-solving .landscape::before, .is-solving .landscape::after { display: none; }
     .math-atlas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .6s ease; }
     .atlas-line { fill: none; stroke: #50735d; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
     .atlas-label { fill: #53725c; font: italic 18px Georgia, "Times New Roman", serif; letter-spacing: .025em; }
@@ -32,9 +34,9 @@
     .brand { display: flex; align-items: center; gap: 13px; user-select: none; }
     .brand-symbol { width: 47px; height: 47px; flex: 0 0 auto; border-radius: 15px; display: grid; place-items: center; background: #274437; color: #e4efcc; box-shadow: inset 0 1px 1px #ffffff20; }
     .brand-symbol svg { width: 31px; height: 31px; }
-    .brand-name { display: flex; flex-direction: column; }
-    .brand-name small { font-size: 9px; letter-spacing: .26em; font-weight: 650; line-height: 1.3; padding-left: 2px; }
-    .brand-name strong { font-size: 31px; line-height: 1.05; letter-spacing: -.065em; font-weight: 650; }
+    .brand-name { display: flex; flex-direction: column; gap: 2px; }
+    .brand-name strong { font-size: 30px; line-height: 1; letter-spacing: -.045em; font-weight: 700; }
+    .brand-name small { font-size: 11px; font-weight: 550; line-height: 1.3; color: var(--muted); }
     .header-note { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .025em; color: #506356; }
     .header-note::before { content: ""; width: 6px; height: 6px; background: #78926b; border-radius: 50%; box-shadow: 0 0 0 4px #78926b0e; }
     main { flex: 1; display: grid; place-items: center; padding: 35px 24px 61px; }
@@ -106,7 +108,7 @@
       .brand { gap: 10px; }
       .brand-symbol { width: 40px; height: 40px; border-radius: 13px; }
       .brand-symbol svg { width: 27px; height: 27px; }
-      .brand-name small { font-size: 8px; }
+      .brand-name small { font-size: 10px; }
       .brand-name strong { font-size: 27px; }
       .header-note { font-size: 0; gap: 0; padding-right: 5px; }
       .header-note::before { width: 7px; height: 7px; box-shadow: 0 0 0 5px #78926b10; }

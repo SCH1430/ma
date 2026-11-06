@@ -62,10 +62,50 @@ globalThis.MathTeacherReport = (() => {
     const complete=row=>({...row,...totals(row.records),records:undefined});
     return {sessions,totals:totals(sessions.flatMap(r=>r.tasks)),unknown,outdated,evidence:typeof MathBankEvidence!=='undefined'?MathBankEvidence.aggregate(sessions,catalog):null,tasks:[...tasks.values()].map(complete).sort((a,b)=>(b.wrong+b.unanswered+b.pending)-(a.wrong+a.unanswered+a.pending)||b.total-a.total||a.id.localeCompare(b.id)),skills:[...skills.values()].map(complete).sort((a,b)=>(b.wrong+b.unanswered+b.pending)-(a.wrong+a.unanswered+a.pending)||b.total-a.total||a.id.localeCompare(b.id))};
   }
+  function practiceContext(reports,catalog,skillId,options={}){
+    const result=aggregate(reports,catalog);
+    const skill=result.skills.find(row=>row.id===skillId);
+    if(!skill||!skill.wrong&&!skill.unanswered)return null;
+    const tasks=new Map(catalog.map(task=>[task.id,task]));
+    const relevant=result.tasks.filter(row=>row.wrong+row.unanswered>0&&tasks.get(row.id)?.skills?.includes(skillId))
+      .sort((a,b)=>(b.wrong+b.unanswered)-(a.wrong+a.unanswered));
+    const origin=tasks.get(relevant[0]?.id);
+    const exam=origin?.examId||origin?.exam;
+    const grade=origin?.grade||(exam?.startsWith('oge')?9:exam?.startsWith('ege')?11:options.grade)||5;
+    const examLevel=exam?.startsWith('ege-profile')?'advanced':exam?.startsWith('ege-basic')?'basic':null;
+    const level=grade>=10&&(origin?.level||examLevel||options.level)==='advanced'?'advanced':'basic';
+    return {grade,level,workedIds:relevant.map(row=>row.id)};
+  }
+  function createPractice(catalog,skillId,context,{title=skillId,excluded=[]}={}){
+    const blocked=new Set(excluded),worked=new Set(context.workedIds);
+    const matches=catalog.filter(q=>q.grade===context.grade&&q.level===context.level&&q.skills?.includes(skillId)
+      && kinds.has(q.kind)&&q.kind!=='open'&&!blocked.has(q.id));
+    const pool=matches.filter(q=>q.family||q.subtypeId);
+    if(new Set(pool.map(q=>q.family||q.subtypeId)).size<2)return null;
+    const difficulty=q=>({'Базовый':0,'Средний':1,'Повышенный':2,'Высокий':3,'Суперсложный':4})[q.difficulty]??4;
+    const examples=matches.filter(MathTaskView.hasWorkedSolution).sort((a,b)=>
+      difficulty(a)-difficulty(b)||Number(worked.has(b.id))-Number(worked.has(a.id))||a.id.localeCompare(b.id));
+    const byLevel=[pool.filter(q=>difficulty(q)<=1),pool];
+    const options={count:3,seed:`report:${skillId}:${context.grade}:${context.level}`,mode:'diverse'};
+    const canonical=q=>q.canonicalId||q.id;
+    for(const candidates of byLevel)for(const example of examples){
+      const varied=MathAutoWork.select(candidates,{...options,excludeTasks:[example]}).ids;
+      // Two distinct practice families are enough for a short follow-up, even
+      // when one of them is also used by the worked example.
+      const ids=varied.length>=2?varied:MathAutoWork.select(candidates.filter(q=>canonical(q)!==canonical(example)),options).ids;
+      if(ids.length>=2)return {title:`Практика · ${title}`,variant:'1',ids,answers:false,exampleId:example.id};
+    }
+    return null;
+  }
+  function skillRow(row,labels){
+    const title=esc(labels.get(row.id)||row.id);
+    const practice=row.wrong||row.unanswered?`<button class="secondary" type="button" data-action="report-practice" data-id="${esc(row.id)}" aria-label="Собрать практику на 10 минут. ${title}">Собрать практику на 10 минут</button>`:'';
+    return `<li class="report-skill-row"><div><strong>${title}</strong>: ошибки ${row.wrong}, пропуски ${row.unanswered}, не проверено ${row.pending}; самостоятельно верно ${row.independent} из ${row.short} ответов по заданиям.</div>${practice}</li>`;
+  }
   function renderBase(reports,catalog,definitions=[]){
     const result=aggregate(reports,catalog),labels=new Map(definitions.map(q=>[q.id,q.title]));
     const percent=(n,d)=>d?Math.round(100*n/d)+'%':'—';
-    return `<section class="glass report-import"><h2>Результаты класса</h2><p>Загрузите JSON результатов учеников. Повторный файл одного прохождения обновляет его запись. Можно объединить до 100 прохождений.</p><div class="builder-actions"><button class="primary" type="button" data-action="report-import">Загрузить результаты</button><button class="secondary" type="button" data-action="report-export" ${result.sessions.length?'':'disabled'}>Скачать сводку CSV</button><button class="text-button" type="button" data-action="report-clear" ${result.sessions.length?'':'disabled'}>Очистить сводку</button></div><input id="report-files" type="file" accept=".json,application/json" multiple hidden><p id="report-import-status" role="status"></p><p class="muted">Данные обрабатываются на устройстве. Показаны результаты из файлов; самопроверка рассуждений учитывается отдельно.</p></section>${result.sessions.length?`<section class="glass report-summary"><h2>${result.sessions.length} прохождений · ${result.totals.total} ответов по заданиям</h2><p>Краткие ответы: верно ${result.totals.correct} из ${result.totals.short} (${percent(result.totals.correct,result.totals.short)}), самостоятельно ${result.totals.independent}, с подсказкой ${result.totals.hinted}, после разбора ${result.totals.explained}. Рассуждения: сверено ${result.totals.reviewed} из ${result.totals.open}.</p>${result.unknown||result.outdated?`<p class="muted">В детализацию по текущему банку не включены: отсутствующие задания — ${result.unknown}, изменённые версии — ${result.outdated}. В строках прохождений сохранены итоги исходных файлов.</p>`:''}<div class="report-scroll"><table><caption>Прохождения учеников</caption><thead><tr><th>Ученик / файл</th><th>Работа</th><th>Верно кратких</th><th>Самостоятельно</th><th>С подсказкой / разбором</th><th>Сверено рассуждений</th><th>Состояние</th></tr></thead><tbody>${result.sessions.map(r=>`<tr><th>${esc(r.label)}</th><td>${esc(r.title)} · ${esc(r.variant)}</td><td>${r.totals.correct} / ${r.totals.short}</td><td>${r.totals.independent}</td><td>${r.totals.hinted} / ${r.totals.explained}</td><td>${r.totals.reviewed} / ${r.totals.open}</td><td>${r.finished?'Завершена':'Не завершена'}${r.outdated?' · есть изменённые задания':''}</td></tr>`).join('')}</tbody></table></div></section><section class="glass report-summary"><h2>Навыки для следующего урока</h2>${result.skills.length?`<ul>${result.skills.slice(0,10).map(r=>`<li><strong>${esc(labels.get(r.id)||r.id)}</strong>: ошибки ${r.wrong}, пропуски ${r.unanswered}, не проверено ${r.pending}; самостоятельно верно ${r.independent} из ${r.short} ответов по заданиям.</li>`).join('')}</ul>`:'<p>Для этих заданий нет разметки навыков в текущем банке.</p>'}<p class="muted">Один ответ может относиться к нескольким навыкам. Суммы по навыкам не складываются в число заданий.</p><div class="report-scroll"><table><caption>Задания по числу ошибок, пропусков и непроверенных ответов</caption><thead><tr><th>Задание</th><th>Ответов</th><th>Неверно</th><th>Пропущено</th><th>Не проверено</th><th>Самостоятельно верно</th></tr></thead><tbody>${result.tasks.filter(r=>r.short).map(r=>`<tr><th>${esc(r.id)}<small>${esc(r.title).slice(0,180)}</small></th><td>${r.short}</td><td>${r.wrong}</td><td>${r.unanswered}</td><td>${r.pending}</td><td>${r.independent}</td></tr>`).join('')}</tbody></table></div></section>`:''}`;
+    return `<section class="glass report-import"><h2>Результаты класса</h2><p>Загрузите JSON результатов учеников. Повторный файл одного прохождения обновляет его запись. Можно объединить до 100 прохождений.</p><div class="builder-actions"><button class="primary" type="button" data-action="report-import">Загрузить результаты</button><button class="secondary" type="button" data-action="report-export" ${result.sessions.length?'':'disabled'}>Скачать сводку CSV</button><button class="text-button" type="button" data-action="report-clear" ${result.sessions.length?'':'disabled'}>Очистить сводку</button></div><input id="report-files" type="file" accept=".json,application/json" multiple hidden><p id="report-import-status" role="status"></p><p class="muted">Данные обрабатываются на устройстве. Показаны результаты из файлов; самопроверка рассуждений учитывается отдельно.</p></section>${result.sessions.length?`<section class="glass report-summary"><h2>${result.sessions.length} прохождений · ${result.totals.total} ответов по заданиям</h2><p>Краткие ответы: верно ${result.totals.correct} из ${result.totals.short} (${percent(result.totals.correct,result.totals.short)}), самостоятельно ${result.totals.independent}, с подсказкой ${result.totals.hinted}, после разбора ${result.totals.explained}. Рассуждения: сверено ${result.totals.reviewed} из ${result.totals.open}.</p>${result.unknown||result.outdated?`<p class="muted">В детализацию по текущему банку не включены: отсутствующие задания — ${result.unknown}, изменённые версии — ${result.outdated}. В строках прохождений сохранены итоги исходных файлов.</p>`:''}<div class="report-scroll"><table><caption>Прохождения учеников</caption><thead><tr><th>Ученик / файл</th><th>Работа</th><th>Верно кратких</th><th>Самостоятельно</th><th>С подсказкой / разбором</th><th>Сверено рассуждений</th><th>Состояние</th></tr></thead><tbody>${result.sessions.map(r=>`<tr><th>${esc(r.label)}</th><td>${esc(r.title)} · ${esc(r.variant)}</td><td>${r.totals.correct} / ${r.totals.short}</td><td>${r.totals.independent}</td><td>${r.totals.hinted} / ${r.totals.explained}</td><td>${r.totals.reviewed} / ${r.totals.open}</td><td>${r.finished?'Завершена':'Не завершена'}${r.outdated?' · есть изменённые задания':''}</td></tr>`).join('')}</tbody></table></div></section><section class="glass report-summary"><h2>Навыки для следующего урока</h2>${result.skills.length?`<ul>${result.skills.slice(0,10).map(row=>skillRow(row,labels)).join('')}</ul>`:'<p>Для этих заданий нет разметки навыков в текущем банке.</p>'}<p class="muted">Один ответ может относиться к нескольким навыкам. Суммы по навыкам не складываются в число заданий.</p><div class="report-scroll"><table><caption>Задания по числу ошибок, пропусков и непроверенных ответов</caption><thead><tr><th>Задание</th><th>Ответов</th><th>Неверно</th><th>Пропущено</th><th>Не проверено</th><th>Самостоятельно верно</th></tr></thead><tbody>${result.tasks.filter(r=>r.short).map(r=>`<tr><th>${esc(r.id)}<small>${esc(r.title).slice(0,180)}</small></th><td>${r.short}</td><td>${r.wrong}</td><td>${r.unanswered}</td><td>${r.pending}</td><td>${r.independent}</td></tr>`).join('')}</tbody></table></div></section>`:''}`;
   }
   function render(reports,catalog,definitions=[],options={}){
     return renderBase(reports,catalog,definitions)+(typeof MathBankEvidence!=='undefined'?MathBankEvidence.render(restore(reports),catalog):'')+(typeof MathBankEditorial!=='undefined'?MathBankEditorial.renderSummary(catalog,options.editorialStore||options.reviews||options):'');
@@ -76,5 +116,5 @@ globalThis.MathTeacherReport = (() => {
     for(const r of result.sessions){const t=r.totals;rows.push([r.label,r.title,r.variant,t.short,t.correct,t.independent,t.hinted,t.explained,t.wrong,t.unanswered,t.pending,t.open,t.reviewed,r.finished?'Да':'Нет']);}
     return '\ufeff'+rows.map(row=>row.map(quote).join(';')).join('\r\n');
   }
-  return Object.freeze({MAX_FILES,MAX_FILE_BYTES,sanitize,merge,restore,totals,aggregate,render,csv});
+  return Object.freeze({MAX_FILES,MAX_FILE_BYTES,sanitize,merge,restore,totals,aggregate,practiceContext,createPractice,render,csv});
 })();

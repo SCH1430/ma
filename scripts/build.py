@@ -150,19 +150,19 @@ manifest = {'version': 1, 'assets': assets, 'exams': exam_summaries, 'counts': c
 write_constant('asset-manifest.js', 'ASSET_MANIFEST', manifest)
 
 license_text = (
-    'pdf-lib (MIT)\n' + (vendor / 'pdf-lib-LICENSE.txt').read_text()
+    'pdf-lib (MIT)\n' + (vendor / 'pdf-lib-LICENSE.txt').read_text(encoding='utf-8')
     + '\n@pdf-lib/fontkit 1.1.1 (MIT), Andrew Dillon; fork of foliojs/fontkit.\n'
     + 'https://github.com/Hopding/fontkit\n'
-    + (vendor / 'fontkit-README.txt').read_text().split('## License')[-1]
-    + '\nDejaVu Sans font:\n' + (vendor / 'dejavu-copyright.txt').read_text()
-    + '\n' + (vendor / 'dejavu-license.txt').read_text()
+    + (vendor / 'fontkit-README.txt').read_text(encoding='utf-8').split('## License')[-1]
+    + '\nDejaVu Sans font:\n' + (vendor / 'dejavu-copyright.txt').read_text(encoding='utf-8')
+    + '\n' + (vendor / 'dejavu-license.txt').read_text(encoding='utf-8')
     + '\n\nЗадания Решу ЕГЭ / Решу ОГЭ: портал СДАМ ГИА, https://sdamgia.ru/.\n'
     + 'Исходные номера и прямые ссылки сохранены у каждого задания отдельного банка.\n'
     + 'Они не объявляются авторскими материалами школы 1430.\n'
 )
 write_utf8((DATA / 'NOTICE.txt'), license_text)
 
-shell = (SRC / 'shell.html').read_text()
+shell = (SRC / 'shell.html').read_text(encoding='utf-8')
 style = re.search(r'  <style>(.*?)  </style>', shell, flags=re.S)
 if style is None:
     raise ValueError('The source shell must contain its page styles')
@@ -174,7 +174,8 @@ shell = shell[:style.start()] + (
     '  <link rel="stylesheet" href="src/work-runner.css">\n'
     '  <link rel="stylesheet" href="src/workspace-tools.css">\n'
     '  <link rel="stylesheet" href="src/learning-path.css">\n'
-    '  <link rel="stylesheet" href="src/method-bank.css">'
+    '  <link rel="stylesheet" href="src/method-bank.css">\n'
+    '  <link rel="stylesheet" href="src/task-view.css">'
 ) + shell[style.end():]
 shell = re.sub(
     r'      <section class="role-view".*?</section>',
@@ -196,7 +197,7 @@ application_scripts = [
     'geometry-core.js', 'geometry-planar.js', 'geometry-spatial.js',
     'figure-guidance.js', 'math-figures.js', 'learning-support.js',
     'lesson-support.js', 'figure-viewer.js', 'exam-seasons.js', 'exam-support.js',
-    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-methods.js', 'bank-workspace.js', 'answer-formats.js', 'bank-evidence.js', 'bank-editorial.js', 'auto-work.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'workspace-transfer.js', 'teacher-report.js', 'learning-content.js', 'learning-path.js', 'pwa.js', 'app.js',
+    'competency-support.js', 'exam-difficulty.js', 'bank-pedagogy.js', 'bank-methods.js', 'bank-workspace.js', 'answer-formats.js', 'bank-evidence.js', 'bank-editorial.js', 'auto-work.js', 'task-view.js', 'work-runner.js', 'training-monitor.js', 'pdf.js', 'workspace-transfer.js', 'teacher-report.js', 'learning-content.js', 'learning-path.js', 'pwa.js', 'app.js',
 ]
 scripts.extend(script_tag(f'src/{name}', 'app-code' if name == 'app.js' else None)
                for name in application_scripts)

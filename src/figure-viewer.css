@@ -1,4 +1,5 @@
-/* Enlarged geometry is local to this page; its controls never enter printouts. */
+/* Enlarged diagrams and raster tasks share one local, accessible dialog. */
+.task-image-frame { min-width:0; }
 .figure-enlarge { display:block; margin:8px auto 0; min-height:44px; padding:8px 15px; border:1px solid #aac0a7; border-radius:12px; background:#fff9; color:#294532; font:inherit; font-size:12px; cursor:pointer; }
 .figure-enlarge:hover { background:#e7efdf; }
 .figure-enlarge:focus-visible { outline:3px solid #426a57; outline-offset:3px; }
@@ -25,6 +26,7 @@ body.figure-viewer-open { overflow:hidden; }
 .figure-viewer-canvas>.math-figure { width:100%; max-width:none; margin:0; padding:24px; box-sizing:border-box; border:0; border-radius:0; background:white; }
 .figure-viewer-canvas>.math-figure svg { display:block; width:100%; max-width:none; height:auto; max-height:none; }
 .figure-viewer-canvas>.math-figure figcaption { padding:8px; font-size:13px; }
+.figure-viewer-canvas>.figure-viewer-raster { display:block; width:100%; max-width:none; height:auto; max-height:none; margin:0; background:white; }
 .figure-viewer-canvas .figure-enlarge,.figure-viewer-canvas .figure-controls { display:none; }
 @media screen and (max-width:600px) {
  .figure-viewer-backdrop { padding:8px; }

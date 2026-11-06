@@ -59,7 +59,7 @@ async function everyPage(h){
   test(tags(byId.get('exam-2026-oge-24-1')).includes('reasoning')&&tags(byId.get('exam-2026-ege-profile-5-2')).includes('data'),'proof and sampling-probability problems remain separately discoverable');
  });
  await scenario('actual checkbox OR, exam alternatives and source transitions',async()=>{
-  const h=createHarness();await teacher(h);
+  const h=createHarness();await teacher(h);await h.change('#source-filter','all');
   const fields=h.document.querySelectorAll('fieldset').filter(field=>field.querySelector('legend')?.textContent.trim()==='Компетенции ученика');
   test(fields.length===1&&fields[0].querySelectorAll('input[type="checkbox"][data-competency]').length===7,'one labelled fieldset exposes seven independent competency checkboxes');
   test(checked(h).length===0,'constructor initially allows every competency');

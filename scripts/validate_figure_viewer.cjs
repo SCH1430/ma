@@ -46,7 +46,39 @@ for(const document of [undefined,bareDocument()]){
  test(api.refresh(),'refresh redraws open viewer');api.close();
  api.open({id:'withSection',trigger});trigger.remove();const replacement=document.createElement('button');replacement.setAttribute('data-action','figure-enlarge');replacement.setAttribute('data-figure-id','withSection');host.append(replacement);api.close();test(document.activeElement===replacement,'removed trigger is replaced by matching current launcher');
  test(!api.close()&&!api.refresh(),'closed viewer operations are idempotent');
+ const raster='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl2nL8AAAAASUVORK5CYII=';
+ const rasterHost=document.createElement('div'),rasterLabel='Условие задания 1';
+ const imageMarkup=context.MathTaskView.images([raster],rasterLabel,{lazy:true});
+ test(imageMarkup.split(raster).length===2,'shared task markup stores raster data only in img src');
+ rasterHost.innerHTML=imageMarkup;document.body.append(rasterHost);
+ const rasterTrigger=rasterHost.querySelector('[data-task-image-open]');
+ test(rasterTrigger?.textContent==='Увеличить изображение'&&rasterTrigger.getAttribute('aria-label').includes(rasterLabel),'task image has a named enlargement control');
+ rasterTrigger.focus();await document.dispatch('click',rasterTrigger);
+ test(api.getState().open&&api.getState().id===null&&canvas.querySelector('.figure-viewer-raster')?.getAttribute('src')===raster,'local raster opens inside the same dialog');
+ test(document.querySelectorAll('.figure-viewer-backdrop').length===1,'raster and geometry reuse one viewer');
+ test(canvas.querySelector('img').getAttribute('alt')===rasterLabel&&titleOf(dialog)===rasterLabel,'raster retains its accessible description');
+ test(dialog.querySelector('.figure-viewer-views').hidden&&!canvas.querySelector('svg'),'raster has no geometry section controls');
+ test(document.activeElement===close&&main.hasAttribute('inert'),'raster launch traps focus and locks background');
+ await document.dispatch('keydown',close,{key:'Tab',shiftKey:true});test(document.activeElement===viewport,'raster Shift Tab uses the same focus trap');
+ await document.dispatch('keydown',viewport,{key:'Tab'});test(document.activeElement===close,'raster Tab wraps inside the dialog');
+ for(let i=0;i<10;i++)await document.dispatch('click',action('zoom-in'));
+ test(api.getState().zoom===300&&canvas.getAttribute('style').includes('300%'),'raster zoom is bounded at 300 percent');
+ viewport.scrollTop=0;await document.dispatch('keydown',viewport,{key:'ArrowDown'});test(viewport.scrollTop===48,'raster can be panned with keyboard');
+ await document.dispatch('click',action('reset'));test(api.getState().zoom===100&&viewport.scrollTop===0&&viewport.scrollLeft===0,'raster reset restores scale and scroll position');
+ test(api.refresh()&&canvas.querySelector('img').getAttribute('src')===raster,'raster refresh keeps the same image');
+ await document.dispatch('keydown',viewport,{key:'Escape'});
+ test(!api.getState().open&&document.activeElement===rasterTrigger&&!main.hasAttribute('inert'),'Escape closes raster and restores trigger focus and background');
+ test(!canvas.querySelector('img'),'closed raster is released from the viewer DOM');
+ for(const src of ['https://example.invalid/task.png','file:///task.png','data:image/svg+xml;base64,AAAA','data:text/html;base64,AAAA','data:image/png;base64,AAAA" onload="alert(1)','data:image/png;base64,'])test(!api.openImage({src}),'viewer rejects non-local or malformed raster: '+src.slice(0,35));
+ test(!api.openImage(null),'missing raster options fail gracefully');
+ for(const mime of ['jpeg','webp']){test(api.openImage({src:`data:image/${mime};base64,AAAA`,trigger:rasterTrigger}),mime+' local raster format is accepted');api.close();}
+ await document.dispatch('click',rasterTrigger);rasterTrigger.remove();
+ const replacementImage=document.createElement('button');replacementImage.setAttribute('data-task-image-open','');rasterHost.querySelector('.task-image-frame').append(replacementImage);api.close();
+ test(document.activeElement===replacementImage,'removed raster trigger is replaced by its current image launcher');
+ test(api.open({id:'withSection',trigger:replacement})&&!dialog.querySelector('.figure-viewer-views').hidden&&!!canvas.querySelector('svg')&&!canvas.querySelector('img'),'geometry rendering and section controls still work after a raster');api.close();
  test(h.networkCalls()===0,'opening and zooming remain offline');
  const css=fs.readFileSync(path.join(root,'src/figure-viewer.css'),'utf8');test(/@media print[\s\S]*display:none !important/.test(css),'modal and controls are omitted from printing');test(/touch-action:pan-x pan-y pinch-zoom/.test(css),'touch scrolling preserves browser pinch zoom');
  const report={checks,errors:[]};fs.writeFileSync(path.join(root,'checks/figure-viewer-results.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
+function titleOf(dialog){return dialog.querySelector('#figure-viewer-title').textContent;}

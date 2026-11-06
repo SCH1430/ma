@@ -30,11 +30,12 @@ globalThis.MathWorkspaceTransfer = (() => {
   function references(raw){
     const w=workspace(raw),ids=new Set(),add=id=>{if(typeof id==='string'&&id)ids.add(id);};
     for(const pair of w.attempts||[])add(pair[0].split(':').at(-1));
-    for(const pair of w.works||[])for(const id of pair[1].ids||[])add(id);
-    for(const item of w.library||[])for(const id of item?.ids||[])add(id);
+    for(const pair of w.works||[]){for(const id of pair[1].ids||[])add(id);add(pair[1].exampleId);}
+    for(const item of w.library||[]){for(const id of item?.ids||[])add(id);add(item?.exampleId);}
     for(const id of w.favorites||[])add(id);
     for(const id of Object.keys(w.bankTools?.notes||{}))add(id);
     for(const id of w.activeRun?.ids||[])add(id);
+    add(w.activeRun?.exampleId);
     for(const id of w.resumeRoute?.taskIds||[])add(id);
     for(const id of w.recoveryState?.ids||[])add(id);
     for(const event of w.learningState?.events||[])for(const result of event?.results||[])add(result?.id);

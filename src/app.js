@@ -48,9 +48,11 @@ function answerHint(q){
 // These boundaries also validate locally saved and imported data.
 function sanitizeWork(raw,tasks,grade,level){
   raw=raw&&typeof raw==='object'?raw:{};
-  const allowed=new Set(tasks.filter(q=>grade==null||q.grade===grade&&q.level===level).map(q=>q.id));
+  const allowed=new Map(tasks.filter(q=>grade==null||q.grade===grade&&q.level===level).map(q=>[q.id,q]));
   const text=(v,n,fallback)=>typeof v==='string'&&v.trim()?v.trim().slice(0,n):fallback;
-  return {ids:[...new Set(Array.isArray(raw.ids)?raw.ids:[])].filter(id=>allowed.has(id)).slice(0,grade==null?WORK_LIMIT:24),title:text(raw.title,70,'Самостоятельная работа'),variant:text(raw.variant,20,'1'),answers:raw.answers===true,...(typeof raw.seed==='string'?{seed:text(raw.seed,40,'1430')}:{})};
+  const ids=[...new Set(Array.isArray(raw.ids)?raw.ids:[])].filter(id=>allowed.has(id)).slice(0,grade==null?WORK_LIMIT:24);
+  const example=allowed.get(raw.exampleId),hasExample=example&&!ids.includes(example.id)&&MathTaskView.hasWorkedSolution(example);
+  return {ids,title:text(raw.title,70,'Самостоятельная работа'),variant:text(raw.variant,20,'1'),answers:raw.answers===true,...(hasExample?{exampleId:example.id}:{}),...(typeof raw.seed==='string'?{seed:text(raw.seed,40,'1430')}:{})};
 }
 function sanitizeRecord(raw,q){
   raw=raw&&typeof raw==='object'?raw:{};
@@ -143,7 +145,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const loadedExams=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[];
     exams=(dataLoader?.manifest.exams||loadedExams).map(e=>loadedExams.find(full=>full.id===e.id)||e);
     examTaskById=new Map(loadedExams.flatMap(e=>e.tasks.flatMap(examExamples).map(q=>[q.id,q])));
-    examWorkTasks=loadedExams.flatMap(exam=>exam.tasks.flatMap(parent=>examExamples(parent).map((q,i)=>({...q,source:'exam',examId:exam.id,sourceLabel:exam.title+(exam.status==='project'?' · проект демоверсии ':' · демоверсия ')+exam.year,examStatus:exam.status,baseExamId:exam.baseExamId,year:exam.year,sourceUrl:exam.sourceUrl,number:parent.number,exampleNumber:examExamples(parent).length>1?i+1:null,images:q.images||[],contextImages:q.contextImages?.length?q.contextImages:parent.contextImages||[],solutionPages:q.solutionPages?.length?q.solutionPages:parent.solutionPages?.length?parent.solutionPages:exam.solutionPages||[],answerPages:exam.answerPages||[],answerText:q.answerText||'',display:q.answerText||'',kind:q.answerKind||'open',prompt:q.text||'',solution:'',rubric:[]})))).map(q=>({...q,difficulty:MathExamDifficulty.forTask(q),competencies:MathCompetencies.forTask(q)}));
+    examWorkTasks=loadedExams.flatMap(exam=>exam.tasks.flatMap(parent=>examExamples(parent).map((q,i)=>({...q,source:'exam',examId:exam.id,sourceLabel:exam.title+(exam.status==='project'?' · проект демоверсии ':' · демоверсия ')+exam.year,examStatus:exam.status,baseExamId:exam.baseExamId,year:exam.year,sourceUrl:exam.sourceUrl,number:parent.number,exampleNumber:examExamples(parent).length>1?i+1:null,images:q.images||[],contextImages:q.contextImages?.length?q.contextImages:parent.contextImages||[],contextText:q.contextText||parent.contextText||'',contextDescription:q.contextDescription||parent.contextDescription||'',solutionPages:q.solutionPages?.length?q.solutionPages:parent.solutionPages?.length?parent.solutionPages:exam.solutionPages||[],answerPages:exam.answerPages||[],answerText:q.answerText||'',display:q.answerText||'',kind:q.answerKind||'open',prompt:q.text||'',solution:'',rubric:[]})))).map(q=>({...q,difficulty:MathExamDifficulty.forTask(q),competencies:MathCompetencies.forTask(q)}));
     sourceBank=typeof SDAMGIA_BANK!=='undefined'?SDAMGIA_BANK:sourceBank;
     sourcedTasks=sourceBank.tasks.map(q=>({...q,source:'sdamgia',competencies:MathCompetencies.forTask(q)}));
     subtypeById.clear();for(const s of sourceBank.subtypes)subtypeById.set(s.id,s);
@@ -194,11 +196,14 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   };
   const recordKey=id=>examTaskById.has(id)?route.role==='teacher'?`exam-teacher:${id}`:student.id?`exam-student:${student.id}:${id}`:`exam-guest:${examLearnerId}:${id}`:route.role==='student'?`student:${student.id}:${id}`:`teacher:${id}`;
   const record=id=>{const key=recordKey(id);if(!attempts.has(key))attempts.set(key,sanitizeRecord(null));return attempts.get(key);};
+  const runLearner=role=>({id:role==='student'?student.id||examLearnerId:'',name:role==='teacher'?'Просмотр учителя':student.id?[student.first,student.last].join(' '):'Гостевое занятие',grade:role==='student'?student.grade||route.grade||null:null});
+  const ownsActiveRun=(role=route.role)=>!!activeRun&&activeRun.participantRole===role&&(role==='teacher'||(activeRun.learner?.id||'')===(student.id||examLearnerId||''));
   function clearStudent(){
     trainingMonitor.stop();
     for(const key of attempts.keys())if(/^(student|exam-student|exam-guest):/.test(key))attempts.delete(key);
-    student={id:'',first:'',last:'',letter:'',grade:null};examLearnerId='';resumeRoute=null;activeRun=null;pendingRun=null;recoveryState=null;
-    if(typeof MathLearningPath!=='undefined')learningState=MathLearningPath.emptyState();learningRun=null;topicLearningId='';
+    student={id:'',first:'',last:'',letter:'',grade:null};examLearnerId='';resumeRoute=null;pendingRun=null;recoveryState=null;
+    if(activeRun?.participantRole!=='teacher'){activeRun=null;learningRun=null;}
+    if(typeof MathLearningPath!=='undefined')learningState=MathLearningPath.emptyState();topicLearningId='';
   }
   function restore(){
     let original=null;
@@ -219,6 +224,13 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       if(s&&typeof s.id==='string'&&/^[a-zA-Z0-9-]{1,80}$/.test(s.id)&&typeof s.first==='string'&&s.first.trim()&&typeof s.last==='string'&&s.last.trim()&&typeof s.letter==='string'&&/^[А-ЯЁA-Z]$/i.test(s.letter)){
         student={id:s.id,first:s.first.slice(0,40),last:s.last.slice(0,60),letter:s.letter.toUpperCase(),grade:Number(s.grade)};
       }
+      // Older saves kept the learner only at workspace level. Bind them once;
+      // later role or class changes must not relabel an existing run.
+      if(activeRun?.participantRole==='student'&&!student.id&&!activeRun.learner?.id){
+        examLearnerId=examLearnerId||freshId();
+        if(activeRun.learner)activeRun.learner.id=examLearnerId;
+      }
+      if(activeRun&&!activeRun.learner)activeRun.learner=runLearner(activeRun.participantRole);
       for(const pair of Array.isArray(saved.attempts)?saved.attempts.slice(0,catalogTasks.length*2):[]){
         if(!Array.isArray(pair)||typeof pair[0]!=='string')continue;
         const [key,value]=pair,id=key.split(':').at(-1);
@@ -275,7 +287,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(route.role!=='student')return null;
     if(route.view==='train')return {kind:'topic',ref:route.topic,title:currentTopic().title,grade:route.grade};
     if(route.view==='exam')return {kind:'exam',ref:route.examId,title:currentExam().title,grade:null};
-    if(route.view==='work-run'&&activeRun?.phase==='solving')return {kind:'work',ref:activeRun.id,title:activeRun.title,grade:null};
+    if(route.view==='work-run'&&ownsActiveRun()&&activeRun.phase==='solving')return {kind:'work',ref:activeRun.id,title:activeRun.title,grade:null};
     return null;
   }
   function trainingMonitorContent(){
@@ -308,6 +320,17 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function notify(text){$('notice').textContent=text;$('notice').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{$('notice').hidden=true;},3500);}
   let navigationVersion=0,sourceRequestVersion=0;
+  let reviewPreviewVersion=-1,reviewPreviewPending=false;
+  const showingReviewPreview=()=>route.role==='student'&&(route.view==='dashboard'||route.view==='learning'&&!route.contentId);
+  function previewReviewMethods(review){
+    if(reviewPreviewPending||reviewPreviewVersion===navigationVersion||!review.skillIds.length||!dataLoader?.manifest.assets.methods||dataLoader.has('methods'))return;
+    reviewPreviewPending=true;
+    reviewPreviewVersion=navigationVersion;
+    dataLoader.load('methods').then(()=>{
+      rebuildCatalog();
+      if(showingReviewPreview())render();
+    }).catch(()=>{/* Class-only review stays available offline. */}).finally(()=>{reviewPreviewPending=false;});
+  }
   async function ensureWorkspaceData(raw){if(dataLoader)await dataLoader.ensureWorkspace(raw);rebuildCatalog();}
   function bankCounts(){const counts=dataLoader?.manifest.counts||{classes:allTasks.length,exams:examWorkTasks.length,source:sourcedTasks.length,thinking:thinkingTasks.length,quality:qualityTasks.length,methods:typeof METHOD_BANK!=='undefined'?METHOD_BANK.tasks.length:0};const learning=typeof MathLearningContent!=='undefined'?MathLearningContent.tasks.length:0;return {...counts,learning,total:['classes','exams','source','thinking','quality','methods'].reduce((sum,key)=>sum+(counts[key]||0),learning)};}
   globalThis.MathAppData=Object.freeze({stats:bankCounts,ensureWorkspace:ensureWorkspaceData,ensureIds:async ids=>{if(dataLoader)await dataLoader.ensureIds(ids);rebuildCatalog();},ensureAll:async()=>{if(dataLoader)await dataLoader.ensureAll();rebuildCatalog();},rebuild:rebuildCatalog});
@@ -318,7 +341,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       sourceFilter=`class:${grade}:${grade>=10?appPreferences.level:'basic'}`;
     }
     const next={...route,...data,view},version=++navigationVersion;
-    const commit=()=>{if(version!==navigationVersion)return;persist();if(typeof MathFigureViewer!=='undefined')MathFigureViewer.close();closeWork(false);examReferencesOpen=false;route=safeRoute(next,BANK);if(route.view!=='home')appPreferences.role=route.role;if(Number.isInteger(route.grade)&&route.grade>=5&&route.grade<=11){appPreferences.grade=route.grade;if(route.level)appPreferences.level=route.level;}history.pushState({mat1430:true,route},'',`#${route.view}`);render(true);};
+    const commit=()=>{if(version!==navigationVersion)return;if($('notice').textContent==='Открываем материалы…')$('notice').hidden=true;persist();if(typeof MathFigureViewer!=='undefined')MathFigureViewer.close();closeWork(false);examReferencesOpen=false;route=safeRoute(next,BANK);if(route.view!=='home')appPreferences.role=route.role;if(Number.isInteger(route.grade)&&route.grade>=5&&route.grade<=11){appPreferences.grade=route.grade;if(route.level)appPreferences.level=route.level;}history.pushState({mat1430:true,route},'',`#${route.view}`);render(true);};
     if(!dataLoader?.needsRoute(next,sourceFilter)){commit();return Promise.resolve();}
     $('app').setAttribute('aria-busy','true');notify('Открываем материалы…');
     return dataLoader.ensureRoute(next,sourceFilter).then(()=>{rebuildCatalog();commit();}).catch(error=>{console.error(error);const state=pwaState();notify(state.localFile?'Не удалось открыть материалы. Проверьте, что папки data и src перенесены целиком, и повторите переход.':!state.online?'Эти материалы не сохранены для работы без интернета. Подключитесь к сети или выберите загруженный класс в разделе «На устройстве».':'Не удалось загрузить материалы. Проверьте подключение к интернету и повторите переход.');}).finally(()=>{$('app').removeAttribute('aria-busy');});
@@ -335,19 +358,59 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function navigation(){
     const current=route.view==='dashboard'?'home':route.view==='devices'?'device':['works','work-run','builder','print'].includes(route.view)?'works':'catalog';
     const state=pwaState();
-    return `<nav class="app-navigation" aria-label="Основная навигация"><div class="nav-intro"><strong>БАЗА</strong><span>Математика · 1430</span></div><div class="nav-links">${[['home','Главная','nav-home'],['catalog',route.role==='teacher'?'Банк заданий':'Практика','nav-catalog'],['works','Работы','nav-works'],['device','На устройстве','nav-device']].map(([key,label,name])=>`<button type="button" class="app-nav-link" data-action="${name}" ${key===current?'aria-current="page"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${navSymbols[key]}</svg><span>${label}</span></button>`).join('')}</div><div class="nav-bottom"><span class="connection-status" id="connection-status">${state.online?'Есть интернет':'Без интернета'}</span><span>${roleLabel()}</span></div></nav>`;
+    return `<nav class="app-navigation" aria-label="Основная навигация"><div class="nav-intro"><strong>БАЗА</strong><span>Математика школы 1430</span></div><div class="nav-links">${[['home','Главная','nav-home'],['catalog',route.role==='teacher'?'Банк заданий':'Практика','nav-catalog'],['works','Работы','nav-works'],['device','На устройстве','nav-device']].map(([key,label,name])=>`<button type="button" class="app-nav-link" data-action="${name}" ${key===current?'aria-current="page"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${navSymbols[key]}</svg><span>${label}</span></button>`).join('')}</div><div class="nav-bottom"><span class="connection-status" id="connection-status">${state.online?'Есть интернет':'Без интернета'}</span><span>${roleLabel()}</span></div></nav>`;
   }
   function homeClassPicker(){return `<section class="home-class-section" aria-labelledby="home-classes-title"><div class="home-section-heading"><h2 id="home-classes-title">Практика по классам</h2>${action('nav-catalog','Весь каталог →','text-button')}</div><div class="home-class-grid">${Array.from({length:7},(_,i)=>i+5).map(grade=>`<button type="button" class="home-class-chip ${grade===appPreferences.grade?'is-selected':''}" data-action="grade" data-grade="${grade}"><strong>${grade}</strong><span>класс</span></button>`).join('')}</div></section>`;}
+  function atlasScheme(topic=''){
+    let path='M18 77h124M42 92V17M48 68l30-21 29 13 27-32',points=[[134,28]];
+    if(/неравен|дроб|процент|вычислен|числа/i.test(topic)){
+      path='M18 54h124m-7-6 7 6-7 6M33 48v12m23-12v12m23-12v12m23-12v12m23-12v12M56 36h46m-6-5 6 5-6 5';points=[[56,54],[102,54]];
+    }else if(/вероят|статистик|комбинатор/i.test(topic)){
+      path='M25 54l42-23m-42 23 42 23m0-46 60-17M67 31l60 12M67 77l60-12m-60 12 60 17';points=[[127,43]];
+    }else if(/геометр|треуголь|четыр[её]хуголь|окружност|стереометр|пифагор/i.test(topic)){
+      path='M34 78V27l91 51H34zm0-12h12v12';points=[[34,27]];
+    }else if(/алгебр|функци|график|уравнен/i.test(topic)){
+      path='M18 79h124m-7-6 7 6-7 6M79 94V16m-6 7 6-7 6 7M31 31q48 84 96 0';points=[[79,73]];
+    }
+    return `<div class="home-hero-mark" aria-hidden="true"><svg viewBox="0 0 160 108" fill="none" stroke-linecap="round" stroke-linejoin="round"><path class="atlas-thumbnail-grid" d="M20 20h120m-120 17h120m-120 17h120m-120 17h120m-120 17h120M20 20v68m20-68v68m20-68v68m20-68v68m20-68v68m20-68v68m20-68v68"/><path d="${path}"/>${points.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4"/>`).join('')}</svg></div>`;
+  }
+  function studentToday(grade,level,resumed){
+    const options={grade,level},attrs=`data-grade="${grade}" data-level="${level}"`;
+    if(ownsActiveRun()&&activeRun.phase==='solving'){
+      const task=question(activeRun.ids[activeRun.index]);
+      return {title:activeRun.title,description:`Задание ${activeRun.index+1} из ${activeRun.ids.length} · черновики сохранены.`,button:action('resume-run','Продолжить занятие →','primary'),topic:task?.topic||activeRun.title,grade:learningRun?.grade||task?.grade};
+    }
+    if(resumed?.view==='train'||resumed?.view==='exam'){
+      const topic=resumed.view==='train'?BANK.find(item=>item.id===resumed.topic):exams.find(item=>item.id===resumed.examId);
+      return {title:topic?.title||'Сохранённое занятие',description:'Вернитесь к последнему заданию. Ответы и черновики сохранены.',button:action('resume','Продолжить занятие →','primary'),topic:[topic?.title,topic?.subject].filter(Boolean).join(' '),grade:resumed.grade};
+    }
+    const review=MathLearningPath.createReview(catalogTasks,learningState,options);
+    previewReviewMethods(review);
+    if(review.work.ids.length){
+      const skills=new Set(review.work.ids.flatMap(id=>MathBankPedagogy.forTask(question(id))).filter(id=>review.skillIds.includes(id)));
+      const skill=skills.size===1?MathBankPedagogy.definitions.find(item=>skills.has(item.id)):null;
+      return {title:skill?.title||'Повторение навыков',description:`${taskCount(review.work.ids.length)} · пора проверить навык на новых задачах.`,button:action('learning-review','Начать повторение →','primary',attrs),topic:skill?.title||question(review.work.ids[0])?.topic,grade};
+    }
+    const hasHistory=learningState.events.some(event=>event.grade===grade&&(grade<10||event.level===level));
+    const next=hasHistory?MathLearningPath.recommendations(learningState,catalogTasks,options).find(item=>item.type==='practice'&&item.available):null;
+    if(next)return {title:next.title,description:`${taskCount(next.available)} · ${next.reason}`,button:action('learning-skill','Начать практику →','primary',`${attrs} data-skill="${esc(next.skillId)}"`),topic:next.title,grade};
+    const diagnostic=BANK.some(topic=>topic.grade===grade)?MathLearningPath.createDiagnostic(catalogTasks,learningState,options):null;
+    if(diagnostic&&!diagnostic.work.ids.length)return {title:'Практика по темам',description:'Выберите тему в каталоге своего класса.',button:action('grade','Выбрать тему →','primary',attrs),grade};
+    return {title:'Короткая диагностика',description:diagnostic?`${taskCount(diagnostic.work.ids.length)} · найдите темы для следующего занятия.`:'Проверьте несколько навыков и получите первый шаг в учебном маршруте.',button:action('learning-diagnostic','Начать диагностику →','primary',attrs),grade};
+  }
   function renderDashboard(){
     const teacher=route.role==='teacher',grade=appPreferences.grade,level=grade>=10?appPreferences.level:'basic',state=pwaState();
     const resumed=resumeRoute?.role===route.role?resumeRoute:null;
-    const running=activeRun&&activeRun.participantRole===route.role&&activeRun.phase==='solving';
-    const continueLabel=running?activeRun.title:resumed?.view==='train'?BANK.find(t=>t.id===resumed.topic)?.title:resumed?.view==='exam'?exams.find(e=>e.id===resumed.examId)?.title:resumed?.view==='builder'?'Открытая работа':resumed?.view==='learning'?'Учебный маршрут':'Последнее занятие';
-    const resume=running||resumed;
-    const gradeAttrs=`data-grade="${grade}" data-level="${level}"`;
-    const title=teacher?'Ваше рабочее место.':student.id?`С возвращением, ${student.first}.`:'Всё начинается с любопытства.';
-    const subtitle=teacher?'Подготовьте занятие, соберите задания и посмотрите результаты учеников.':'Небольшая практика сегодня — уверенный следующий шаг завтра.';
-    return header(title,subtitle)+(bootstrapPendingWorkspace?`<section class="glass home-recovery" role="status"><h2>Вернёмся к сохранённому занятию</h2><p>Часть материалов пока недоступна. Ваш прогресс сохранён и защищён от перезаписи. Подключитесь к интернету и повторите восстановление. В разделе «На устройстве» можно сохранить класс для будущих занятий.</p>${action('workspace-retry','Повторить восстановление','primary')}${action('backup-home','Скачать исходное сохранение','secondary')}</section>`:'')+`<div id="dashboard" class="home-dashboard"><section class="home-hero glass"><div><span class="home-eyebrow">${teacher?'Подготовка к уроку':`${grade} класс · мой следующий шаг`}</span><h2>${teacher?'Хороший урок начинается с задачи.':resume?'Продолжим с того же места?':'Выберите тему и начните.'}</h2><p>${teacher?'Собирайте работы из банка, сохраняйте подборки и создавайте PDF на этом устройстве.':resume?esc(continueLabel||'Сохранённое занятие')+' · ответы и черновики сохранены.':'Задания, объяснения и короткие проверки помогут двигаться в своём темпе.'}</p><div class="builder-actions">${teacher?action('builder-home','Создать работу →','primary'):resume?action(running?'resume-run':'resume','Продолжить →','primary'):action('grade','Начать практику →','primary',`data-grade="${grade}"`)}${teacher?(resumed?action('resume','Продолжить работу','secondary'):action('works-home','Мои работы','secondary')):action('learning-home','Мой маршрут','secondary',gradeAttrs)}</div></div><div class="home-hero-mark" aria-hidden="true"><svg viewBox="0 0 180 180" fill="none"><circle cx="90" cy="90" r="65"/><ellipse cx="90" cy="90" rx="26" ry="65"/><ellipse cx="90" cy="90" rx="65" ry="24"/><path d="M25 90h130M90 25v130M45 136 135 44"/><circle cx="135" cy="44" r="5"/></svg><span>${teacher?'От вопроса к открытию':'У каждого свой путь'}</span></div></section><div class="home-action-grid">${teacher?`<article class="glass home-action-card"><span class="home-eyebrow">Работа с классом</span><h2>Результаты учеников</h2><p>Загрузите файлы результатов и найдите темы для следующего урока.</p>${action('report-home','Открыть сводку →','text-button')}</article><article class="glass home-action-card"><span class="home-eyebrow">Ваши материалы</span><h2>Сохранённые работы</h2><p>${library.length?`${library.length} ${plural(library.length,'подборка','подборки','подборок')} на этом устройстве.`:'Сохраняйте подборки, чтобы вернуться к ним на следующем занятии.'}</p>${action('works-home','Открыть работы →','text-button')}</article>`:`<article class="glass home-action-card"><span class="home-eyebrow">Диагностика и повторение</span><h2>Повторить сегодня</h2><p>Вернитесь к изученным навыкам или выберите короткую диагностику в своём маршруте.</p>${action('learning-home','Открыть маршрут →','text-button',gradeAttrs)}</article><article class="glass home-action-card"><span class="home-eyebrow">Задание учителя</span><h2>Мои работы</h2><p>Откройте файл учителя или сохранённую подборку и решайте прямо здесь.</p>${action('works-home','Открыть работу →','text-button')}</article>`}<article class="glass home-action-card home-device-card"><span class="home-eyebrow">Заниматься где удобно</span><h2>Математика с собой</h2><p>Установите приложение и сохраните нужный класс для занятий без интернета.</p>${action('nav-device','Настроить устройство →','text-button')}</article></div>${homeClassPicker()}${teacher&&library.length?`<section class="home-recent"><div class="home-section-heading"><h2>Последние подборки</h2>${action('works-home','Все работы →','text-button')}</div>${library.slice(0,3).map(item=>`<article class="glass home-recent-row"><div><h3>${esc(item.title)}</h3><p>${taskCount(item.ids.length)} · Вариант ${esc(item.variant)}</p></div>${action('dashboard-load-work','Открыть','secondary',`data-id="${esc(item.id)}"`)}</article>`).join('')}</section>`:''}${state.updateAvailable?`<aside class="glass home-update"><p>Доступна новая версия. Завершите занятие и обновите приложение, когда будет удобно.</p>${action('pwa-update','Обновить приложение','secondary',state.busy?'disabled':'')}</aside>`:''}</div>`;
+    const today=teacher?null:studentToday(grade,level,resumed);
+    const studentResume=({topics:'Вернуться к темам',profile:'Настройки класса',result:'Итоги прошлого занятия'})[resumed?.view]
+      ||(resumed?.view==='work-run'&&ownsActiveRun()&&activeRun.phase==='results'?'Итоги прошлого занятия':'');
+    const title=teacher?'Ваше рабочее место.':student.id?`С возвращением, ${student.first}.`:'Практика по математике';
+    const subtitle=teacher?'Подготовьте занятие, соберите задания и посмотрите результаты учеников.':'Практика по темам, повторение и подготовка к экзаменам.';
+    const recovery=bootstrapPendingWorkspace?`<section class="glass home-recovery" role="status"><h2>Вернёмся к сохранённому занятию</h2><p>Часть материалов пока недоступна. Ваш прогресс сохранён и защищён от перезаписи. Подключитесь к интернету и повторите восстановление. В разделе «На устройстве» можно сохранить класс для будущих занятий.</p>${action('workspace-retry','Повторить восстановление','primary')}${action('backup-home','Скачать исходное сохранение','secondary')}</section>`:'';
+    const hero=teacher?`<section class="home-hero glass"><div><span class="home-eyebrow">Подготовка к уроку</span><h2>Соберите работу к уроку</h2><p>Выберите задания из банка, сохраните подборку и скачайте PDF.</p><div class="builder-actions">${action('builder-home','Создать работу →','primary')}${resumed?action('resume','Продолжить работу','secondary'):action('works-home','Мои работы','secondary')}</div></div>${atlasScheme()}</section>`:`<section class="home-hero glass" aria-labelledby="today-title"><div><span class="home-eyebrow">Сегодня${today.grade?` · ${today.grade} класс`:''}</span><h2 id="today-title">${esc(today.title)}</h2><p>${esc(today.description)}</p><div class="builder-actions">${today.button}${action('learning-home','Мой маршрут','text-button',`data-grade="${grade}" data-level="${level}"`)}${studentResume?action('resume',studentResume,'text-button'):''}</div></div>${atlasScheme(today.topic)}</section>`;
+    const shortcuts=teacher?`<article class="glass home-action-card"><span class="home-eyebrow">Работа с классом</span><h2>Результаты учеников</h2><p>Загрузите файлы результатов и найдите темы для следующего урока.</p>${action('report-home','Открыть сводку →','text-button')}</article><article class="glass home-action-card"><span class="home-eyebrow">Ваши материалы</span><h2>Сохранённые работы</h2><p>${library.length?`${library.length} ${plural(library.length,'подборка','подборки','подборок')} на этом устройстве.`:'Сохраняйте подборки, чтобы вернуться к ним на следующем занятии.'}</p>${action('works-home','Открыть работы →','text-button')}</article>`:`<article class="glass home-action-card"><span class="home-eyebrow">Задание учителя</span><h2>Мои работы</h2><p>Откройте файл учителя или сохранённую подборку и решайте прямо здесь.</p>${action('works-home','Открыть работу →','text-button')}</article>`;
+    const recent=teacher&&library.length?`<section class="home-recent"><h2>Последние подборки</h2>${library.slice(0,3).map(item=>`<article class="glass home-recent-row"><div><h3>${esc(item.title)}</h3><p>${taskCount(item.ids.length)} · Вариант ${esc(item.variant)}</p></div>${action('dashboard-load-work','Открыть','secondary',`data-id="${esc(item.id)}"`)}</article>`).join('')}</section>`:'';
+    return header(title,subtitle)+recovery+`<div id="dashboard" class="home-dashboard">${hero}${homeClassPicker()}<div class="home-action-grid ${teacher?'':'home-action-grid--student'}">${shortcuts}<article class="glass home-action-card home-device-card"><span class="home-eyebrow">Заниматься где удобно</span><h2>Математика с собой</h2><p>Установите приложение и сохраните нужный класс для занятий без интернета.</p>${action('nav-device','Настроить устройство →','text-button')}</article></div>${recent}${state.updateAvailable?`<aside class="glass home-update"><p>Доступна новая версия. Завершите занятие и обновите приложение, когда будет удобно.</p>${action('pwa-update','Обновить приложение','secondary',state.busy?'disabled':'')}</aside>`:''}</div>`;
   }
   function renderDeviceContent(){
     const state=pwaState(),grade=appPreferences.grade,pack=state.grades.find(item=>item.grade===grade),bytes=Number(pack?.bytes)||0;
@@ -368,18 +431,20 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function render(focus=false){
     const workScroll={panel:$('work-panel')?.scrollTop||0,paper:$('work-paper-body')?.scrollTop||0};
     const active=document.activeElement;
-    const previousFocus=active?{id:active.id,action:active.dataset?.action,taskId:active.dataset?.id,rubric:active.dataset?.rubric}:{};
+    const previousFocus=active?{id:active.id,tag:active.tagName,dataset:{...active.dataset},action:active.dataset?.action,taskId:active.dataset?.id,rubric:active.dataset?.rubric,selectionStart:active.selectionStart,selectionEnd:active.selectionEnd}:{};
+    const focusWasInApp=!!active&&$('app').contains(active);
     route=safeRoute(route,BANK);
     if(route.role==='student'&&!student.id&&!examLearnerId&&['exam','exam-levels'].includes(route.view))examLearnerId=freshId();
     if(route.role==='student'&&!student.id&&['topics','train','result'].includes(route.view))route={...route,view:'profile'};
     if(route.view==='print'&&!work().ids.length)route={...route,view:'builder'};
-    if(route.view==='work-run'&&!activeRun)route={...route,view:'works'};
+    if(route.view==='work-run'&&!ownsActiveRun())route={...route,view:'works'};
     trainingMonitor.sync(trainingContext(),route.view==='result'||route.view==='work-run'&&activeRun?.phase==='results'?'completed':'closed');
     $('welcome').hidden=route.view!=='home';$('app').hidden=route.view==='home';
     document.body.classList.toggle('app-mode',route.view!=='home');
-    if(route.view==='home')document.body.classList.remove('app-has-nav');
+    if(route.view==='home')document.body.classList.remove('app-has-nav','is-solving');
     document.body.classList.toggle('work-open',workOpen&&window.matchMedia('(max-width:650px)').matches);
-    document.title=route.view==='home'?'1430 — пространство математики':`1430 — ${route.view==='exam'?currentExam().title:route.view==='exam-levels'?'ЕГЭ · '+selectedExamYear:roleLabel()}${route.grade?` · ${route.grade} класс`:''}`;
+    const brandTitle='БАЗА · Математика школы 1430';
+    document.title=route.view==='home'?brandTitle:`${brandTitle} — ${route.view==='exam'?currentExam().title:route.view==='exam-levels'?'ЕГЭ · '+selectedExamYear:roleLabel()}${route.grade?` · ${route.grade} класс`:''}`;
     document.querySelector('.skip-link').textContent=route.view==='home'?'Перейти к выбору роли':'Перейти к содержимому';
     if(route.view==='home'){
       $('app').innerHTML='';updateHome();
@@ -388,6 +453,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     const pages={dashboard:renderDashboard,devices:renderDevices,classes:renderClasses,levels:renderLevels,profile:renderProfile,topics:renderTopics,train:renderTrainer,result:renderResult,builder:renderBuilder,print:renderPrint,help:renderHelp,'exam-levels':renderExamLevels,exam:renderExam,subtypes:renderSubtypes,works:renderWorks,'work-run':renderWorkRunner,backup:renderBackup,report:renderTeacherReport,learning:renderLearning,'method-bank':renderMethodBank,editorial:renderEditorial};
     const focused=['train','exam','print'].includes(route.view)||route.view==='work-run'&&activeRun?.phase==='solving';
+    document.body.classList.toggle('is-solving',focused&&route.view!=='print');
     document.body.classList.toggle('app-has-nav',!focused);
     $('app').innerHTML=`<div class="application-layout ${focused?'is-focused':''}">${focused?'':navigation()}<div class="application-content"><section id="training-monitor" aria-label="Полный экран и журнал тренажёра">${trainingMonitorContent()}</section>${pages[route.view]()}</div></div>`;
     syncRunActivity();
@@ -402,6 +468,11 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       const target=previousFocus.id?$(previousFocus.id):[...panel.querySelectorAll('button,input,select')].find(e=>e.dataset.action===previousFocus.action&&e.dataset.id===previousFocus.taskId&&e.dataset.rubric===previousFocus.rubric);
       (target&&panel.contains(target)?target:panel).focus({preventScroll:true});
     }
+    if(!focus&&focusWasInApp&&!(workOpen&&window.matchMedia('(max-width:650px)').matches)){
+      const target=previousFocus.id?$(previousFocus.id):[...$('app').querySelectorAll('button,input,select,textarea,summary')].find(e=>e.tagName===previousFocus.tag&&Object.keys(previousFocus.dataset||{}).length&&Object.entries(previousFocus.dataset).every(([key,value])=>e.dataset[key]===value));
+      if(target&&!target.disabled){target.focus({preventScroll:true});if(previousFocus.selectionStart!=null&&typeof target.setSelectionRange==='function')try{target.setSelectionRange(previousFocus.selectionStart,previousFocus.selectionEnd);}catch{}}
+      else if(document.activeElement===document.body)$('screen-title')?.focus({preventScroll:true});
+    }
     if(focus){window.scrollTo(0,0);$('screen-title')?.focus({preventScroll:true});}
   }
   const examBaseId=e=>e.baseExamId||e.id.replace(/-20\d\d$/,'');
@@ -410,9 +481,9 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   function renderClasses(){
     const season=exams.filter(e=>e.year===selectedExamYear),oge=season.find(e=>examBaseId(e)==='oge');
     return header('Что будем разбирать?',route.role==='teacher'?'Выберите класс для тренажёра, соберите работу или посмотрите результаты учеников.':'Выберите класс, учебный маршрут или экзамен. Прогресс сохранится на этом устройстве.')+
-      (route.role==='teacher'?'<section class="glass constructor-entry" aria-labelledby="constructor-heading"><div><span class="badge">Рабочее место учителя</span><h2 id="constructor-heading">Конструктор работы</h2><p>Соберите одну работу из заданий 5–11 классов, ОГЭ и ЕГЭ. Сохраните подборку и скачайте PDF.</p></div>'+action('builder-home','Создать работу →','primary')+'</section>':'')+renderLearningEntries()+
+      (route.role==='teacher'?'<section class="glass constructor-entry" aria-labelledby="constructor-heading"><div><span class="badge">Рабочее место учителя</span><h2 id="constructor-heading">Конструктор работы</h2><p>Соберите одну работу из заданий 5–11 классов, ОГЭ и ЕГЭ. Сохраните подборку и скачайте PDF.</p></div>'+action('builder-home','Создать работу →','primary')+'</section>':'')+
       '<div class="catalog-layout"><section class="class-section" aria-labelledby="classes-heading"><h2 class="catalog-heading" id="classes-heading">По классам</h2><div class="class-grid">'+Array.from({length:7},(_,i)=>i+5).map(g=>'<button class="glass class-card" type="button" data-action="grade" data-grade="'+g+'"><strong>'+g+'<small>класс</small></strong><span>'+(g>=10?'Базовый и углублённый курсы':topicCount((dataLoader?.manifest.topics||BANK).filter(t=>t.grade===g).length))+'</span></button>').join('')+'</div></section>'+
-      (season.length?'<section class="exam-section" aria-labelledby="exams-heading"><h2 class="catalog-heading" id="exams-heading">Экзамены</h2>'+seasonPicker()+'<div class="exam-entry-grid">'+(oge?'<button type="button" class="glass exam-entry-card" data-action="exam-start" data-exam="'+esc(oge.id)+'"><span class="exam-card-top">9 класс · ФИПИ</span><strong>ОГЭ</strong><span>'+esc(examSeasonLabel(oge))+' · '+oge.tasks.length+' заданий</span><span class="exam-card-link">Открыть задания →</span></button>':'')+'<button type="button" class="glass exam-entry-card" data-action="exam-levels"><span class="exam-card-top">11 класс · ФИПИ</span><strong>ЕГЭ</strong><span>'+selectedExamYear+'</span><span class="exam-card-link">Базовый и профильный →</span></button></div><p class="muted exam-catalog-note">Оригинальные материалы ФИПИ. Статус проекта указан отдельно; предыдущие годы доступны в архиве.</p></section>':'')+'</div>'+note();
+      (season.length?'<section class="exam-section" aria-labelledby="exams-heading"><h2 class="catalog-heading" id="exams-heading">Экзамены</h2>'+seasonPicker()+'<div class="exam-entry-grid">'+(oge?'<button type="button" class="glass exam-entry-card" data-action="exam-start" data-exam="'+esc(oge.id)+'"><span class="exam-card-top">9 класс · ФИПИ</span><strong>ОГЭ</strong><span>'+esc(examSeasonLabel(oge))+' · '+oge.tasks.length+' заданий</span><span class="exam-card-link">Открыть задания →</span></button>':'')+'<button type="button" class="glass exam-entry-card" data-action="exam-levels"><span class="exam-card-top">11 класс · ФИПИ</span><strong>ЕГЭ</strong><span>'+selectedExamYear+'</span><span class="exam-card-link">Базовый и профильный →</span></button></div><p class="muted exam-catalog-note">Оригинальные материалы ФИПИ. Статус проекта указан отдельно; предыдущие годы доступны в архиве.</p></section>':'')+'</div>'+renderLearningEntries()+note();
   }
   function renderExamLevels(){
     return header('ЕГЭ по математике.','Выберите год и уровень официальной демоверсии ФИПИ.')+seasonPicker()+'<div class="level-grid">'+exams.filter(e=>e.year===selectedExamYear&&examBaseId(e).startsWith('ege-')).map(e=>'<button type="button" class="glass level-card exam-level-card" data-action="exam-start" data-exam="'+esc(e.id)+'"><span class="badge">'+esc(examSeasonLabel(e))+'</span><h2>'+(examBaseId(e)==='ege-basic'?'Базовый уровень':'Профильный уровень')+'</h2><p>'+taskCount(e.tasks.length)+(e.duration?' · '+esc(examDuration(e.duration)):'')+'</p><span>Открыть задания →</span></button>').join('')+'</div><p class="muted exam-catalog-note">Все примеры одного номера сохранены отдельно. Прежние подборки с заданиями 2026 года продолжают работать.</p>';
@@ -431,17 +502,21 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function startWorkRun(value,replace=false,learning=null){
     const clean=sanitizeWork(value,catalogTasks);if(!clean.ids.length){notify('Сначала добавьте задания в работу.');return;}
+    // Guest work and exam attempts belong to the same local learner from the start.
+    if(route.role==='student'&&!student.id&&!examLearnerId)examLearnerId=freshId();
     const previous=activeRun&&MathWorkRunner.exportResults(activeRun,catalogTasks);
-    const same=activeRun&&JSON.stringify(activeRun.ids)===JSON.stringify(clean.ids)&&activeRun.title===clean.title&&activeRun.variant===clean.variant;
+    const same=ownsActiveRun()&&JSON.stringify(activeRun.ids)===JSON.stringify(clean.ids)&&activeRun.title===clean.title&&activeRun.variant===clean.variant&&activeRun.exampleId===clean.exampleId;
     if(same&&!replace){pendingRun=null;go('work-run',{grade:null,level:null,topic:null});return;}
     if(activeRun&&previous&&!replace){pendingRun={...clean,learningMeta:learning};go('works',{grade:null,level:null,topic:null});return;}
-    activeRun=MathWorkRunner.createSession(clean,catalogTasks,{id:freshId(),participantRole:route.role});pendingRun=null;
+    const learner=runLearner(route.role);
+    if(route.role==='student'&&!learner.grade&&learning?.grade)learner.grade=learning.grade;
+    activeRun=MathWorkRunner.createSession(clean,catalogTasks,{id:freshId(),participantRole:route.role,learner});pendingRun=null;
     learningRun=learning?{sessionId:activeRun.id,...learning}:null;
     go('work-run',{grade:null,level:null,topic:null});
   }
   function renderWorks(){
     const w=work();
-    return header('Мои работы.','Решайте подборки на сайте. Текущее прохождение сохраняется отдельно от тренажёра.')+`${pendingRun?`<section class="glass run-replace"><h2>Начать другую работу?</h2><p>Текущее прохождение будет заменено. Сначала можно сохранить его результаты в файл.</p><div class="builder-actions">${action('replace-run','Начать новую работу','primary')}${action('run-export','Скачать текущие результаты','secondary')}${action('cancel-run-replace','Оставить текущее прохождение','secondary')}</div></section>`:''}${activeRun?`<section class="glass works-current"><span class="badge">Текущее прохождение</span><h2>${esc(activeRun.title)}</h2><p class="muted">Вариант ${esc(activeRun.variant)} · ${taskCount(activeRun.ids.length)}</p><div class="builder-actions">${action('resume-run',activeRun.phase==='results'?'Посмотреть итоги →':'Продолжить →','primary')}${action('run-export','Скачать результаты','secondary')}</div></section>`:''}<section class="glass works-current"><h2>Открытая подборка</h2><p>${esc(w.title)} · ${taskCount(w.ids.length)}</p><div class="builder-actions">${action('run-work','Начать работу →','primary',w.ids.length?'':'disabled')}${action('import-work','Открыть файл учителя','secondary')}${route.role==='teacher'?action('builder-home','В конструктор','secondary'):''}</div><input id="import-file" type="file" accept=".json,application/json" hidden></section><section class="library-panel"><h2>Сохранённые подборки</h2>${library.length?library.map(x=>`<article class="glass library-row"><div><h3>${esc(x.title)}</h3><p class="muted">${taskCount(x.ids.length)} · Вариант ${esc(x.variant)}</p></div>${action('run-work','Решать →','primary',`data-id="${esc(x.id)}"`)}</article>`).join(''):'<p class="muted">Здесь появятся сохранённые подборки учителя. Также можно открыть JSON-файл работы.</p>'}</section>`;
+    return header('Мои работы.','Решайте подборки на сайте. Текущее прохождение сохраняется отдельно от тренажёра.')+`${pendingRun?`<section class="glass run-replace"><h2>Начать другую работу?</h2><p>Текущее прохождение будет заменено. Сначала можно сохранить его результаты в файл.</p><div class="builder-actions">${action('replace-run','Начать новую работу','primary')}${action('run-export','Скачать текущие результаты','secondary')}${action('cancel-run-replace','Оставить текущее прохождение','secondary')}</div></section>`:''}${activeRun?`<section class="glass works-current"><span class="badge">Текущее прохождение</span><h2>${esc(activeRun.title)}</h2><p class="muted">Вариант ${esc(activeRun.variant)} · ${taskCount(activeRun.ids.length)}</p><div class="builder-actions">${ownsActiveRun()?action('resume-run',activeRun.phase==='results'?'Посмотреть итоги →':'Продолжить →','primary'):`<p class="muted">${activeRun.participantRole==='teacher'?'Это просмотр учителя. Чтобы продолжить, выберите роль учителя.':activeRun.participantRole==='student'?'Это прохождение ученика. Продолжить его может тот же ученик в своей роли.':'Роль старого прохождения не определена. Сохраните результаты и начните новую работу.'}</p>`}${action('run-export','Скачать результаты','secondary')}</div></section>`:''}<section class="glass works-current"><h2>Открытая подборка</h2><p>${esc(w.title)} · ${taskCount(w.ids.length)}</p><div class="builder-actions">${action('run-work','Начать работу →','primary',w.ids.length?'':'disabled')}${action('import-work','Открыть файл учителя','secondary')}${route.role==='teacher'?action('builder-home','В конструктор','secondary'):''}</div><input id="import-file" type="file" accept=".json,application/json" hidden></section><section class="library-panel"><h2>Сохранённые подборки</h2>${library.length?library.map(x=>`<article class="glass library-row"><div><h3>${esc(x.title)}</h3><p class="muted">${taskCount(x.ids.length)} · Вариант ${esc(x.variant)}</p></div>${action('run-work','Решать →','primary',`data-id="${esc(x.id)}"`)}</article>`).join(''):'<p class="muted">Здесь появятся сохранённые подборки учителя. Также можно открыть JSON-файл работы.</p>'}</section>`;
   }
   function renderBackup(){
     const summary=MathWorkspaceTransfer.summary(workspaceSnapshot()),counts=s=>`<div class="workspace-counts">${[['Попытки',s.attempts],['Подборки',s.collections],['Заметки',s.notes],['Шаблоны',s.templates],['Избранное',s.favorites],['Текущая работа',s.currentTasks]].map(([label,n])=>`<div><strong>${n}</strong><span>${label}</span></div>`).join('')}</div>`;
@@ -472,6 +547,37 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }catch(error){workspaceReloading=false;notify('Восстановление не выполнено. '+(error.message||'Проверьте доступность хранилища.'));}
   }
   function renderTeacherReport(){return header('Сводка результатов.','Загрузите файлы учеников, чтобы спланировать следующий урок.')+MathTeacherReport.render(teacherReports,catalogTasks,MathBankPedagogy.definitions,{editorialStore})+(reportImportStatus?`<p class="workspace-warning" role="status">${esc(reportImportStatus)}</p>`:'');}
+  async function openReportPractice(skillId,button){
+    const context=MathTeacherReport.practiceContext(teacherReports,catalogTasks,skillId,appPreferences);
+    if(!context)return;
+    const startingRoute=route,source=`class:${context.grade}:${context.level}`;
+    button.disabled=true;
+    try{
+      if(dataLoader){await dataLoader.ensureSource(source);rebuildCatalog();}
+      if(route!==startingRoute)return;
+      const title=MathBankPedagogy.definitions.find(item=>item.id===skillId)?.title||skillId;
+      const excluded=bankTools.excludeMarked?Object.keys(bankTools.notes).filter(id=>bankTools.notes[id].excluded):[];
+      let practice=MathTeacherReport.createPractice(catalogTasks,skillId,context,{title,excluded});
+      if(dataLoader&&(!practice||practice.ids.length<3)){
+        await Promise.allSettled(['quality','methods'].map(key=>dataLoader.ensureSource(key)));
+        if(route!==startingRoute)return;
+        rebuildCatalog();
+        practice=MathTeacherReport.createPractice(catalogTasks,skillId,context,{title,excluded});
+      }
+      if(!practice){notify('Для этого навыка в загруженном банке пока недостаточно разных семейств с разбором.');return;}
+      const previous=work();
+      const hasDraft=previous.ids.length||previous.exampleId||previous.title!=='Самостоятельная работа'||previous.variant!=='1'||previous.answers||previous.seed;
+      if(hasDraft&&!saveLibrary(previous,{preserve:true})){notify('Список подборок заполнен. Освободите место, чтобы сохранить текущий черновик.');return;}
+      works.set('unified',sanitizeWork(practice,catalogTasks));
+      resetFilters();sourceFilter=source;bankTools.skills=[skillId];
+      await go('builder',{grade:null,level:null,topic:null,taskIds:null});
+      if(route.view==='builder'&&window.matchMedia('(max-width:650px)').matches){
+        workOpen=true;render();$('work-panel')?.focus({preventScroll:true});
+      }
+      notify(hasDraft?'Практика готова. Прежний черновик сохранён в «Моих подборках».':'Практика готова. Состав можно изменить.');
+    }catch(error){notify('Материалы для практики пока недоступны. Скачайте нужный класс или подключитесь к интернету.');}
+    finally{button.disabled=false;}
+  }
   async function importResults(files){
     const batch=[...files||[]];if(!batch.length)return;
     if(batch.length>MathTeacherReport.MAX_FILES){reportImportStatus='Выберите не более 100 файлов за один раз.';render();return;}
@@ -483,10 +589,11 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function renderLearning(){
     const options={grade:route.grade,level:route.level},lesson=MathLearningContent.lessons.find(item=>item.id===route.contentId),project=MathLearningContent.projects.find(item=>item.id===route.contentId);
+    if(showingReviewPreview()&&!reviewPreviewPending&&reviewPreviewVersion!==navigationVersion&&dataLoader&&!dataLoader.has('methods'))previewReviewMethods(MathLearningPath.createReview(catalogTasks,learningState,options));
     return header('Мой учебный маршрут.','Начните с диагностики, разберите трудное место и возвращайтесь к повторению.')+`<section class="glass workspace-tools"><div class="field-grid"><label class="field" for="learning-grade">Класс<select id="learning-grade">${Array.from({length:7},(_,i)=>i+5).map(g=>`<option value="${g}" ${route.grade===g?'selected':''}>${g} класс</option>`).join('')}</select></label>${route.grade>=10?`<label class="field" for="learning-level">Программа<select id="learning-level"><option value="basic" ${route.level==='basic'?'selected':''}>Базовая</option><option value="advanced" ${route.level==='advanced'?'selected':''}>Углублённая</option></select></label>`:''}</div></section>${lesson?MathLearningContent.renderLesson(lesson.id,{mathHTML})+action('learning-home','Вернуться к маршруту','secondary'):project?MathLearningContent.renderProject(project.id,{mathHTML})+action('learning-home','Вернуться к маршруту','secondary'):MathLearningPath.render(learningState,catalogTasks,options)}`;
   }
   function syncRunActivity(){
-    if(activeRun&&typeof MathWorkRunner.setActivity==='function')MathWorkRunner.setActivity(activeRun,{visible:document.visibilityState!=='hidden',focused:typeof document.hasFocus==='function'?document.hasFocus():true,active:route.view==='work-run'});
+    if(activeRun&&typeof MathWorkRunner.setActivity==='function')MathWorkRunner.setActivity(activeRun,{visible:document.visibilityState!=='hidden',focused:typeof document.hasFocus==='function'?document.hasFocus():true,active:route.view==='work-run'&&ownsActiveRun()});
   }
   function sanitizeMethodView(raw={}){
     return {grade:raw?.grade==='all'||Number.isInteger(Number(raw?.grade))&&Number(raw.grade)>=5&&Number(raw.grade)<=11?String(raw.grade):'all',topic:typeof raw?.topic==='string'?raw.topic.slice(0,100):'all',category:Object.hasOwn(MathBankMethods.categories,raw?.category)?raw.category:'all',kind:Object.hasOwn(MathBankMethods.formats,raw?.kind)?raw.kind:'all',method:typeof raw?.method==='string'?raw.method.slice(0,100):'all',query:typeof raw?.query==='string'?raw.query.slice(0,200):''};
@@ -500,20 +607,34 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const select=(key,title,entries)=>`<label class="field" for="method-${key}">${title}<select id="method-${key}" data-method-filter="${key}"><option value="all">Все</option>${entries.map(([value,label])=>`<option value="${esc(value)}" ${String(methodView[key])===String(value)?'selected':''}>${esc(label)}</option>`).join('')}</select></label>`;
     return header('Способы и смысл.','Контрастные пары, восстановление решения, разные представления и пограничные случаи.')+`<section class="glass method-intro"><p>${taskCount(all.length)} · ${topics.length} тем. Для каждой темы — две контрастные пары, два задания на шаги, смена представления и пограничный случай.</p><p class="muted">Способ решения и семейство вариантов размечены отдельно. Математическая проверка и рецензия учителя имеют разные статусы.</p><div class="method-filters">${select('grade','Класс',Array.from({length:7},(_,i)=>[String(i+5),(i+5)+' класс']))}${select('topic','Тема',topics.map(t=>[t.id,t.grade+' класс · '+t.title]))}${select('category','Учебный формат',Object.entries(MathBankMethods.categories))}${select('kind','Формат ответа',Object.entries(MathBankMethods.formats).filter(([kind])=>all.some(q=>q.kind===kind)))}${select('method','Способ решения',MathBankMethods.methods().map(m=>[m.id,m.title]))}<label class="field" for="method-query">Поиск<input id="method-query" type="search" maxlength="200" value="${esc(methodView.query)}" placeholder="Условие, тема или ID"></label></div><div class="builder-actions">${action('method-reset','Сбросить фильтры','secondary')}${route.role==='teacher'?action('method-builder','Открыть источник в конструкторе','primary'):''}</div><p role="status">Найдено: ${taskCount(filtered.length)}.</p></section><div class="method-cards">${filtered.slice(methodPage*12,(methodPage+1)*12).map(q=>{
       const pair=all.filter(item=>item.contrastPairId&&item.contrastPairId===q.contrastPairId),topic=all.filter(item=>item.topicId===q.topicId);
-      return `<article class="glass method-card" data-method-task="${esc(q.id)}"><div class="method-tags"><span class="badge">${q.grade} класс · ${esc(q.topic)}</span><span class="badge">${esc(MathBankMethods.categories[q.category]||q.category)}</span><span class="badge">${esc(MathBankMethods.formats[q.kind]||q.kind)}</span></div><p class="task-prompt">${mathHTML(q.prompt)}</p>${MathBankMethods.representations(q,{mathHTML})}${typeof MathAnswerFormats!=='undefined'?MathAnswerFormats.renderPrompt(q,{mathHTML,esc}):''}${pair.length>1?`<p class="method-related">Контрастная пара: ${pair.map(item=>esc(item.id)).join(' ↔ ')}. Сравните, какое изменение условия влияет на решение.</p>`:''}<div class="builder-actions">${action('method-run-one','Решить задание','primary',`data-id="${esc(q.id)}"`)}${pair.length>1?action('method-run-pair','Решить пару','secondary',`data-id="${esc(q.id)}"`):''}${action('method-run-topic',`Все задания темы (${topic.length})`,'secondary',`data-id="${esc(q.id)}"`)}${route.role==='teacher'?action('method-review','Рецензировать','text-button',`data-id="${esc(q.id)}"`):''}</div>${route.role==='teacher'?MathBankMethods.passport(q,{mathHTML}):''}<p class="method-review-status">${esc(q.id)} · версия ${q.revision||1} · ${typeof MathBankEditorial!=='undefined'?(MathBankEditorial.assessment(q,editorialStore).review?'Рецензия учителя сохранена':'Ожидает рецензии учителя'):'Ожидает рецензии учителя'}</p></article>`;
+      return `<article class="glass method-card" data-method-task="${esc(q.id)}"><div class="method-tags"><span class="badge">${q.grade} класс · ${esc(q.topic)}</span><span class="badge">${esc(MathBankMethods.categories[q.category]||q.category)}</span><span class="badge">${esc(MathBankMethods.formats[q.kind]||q.kind)}</span></div>${MathTaskView.content(q,{mathHTML,figureSVG})}${pair.length>1?`<p class="method-related">Контрастная пара: ${pair.map(item=>esc(item.id)).join(' ↔ ')}. Сравните, какое изменение условия влияет на решение.</p>`:''}<div class="builder-actions">${action('method-run-one','Решить задание','primary',`data-id="${esc(q.id)}"`)}${pair.length>1?action('method-run-pair','Решить пару','secondary',`data-id="${esc(q.id)}"`):''}${action('method-run-topic',`Все задания темы (${topic.length})`,'secondary',`data-id="${esc(q.id)}"`)}${route.role==='teacher'?action('method-review','Рецензировать','text-button',`data-id="${esc(q.id)}"`):''}</div>${route.role==='teacher'?MathBankMethods.passport(q,{mathHTML}):''}<p class="method-review-status">${esc(q.id)} · версия ${q.revision||1} · ${typeof MathBankEditorial!=='undefined'?(MathBankEditorial.assessment(q,editorialStore).review?'Рецензия учителя сохранена':'Ожидает рецензии учителя'):'Ожидает рецензии учителя'}</p></article>`;
     }).join('')||'<p class="glass empty">По выбранным фильтрам заданий нет.</p>'}</div><div class="builder-actions">${action('method-page-prev','← Предыдущие','secondary',methodPage?'':'disabled')}<span>${methodPage+1} / ${pages}</span>${action('method-page-next','Следующие →','secondary',methodPage<pages-1?'':'disabled')}</div>${route.role==='teacher'?MathBankMethods.renderCoverage(all):''}`;
   }
   function renderEditorial(){
     const tasks=catalogTasks.filter(q=>q.source==='methods'),q=question(route.contentId)||tasks[0];
     if(!q)return header('Рецензия заданий.','Откройте новый источник, чтобы выбрать задание.');
     const assessment=MathBankEditorial.assessment(q,editorialStore),previous=assessment.review;
-    return header('Рецензия задания.','Проверьте решение и отметьте критерии. Рецензия привязывается к содержимому и версии.')+`<section class="glass method-review"><label class="field" for="editorial-task">Задание<select id="editorial-task">${tasks.map(item=>`<option value="${esc(item.id)}" ${item.id===q.id?'selected':''}>${esc(item.id+' · '+item.topic)}</option>`).join('')}</select></label><h2>${esc(q.topic||q.id)}</h2><p>${mathHTML(q.prompt)}</p>${MathBankMethods.representations(q,{mathHTML})}<p><strong>Разбор:</strong> ${mathHTML(q.solution)}</p>${MathBankMethods.passport(q,{mathHTML})}${MathBankEditorial.render(q,editorialStore)}<form id="editorial-review-form" data-task-id="${esc(q.id)}"><h3>Рецензия учителя</h3><label class="field" for="editorial-reviewer">Имя рецензента<input id="editorial-reviewer" maxlength="100" required value="${esc(previous?.reviewer||'')}"></label>${MathBankEditorial.criteria.map(criterion=>`<label class="check"><input type="checkbox" data-editorial-criterion="${esc(criterion.id)}" ${previous?.criteria?.[criterion.id]?'checked':''}>${esc(criterion.title)}</label>`).join('')}<label class="field" for="editorial-comment">Комментарий<textarea id="editorial-comment" rows="4" maxlength="1600" required>${esc(previous?.comment||'')}</textarea></label><button type="submit" class="primary">Сохранить рецензию</button></form><div class="builder-actions">${action('editorial-export','Скачать рецензии JSON','secondary')}${action('editorial-import','Импортировать рецензии','secondary')}${action('method-home','К заданиям','text-button')}</div><input id="editorial-file" type="file" accept=".json,application/json" hidden>${editorialNotice?`<p role="status">${esc(editorialNotice)}</p>`:''}<p class="muted">Имя рецензента — локальная запись, а не подтверждение личности. Очистка данных браузера удалит рецензии; они включаются в полную резервную копию.</p></section>`;
+    return header('Рецензия задания.','Проверьте решение и отметьте критерии. Рецензия привязывается к содержимому и версии.')+`<section class="glass method-review"><label class="field" for="editorial-task">Задание<select id="editorial-task">${tasks.map(item=>`<option value="${esc(item.id)}" ${item.id===q.id?'selected':''}>${esc(item.id+' · '+item.topic)}</option>`).join('')}</select></label><h2>${esc(q.topic||q.id)}</h2>${MathTaskView.content(q,{mathHTML,figureSVG})}${MathTaskView.answer(q,{mathHTML})}${MathBankMethods.passport(q,{mathHTML})}${MathBankEditorial.render(q,editorialStore)}<form id="editorial-review-form" data-task-id="${esc(q.id)}"><h3>Рецензия учителя</h3><label class="field" for="editorial-reviewer">Имя рецензента<input id="editorial-reviewer" maxlength="100" required value="${esc(previous?.reviewer||'')}"></label>${MathBankEditorial.criteria.map(criterion=>`<label class="check"><input type="checkbox" data-editorial-criterion="${esc(criterion.id)}" ${previous?.criteria?.[criterion.id]?'checked':''}>${esc(criterion.title)}</label>`).join('')}<label class="field" for="editorial-comment">Комментарий<textarea id="editorial-comment" rows="4" maxlength="1600" required>${esc(previous?.comment||'')}</textarea></label><button type="submit" class="primary">Сохранить рецензию</button></form><div class="builder-actions">${action('editorial-export','Скачать рецензии JSON','secondary')}${action('editorial-import','Импортировать рецензии','secondary')}${action('method-home','К заданиям','text-button')}</div><input id="editorial-file" type="file" accept=".json,application/json" hidden>${editorialNotice?`<p role="status">${esc(editorialNotice)}</p>`:''}<p class="muted">Имя рецензента — локальная запись, а не подтверждение личности. Очистка данных браузера удалит рецензии; они включаются в полную резервную копию.</p></section>`;
   }
-  function renderWorkRunner(){const q=question(activeRun.ids[activeRun.index]);return header(activeRun.title,'Ответы сохраняются на устройстве. Можно прерваться и продолжить позже.')+MathWorkRunner.render(activeRun,catalogTasks,{esc,mathHTML,figureSVG})+(activeRun.phase==='solving'?renderRecovery(q,activeRun.records[q.id]):renderNextSteps({grade:learningRun?.grade||q.grade,level:learningRun?.level||q.level}));}
+  function renderWorkRunner(){
+    const q=question(activeRun.ids[activeRun.index]),solving=activeRun.phase==='solving';
+    const nextSteps=solving?'':renderNextSteps({grade:learningRun?.grade||q.grade,level:learningRun?.level||q.level});
+    const taskContext=solving&&learningRun?.kind==='review'&&q.category==='representation'&&q.representationLinks?.length?'Смена представления':'';
+    const subtitle=learningRun?.kind==='diagnostic'?'Короткая проверка помогает выбрать темы для практики.':'Ответы сохраняются на устройстве. Можно прерваться и продолжить позже.';
+    return header(activeRun.title,subtitle)+MathWorkRunner.render(activeRun,catalogTasks,{esc,mathHTML,figureSVG,nextSteps,taskContext})+(solving?renderRecovery(q,activeRun.records[q.id]):'');
+  }
   function renderNextSteps(options={}){
     if(!options.grade||!learningState||route.role!=='student')return '';
-    const recommendations=MathLearningPath.recommendations(learningState,catalogTasks,options),attrs=`data-grade="${options.grade}" data-level="${options.level||'basic'}"`;
-    return `<section class="glass workspace-tools"><h2>Что решать дальше</h2>${recommendations.length?`<ul>${recommendations.map(item=>`<li><strong>${esc(item.title)}</strong><p>${esc(item.reason)}</p>${item.type==='review'?action('learning-review','Начать повторение','secondary',attrs):action('learning-skill','Проверить навык','secondary',attrs+` data-skill="${esc(item.skillId)}" ${item.available?'':'disabled'}`)}${item.lessonId?action('learning-lesson','Открыть объяснение','text-button',attrs+` data-lesson="${esc(item.lessonId)}"`):''}</li>`).join('')}</ul>`:'<p>Выберите следующий мини-урок или вернитесь к повторению в своём маршруте.</p>'}${action('learning-home','Открыть учебный маршрут →','primary',attrs)}</section>`;
+    const next=MathLearningPath.recommendations(learningState,catalogTasks,options).find(item=>item.available||item.lessonId);
+    const attrs=`data-grade="${options.grade}" data-level="${options.level||'basic'}"`;
+    const link=action('learning-home','Открыть учебный маршрут →',next?'text-button':'primary',attrs);
+    let primary=link,extra='';
+    if(next){
+      const lesson=next.lessonId?action('learning-lesson','Открыть объяснение',next.available?'text-button':'primary',`${attrs} data-lesson="${esc(next.lessonId)}"`):'';
+      primary=next.type==='review'?action('learning-review','Начать повторение →','primary',attrs):next.available?action('learning-skill','Проверить навык на новых задачах →','primary',`${attrs} data-skill="${esc(next.skillId)}"`):lesson;
+      extra=(next.available?lesson:'')+link;
+    }
+    return `<section class="next-step"><h2>Что решать дальше</h2>${next?`<h3>${esc(next.title)}${next.available?` · ${taskCount(next.available)}`:''}</h3><p>${esc(next.reason)}</p>`:'<p>В маршруте можно выбрать мини-урок или тему для практики.</p>'}<div class="builder-actions">${primary}${extra}</div></section>`;
   }
   const examStatus=q=>{const r=record(q.id);return q.answerKind==='open'?r.feedback==='self'?'Сверено с критериями':r.draft?'Есть черновик':'Нужно полное решение':r.correct?classifyAttempt(r)==='explained'?'Верно после просмотра ответа':'Верно':r.tries?'Были попытки':'Ещё не решено';};
   const examComplete=q=>q.answerKind==='open'?record(q.id).feedback==='self':record(q.id).correct;
@@ -531,7 +652,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const correct=short.filter(x=>record(x.id).correct).length,reviewed=open.filter(x=>record(x.id).feedback==='self').length;
     const hint=MathExam.answerHint(q),next=route.index<exam.tasks.length-1,contextImages=q.contextImages?.length?q.contextImages:numberTask.contextImages;
     const response=q.answerKind==='open'?`<label class="field" for="exam-draft">Ваше полное решение<textarea id="exam-draft" rows="6" maxlength="4000" aria-describedby="exam-answer-format" placeholder="Запишите ход решения и обоснование. Рисунок можно выполнить в тетради.">${esc(r.draft)}</textarea></label><p class="muted" id="exam-answer-format">${esc(hint)}</p>${r.feedback==='self'?'<p class="feedback" role="status">Решение отмечено как сверенное с критериями. Экзаменационный балл не выставляется.</p>':''}`:`<form id="exam-answer-form"><div class="answer-row"><label class="field" for="exam-answer">Ваш ответ<input id="exam-answer" name="answer" autocomplete="off" spellcheck="false" maxlength="80" value="${esc(r.draft)}" ${r.correct?'readonly':''} aria-describedby="exam-answer-format${r.feedback?' exam-feedback':''}"></label><button class="primary" type="submit" ${r.correct?'disabled':''}>${r.correct?'Проверено ✓':'Проверить'}</button></div><p class="muted" id="exam-answer-format">${esc(hint)}</p></form>${r.feedback?`<div id="exam-feedback" class="feedback ${r.correct?'':'wrong'}" role="status" tabindex="-1"><strong>${r.correct?'Ответ верный.':r.feedback==='format'?'Проверьте запись ответа.':'Ответ пока не сходится.'}</strong><p>${r.correct?'Ответ совпадает с официальным ключом ФИПИ.':r.feedback==='format'?esc(hint):'Проверьте вычисления и указания в условии. Можно сравнить ответ с официальным ключом.'}</p></div>`:''}`;
-    return `<div class="exam-trainer">${header(exam.title,exam.subtitle||'Оригинальные условия, рисунки и ответы ФИПИ.')}<div class="exam-overview"><span class="badge">${esc(examSeasonLabel(exam))}${exam.duration?` · ${esc(examDuration(exam.duration))}`:''}</span><p class="muted">Краткие ответы: ${correct} из ${short.length} верно${open.length?` · Развёрнутые: ${reviewed} из ${open.length} сверено`:''}${all.length!==exam.tasks.length?` · ${all.length} примеров на ${exam.tasks.length} номеров`:''}</p></div><nav class="dots exam-numbers" aria-label="Номер задания демоверсии">${exam.tasks.map((task,i)=>{const variants=examExamples(task),done=variants.every(examComplete);return action('exam-task',String(task.number),`task-dot ${done?'done':''}`,`data-index="${i}" aria-label="Задание ${task.number}${variants.length>1?`, ${variants.length} примера`:''}, ${done?'выполнено':'в работе'}" ${route.index===i?'aria-current="step"':''}`);}).join('')}</nav><article class="glass task-card exam-task-card"><div class="task-meta"><span>Оригинал ФИПИ · ${exam.year}</span><span>Номер ${numberTask.number} из ${exam.tasks.length}</span></div><h2 class="exam-task-heading">Задание ${numberTask.number} <span class="badge">${q.answerKind==='open'?'Развёрнутое решение':q.answerKind==='sequence'?'Последовательность':'Краткий ответ'}</span></h2>${examples.length>1?`<div class="exam-examples" aria-label="Примеры задания ${numberTask.number}">${examples.map((item,i)=>action('exam-example',`Пример ${i+1}`,`secondary ${route.example===i?'is-current':''}`,`data-example="${i}" aria-pressed="${route.example===i}" aria-label="Пример ${i+1}: ${esc(examStatus(item))}"`)).join('')}</div><p class="muted">В оригинале эти примеры разделены словом «ИЛИ». Ответ и черновик сохраняются для каждого примера отдельно.</p>`:''}${contextImages?.length?`<details class="exam-context" open><summary>Общее условие к заданию</summary>${examImages(contextImages,'Общее условие к заданию '+numberTask.number)}</details>`:''}${examImages(q.images,'Оригинальное условие задания '+numberTask.number,q.text)}${response}<div class="exam-review-actions">${action('exam-references',examReferencesOpen?'Скрыть ответы и критерии':'Официальные ответы и критерии','secondary',`aria-expanded="${examReferencesOpen}" aria-controls="exam-references"`)}${q.answerKind==='open'&&examReferencesOpen?action('exam-reviewed',r.feedback==='self'?'Сверка отмечена ✓':'Я сверил(а) решение с критериями','secondary',r.draft.trim()&&r.feedback!=='self'?'':'disabled'):''}</div>${renderExamReferences(exam,q)}</article><div class="task-nav">${action('exam-prev','← Предыдущий номер','secondary',route.index?'':'disabled')}${next?action('exam-next','Следующий номер →','primary'):action('exam-catalog','К экзаменам →','secondary')}</div><aside class="exam-source glass"><div><strong>Источник: <a href="${esc(exam.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(exam.sourceTitle||'ФИПИ · демоверсия '+exam.year)}</a></strong><p class="muted">Условия показаны фрагментами оригинального документа. Полная демоверсия с инструкциями и критериями доступна в PDF.</p></div>${action('exam-download','Скачать оригинал PDF ↓','secondary',`data-exam="${esc(exam.id)}"`)}</aside></div>`;
+    return `<div class="exam-trainer">${header(exam.title,exam.subtitle||'Оригинальные условия, рисунки и ответы ФИПИ.')}<article class="glass task-card exam-task-card"><div class="task-meta"><span>Оригинал ФИПИ · ${exam.year}</span><span>Номер ${numberTask.number} из ${exam.tasks.length}</span></div><h2 class="exam-task-heading">Задание ${numberTask.number} <span class="badge">${q.answerKind==='open'?'Развёрнутое решение':q.answerKind==='sequence'?'Последовательность':'Краткий ответ'}</span></h2>${examples.length>1?`<div class="exam-examples" aria-label="Примеры задания ${numberTask.number}">${examples.map((item,i)=>action('exam-example',`Пример ${i+1}`,`secondary ${route.example===i?'is-current':''}`,`data-example="${i}" aria-pressed="${route.example===i}" aria-label="Пример ${i+1}: ${esc(examStatus(item))}"`)).join('')}</div><p class="muted">В оригинале эти примеры разделены словом «ИЛИ». Ответ и черновик сохраняются для каждого примера отдельно.</p>`:''}${MathTaskView.content(question(q.id)||{...q,source:'exam',contextImages},{mathHTML})}${response}<div class="exam-review-actions">${action('exam-references',examReferencesOpen?'Скрыть ответы и критерии':'Официальные ответы и критерии','secondary',`aria-expanded="${examReferencesOpen}" aria-controls="exam-references"`)}${q.answerKind==='open'&&examReferencesOpen?action('exam-reviewed',r.feedback==='self'?'Сверка отмечена ✓':'Я сверил(а) решение с критериями','secondary',r.draft.trim()&&r.feedback!=='self'?'':'disabled'):''}</div>${renderExamReferences(exam,q)}</article><div class="task-nav">${action('exam-prev','← Предыдущий номер','secondary',route.index?'':'disabled')}${next?action('exam-next','Следующий номер →','primary'):action('exam-catalog','К экзаменам →','secondary')}</div><div class="exam-overview"><span class="badge">${esc(examSeasonLabel(exam))}${exam.duration?` · ${esc(examDuration(exam.duration))}`:''}</span><p class="muted">Краткие ответы: ${correct} из ${short.length} верно${open.length?` · Развёрнутые: ${reviewed} из ${open.length} сверено`:''}${all.length!==exam.tasks.length?` · ${all.length} примеров на ${exam.tasks.length} номеров`:''}</p></div><nav class="dots exam-numbers" aria-label="Номер задания демоверсии">${exam.tasks.map((task,i)=>{const variants=examExamples(task),done=variants.every(examComplete);return action('exam-task',String(task.number),`task-dot ${done?'done':''}`,`data-index="${i}" aria-label="Задание ${task.number}${variants.length>1?`, ${variants.length} примера`:''}, ${done?'выполнено':'в работе'}" ${route.index===i?'aria-current="step"':''}`);}).join('')}</nav><aside class="exam-source glass"><div><strong>Источник: <a href="${esc(exam.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(exam.sourceTitle||'ФИПИ · демоверсия '+exam.year)}</a></strong><p class="muted">Условия показаны фрагментами оригинального документа. Полная демоверсия с инструкциями и критериями доступна в PDF.</p></div>${action('exam-download','Скачать оригинал PDF ↓','secondary',`data-exam="${esc(exam.id)}"`)}</aside></div>`;
   }
   function renderLevels(){return header('Выберите программу.',`${route.grade} класс. Сложность заданий выбирается отдельно внутри темы.`)+`<div class="level-grid">${['basic','advanced'].map(level=>{const ts=BANK.filter(t=>t.grade===route.grade&&t.level===level);return `<button class="glass level-card" type="button" data-action="level" data-level="${level}"><h2>${level==='basic'?'Базовый':'Углублённый'}</h2><p>${topicCount(ts.length)} · ${taskCount(ts.reduce((s,t)=>s+t.tasks.length,0))}</p><span>Выбрать →</span></button>`;}).join('')}</div>`+note();}
   function renderProfile(){return header('Давайте познакомимся.',`${route.grade} класс. Как к вам обращаться?`)+`<form id="profile-form" class="glass profile"><div class="field-grid"><label class="field" for="first-name">Имя<input id="first-name" required maxlength="40" autocomplete="off" value="${esc(student.first)}" placeholder="Саша"></label><label class="field" for="last-name">Фамилия<input id="last-name" required maxlength="60" autocomplete="off" value="${esc(student.last)}" placeholder="Иванова"></label></div><label class="field letter-field" for="class-letter">Буква класса<input id="class-letter" required maxlength="1" pattern="[А-Яа-яЁёA-Za-z]" autocomplete="off" value="${esc(student.letter)}" placeholder="А" title="Одна буква класса"></label><p class="muted">Имя и прогресс сохраняются только в этом браузере. На общем компьютере после занятия нажмите «Сменить ученика» — новый ученик начнёт с чистого сеанса.</p><button class="primary" type="submit">Выбрать тему →</button></form>`;}
@@ -545,7 +666,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const full=BANK.find(t=>t.id===topic.id)||topic,example=MathLessons.example(full,q);if(!example)return '';
     const open=lessonPanels.get(topic.id)===true;
     if(open&&question(example.id))record(example.id).revealed=true;
-    return `<section class="lesson-example glass" aria-labelledby="lesson-example-title"><div class="lesson-example-heading"><div><span class="eyebrow">Перед самостоятельным решением</span><h2 id="lesson-example-title">Разобранный пример</h2></div>${action('lesson-toggle',open?'Свернуть пример':'Открыть пример','secondary',`aria-expanded="${open}" aria-controls="lesson-example-body"`)}</div><div id="lesson-example-body" ${open?'':'hidden'}>${open?`<p class="lesson-example-prompt">${mathHTML(example.prompt)}</p><dl class="lesson-givens"><div><dt>Дано</dt><dd>${example.given.map(x=>mathHTML(x)).join('<br>')}</dd></div><div><dt>Найти</dt><dd>${mathHTML(example.find)}</dd></div></dl>${example.figureId?figureSVG(example.figureId,false,{stage:1}):''}<h3>Выбор правила</h3><p>${mathHTML(example.theorem)}</p><h3>Ход решения</h3><ol class="lesson-steps">${example.steps.map((step,i)=>`<li><span class="lesson-step-number" aria-hidden="true">${i+1}</span><p>${mathHTML(step)}</p></li>`).join('')}</ol><p class="lesson-example-answer"><strong>Ответ примера:</strong> ${mathHTML(example.answer)}</p><p class="muted">Ниже — другое задание для самостоятельного решения.</p>${action('lesson-practice','Перейти к самостоятельному решению →','primary',`data-practice-id="${esc(example.practiceId)}"`)}`:''}</div></section>`;
+    return `<section class="lesson-example glass" aria-labelledby="lesson-example-title"><div class="lesson-example-heading"><div><span class="eyebrow">Памятка к теме</span><h2 id="lesson-example-title">Разобранный пример</h2></div>${action('lesson-toggle',open?'Свернуть пример':'Вспомнить правило','secondary',`aria-expanded="${open}" aria-controls="lesson-example-body"`)}</div><div id="lesson-example-body" ${open?'':'hidden'}>${open?`<p class="lesson-example-prompt">${mathHTML(example.prompt)}</p><dl class="lesson-givens"><div><dt>Дано</dt><dd>${example.given.map(x=>mathHTML(x)).join('<br>')}</dd></div><div><dt>Найти</dt><dd>${mathHTML(example.find)}</dd></div></dl>${example.figureId?figureSVG(example.figureId,false,{stage:1}):''}<h3>Выбор правила</h3><p>${mathHTML(example.theorem)}</p><h3>Ход решения</h3><ol class="lesson-steps">${example.steps.map((step,i)=>`<li><span class="lesson-step-number" aria-hidden="true">${i+1}</span><p>${mathHTML(step)}</p></li>`).join('')}</ol><p class="lesson-example-answer"><strong>Ответ примера:</strong> ${mathHTML(example.answer)}</p><p class="muted">Вернитесь к заданию и примените правило самостоятельно.</p>${action('lesson-practice','Перейти к самостоятельному решению →','primary',`data-practice-id="${esc(example.practiceId)}"`)}`:''}</div></section>`;
   }
   function wrongAnswerMessage(q,r){
     const specific=typeof MathLessons==='undefined'?null:MathLessons.feedback(q,r.draft,parseAnswer);
@@ -583,19 +704,20 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     const t=currentTopic();if(!t?.tasks.length)return header('Нет заданий.','Вернитесь к темам и измените фильтр.');
     const q=t.tasks[route.index],r=record(q.id),done=t.tasks.filter(x=>record(x.id).correct).length;
     const numeric=`<form id="answer-form"><div class="answer-row"><label class="field" for="answer">Ваш ответ<input id="answer" name="answer" autocomplete="off" spellcheck="false" maxlength="60" value="${esc(r.draft)}" ${r.correct?'readonly':''} aria-describedby="answer-format${r.feedback?' feedback':''}"></label><button class="primary" type="submit" ${r.correct?'disabled':''}>${r.correct?'Проверено ✓':'Проверить'}</button></div><p class="muted" id="answer-format">${esc(answerHint(q))}</p></form>${r.feedback?`<div id="feedback" class="feedback ${r.correct?'':'wrong'}" role="status"><strong>${r.correct?'Верно. Продолжаем!':r.feedback==='format'?'Проверьте запись ответа.':'Пока не сходится.'}</strong><p>${r.correct?mathHTML(q.solution):r.feedback==='format'?esc(answerHint(q)):mathHTML(wrongAnswerMessage(q,r))}</p></div>`:''}${helpMarkup(q,r)}${r.revealed&&!r.correct?`<div class="solution"><strong>Ответ: ${mathHTML(q.display.replace(/\./g,','))}.</strong><p>${mathHTML(q.solution)}</p></div>`:''}`;
-    return `<div class="trainer">`+header(t.title,route.role==='teacher'?'Просмотр учителя. Ученические результаты хранятся отдельно.':`${student.first}, решайте в своём темпе. Подсказки доступны на каждом шаге.`)+`${route.taskIds?'<p class="badge">Повтор выбранных заданий</p>':`<label class="field training-filter" for="training-difficulty">Сложность в этой теме<select id="training-difficulty"><option value="all">Все ступени</option>${levels.map(d=>`<option value="${d}" ${route.difficulty===d?'selected':''}>${d}</option>`).join('')}</select></label>`}<div class="progress" role="progressbar" aria-label="Завершённые задания" aria-valuemin="0" aria-valuemax="${t.tasks.length}" aria-valuenow="${done}"><span style="width:${done/t.tasks.length*100}%"></span></div>${lessonMarkup(t,q)}<article class="glass task-card"><div class="task-meta"><span class="subject-label">${subjectIcon(t.subject)}${esc(t.subject)} · ${route.grade} класс</span><span>Задание ${route.index+1} из ${t.tasks.length}</span></div>${difficultyTags(q)}<h2 class="task-prompt">${mathHTML(q.prompt)}</h2>${figureSVG(q.id,false,{stage:r.revealed||r.correct?1:r.hintLevel-1})}${q.kind==='open'?renderOpen(q,r):numeric}${renderRecovery(q,r)}${r.correct?`<p class="task-outcome">${q.kind==='open'?'Самопроверка по образцу':outcomeNames[classifyAttempt(r)]}</p>`:''}</article><div class="task-nav"><div class="dots" aria-label="Номер задания">${t.tasks.map((x,i)=>action('task',String(i+1),`task-dot ${record(x.id).correct?'done':''}`,`data-index="${i}" aria-label="Задание ${i+1}, ${x.kind==='open'&&record(x.id).correct?'самопроверка':outcomeNames[classifyAttempt(record(x.id))]}" ${i===route.index?'aria-current="step"':''}`)).join('')}</div>${action(route.index===t.tasks.length-1?'finish':'next',route.index===t.tasks.length-1?'Завершить →':'Следующее →',r.correct?'primary':'secondary')}</div></div>`;
+    return `<div class="trainer">`+header(t.title,route.role==='teacher'?'Просмотр учителя. Ученические результаты хранятся отдельно.':`${student.first}, решайте в своём темпе. Подсказки доступны на каждом шаге.`)+`${route.taskIds?'<p class="badge">Повтор выбранных заданий</p>':`<label class="field training-filter" for="training-difficulty">Сложность в этой теме<select id="training-difficulty"><option value="all">Все ступени</option>${levels.map(d=>`<option value="${d}" ${route.difficulty===d?'selected':''}>${d}</option>`).join('')}</select></label>`}<div class="progress" role="progressbar" aria-label="Завершённые задания" aria-valuemin="0" aria-valuemax="${t.tasks.length}" aria-valuenow="${done}"><span style="width:${done/t.tasks.length*100}%"></span></div><article class="glass task-card"><div class="task-meta"><span class="subject-label">${subjectIcon(t.subject)}${esc(t.subject)} · ${route.grade} класс</span><span>Задание ${route.index+1} из ${t.tasks.length}</span></div>${difficultyTags(q)}${MathTaskView.content(question(q.id)||q,{mathHTML,figureSVG,figureOptions:{stage:r.revealed||r.correct?1:r.hintLevel-1}})}${q.kind==='open'?renderOpen(q,r):numeric}${renderRecovery(q,r)}${r.correct?`<p class="task-outcome">${q.kind==='open'?'Самопроверка по образцу':outcomeNames[classifyAttempt(r)]}</p>`:''}</article>${lessonMarkup(t,q)}<div class="task-nav"><div class="dots" aria-label="Номер задания">${t.tasks.map((x,i)=>action('task',String(i+1),`task-dot ${record(x.id).correct?'done':''}`,`data-index="${i}" aria-label="Задание ${i+1}, ${x.kind==='open'&&record(x.id).correct?'самопроверка':outcomeNames[classifyAttempt(record(x.id))]}" ${i===route.index?'aria-current="step"':''}`)).join('')}</div>${action(route.index===t.tasks.length-1?'finish':'next',route.index===t.tasks.length-1?'Завершить →':'Следующее →',r.correct?'primary':'secondary')}</div></div>`;
   }
   function renderResult(){
     const t=currentTopic(),counts={independent:0,hinted:0,explained:0,pending:0,self:0};
     for(const q of t.tasks){const r=record(q.id);counts[q.kind==='open'&&r.correct?'self':classifyAttempt(r)]++;}
     const retry=t.tasks.filter(q=>!record(q.id).correct||record(q.id).everWrong).length;
-    return header('Посмотрим, что получилось.',t.title)+`<section class="glass result"><span class="eyebrow">Итоги занятия</span><div class="result-number">${t.tasks.length-counts.pending}<span class="muted"> / ${t.tasks.length}</span></div><div class="result-stats">${Object.entries({...outcomeNames,self:'Самопроверка по образцу'}).map(([key,label])=>`<div><strong>${counts[key]}</strong><span>${label}</span></div>`).join('')}</div><p class="muted">Несколько попыток без подсказок считаются самостоятельным решением. Открытые задания отмечаются отдельно после самопроверки.</p><ol class="result-task-list">${t.tasks.map((q,i)=>`<li><span>${i+1}. ${q.kind==='open'&&record(q.id).correct?'Самопроверка по образцу':outcomeNames[classifyAttempt(record(q.id))]}${record(q.id).everWrong?' · были ошибки':''}</span>${action('review-task','Открыть','text-button',`data-index="${i}"`)}</li>`).join('')}</ol><div class="toolbar">${action('retry',`Повторить ошибки и пропуски (${retry})`,'primary',retry?'':'disabled')}${action('repeat','Начать тему заново','secondary')}${action('topics','К темам →','secondary')}</div></section>`+renderNextSteps({grade:route.grade,level:route.level});
+    const next=renderNextSteps({grade:route.grade,level:route.level});
+    return header('Итоги занятия',t.title)+`<section class="glass result"><span class="eyebrow">Итоги занятия</span><div class="result-number">${t.tasks.length-counts.pending}<span class="muted"> / ${t.tasks.length}</span></div>${next}<div class="result-stats">${Object.entries({...outcomeNames,self:'Самопроверка по образцу'}).map(([key,label])=>`<div><strong>${counts[key]}</strong><span>${label}</span></div>`).join('')}</div><p class="muted">Несколько попыток без подсказок считаются самостоятельным решением. Открытые задания отмечаются отдельно после самопроверки.</p><ol class="result-task-list">${t.tasks.map((q,i)=>`<li><span>${i+1}. ${q.kind==='open'&&record(q.id).correct?'Самопроверка по образцу':outcomeNames[classifyAttempt(record(q.id))]}${record(q.id).everWrong?' · были ошибки':''}</span>${action('review-task','Открыть','text-button',`data-index="${i}"`)}</li>`).join('')}</ol><div class="toolbar">${action('retry',`Повторить ошибки и пропуски (${retry})`,next?'secondary':'primary',retry?'':'disabled')}${action('repeat','Начать тему заново','secondary')}${action('topics','К темам →','secondary')}</div></section>`;
   }
   function shuffled(values,seed){
     const hash=value=>{let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
     return [...values].sort((a,b)=>hash(`${seed}:${a.id}`)-hash(`${seed}:${b.id}`));
   }
-  function presetCandidates(){return shuffled(filteredTasks().filter(q=>(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded)&&q.source==='class'&&q.topicId===filter&&q.difficulty===presetLevel),presetSeed);}
+  function presetCandidates(){return shuffled(filteredTasks().filter(q=>q.id!==work().exampleId&&(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded)&&q.source==='class'&&q.topicId===filter&&q.difficulty===presetLevel),presetSeed);}
   function renderPresets(){
     if(filter==='all')return '<div class="glass preset-panel"><h2>Заготовки по сложности</h2><p class="muted">Выберите тему. Можно посмотреть состав заготовки и добавить её к ручному выбору.</p></div>';
     const ts=filteredTasks().filter(q=>(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded)&&q.source==='class'&&q.topicId===filter),pool=presetCandidates(),selected=pool.slice(0,presetCount);
@@ -609,22 +731,23 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     return action('toggle-builder-section',`<span>${label}</span>${count?`<span class="toggle-count">${count}</span>`:''}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>`,cls,`id="toggle-${key}" data-section="${key}" aria-controls="builder-${key}" aria-expanded="${builderSections.has(key)}"`);
   }
   function renderWorkPanel(){
-    const w=work();
+    const w=work(),example=question(w.exampleId);
     const items=w.ids.map((id,i)=>{
       const q=question(id);
-      return `<li><div class="paper-task"><span class="paper-task-number">${i+1}.</span><div><p>${workTaskSummary(q)}</p>${q.source==='exam'?`<div class="paper-exam-image">${examImages(q.images,'Условие: '+taskSource(q),'',true)}</div>`:figureSVG(q.id,true)}</div></div><div class="mini-actions">${action('up','↑','',`data-id="${id}" aria-label="Поднять задание ${i+1}" ${i===0?'disabled':''}`)}${action('down','↓','',`data-id="${id}" aria-label="Опустить задание ${i+1}" ${i===w.ids.length-1?'disabled':''}`)}${action('remove','Удалить','',`data-id="${id}" aria-label="Удалить задание ${i+1}"`)}</div></li>`;
+      return `<li><div class="paper-task"><span class="paper-task-number">${i+1}.</span><div>${workTaskSummary(q)}</div></div><div class="mini-actions">${action('up','↑','',`data-id="${id}" aria-label="Поднять задание ${i+1}" ${i===0?'disabled':''}`)}${action('down','↓','',`data-id="${id}" aria-label="Опустить задание ${i+1}" ${i===w.ids.length-1?'disabled':''}`)}${action('remove','Удалить','',`data-id="${id}" aria-label="Удалить задание ${i+1}"`)}</div></li>`;
     }).join('');
     return `<button type="button" class="work-backdrop ${workOpen?'is-open':''}" data-action="close-work" aria-label="Закрыть панель работы" tabindex="-1"></button>
       <aside id="work-panel" class="work-panel ${workOpen?'is-open':''}" tabindex="-1" aria-labelledby="work-heading">
         <div class="paper-panel-heading"><h2 id="work-heading">Ваша работа <span class="badge">${w.ids.length} / ${WORK_LIMIT}</span></h2>${action('close-work','Закрыть ×','secondary work-close')}</div>
         <section class="work-paper" aria-label="Состав работы на листе А4">
-          <div class="paper-masthead"><span>1430 <span aria-hidden="true">/</span> МАТЕМАТИКА</span><span>А4</span></div>
+          <div class="paper-masthead"><span>БАЗА · Математика школы 1430</span><span>А4</span></div>
           <label class="field paper-title" for="work-title"><span>Название работы</span><input id="work-title" maxlength="70" value="${esc(w.title)}"></label>
           <div class="paper-meta"><span class="paper-name-line">Имя и фамилия</span><label class="paper-variant" for="work-variant">Вариант <input id="work-variant" maxlength="20" value="${esc(w.variant)}"></label></div>
           <div id="work-paper-body" class="paper-body" tabindex="0" role="region" aria-label="Выбранные задания">
+            ${example?`<details class="practice-example"><summary>Пример с разбором</summary><p class="work-source">${esc(taskSource(example))}</p>${MathTaskView.workedExample(example,{mathHTML,figureSVG,lazy:true})}${action('remove-work-example','Убрать пример','text-button')}</details>`:''}
             ${w.ids.length?`<ol class="work-list">${items}</ol>`:`<div class="paper-empty"><svg viewBox="0 0 120 100" fill="none" aria-hidden="true"><path d="M20 78h84M60 84V14" stroke="currentColor" stroke-opacity=".25"/><path d="M27 29Q60 125 93 29" stroke="currentColor" stroke-width="1.5"/><path d="m47 40 13-18 19 24-19 17-13-23Z" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-opacity=".35"/><circle cx="80" cy="59" r="3" fill="currentColor"/><path d="M16 18h10m-5-5v10M96 80h10m-5-5v10" stroke="currentColor" stroke-opacity=".3"/></svg><strong>Здесь начнётся работа</strong><p>Добавляйте задания из банка —<br>они появятся на этом листе.</p></div>`}
           </div>
-          <div class="paper-footer"><span>ШКОЛА 1430</span><span>${w.ids.length?taskCount(w.ids.length):'От вопроса к открытию'}</span></div>
+          <div class="paper-footer"><span>БАЗА · ШКОЛА 1430</span><span>${w.ids.length?taskCount(w.ids.length):'От вопроса к открытию'}</span></div>
         </section>
         <div class="paper-actions"><label class="check"><input id="include-answers" type="checkbox" ${w.answers?'checked':''}>Ответы и критерии для учителя</label>${action('run-work','Решать на сайте →','primary',w.ids.length?'':'disabled')}${action('print-preview','Предпросмотр А4 →','secondary',w.ids.length?'':'disabled')}<div class="builder-actions paper-save-actions">${action('save-work','Сохранить подборку','secondary',w.ids.length?'':'disabled')}${action('export-work','Сохранить в файл','secondary',w.ids.length?'':'disabled')}${action('import-work','Открыть из файла','text-button')}</div><input id="import-file" type="file" accept=".json,application/json" hidden></div>
         <div class="paper-utilities">${builderToggle('variants','Следующий вариант',0,'work-utility-toggle')}<div id="builder-variants" class="work-utility-panel" ${builderSections.has('variants')?'':'hidden'}><section class="variant-controls"><h3>Следующий вариант</h3><label class="field" for="variant-seed">Ключ подбора<input id="variant-seed" maxlength="40" value="${esc(w.seed||'1430')}" aria-describedby="variant-help"></label><p class="muted" id="variant-help">Для заданий классов замены сохраняют тему, ступень сложности и формат. Оригинальные экзаменационные примеры сохраняются без замены. Одинаковый ключ и исходная работа дают одинаковый результат. Предыдущий вариант сохранится в подборках.</p>${action('new-variant','Создать следующий вариант','secondary',w.ids.length?'':'disabled')}</section></div>${builderToggle('library','Мои подборки',library.length,'work-utility-toggle')}<div id="builder-library" class="work-utility-panel" ${builderSections.has('library')?'':'hidden'}>${renderLibrary()}</div></div>
@@ -666,7 +789,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     return `<div id="auto-result" class="auto-result ${r.shortfall||r.missingCompetencies.length?'has-shortage':''}" role="status" tabindex="-1"><strong>${heading}</strong><p>В работе: ${taskCount(r.workSize)}. ${r.selected?`Подобрано без повторов по выбранным фильтрам.`:'Состав текущей работы не изменился.'}</p>${r.searchLimited?'<p>Подбор остановлен на ограничении перебора. Не найдено полного набора; попробуйте другой запуск или смягчите условия.</p>':''}${r.quotaResults?.length?`<ul>${r.quotaResults.map(q=>`<li>${esc(q.label||q.difficulty)}: ${q.selected} из ${q.requested}${q.shortfall?` · не хватает ${q.shortfall}`:''}</li>`).join('')}</ul>`:''}${r.previousSaved?'<p>Предыдущая работа сохранена в «Мои подборки».</p>':''}${r.shortfall?`<p>Не хватает: ${taskCount(r.shortfall)}. ${r.mode==='append'&&r.capacity<r.requested?`Свободных мест до сборки: ${r.capacity}. `:''}По фильтрам ${r.mode==='append'?'новых ':''}доступно: ${taskCount(r.available)}.</p>`:''}${r.coveredCompetencies.length?`<p>Проверяемые компетенции: ${esc(labels(r.coveredCompetencies))}.</p>`:''}${r.missingCompetencies.length?`<p class="auto-missing">Не удалось включить компетенции: ${esc(labels(r.missingCompetencies))}. Измените фильтры или увеличьте количество заданий.</p>`:''}</div>`;
   }
   function renderAutoAssembly(list,w){
-    list=list.filter(q=>!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded);
+    list=list.filter(q=>q.id!==w.exampleId&&(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded));
     const availableNew=list.filter(q=>!w.ids.includes(q.id)).length,capacity=WORK_LIMIT-w.ids.length;
     return `<section class="glass auto-panel" aria-labelledby="auto-heading"><div class="auto-panel-heading"><span class="badge">Подбор по фильтрам</span><h2 id="auto-heading">Автоматическая сборка</h2><p class="muted" id="auto-help">Выберите источник, компетенции и сложность выше, затем укажите количество. Конструктор подберёт задания из найденных и постарается включить каждую выбранную компетенцию.</p></div><div class="auto-build-controls"><label class="field" for="auto-count">${bankTools.structured?'Количество без структуры':'Количество заданий'}<input id="auto-count" type="number" inputmode="numeric" min="1" max="${WORK_LIMIT}" step="1" required value="${esc(autoCount)}" ${bankTools.structured?'disabled':''} aria-describedby="auto-help auto-available"></label><div class="auto-availability" id="auto-available"><strong>Доступно: ${taskCount(list.length)}</strong><span>Для добавления без повторов: ${taskCount(availableNew)}</span><span>Свободных мест в работе: ${capacity}</span></div></div><div class="builder-actions auto-actions">${action('auto-build','Собрать новую работу','primary',list.length?'':'disabled')}${action('auto-append','Добавить к работе','secondary',availableNew&&capacity?'':'disabled')}</div><p class="muted auto-preserve-note">При новой сборке текущая непустая работа сохранится в «Мои подборки». Каждый запуск подбирает набор заново. Учитываются все фильтры банка, включая поиск и избранное.</p>${renderAutoResult()}${renderAssemblyOptions(list)}</section>`;
   }
@@ -676,7 +799,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       autoResult={invalid:true};render();const next=$('auto-count');next?.setCustomValidity('Введите целое количество заданий от 1 до 60.');next?.reportValidity();$('auto-result')?.focus({preventScroll:true});return;
     }
     const w=work(),capacity=mode==='append'?WORK_LIMIT-w.ids.length:WORK_LIMIT;
-    const pool=filteredTasks().filter(q=>!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded);
+    const pool=filteredTasks().filter(q=>q.id!==w.exampleId&&(!bankTools.excludeMarked||!bankTools.notes[q.id]?.excluded));
     const result=MathAutoWork.select(pool,{count:Number(autoCount),seed:freshId(),competencies:competencyFilter,excludeIds:mode==='append'?w.ids:[],excludeTasks:mode==='append'?w.ids.map(question):[],limit:capacity,mode:bankTools.mode,familyId:bankTools.familyId,openCount:bankTools.structured?Number(bankTools.openCount):0,difficultyQuotas:bankTools.structured?MathBankWorkspace.difficulties.map(difficulty=>({difficulty,count:Number(bankTools.quotas[difficulty])})):undefined});
     let previousSaved=false;
     if(result.ids.length){
@@ -687,8 +810,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   }
   function workSources(ids){return [...new Set(ids.map(id=>question(id)?.sourceLabel).filter(Boolean))].join(' · ');}
   function taskSource(q){return q.source==='exam'?`${q.sourceLabel} · № ${q.number}${q.exampleNumber?` · пример ${q.exampleNumber}`:''}`:q.source==='sdamgia'?`${q.sourceLabel} · ${q.topic} · № ${q.sourceId}`:`${q.sourceLabel} · ${q.topic} · № ${q.id}`;}
-  function workTaskSummary(q){return q.source==='exam'?`<span class="work-source">${esc(taskSource(q))}</span>`:q.source==='sdamgia'?`<span class="work-source">${esc(taskSource(q))}</span>${sourcedPrompt(q)}`:`<span class="work-source">${esc(q.sourceLabel)} · ${esc(q.topic)}</span>${mathHTML(q.prompt)}`;}
-  function examTaskMarkup(q,lazy=false){return `${q.contextImages.length?`<div class="work-exam-context"><p class="muted">Общее условие к заданию № ${q.number}</p>${examImages(q.contextImages,'Общее условие ФИПИ к заданию '+q.number,'',lazy)}</div>`:''}${examImages(q.images,'Оригинал ФИПИ: '+taskSource(q),'',lazy)}`;}
+  function workTaskSummary(q){return `<span class="work-source">${esc(taskSource(q))}</span><div class="task-preview" tabindex="0" role="region" aria-label="Условие задания ${esc(q.id)}">${MathTaskView.content(q,{mathHTML,figureSVG,compact:true,lazy:true})}</div>`;}
+  function examTaskMarkup(q,lazy=false){return MathTaskView.content(q,{mathHTML,lazy});}
   function competencyTags(q){
     const ids=new Set(MathCompetencies.forTask(q));
     return `<div class="competency-tags" aria-label="Проверяемые умения">${MathCompetencies.definitions.filter(item=>ids.has(item.id)).map(item=>`<span class="competency-tag" data-competency-tag="${item.id}" title="${esc(item.description)}">${esc(item.title)}</span>`).join('')}</div>`;
@@ -723,7 +846,8 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     for(const q of base)for(const id of MathCompetencies.forTask(q))counts.set(id,counts.get(id)+1);
     return `<fieldset class="competency-filter" aria-describedby="competency-help"><legend>Компетенции ученика</legend><p id="competency-help" class="muted">Какие умения должны проверять задания? При выборе нескольких достаточно одного совпадения. Числа — количество заданий в выбранном источнике.</p><div class="competency-options">${MathCompetencies.definitions.map(item=>`<label class="competency-choice ${competencyFilter.includes(item.id)?'is-selected':''}" for="competency-${item.id}" title="${esc(item.description)}"><input type="checkbox" id="competency-${item.id}" data-competency="${item.id}" ${competencyFilter.includes(item.id)?'checked':''}><span>${esc(item.title)}</span><small class="competency-count" aria-label="${taskCount(counts.get(item.id))}">${counts.get(item.id)}</small></label>`).join('')}</div><div class="competency-selection"><span class="muted" role="status">${competencyFilter.length?`Выбрано компетенций: ${competencyFilter.length}`:'Все компетенции'}</span>${action('clear-competencies','Снять выбор','text-button',competencyFilter.length?'':'disabled')}</div></fieldset>`;
   }
-  function bankTask(q,w){return `<article class="glass bank-task ${q.source==='exam'?'exam-bank-task':''}" data-task-id="${esc(q.id)}"><h3>${q.source==='class'?subjectIcon(q.subject):''}<span>${esc(taskSource(q))}</span></h3>${q.source==='exam'?`${difficultyTags(q)}<span class="badge">Оригинал ФИПИ · ${q.kind==='open'?'Развёрнутое решение':'Краткий ответ'}</span>${competencyTags(q)}${examTaskMarkup(q,true)}`:q.source==='sdamgia'?`${difficultyTags(q)}${competencyTags(q)}${sourcedPrompt(q)}${sourceLink(q)}`:`${difficultyTags(q)}${competencyTags(q)}<p>${mathHTML(q.prompt)}</p>${figureSVG(q.id,true)}${q.source==='methods'?MathBankMethods.representations(q,{mathHTML})+MathAnswerFormats.renderPrompt(q,{mathHTML,esc}):''}`}<div class="builder-actions">${action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу +','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=WORK_LIMIT?'disabled':''}`)}${action('favorite',favorites.has(q.id)?'★ В избранном':'☆ В избранное','secondary favorite-button',`data-id="${q.id}" aria-pressed="${favorites.has(q.id)}"`)}</div>${renderTaskTools(q)}</article>`;}
+  function bankTask(q,w){return `<article class="glass bank-task ${q.source==='exam'?'exam-bank-task':''}" data-task-id="${esc(q.id)}" data-task-source="${esc(q.source)}"><div class="task-heading"><h3>${q.source==='class'?subjectIcon(q.subject):''}<span>${esc(taskSource(q))}</span></h3><span class="task-format">${esc(MathTaskView.format(q))}</span></div>${difficultyTags(q)}${competencyTags(q)}${MathTaskView.content(q,{mathHTML,figureSVG,compact:true,lazy:true})}${q.source==='sdamgia'?sourceLink(q):''}<div class="builder-actions">${w.exampleId===q.id?'<span class="badge">Пример с разбором</span>':action(w.ids.includes(q.id)?'remove':'add',w.ids.includes(q.id)?'✓ Добавлено · убрать':'Добавить в работу','secondary',`data-id="${q.id}" ${!w.ids.includes(q.id)&&w.ids.length>=WORK_LIMIT?'disabled':''}`)}${action('favorite',favorites.has(q.id)?'★ В избранном':'☆ В избранное','secondary favorite-button',`data-id="${q.id}" aria-pressed="${favorites.has(q.id)}"`)}</div><details class="task-answer"><summary>Ответ и разбор</summary>${MathTaskView.answer(q,{mathHTML})}${q.kind==='open'?'<p class="muted">Развёрнутое решение проверяется по критериям; автоматический балл за текст не выставляется.</p>':''}${q.rubric?.length?`<ul>${q.rubric.map(item=>`<li>${mathHTML(item)}</li>`).join('')}</ul>`:''}${q.source==='exam'?`<div class="task-answer-references" data-reference-task="${esc(q.id)}"></div>`:''}${q.id!==w.exampleId&&!w.ids.includes(q.id)&&MathTaskView.hasWorkedSolution(q)?action('set-work-example',w.exampleId?'Заменить пример с разбором':'Использовать как пример с разбором','text-button',`data-id="${esc(q.id)}"`):''}</details>${renderTaskTools(q)}</article>`;}
+
   function renderBuilder(){
     const w=work(),base=sourceTasks(),classTopics=BANK.filter(t=>base.some(q=>['class','enrichment','quality'].includes(q.source)&&q.topicId===t.id)),hasClasses=classTopics.length>0;
     const list=filteredTasks(),difficultyOptions=[...new Set(base.map(q=>q.difficulty))].sort((a,b)=>[...levels,'Высокий'].indexOf(a)-[...levels,'Высокий'].indexOf(b));
@@ -757,12 +881,13 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       </section>${renderWorkPanel()}</div>`;
   }
   function answerKey(q,number){
-    if(q.source==='sdamgia')return `<section class="answer-key"><strong>${number}. ${esc(taskSource(q))}</strong>${q.answerHtml?`<div class="sourced-content">${q.answerHtml}</div>`:`<p>Ответ: ${mathHTML(q.display)}</p>`}${sourceLink(q)}${q.solutionImages?.length?examImages(q.solutionImages,'Разбор задания '+q.sourceId):sourcedSolution(q)}${q.kind==='open'?`<ul>${q.rubric.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</section>`;
+    if(q.source==='sdamgia')return `<section class="answer-key"><strong>${number}. ${esc(taskSource(q))}</strong>${q.answerHtml?`<div class="sourced-content">${q.answerHtml}</div>`:`<p>Ответ: ${mathHTML(q.display)}</p>`}${sourceLink(q)}${q.solutionEditorialNote?`<p class="muted">${esc(q.solutionEditorialNote)}</p>`:''}${q.solutionImages?.length?examImages(q.solutionImages,'Разбор задания '+q.sourceId):sourcedSolution(q)}${q.kind==='open'?`<ul>${q.rubric.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</section>`;
     if(q.source==='exam')return `<section class="answer-key"><strong>${number}. ${esc(taskSource(q))}</strong>${q.answerText?`<p>Ответ ФИПИ: ${esc(q.answerText)}</p>`:''}${q.kind==='open'?'<p>Решение и оценивание — по официальным критериям ФИПИ на следующих страницах.</p>':''}</section>`;
     return `<section class="answer-key"><strong>${number}. ${q.kind==='open'?'Образец · самопроверка':'Ответ: '+mathHTML(q.display.replace(/\./g,','))}</strong><p>${mathHTML(q.solution)}</p>${q.kind==='open'?`<strong>Критерии</strong><ul>${q.rubric.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</section>`;
   }
   function printMarkup(){
-    const w=work(),tasks=w.ids.map(question),pages=[],top=isKey=>`<div class="sheet-header"><div class="sheet-brand">1430 × МАТЕМАТИКА</div><h2>${esc(w.title.trim()||'Самостоятельная работа')}${isKey?' · ответы':''}</h2><div class="sheet-meta">Вариант ${esc(w.variant.trim()||'1')}${isKey?' · Для учителя':''}</div></div>`;
+    const w=work(),tasks=w.ids.map(question),example=question(w.exampleId),pages=[],top=isKey=>`<div class="sheet-header"><div class="sheet-brand">БАЗА · Математика школы 1430</div><h2>${esc(w.title.trim()||'Самостоятельная работа')}${isKey?' · ответы':''}</h2><div class="sheet-meta">Вариант ${esc(w.variant.trim()||'1')}${isKey?' · Для учителя':''}</div></div>`;
+    if(example)pages.push(`${top(false)}<section class="practice-example"><h3>Пример с разбором</h3><p class="print-source">${esc(taskSource(example))}</p>${MathTaskView.workedExample(example,{mathHTML,figureSVG,figureOptions:{interactive:false}})}</section>`);
     let pending=[];const flush=()=>{if(!pending.length)return;for(const group of taskPages(pending.map(x=>x.q)))pages.push(`${top(false)}<div class="name-line">Имя и фамилия: __________________________ Класс: ______</div>${group.map(({q})=>`<section class="print-question ${group.length===1?'single':''}"><p class="print-source">${esc(taskSource(q))}</p><p><strong>${tasks.indexOf(q)+1}.</strong> ${mathHTML(q.prompt)}</p>${figureSVG(q.id,true,{interactive:false})}<div class="solution-lines" aria-label="Место для решения"></div></section>`).join('')}`);pending=[];};
     tasks.forEach((q,i)=>{if(q.source==='methods'){flush();pages.push(`${top(false)}<div class="name-line">Имя и фамилия: __________________________ Класс: ______</div><section class="print-question single"><p class="print-source">${esc(taskSource(q))}</p><p><strong>${i+1}.</strong> ${mathHTML(q.prompt)}</p>${MathBankMethods.representations(q,{mathHTML})}${MathAnswerFormats.renderPrompt(q,{mathHTML,esc})}<p class="muted">${esc(MathAnswerFormats.hint(q))}</p><div class="solution-lines" aria-label="Место для решения"></div></section>`);return;}if(q.source==='sdamgia'){flush();(q.printImages||[]).forEach((src,j)=>pages.push(`${top(false)}<div class="name-line">Имя и фамилия: __________________________ Класс: ______</div><section class="print-exam-block print-source-original"><h3>${i+1}. ${esc(taskSource(q))}${q.printImages.length>1?` · фрагмент ${j+1}/${q.printImages.length}`:''}</h3>${sourceLink(q)}${examImages([src],'Условие задания '+q.sourceId)}${j===q.printImages.length-1?'<div class="exam-solution-space" aria-label="Место для решения"></div>':''}</section>`));return;}if(q.source!=='exam'){pending.push({q,number:i+1});return;}flush();if(q.contextImages.length)q.contextImages.forEach((src,j)=>pages.push(`${top(false)}<section class="print-exam-block"><h3>${i+1}. ${esc(taskSource(q))} · общее условие${q.contextImages.length>1?` (${j+1}/${q.contextImages.length})`:''}</h3>${examImages([src],'Общее условие '+taskSource(q))}</section>`));q.images.forEach((src,j)=>pages.push(`${top(false)}<div class="name-line">Имя и фамилия: __________________________ Класс: ______</div><section class="print-exam-block${j===0?' print-question':''}"><h3>${i+1}. ${esc(taskSource(q))}${q.images.length>1?` · фрагмент ${j+1}/${q.images.length}`:''}</h3>${examImages([src],'Оригинал '+taskSource(q))}${j===q.images.length-1?'<div class="exam-solution-space" aria-label="Место для решения"></div>':''}</section>`));});flush();
     if(w.answers){let keyGroup=[];const flushKeys=()=>{if(keyGroup.length){pages.push(top(true)+keyGroup.map(({q,number})=>answerKey(q,number)).join(''));keyGroup=[];}};tasks.forEach((q,i)=>{if(q.source!=='sdamgia'){keyGroup.push({q,number:i+1});if(keyGroup.length===3)flushKeys();return;}flushKeys();q.solutionImages.forEach((src,j)=>pages.push(`${top(true)}<section class="print-exam-block print-source-original"><h3>${i+1}. ${esc(taskSource(q))} · разбор${q.solutionImages.length>1?` (${j+1}/${q.solutionImages.length})`:''}</h3>${sourceLink(q)}${j===0?(q.answerHtml?`<div class="sourced-content">${q.answerHtml}</div>`:`<p>Ответ: ${mathHTML(q.display)}</p>`):''}${examImages([src],'Разбор задания '+q.sourceId)}</section>`));if(q.kind==='open')pages.push(`${top(true)}<section class="answer-key"><h3>${i+1}. ${esc(taskSource(q))} · критерии самопроверки</h3><ul>${q.rubric.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`);});flushKeys();const included=new Set();tasks.filter(q=>q.source==='exam'&&q.kind==='open').forEach(q=>q.solutionPages.forEach(p=>{const key=p.image;if(included.has(key))return;included.add(key);pages.push(`${top(true)}<section class="print-exam-block"><h3>${tasks.indexOf(q)+1}. ${esc(taskSource(q))} · официальные решения и критерии · стр. ${esc(p.page||'')}</h3>${examImages([p.image],'Официальные критерии ФИПИ')}</section>`);}));}
@@ -788,10 +913,11 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     $('work-panel')?.classList.remove('is-open');document.querySelector('.work-backdrop')?.classList.remove('is-open');
     const toggle=document.querySelector('.work-toggle');toggle?.setAttribute('aria-expanded','false');syncWorkAccessibility();if(focus)toggle?.focus();
   }
-  function saveLibrary(w=work()){
-    const value=sanitizeWork(w,catalogTasks);if(!value.ids.length)return null;
-    const existing=library.find(x=>x.title===value.title&&x.variant===value.variant&&JSON.stringify(x.ids)===JSON.stringify(value.ids));
+  function saveLibrary(w=work(),{preserve=false}={}){
+    const value=sanitizeWork(w,catalogTasks);if(!value.ids.length&&!preserve)return null;
+    const existing=library.find(x=>x.title===value.title&&x.variant===value.variant&&x.exampleId===value.exampleId&&JSON.stringify(x.ids)===JSON.stringify(value.ids));
     if(existing){Object.assign(existing,value);return existing;}
+    if(preserve&&library.length>=200)return null;
     const entry={...value,id:freshId(),grade:null,level:null,created:new Date().toISOString()};library.unshift(entry);library=library.slice(0,200);return entry;
   }
   function downloadFile(bytes,name,type){const url=URL.createObjectURL(new Blob([bytes],{type})),link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -800,20 +926,28 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     try{
       const raw=JSON.parse(await file.text());
       if(raw.format!=='mat1430-work'||![1,2].includes(raw.version)||!raw.work||!Array.isArray(raw.work.ids))throw new Error('schema');
-      if(dataLoader){await dataLoader.ensureIds(raw.work.ids);rebuildCatalog();}
+      if(dataLoader){await dataLoader.ensureIds([...raw.work.ids,raw.work.exampleId]);rebuildCatalog();}
       if(raw.version===1&&!BANK.some(t=>t.grade===raw.grade&&t.level===raw.level))throw new Error('legacy schema');
       const clean=raw.version===1?sanitizeWork(raw.work,allTasks,raw.grade,raw.level):sanitizeWork(raw.work,catalogTasks);
-      if(!clean.ids.length||clean.ids.length!==raw.work.ids.length)throw new Error('tasks');
+      if(!clean.ids.length||clean.ids.length!==raw.work.ids.length||raw.work.exampleId!==undefined&&raw.work.exampleId!==clean.exampleId)throw new Error('tasks');
       saveLibrary();works.set('unified',clean);resetFilters();sourceFilter='all';go(route.role==='teacher'?'builder':'works',{grade:null,level:null,topic:null,taskIds:null});notify('Подборка открыта. Предыдущая работа сохранена в списке.');
     }catch(error){notify('Не удалось открыть подборку. Нужен файл БАЗЫ с действующими номерами заданий.');}
   }
   document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>{topicSearch='';go('dashboard',{role:b.dataset.role,grade:null,level:null,topic:null,index:0,difficulty:'all',taskIds:null});}));
+  $('app').addEventListener('toggle',event=>{
+    const details=event.target;
+    if(!details.matches?.('details.task-answer')||!details.open)return;
+    const host=details.querySelector('[data-reference-task]');
+    if(!host||host.dataset.loaded)return;
+    const q=question(host.dataset.referenceTask);if(!q)return;
+    host.innerHTML=MathTaskView.references(q,{lazy:true});host.dataset.loaded='true';
+  },true);
   $('app').addEventListener('input',event=>{
     const e=event.target;
     if(e.id==='method-query'){
       const start=e.selectionStart,end=e.selectionEnd;methodView.query=e.value.slice(0,200);methodPage=0;render();$('method-query')?.focus({preventScroll:true});if(start!==null)$('method-query')?.setSelectionRange(start,end);return;
     }
-    if((e.id==='work-run-answer'||e.id==='work-run-draft')&&route.view==='work-run'){
+    if((e.id==='work-run-answer'||e.id==='work-run-draft')&&route.view==='work-run'&&ownsActiveRun()){
       MathWorkRunner.setDraft(activeRun,e.value);
       syncRunActivity();
       if(e.id==='work-run-draft'){const start=e.selectionStart,end=e.selectionEnd;render();$('work-run-draft')?.focus({preventScroll:true});if(start!==null)$('work-run-draft')?.setSelectionRange(start,end);}
@@ -879,7 +1013,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     if(e.id==='subtype-filter'){subtypeFilter=subtypeById.has(e.value)?e.value:'all';bankPage=0;rerender=true;}
     if(e.id==='subtype-exam-filter'){subtypeExam=['ege-profile','ege-basic','oge'].includes(e.value)?e.value:'all';rerender=true;}
-    if(e.dataset.runRubric!==undefined&&route.view==='work-run'){MathWorkRunner.setCriterion(activeRun,catalogTasks,Number(e.dataset.runRubric),e.checked);rerender=true;}
+    if(e.dataset.runRubric!==undefined&&route.view==='work-run'&&ownsActiveRun()){MathWorkRunner.setCriterion(activeRun,catalogTasks,Number(e.dataset.runRubric),e.checked);rerender=true;}
     if(e.dataset.competency!==undefined){const selected=new Set(competencyFilter);if(e.checked)selected.add(e.dataset.competency);else selected.delete(e.dataset.competency);competencyFilter=MathCompetencies.normalize([...selected]);presetLevel='';bankPage=0;rerender=true;}
     if(e.id==='subject-filter'){subjectFilter=e.value;filter='all';presetLevel='';bankPage=0;rerender=true;}
     if(e.id==='bank-filter'){filter=e.value;presetLevel='';bankPage=0;rerender=true;}
@@ -902,15 +1036,15 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       catch(error){notify(error.message||'Не удалось сохранить рецензию.');}return;
     }
     if(event.target.id==='recovery-answer-form'&&recoveryState){const state=recoveryState,i=state.stage,q=question(state.ids[i]);if(state.owner!==recoveryOwner()||state.correct[i])return;state.drafts[i]=$('recovery-answer').value;const result=checkAnswer(state.drafts[i],q);state.correct[i]=result.correct;state.feedback[i]=result.valid?result.correct?'correct':'wrong':'format';render();$('recovery-panel')?.focus({preventScroll:true});return;}
-    if(event.target.id==='work-run-answer-form'&&route.view==='work-run'){
+    if(event.target.id==='work-run-answer-form'&&route.view==='work-run'&&ownsActiveRun()){
       MathWorkRunner.setDraft(activeRun,$('work-run-answer').value);MathWorkRunner.submit(activeRun,catalogTasks,checkAnswer);render();$('work-run-feedback')?.focus({preventScroll:true});return;
     }
     if(event.target.id==='profile-form'){
       const first=$('first-name'),last=$('last-name'),letter=$('class-letter');
       first.setCustomValidity(first.value.trim()?'':'Введите имя.');last.setCustomValidity(last.value.trim()?'':'Введите фамилию.');
       if(!event.target.reportValidity())return;
-      const signature=[first.value.trim().toLowerCase(),last.value.trim().toLowerCase(),letter.value.toUpperCase(),route.grade].join('|');
-      const old=[student.first.toLowerCase(),student.last.toLowerCase(),student.letter,student.grade].join('|');
+      const signature=[first.value.trim().toLowerCase(),last.value.trim().toLowerCase()].join('|');
+      const old=[student.first.toLowerCase(),student.last.toLowerCase()].join('|');
       if(signature!==old)clearStudent();
       student={id:student.id||freshId(),first:first.value.trim(),last:last.value.trim(),letter:letter.value.toUpperCase(),grade:route.grade};go('topics',{topic:null,taskIds:null});
     }
@@ -949,7 +1083,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='nav-device'){await go('devices',{grade:null,level:null,topic:null});return;}
     if(a==='dashboard-load-work'&&route.role==='teacher'){
       const saved=library.find(item=>item.id===id);if(!saved)return;
-      try{if(dataLoader){await dataLoader.ensureIds(saved.ids);rebuildCatalog();}saveLibrary();works.set('unified',sanitizeWork(saved,catalogTasks));resetFilters();sourceFilter=saved.grade?'class:'+saved.grade+':'+saved.level:'all';await go('builder',{grade:null,level:null,topic:null});}
+      try{if(dataLoader){await dataLoader.ensureIds([...saved.ids,saved.exampleId]);rebuildCatalog();}saveLibrary();works.set('unified',sanitizeWork(saved,catalogTasks));resetFilters();sourceFilter=saved.grade?'class:'+saved.grade+':'+saved.level:'all';await go('builder',{grade:null,level:null,topic:null});}
       catch(error){notify('Материалы подборки пока недоступны. Подключитесь к интернету или скачайте нужный класс.');}return;
     }
     if(['pwa-install','pwa-download','pwa-remove','pwa-update'].includes(a)){
@@ -981,6 +1115,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='backup-cancel'){pendingBackup=null;render();return;}
     if(a==='backup-confirm'){await restoreBackup();return;}
     if(a==='report-home'&&route.role==='teacher'){await go('report');return;}
+    if(a==='report-practice'&&route.role==='teacher'&&route.view==='report'){await openReportPractice(id,b);return;}
     if(a==='report-import'&&route.role==='teacher'){$('report-files')?.click();return;}
     if(a==='report-export'&&route.role==='teacher'){downloadFile(MathTeacherReport.csv(teacherReports,catalogTasks),'baza-class-results.csv','text/csv;charset=utf-8');return;}
     if(a==='report-clear'&&route.role==='teacher'){teacherReports=[];reportImportStatus='Сводка очищена.';render();return;}
@@ -988,7 +1123,17 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       const grade=Number(b.dataset.grade)||route.grade||learningRun?.grade||student.grade||5,level=b.dataset.level||route.level||learningRun?.level||'basic',options={grade,level};
       if(a==='learning-home'){await go('learning',{...options,topic:null,contentId:''});return;}
       if(a==='learning-lesson'||a==='learning-project'){await go('learning',{...options,topic:null,contentId:b.dataset.lesson||b.dataset.project});return;}
-      if(dataLoader){await dataLoader.load('class:'+grade);rebuildCatalog();}
+      if(dataLoader){
+        const version=navigationVersion;
+        b.disabled=true;
+        try{
+          await dataLoader.load('class:'+grade);
+          if(a==='learning-review'&&dataLoader.manifest.assets.methods)await dataLoader.load('methods').catch(()=>{});
+          if(version!==navigationVersion)return;
+          rebuildCatalog();
+        }catch(error){if(version===navigationVersion)notify('Материалы этого класса пока недоступны. Подключитесь к интернету или выберите загруженный класс.');return;}
+        finally{b.disabled=false;}
+      }
       let result;
       if(a==='learning-diagnostic')result=MathLearningPath.createDiagnostic(catalogTasks,learningState,options);
       else if(a==='learning-review')result=MathLearningPath.createReview(catalogTasks,learningState,options);
@@ -998,7 +1143,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
         if(item)result={work:{title:item.title,variant:'1',ids:item.practiceIds,answers:false},kind:a==='learning-lesson-practice'?'lesson':'project'};
       }
       if(!result?.work.ids.length){notify(result?.message||'Подходящих новых заданий пока нет.');return;}
-      startWorkRun(result.work,false,{kind:result.kind,grade,level});if(result.message)notify(result.message);return;
+      startWorkRun(result.work,false,{kind:result.kind,grade,level});if(result.message&&result.kind!=='diagnostic')notify(result.message);return;
     }
     if(a==='recovery-start'){
       const q=question(id);if(!q)return;const plan=recoveryPlan(q);if(!plan.simple||!plan.practice)return;
@@ -1026,13 +1171,13 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='run-work'){const value=id?library.find(w=>w.id===id):work();if(value)startWorkRun(value);return;}
     if(a==='replace-run'){if(pendingRun)startWorkRun(pendingRun,true,pendingRun.learningMeta);return;}
     if(a==='cancel-run-replace'){pendingRun=null;render();return;}
-    if(a==='resume-run'){if(activeRun){pendingRun=null;go('work-run',{grade:null,level:null,topic:null});}return;}
+    if(a==='resume-run'){if(ownsActiveRun()){pendingRun=null;go('work-run',{grade:null,level:null,topic:null});}return;}
     if(a==='import-work'){$('import-file')?.click();return;}
     if(a==='run-export'){
-      if(!activeRun)return;downloadFile(JSON.stringify({...MathWorkRunner.exportResults(activeRun,catalogTasks),participantRole:activeRun.participantRole||route.role,learner:{name:student.id?[student.first,student.last].join(' '):'Гостевое занятие',grade:student.grade||learningRun?.grade||null}},null,2),'baza-work-results.json','application/json');persist();notify('Результаты переданы браузеру для сохранения.');return;
+      if(!activeRun)return;downloadFile(JSON.stringify({...MathWorkRunner.exportResults(activeRun,catalogTasks),participantRole:activeRun.participantRole||'unknown',learner:activeRun.learner},null,2),'baza-work-results.json','application/json');persist();notify('Результаты переданы браузеру для сохранения.');return;
     }
     if(a.startsWith('run-')){
-      if(!activeRun||route.view!=='work-run')return;
+      if(!ownsActiveRun()||route.view!=='work-run')return;
       if(a==='run-exit'){go('works',{grade:null,level:null,topic:null});return;}
       if(a==='run-prev'||a==='run-next'||a==='run-task')MathWorkRunner.go(activeRun,a==='run-task'?Number(b.dataset.index):activeRun.index+(a==='run-next'?1:-1));
       else if(a==='run-reveal')MathWorkRunner.reveal(activeRun);
@@ -1040,7 +1185,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
       else if(a==='run-review')MathWorkRunner.review(activeRun,catalogTasks);
       else if(a==='run-finish'){
         MathWorkRunner.finish(activeRun,catalogTasks,checkAnswer);
-        if(route.role==='student'){
+        if(activeRun.participantRole==='student'&&ownsActiveRun()){
           const first=question(activeRun.ids[0]);learningState=MathLearningPath.recordSession(learningState,activeRun,catalogTasks,{kind:learningRun?.kind||'practice',grade:learningRun?.grade||first?.grade,level:learningRun?.level||first?.level,checker:checkAnswer});
         }
       }
@@ -1053,7 +1198,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     if(a==='clear-competencies'){competencyFilter=[];presetLevel='';bankPage=0;autoResult=null;render();$('competency-calculations')?.focus({preventScroll:true});return;}
     if(a==='reset-builder-filters'){if(dataLoader){await dataLoader.ensureSource('all');rebuildCatalog();}resetFilters();sourceFilter='all';render();$('source-filter')?.focus({preventScroll:true});return;}
-    if(a==='builder-home'){resetFilters();sourceFilter='all';go('builder',{role:'teacher',grade:null,level:null,topic:null,taskIds:null});return;}
+    if(a==='builder-home'){resetFilters();const device=pwaState();sourceFilter=device.supported&&!device.online?'all':`class:${appPreferences.grade}:${appPreferences.grade>=10?appPreferences.level:'basic'}`;go('builder',{role:'teacher',grade:null,level:null,topic:null,taskIds:null});return;}
     if(a==='exam-levels'){go('exam-levels',{grade:null,level:null,topic:null,examId:null,index:0,example:0});return;}
     if(a==='exam-start'){go('exam',{examId:b.dataset.exam,grade:null,level:null,topic:null,index:0,example:0});return;}
     if(a==='exam-catalog'){go('classes',{grade:null,level:null,topic:null,examId:null,index:0,example:0});return;}
@@ -1085,7 +1230,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
     if(a==='level'){go(route.role==='teacher'?'topics':'profile',{level:b.dataset.level,topic:null,index:0,difficulty:'all',taskIds:null});return;}
     if(a==='topics'){go('topics',{taskIds:null});return;}
-    if(a==='train'){topicLearningId=freshId();lessonPanels.set(b.dataset.topic,true);go('train',{topic:b.dataset.topic,index:0,difficulty:'all',taskIds:null});return;}
+    if(a==='train'){topicLearningId=freshId();lessonPanels.delete(b.dataset.topic);go('train',{topic:b.dataset.topic,index:0,difficulty:'all',taskIds:null});return;}
     if(a==='lesson-toggle'||a==='lesson-practice'){
       if(route.view!=='train')return;const open=a==='lesson-toggle'?!lessonPanels.get(route.topic):false;lessonPanels.set(route.topic,open);render();
       const target=open?$('lesson-example-body'):$('answer')||$('open-draft');if(target){if(open)target.setAttribute('tabindex','-1');target.focus({preventScroll:true});target.scrollIntoView({block:'nearest'});}return;
@@ -1147,9 +1292,19 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='favorite'){
       if(!question(id))return;if(favorites.has(id))favorites.delete(id);else favorites.add(id);autoResult=null;render();document.querySelector(`[data-action="favorite"][data-id="${id}"]`)?.focus({preventScroll:true});notify(favorites.has(id)?'Задание в избранном':'Задание убрано из избранного');return;
     }
+    if(a==='set-work-example'&&route.role==='teacher'&&route.view==='builder'){
+      const w=work();if(w.ids.includes(id)||!MathTaskView.hasWorkedSolution(question(id)))return;
+      w.exampleId=id;autoResult=null;
+      if(window.matchMedia('(max-width:650px)').matches)workOpen=true;
+      render();document.querySelector('#work-panel .practice-example > summary')?.focus({preventScroll:true});
+      notify('Пример с разбором сохранён в работе.');return;
+    }
+    if(a==='remove-work-example'&&route.role==='teacher'&&route.view==='builder'){
+      delete work().exampleId;autoResult=null;render();$('work-paper-body')?.focus({preventScroll:true});notify('Пример убран из работы.');return;
+    }
     if(['add','remove','up','down'].includes(a)){
       if(!question(id))return;const w=work(),i=w.ids.indexOf(id),scroll=window.scrollY;
-      if(a==='add'&&i<0&&w.ids.length<WORK_LIMIT)w.ids.push(id);
+      if(a==='add'&&i<0&&w.ids.length<WORK_LIMIT&&w.exampleId!==id)w.ids.push(id);
       if(a==='remove'&&i>=0)w.ids.splice(i,1);
       if(a==='up'&&i>0)[w.ids[i-1],w.ids[i]]=[w.ids[i],w.ids[i-1]];
       if(a==='down'&&i>=0&&i<w.ids.length-1)[w.ids[i+1],w.ids[i]]=[w.ids[i],w.ids[i+1]];
@@ -1169,7 +1324,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     }
         if(a==='new-variant'){
       const w=work(),original=[...w.ids],seed=w.seed||'1430';saveLibrary();
-      const excluded=library.filter(x=>x.title===w.title).flatMap(x=>x.ids);
+      const excluded=[w.exampleId,...library.filter(x=>x.title===w.title).flatMap(x=>x.ids)];
       const ids=generateVariant(original,catalogTasks,seed,[...excluded,...(bankTools.excludeMarked?Object.keys(bankTools.notes).filter(id=>bankTools.notes[id].excluded):[])]);
       const overlap=ids.filter(id=>original.includes(id)).length;
       const n=Number(w.variant);w.variant=Number.isFinite(n)&&n>=1?String(n+1):w.variant.slice(0,17)+'-2';w.ids=ids;saveLibrary();autoResult=null;render();
@@ -1178,7 +1333,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
     if(a==='print-preview'&&work().ids.length){go('print');return;}
     if(a==='download'){
       b.disabled=true;$('pdf-status').textContent='Собираем PDF…';
-      try{const w=work(),bytes=await createMathPDF({tasks:w.ids.map(question),title:w.title.trim(),variant:w.variant.trim(),grade:null,level:null,answers:w.answers});downloadFile(bytes,'1430-math-work.pdf','application/pdf');if($('pdf-status'))$('pdf-status').textContent='PDF передан браузеру для сохранения.';}
+      try{const w=work(),bytes=await createMathPDF({tasks:w.ids.map(question),example:question(w.exampleId),title:w.title.trim(),variant:w.variant.trim(),grade:null,level:null,answers:w.answers});downloadFile(bytes,'1430-math-work.pdf','application/pdf');if($('pdf-status'))$('pdf-status').textContent='PDF передан браузеру для сохранения.';}
       catch(error){if($('pdf-status'))$('pdf-status').textContent='Не удалось создать PDF. Попробуйте обычную печать.';console.error(error);}finally{b.disabled=false;}return;
     }
     if(a==='print'){window.print();return;}
@@ -1191,6 +1346,7 @@ function safeRoute(raw,bank,examBank=typeof EXAM_BANK!=='undefined'?EXAM_BANK:[]
   window.addEventListener('pageshow',event=>{if(event.persisted)render();});
   window.addEventListener('beforeunload',persist);
   window.addEventListener('resize',syncWorkAccessibility);
+  window.addEventListener('online',()=>{reviewPreviewVersion=-1;if(showingReviewPreview())render();});
   document.addEventListener('keydown',event=>{
     if(event.defaultPrevented)return;
     if(workOpen&&window.matchMedia('(max-width:650px)').matches){

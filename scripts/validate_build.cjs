@@ -18,7 +18,7 @@ test(!bank.some(topic=>topic.tasks.some(task=>page.html.includes(task.id)||page.
 test(page.scripts.length>0&&page.scripts.every(script=>script.reference&&script.inline.trim()===''),'all scripts are external files');
 test(page.scripts.every(script=>'defer' in script.attrs&&!('async' in script.attrs)&&!script.attrs.type),'ordered classic deferred scripts support offline file loading');
 test(new Set(refs).size===refs.length,'every script is loaded exactly once');
-test(page.styles.length===7&&page.styles.every(style=>style.file),'all stylesheet references exist locally');
+test(page.styles.length===8&&page.styles.every(style=>style.file)&&page.styles.some(style=>style.attrs.href==='src/task-view.css'),'all stylesheet references, including shared tasks, exist locally');
 test(!/<style\b/i.test(page.html),'styles are external files');
 test(same(lazyRefs.filter(ref=>ref?.startsWith('data/tasks/')),gradeRefs),'each class has exactly one lazy task file, ordered 5 through 11');
 test(same(lazyRefs.filter(ref=>ref?.startsWith('data/exams/')),examRefs),'each exam season has its own lazy runtime file');
@@ -29,6 +29,7 @@ test(initialScriptBytes<2*1024*1024,'all initial JavaScript stays below the 2 Mi
 test(!refs.includes('data/method-bank.js')&&data.METHOD_BANK.tasks.length===80,'the new 80-task method bank remains a lazy resource');
 test(!JSON.stringify(data.METHOD_BANK).includes('mathCheck'),'independent source oracles do not ship to learners');
 test(refs.at(-1)==='src/app.js','the application starts after all of its dependencies');
+test(refs.indexOf('src/task-view.js')>=0&&refs.indexOf('src/task-view.js')<refs.indexOf('src/work-runner.js'),'shared task presentation initializes before the work runner');
 test(page.lazyScripts.filter(script=>script.vendor).length===2&&['pdf-lib','fontkit'].every(name=>page.lazyScripts.some(script=>script.attrs.id==='vendor-'+name)),'both PDF libraries are available through the local lazy manifest');
 test(same(data.BANK,bank),'deployed class banks match every generated source record exactly');
 test(same(data.EXAM_BANK,exams),'deployed exam banks restore every original image, PDF, answer and record exactly');

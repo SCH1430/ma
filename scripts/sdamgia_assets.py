@@ -4,6 +4,7 @@ from __future__ import annotations
 import base64
 from collections import Counter
 import hashlib
+import html
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -48,6 +49,74 @@ class SafeHTML(HTMLParser):
 
     def handle_startendtag(self,tag,attrs):
         self.handle_starttag(tag,attrs)
+
+
+def normalize_formula_alt(value):
+    """Translate only standard notation; ambiguous source formulae need review."""
+    result=value.replace('в степени левая круглая скобка \\circ правая круглая скобка', 'градусов')
+    result=re.sub(r'\\underset\s*([^\\]*?)\s*(?:\\mathop\s*)?равносильно',
+                  lambda m:'при условии '+m[1].strip()+', равносильно',result)
+    result=re.sub(r'\\log\s*}?\s*_\s*([245])}?(?!\d)',r'логарифм по основанию \1 ',result)
+    result=result.replace('логарифм по основанию левая круглая скобка 5 правая круглая скобка }',
+                          'логарифм по основанию 5')
+    for original,replacement in {
+        r'\thinspace':' ',r'\Rightarrow':' следовательно ',r'\mathop':'',
+        r'\operatorname':'',r'\textrm':'',r'\omega':'омега',r'\angle':'угол ',
+        r'\geqslant':' больше или равно ',r'\pm':'плюс-минус ',r'\over':' делить на ',
+        r'\colon':' разделить на ',r'\ldots':'и так далее',r'\circ':'градусов',r'\%':' процентов ',
+    }.items():
+        result=result.replace(original,replacement)
+    if re.search(r'\\[A-Za-z%]',result):
+        raise ValueError('Review an unsupported source formula alternative: '+result[:180])
+    return re.sub(r'\s+',' ',result).strip() if result!=value else value
+
+
+def accessible_bank(bank):
+    """Derive readable alternatives after checking the untouched source assets.
+
+    Source HTML hashes still identify the original rasterization. Alternatives
+    change only alt attributes; the single reviewed solution correction is
+    explicitly labelled and uses native PDF text instead of its broken image.
+    """
+    data=json.loads((ROOT/'src/sdamgia/accessibility.json').read_text(encoding='utf-8'))
+    if data.get('version')!=1:raise ValueError('Unsupported source accessibility version')
+    alternatives={(r['taskId'],r['field'],r['originalAlt']):r for r in data['formulaAlternatives']}
+    solutions={r['taskId']:r for r in data['solutions']}
+    if len(alternatives)!=len(data['formulaAlternatives']) or len(solutions)!=len(data['solutions']):
+        raise ValueError('Duplicate source accessibility review')
+    used=set();used_solutions=set()
+    for q in bank['tasks']:
+        correction=solutions.get(q['id'])
+        if correction:
+            if correction['sourceHtmlSha256']!=q['renderedHtmlSha256']:
+                raise ValueError('Source solution changed since editorial correction: '+q['id'])
+            SafeHTML().feed(correction['solutionHtml'])
+            q['solution']=correction['solution'];q['solutionHtml']=correction['solutionHtml']
+            q['solutionEditorialNote']=correction['note'];q['solutionImages']=[]
+            used_solutions.add(q['id'])
+        for field in ('promptHtml','solutionHtml','answerHtml'):
+            def image(match):
+                tag=match[0]
+                alt=re.search(r'\balt=("|\')(.*?)\1',tag,re.S)
+                if not alt:return tag
+                before=html.unescape(alt[2]);key=(q['id'],field,before)
+                reviewed=alternatives.get(key)
+                if reviewed:
+                    src=re.search(r'\bsrc=("|\')(.*?)\1',tag,re.S)
+                    if not src or hashlib.sha256(html.unescape(src[2]).encode()).hexdigest()!=reviewed['imageSha256']:
+                        raise ValueError('Source image changed since alternative review: '+q['id'])
+                    after=reviewed['text'];used.add(key)
+                else:after=normalize_formula_alt(before)
+                if after==before:return tag
+                if re.findall(r'\d',after)!=re.findall(r'\d',before):
+                    raise ValueError('Formula alternative changed numerical values: '+q['id'])
+                plain={'promptHtml':'prompt','solutionHtml':'solution'}.get(field)
+                if plain:q[plain]=q[plain].replace(before,after)
+                return tag[:alt.start()]+'alt="'+html.escape(after,quote=True)+'"'+tag[alt.end():]
+            q[field]=re.sub(r'<img\b[^>]*>',image,q[field],flags=re.I)
+    if used!=set(alternatives) or used_solutions!=set(solutions):
+        raise ValueError('Reviewed source accessibility alternative no longer matches its original')
+    return bank
 
 
 def build_sdamgia_bank():
@@ -102,7 +171,7 @@ def build_sdamgia_bank():
             if not q.get(field):raise ValueError('Missing faithful offline PDF rendering: '+q['id'])
             for image in q[field]:_image(image,png=True)
     if set(counts.values())!={8}:raise ValueError('Each reviewed subtype must contain eight tasks')
-    return bank
+    return accessible_bank(bank)
 
 
 if __name__=='__main__':

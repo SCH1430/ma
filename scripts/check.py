@@ -9,6 +9,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+# Content is UTF-8 on every platform, including Windows with a legacy locale.
+os.environ['PYTHONUTF8'] = '1'
 node = os.environ.get('NODE_BINARY') or shutil.which('node')
 if not node:
     raise SystemExit('Node.js is required. Install Node 22+ or set NODE_BINARY to its executable.')
@@ -20,17 +22,19 @@ commands = [
     [sys.executable, '-B', 'scripts/validate_enrichment.py'],
     [sys.executable, '-B', 'scripts/validate_quality_bank.py'],
     [sys.executable, '-B', 'scripts/validate_exam_seasons.py'],
+    [sys.executable, '-B', 'scripts/validate_exam_context.py'],
+    [sys.executable, '-B', 'scripts/validate_sdamgia_accessibility.py'],
     [sys.executable, '-B', 'scripts/method_bank_assets.py'],
     *[[node, f'scripts/{name}.cjs'] for name in [
         'validate_build', 'validate_pwa', 'validate_app_shell', 'validate_lazy_loading', 'validate_runtime', 'validate_geometry', 'validate_lessons',
         'validate_figure_viewer', 'validate_training', 'validate_training_monitor', 'validate_font', 'validate_features',
         'validate_ui_state', 'validate_regressions', 'validate_exams',
         'validate_unified_work', 'validate_competencies', 'validate_auto_work',
-        'validate_work_runner', 'validate_answer_formats', 'validate_bank_evidence', 'validate_method_formats', 'validate_method_bank_ui', 'validate_sdamgia_ui',
+        'validate_work_runner', 'validate_session_identity', 'validate_hint_routing', 'validate_task_view', 'validate_answer_formats', 'validate_bank_evidence', 'validate_method_formats', 'validate_method_bank_ui', 'validate_sdamgia_ui',
         'validate_learning_path', 'validate_workspace_tools', 'validate_workspace_integration',
         'validate_bank_pedagogy', 'validate_bank_selection', 'validate_bank_tools',
         'validate_recovery_flow', 'validate_enrichment_ui', 'validate_quality_ui',
-        'export_unified_sample', 'export_expansion_sample', 'export_sdamgia_sample',
+        'export_unified_sample', 'export_expansion_sample', 'export_sdamgia_sample', 'validate_sdamgia_editorial_pdf',
     ]],
     [node, 'scripts/update_readme.cjs', '--check'],
     [sys.executable, '-B', 'scripts/prepare_pages.py'],
@@ -39,15 +43,15 @@ commands = [
 for command in commands:
     print('\nRunning ' + ' '.join(command), flush=True)
     subprocess.run(command, cwd=ROOT, check=True)
-reports = {name: json.loads((ROOT/'checks'/f'{name}-results.json').read_text())
+reports = {name: json.loads((ROOT/'checks'/f'{name}-results.json').read_text(encoding='utf-8'))
            for name in ['build','math','expansion','runtime','geometry','lessons','figure-viewer','training','training-monitor','font','features','ui-state',
                         'regression','exam','unified-work','competency','auto-work',
                         'unified-pdf','expansion-pdf','sdamgia-ui','sdamgia-pdf','enrichment-ui','quality-bank','quality-ui','learning-path','workspace-integration','method-bank','method-bank-ui']}
 summary = {'verified_at':datetime.now(timezone.utc).isoformat(),
            'automated_status':'passed','reports':reports,
            'checks_executed':[command[-1] for command in commands],
-           'semantic':json.loads((ROOT/'checks/semantic-results.json').read_text())['stats'],
+           'semantic':json.loads((ROOT/'checks/semantic-results.json').read_text(encoding='utf-8'))['stats'],
            'pages':{'directory':'_site','relative_asset_and_runtime_check':'passed'},
            'scope':'Automated source, math, state/event and PDF checks; browser visual QA is separate.'}
-(ROOT/'checks/verification-results.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
+(ROOT/'checks/verification-results.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('\nAll project checks passed.', flush=True)

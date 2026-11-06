@@ -12,7 +12,7 @@ const withoutCurrentClock=record=>Object.fromEntries(Object.entries(record).filt
 const answer=q=>q.kind==='set'?q.answer.length?q.answer.join(';'):'∅':String(q.answer);
 const attempt=(h,id)=>h.state().attempts?.find(([key])=>key==='teacher:'+id)?.[1];
 async function trainer(store=new Map()){
- const h=createHarness(store);await h.click('[data-role="teacher"]');await h.click('[data-action="grade"][data-grade="8"]');await h.click('[data-action="train"][data-topic="8-05"]');await h.click('[data-action="lesson-practice"]');return h;
+ const h=createHarness(store);await h.click('[data-role="teacher"]');await h.click('[data-action="grade"][data-grade="8"]');await h.click('[data-action="train"][data-topic="8-05"]');return h;
 }
 async function wrong(h){await h.input('#answer',String(origin.answer*origin.answer));await h.submit('#answer-form');}
 async function scenario(label,run){try{await run();}catch(error){test(false,label+': '+error.stack);}}

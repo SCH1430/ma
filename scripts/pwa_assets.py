@@ -46,7 +46,7 @@ def build_pwa(root, html, asset_manifest):
         if not path.exists():
             path.write_bytes(_icon(size))
     manifest = {
-        'id': './', 'name': 'БАЗА · Математика 1430', 'short_name': 'БАЗА', 'lang': 'ru',
+        'id': './', 'name': 'БАЗА · Математика школы 1430', 'short_name': 'БАЗА', 'lang': 'ru',
         'description': 'Математика для ученика и учителя. Практика, учебный маршрут и работы без интернета.',
         'start_url': './', 'scope': './', 'display': 'standalone',
         'background_color': '#edf2ee', 'theme_color': '#243f35',

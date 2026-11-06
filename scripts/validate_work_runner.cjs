@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),context=vm.createContext({console});
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8').split('/* UI */')[0];
-vm.runInContext(app+'\n'+fs.readFileSync(path.join(root,'src/exam-support.js'),'utf8')+'\n'+fs.readFileSync(path.join(root,'src/work-runner.js'),'utf8'),context);
+vm.runInContext(app+'\n'+fs.readFileSync(path.join(root,'src/exam-support.js'),'utf8')+'\n'+fs.readFileSync(path.join(root,'src/task-view.js'),'utf8')+'\n'+fs.readFileSync(path.join(root,'src/work-runner.js'),'utf8'),context);
 const runner=context.MathWorkRunner,checker=context.checkAnswer;
 const catalog=[
  {id:'class-number',source:'class',kind:'number',answer:0.75,display:'3/4',prompt:'Вычислите 3/4.',solution:'Три разделить на четыре — 0,75.'},
@@ -32,7 +32,7 @@ runner.go(session,2);runner.setDraft(session,'107,25');test(runner.submit(sessio
 test(!runner.evaluate('107.25000001',catalog[2],checker).correct,'FIPI answer keeps exact official-trainer comparison');
 test(runner.evaluate('429/4',catalog[2],checker).correct,'FIPI exact fractional input remains accepted');
 const fipiMarkup=runner.render(session,catalog);test(fipiMarkup.includes('BBBB')&&fipiMarkup.includes('AAAA'),'official shared context and task images included');
-test(fipiMarkup.includes('<p class="sr-only">Найдите высоту шины.</p>'),'official task image retains accessible text prompt');
+test(/class="sr-only">Найдите высоту шины\.<\//.test(fipiMarkup),'official task image retains accessible text prompt');
 runner.go(session,3);runner.setDraft(session,'312');test(!runner.submit(session,catalog,checker).correct,'sequence preserves leading zero');
 runner.setDraft(session,'0 3 1 2');test(runner.submit(session,catalog,checker).correct,'sequence whitespace accepted');
 const linked=runner.render(session,catalog);test(linked.includes('https://math-ege.sdamgia.ru/problem?id=12345')&&linked.includes('№ 12345'),'source task link and original ID displayed');
